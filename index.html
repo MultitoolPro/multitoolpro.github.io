@@ -299,6 +299,21 @@
         .dark #sun-icon { display: none; }
         .dark #moon-icon { display: block; }
 
+        .tab-buttons > .tab-button,
+        .tab-buttons > .theme-toggle-container {
+            flex: 0 0 auto;
+        }
+        .tab-buttons > .tab-buttons {
+            position: relative;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 0;
+            flex: 0 0 auto;
+            flex-wrap: nowrap;
+        }
+
 
         .tab-buttons {
             display: flex;
@@ -7302,8 +7317,8 @@ body.sidebar-open #sidebarOverlay {
     }
     .comment-card.my-message .comment-text-content {
         cursor: pointer;
-        transition: background-color: 0.2s;
-        border-radius: 4px;
+    transition: background-color 0.2s;
+            border-radius: 4px;
         padding: 2px 4px;
         margin: -2px -4px;
     }
@@ -7720,7 +7735,7 @@ body.sidebar-open #sidebarOverlay {
 /* END: Canvas Tab Styles */
 /* ======================================================== */
 
-<!-- এখান থেকে ওপরে নতুন ট্যাবের সি এস এস কোড লিখতে হবে বা বসাতে হয় বা বসাতে হবে -->
+<!-- এখান থেকে ওপরে নতুন ট্যাবের সি এস এস কোড লিখতে হবে বা বসাতে হয় বা বসাতে হবে 
     </style>
 </head>
 <body>
@@ -7943,15 +7958,6 @@ body.sidebar-open #sidebarOverlay {
                 <svg class="w-4 h-4 text-indigo-600 hidden check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
             </button>
         
-		            <!-- নতুন যুক্ত করা উইন্ডোজ অ্যাপ ডাউনলোড লিংক -->
-            <div class="border-t border-gray-200 dark:border-gray-600 mt-1 pt-1 has-tooltip" data-tooltip="উইন্ডোজ কীবোর্ড Bangla Keyboard CS ডাউনলোড করুন">
-                <a href="https://drive.google.com/drive/folders/1saIx04GYJ0nCtGrFedzpL8nfdeU7Phu4?usp=sharing" target="_blank" class="w-full text-left px-4 py-2 text-sm text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600 flex items-center gap-2 group transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.951-1.801"/>
-                    </svg>
-                    <span>Bangla Keyboard CS</span>
-                </a>
-            </div>
 			
 			<!-- পিসি ফাইল ট্রান্সফার বাটন -->
 <div class="border-t border-gray-200 dark:border-gray-600 mt-1 pt-1 has-tooltip" data-tooltip="পিসির সাথে লোকাল নেটওয়ার্কে ফাইল আদান-প্রদান করুন">
@@ -7967,19 +7973,11 @@ body.sidebar-open #sidebarOverlay {
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
                     <span>পিসি ভয়েস টাইপিং</span>
                 </button>
-            </div>
 
+
+                </div>
         </div>
-    </div>
-</div>
 
-            </div>
-        <!-- নতুন ডোনেট আইকন বাটন -->
-        <button id="donateIconBtn" type="button" class="voice-command-btn w-9 h-9 rounded-full flex justify-center items-center transition-all duration-300 shadow-sm has-tooltip" data-tooltip="ডোনেট করুন (সহায়তা করুন)">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-            </svg>
-        </button>
         <!-- নতুন বাটন শেষ -->
 
         </div>
@@ -8083,78 +8081,624 @@ body.sidebar-open #sidebarOverlay {
     </div>
 </div>
 
-<!-- মৌলিক ক্যালকুলেটর বিভাগ -->
-        <div id="basicCalculatorContent" class="calculator-content active">
-            <div class="basic-calculator-wrapper">
-                <div class="calculator-grid">
-                    <div class="output">
-                        <div data-previous-operand class="previous-operand"></div>
-                        <div data-current-operand class="current-operand"></div>
-                    </div>
-                    <button data-all-clear class="clear calculator-button rounded-xl" style="grid-column: span 2;">AC</button>
-                    <button data-delete class="calculator-button rounded-xl">DEL</button>
-                    <button data-operator class="operator calculator-button rounded-xl">÷</button> <!-- ভাগ -->
-                    <button data-number class="calculator-button rounded-xl">7</button>
-                    <button data-number class="calculator-button rounded-xl">8</button>
-                    <button data-number class="calculator-button rounded-xl">9</button>
-                    <button data-operator class="operator calculator-button rounded-xl">×</button> <!-- গুণ -->
-                    <button data-number class="calculator-button rounded-xl">4</button>
-                    <button data-number class="calculator-button rounded-xl">5</button>
-                    <button data-number class="calculator-button rounded-xl">6</button>
-                    <button data-operator class="operator calculator-button rounded-xl">-</button> <!-- বিয়োগ -->
-                    <button data-number class="calculator-button rounded-xl">1</button>
-                    <button data-number class="calculator-button rounded-xl">2</button>
-                    <button data-number class="calculator-button rounded-xl">3</button>
-                    <button data-operator class="operator calculator-button rounded-xl">+</button> <!-- যোগ -->
-                    
-                    <!-- পরিবর্তন: ০ এবং ডট বাটন সোয়াপ করা হয়েছে -->
-                    <button data-number class="calculator-button rounded-xl">.</button>
-                    <button data-number class="calculator-button rounded-xl">0</button>
-                    <button data-operator class="operator calculator-button rounded-xl">%</button>
-                    <!-- পরিবর্তন শেষ -->
+<div id="basicCalculatorContent" class="calculator-content active">
+  <style>
+    #basicCalculatorContent .gmail-tool-wrap,
+    #basicCalculatorContent .gmail-tool-wrap * {
+      box-sizing: border-box;
+    }
 
-                    <button data-equals class="equals calculator-button rounded-xl">=</button> <!-- সমান -->
-                </div>
-                <!-- নতুন: হিস্টোরি প্যানেল -->
-                <div class="history-panel">
-                    <div class="history-header">
-                        <h3>হিস্টোরি</h3>
-                        <button id="clearHistoryBtn">মুছুন</button>
-                    </div>
-                    <ul id="history-list">
-                        <!-- হিস্টোরি আইটেম এখানে যুক্ত হবে -->
-                    </ul>
-                </div>
+    #basicCalculatorContent .gmail-tool-wrap {
+      --gmail-accent: #7eb3ff;
+      --gmail-deep-blue: #5d82ff;
+      --gmail-fire: #ff6259;
+      --gmail-success: #22c55e;
+      --gmail-glass: rgba(25, 32, 63, 0.58);
+      --gmail-glass-border: rgba(255, 255, 255, 0.14);
+      --gmail-glass-shadow: 0 18px 45px rgba(9, 14, 38, 0.32);
+      --gmail-text: #eef2ff;
+      --gmail-muted: #b8c2dd;
+      width: 100%;
+      color: var(--gmail-text);
+      font-family: Inter, Segoe UI, Arial, sans-serif;
+    }
+
+    #basicCalculatorContent .gmail-tools-shell {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 8px 0;
+    }
+
+    #basicCalculatorContent .gmail-tools-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    #basicCalculatorContent .gmail-panel {
+      background: linear-gradient(135deg, rgba(20, 27, 74, 0.96), rgba(38, 31, 77, 0.94));
+      border: 1px solid var(--gmail-glass-border);
+      border-radius: 24px;
+      box-shadow: var(--gmail-glass-shadow);
+      padding: 18px;
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+    }
+
+    #basicCalculatorContent .gmail-title {
+      margin: 0 0 14px;
+      font-size: 14px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #f8fbff;
+    }
+
+    #basicCalculatorContent .gmail-label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--gmail-muted);
+    }
+
+    #basicCalculatorContent .gmail-input,
+    #basicCalculatorContent .gmail-select,
+    #basicCalculatorContent .gmail-textarea,
+    #basicCalculatorContent .gmail-button {
+      font: inherit;
+    }
+
+    #basicCalculatorContent .gmail-input,
+    #basicCalculatorContent .gmail-select,
+    #basicCalculatorContent .gmail-textarea {
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(10, 15, 36, 0.36);
+      color: var(--gmail-text);
+      border-radius: 14px;
+      outline: none;
+      padding: 12px 14px;
+    }
+
+    #basicCalculatorContent .gmail-textarea::placeholder,
+    #basicCalculatorContent .gmail-input::placeholder {
+      color: rgba(226, 232, 240, 0.58);
+    }
+
+    #basicCalculatorContent .gmail-mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    #basicCalculatorContent .gmail-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    #basicCalculatorContent .gmail-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    #basicCalculatorContent .gmail-icon-btn,
+    #basicCalculatorContent .gmail-action-btn {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(33, 40, 77, 0.5);
+      color: var(--gmail-text);
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    #basicCalculatorContent .gmail-action-btn {
+      height: 42px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0 14px;
+    }
+
+    #basicCalculatorContent .gmail-action-btn:hover,
+    #basicCalculatorContent .gmail-icon-btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(126, 179, 255, 0.32);
+    }
+
+    #basicCalculatorContent .gmail-icon-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #basicCalculatorContent .gmail-icon-btn svg {
+      width: 18px;
+      height: 18px;
+      position: relative;
+      z-index: 2;
+    }
+
+    #basicCalculatorContent .gmail-copy-burst {
+      position: absolute;
+      inset: 0;
+      background: var(--gmail-success);
+      transform: scale(0);
+      opacity: 0;
+      transition: 0.28s ease;
+      z-index: 1;
+    }
+
+    #basicCalculatorContent .gmail-icon-btn.copied .gmail-copy-burst {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    #basicCalculatorContent .gmail-code-box,
+    #basicCalculatorContent .gmail-output-box,
+    #basicCalculatorContent .gmail-email-list {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(0, 0, 0, 0.24);
+      border-radius: 16px;
+    }
+
+    #basicCalculatorContent .gmail-code-box {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 14px;
+      cursor: pointer;
+    }
+
+    #basicCalculatorContent .gmail-otp-code {
+      font-size: clamp(28px, 4vw, 46px);
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      line-height: 1;
+      color: #ffffff;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    #basicCalculatorContent .gmail-timer {
+      text-align: center;
+      font-size: 12px;
+      color: var(--gmail-muted);
+      margin-top: 6px;
+    }
+
+    #basicCalculatorContent .gmail-error {
+      min-height: 16px;
+      font-size: 12px;
+      color: var(--gmail-fire);
+    }
+
+    #basicCalculatorContent .gmail-output-box {
+      min-height: 64px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    #basicCalculatorContent .gmail-password-text {
+      font-size: 20px;
+      font-weight: 800;
+      color: #22c55e;
+      text-align: center;
+      word-break: break-all;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    #basicCalculatorContent .gmail-length-wrap {
+      width: 72px;
+      flex-shrink: 0;
+    }
+
+    #basicCalculatorContent .gmail-email-controls {
+      display: grid;
+      grid-template-columns: 88px 1fr 1fr;
+      gap: 10px;
+    }
+
+    #basicCalculatorContent .gmail-email-list {
+      min-height: 280px;
+      max-height: 280px;
+      overflow: auto;
+      padding: 12px;
+    }
+
+    #basicCalculatorContent .gmail-email-item {
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.04);
+      font-size: 13px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      color: #dbeafe;
+      margin-bottom: 8px;
+      word-break: break-all;
+      cursor: pointer;
+    }
+
+    #basicCalculatorContent .gmail-email-item:last-child {
+      margin-bottom: 0;
+    }
+
+    #basicCalculatorContent .gmail-section-sub {
+      font-size: 11px;
+      color: var(--gmail-muted);
+    }
+
+    #basicCalculatorContent .gmail-help {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: left;
+      color: #dbeafe;
+    }
+
+    #basicCalculatorContent .gmail-help h4 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    #basicCalculatorContent .gmail-help p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    @media (max-width: 980px) {
+      #basicCalculatorContent .gmail-tools-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #basicCalculatorContent .gmail-email-controls {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  <div class="gmail-tool-wrap">
+    <div class="gmail-tools-shell">
+      <div class="gmail-tools-grid">
+        <section class="gmail-panel">
+          <h2 class="gmail-title">2FA</h2>
+
+          <div class="gmail-stack">
+            <div>
+              <label class="gmail-label" for="gmailOtpSecretField">Enter 2FA Secret</label>
+              <div class="gmail-row">
+                <textarea
+                  id="gmailOtpSecretField"
+                  class="gmail-textarea gmail-mono"
+                  rows="2"
+                  placeholder="ENTER 2FA SECRET"
+                ></textarea>
+                <button class="gmail-icon-btn gmail-button" id="gmailClear2faBtn" type="button" title="Clear">
+                  <span class="gmail-copy-burst"></span>
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 7V5h6v2"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 10v6M15 10v6"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7l.6 11a1 1 0 001 .95h4.8a1 1 0 001-.95L16 7"></path>
+                  </svg>
+                </button>
+              </div>
+              <div id="gmailOtpError" class="gmail-error">Enter a valid 2FA secret</div>
             </div>
-            <!-- LLM-চালিত ব্যাখ্যা বৈশিষ্ট্য -->
-            <button id="explainBasicBtn" class="explain-button rounded-xl">ব্যাখ্যা করুন ✨</button>
-            <div id="basicExplanationLoading" class="loading-indicator">জেমিনি ব্যাখ্যা করছে</div>
-            <div id="basicExplanation" class="response-area rounded-lg mt-4" style="background-color: #e6f7ff; border: 1px solid #b3e0ff;"></div>
-             <!-- Info Section Start -->
-            <div class="mt-8 p-5 bg-white dark:bg-gray-800 rounded-xl border-l-4 border-indigo-500 shadow-md text-left mx-auto max-w-4xl">
-                <h4 class="text-lg font-bold text-indigo-700 dark:text-indigo-400 mb-3 border-b pb-2 dark:border-gray-700 flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/></svg>
-                    এই টুলের সুবিধা ও ব্যবহার (Features & Usage)
-                </h4>
-                
-                <div class="mb-4">
-                    <h5 class="text-md font-semibold text-gray-800 dark:text-gray-200 mb-1">🇧🇩 বাংলায়:</h5>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed text-justify">
-                        <strong class="text-gray-700 dark:text-gray-300">সুবিধা ও কার্যকারিতা:</strong> এটি একটি আধুনিক ও দ্রুতগতির সাধারণ ক্যালকুলেটর। এর মাধ্যমে আপনি প্রাত্যহিক যোগ, বিয়োগ, গুণ, ভাগ এবং শতকরা (%) হিসাব খুব সহজেই করতে পারবেন। এর সবচেয়ে বড় বৈশিষ্ট্য হলো 'হিস্টোরি প্যানেল', যা আপনার অতীতের সমস্ত হিসাব সংরক্ষণ করে রাখে এবং এআই (AI) এর মাধ্যমে যেকোনো জটিল হিসাবের ব্যাখ্যা প্রদান করতে পারে।<br>
-                        <strong class="text-gray-700 dark:text-gray-300 mt-1 inline-block">ব্যবহারের নিয়ম:</strong> অনস্ক্রিন বাটন অথবা আপনার কিবোর্ডের নাম্বার প্যাড ব্যবহার করে হিসাব করুন। কোনো হিসাবের বিস্তারিত বুঝতে চাইলে "ব্যাখ্যা করুন ✨" বাটনে ক্লিক করুন।
-                    </p>
+
+            <div id="gmailOtpWrap" style="display:none;">
+              <div class="gmail-section-sub">The current 2FA verification code is</div>
+              <div class="gmail-row" style="margin-top:8px;">
+                <div id="gmailOtpCodePanel" class="gmail-code-box" style="flex:1;">
+                  <div id="gmailOtpBox" class="gmail-otp-code gmail-mono">------</div>
                 </div>
-                
-                <div>
-                    <h5 class="text-md font-semibold text-gray-800 dark:text-gray-200 mb-1">🇬🇧 In English:</h5>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed text-justify">
-                        <strong class="text-gray-700 dark:text-gray-300">Benefits & Functionality:</strong> This is a modern and fast basic calculator. It allows you to easily perform daily calculations like addition, subtraction, multiplication, division, and percentages (%). Its best features include a 'History Panel' that saves all your past calculations and an AI-powered explanation tool for complex equations.<br>
-                        <strong class="text-gray-700 dark:text-gray-300 mt-1 inline-block">How to use:</strong> Use the on-screen buttons or your physical keyboard's numpad to calculate. Click the "Explain ✨" button to get a detailed AI explanation of your current calculation.
-                    </p>
-                </div>
+                <button class="gmail-icon-btn gmail-button" id="gmailOtpCopyBtn" type="button" title="Copy code">
+                  <span class="gmail-copy-burst"></span>
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2">
+                    <path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
+                  </svg>
+                </button>
+              </div>
+              <div class="gmail-timer">(<span id="gmailTimerText">30</span> seconds)</div>
             </div>
-            <!-- Info Section End -->       
-		</div>
+          </div>
+        </section>
+
+        <section class="gmail-panel">
+          <h2 class="gmail-title">Password Generator</h2>
+
+          <div class="gmail-stack">
+            <div class="gmail-row">
+              <div id="gmailPassOutputBox" class="gmail-output-box" style="flex:1;">
+                <div id="gmailPassOutput" class="gmail-password-text">Ready...</div>
+              </div>
+              <button class="gmail-icon-btn gmail-button" id="gmailPassCopyBtn" type="button" title="Copy password">
+                <span class="gmail-copy-burst"></span>
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2">
+                  <path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
+                </svg>
+              </button>
+            </div>
+
+            <div class="gmail-row">
+              <button id="gmailGeneratePassBtn" class="gmail-icon-btn gmail-button" type="button" title="Generate password">
+                <span class="gmail-copy-burst"></span>
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v6h6"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M20 20v-6h-6"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M20 10A8 8 0 007 6l-3 4"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 14a8 8 0 0013 4l3-4"></path>
+                </svg>
+              </button>
+
+              <div class="gmail-length-wrap">
+                <label class="gmail-label" for="gmailPassLength">Length</label>
+                <input id="gmailPassLength" type="number" min="8" max="50" value="12" class="gmail-input gmail-mono" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="gmail-panel">
+          <h2 class="gmail-title">Email Generator</h2>
+
+          <div class="gmail-stack">
+            <div class="gmail-email-controls">
+              <div>
+                <label class="gmail-label" for="gmailEqty">Quantity</label>
+                <input id="gmailEqty" type="number" min="1" max="100" value="10" class="gmail-input gmail-mono" />
+              </div>
+
+              <div>
+                <label class="gmail-label" for="gmailEcountry">Country</label>
+                <select id="gmailEcountry" class="gmail-select">
+                  <option value="bd">Bangladesh</option>
+                  <option value="usa">USA</option>
+                  <option value="india">India</option>
+                  <option value="uk">UK</option>
+                  <option value="pak">Pakistan</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="gmail-label" for="gmailEdomain">Domain</label>
+                <select id="gmailEdomain" class="gmail-select">
+                  <option value="gmail.com">gmail.com</option>
+                  <option value="outlook.com" selected>outlook.com</option>
+                  <option value="yahoo.com">yahoo.com</option>
+                  <option value="hotmail.com">hotmail.com</option>
+                  <option value="icloud.com">icloud.com</option>
+                </select>
+              </div>
+            </div>
+
+            <button id="gmailGenerateEmailsBtn" class="gmail-action-btn gmail-button" type="button">Generate Emails</button>
+
+            <div id="gmailEmailContainer" class="gmail-email-list"></div>
+          </div>
+        </section>
+      </div>
+
+      <div class="gmail-help">
+        <h4>Gmail</h4>
+        <p>এখানে 2FA code generate, strong password তৈরি, আর random email generate করা যাবে। সব CSS, HTML আর JavaScript এই block-এর ভেতরেই namespaced করা আছে, তাই existing page-এর অন্য tool-এর সাথে conflict হওয়ার chance খুব কম।</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/@otplib/preset-browser@latest/buffer.js"></script>
+  <script src="https://unpkg.com/@otplib/preset-browser@latest/index.js"></script>
+
+  <script>
+    (function () {
+      if (window.__gmailToolsInitialized) return;
+      window.__gmailToolsInitialized = true;
+
+      function initializeWhenReady() {
+        if (!window.otplib || !window.otplib.authenticator) {
+          setTimeout(initializeWhenReady, 120);
+          return;
+        }
+
+        const authenticator = window.otplib.authenticator;
+        const otpSecretField = document.getElementById("gmailOtpSecretField");
+        const otpError = document.getElementById("gmailOtpError");
+        const otpWrap = document.getElementById("gmailOtpWrap");
+        const otpBox = document.getElementById("gmailOtpBox");
+        const timerText = document.getElementById("gmailTimerText");
+        const otpCodePanel = document.getElementById("gmailOtpCodePanel");
+        const otpCopyBtn = document.getElementById("gmailOtpCopyBtn");
+        const clear2faBtn = document.getElementById("gmailClear2faBtn");
+
+        const passLength = document.getElementById("gmailPassLength");
+        const passOutput = document.getElementById("gmailPassOutput");
+        const passOutputBox = document.getElementById("gmailPassOutputBox");
+        const passCopyBtn = document.getElementById("gmailPassCopyBtn");
+        const generatePassBtn = document.getElementById("gmailGeneratePassBtn");
+
+        const eqty = document.getElementById("gmailEqty");
+        const ecountry = document.getElementById("gmailEcountry");
+        const edomain = document.getElementById("gmailEdomain");
+        const emailContainer = document.getElementById("gmailEmailContainer");
+        const generateEmailsBtn = document.getElementById("gmailGenerateEmailsBtn");
+
+        if (
+          !otpSecretField || !otpError || !otpWrap || !otpBox || !timerText ||
+          !otpCodePanel || !otpCopyBtn || !clear2faBtn || !passLength || !passOutput ||
+          !passOutputBox || !passCopyBtn || !generatePassBtn || !eqty || !ecountry ||
+          !edomain || !emailContainer || !generateEmailsBtn
+        ) {
+          return;
+        }
+
+        let currentSecret = "";
+
+        function animateCopy(btn) {
+          btn.classList.add("copied");
+          setTimeout(function () {
+            btn.classList.remove("copied");
+          }, 520);
+        }
+
+        async function copyText(text, btn) {
+          if (!text || text === "------" || text === "Ready...") return;
+
+          try {
+            await navigator.clipboard.writeText(text);
+          } catch (error) {
+            const temp = document.createElement("textarea");
+            temp.value = text;
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand("copy");
+            temp.remove();
+          }
+
+          if (btn) animateCopy(btn);
+        }
+
+        function sanitizeSecret(raw) {
+          return String(raw || "").replace(/\s+/g, "").trim();
+        }
+
+        function update2FA() {
+          const secret = sanitizeSecret(otpSecretField.value);
+          currentSecret = secret;
+
+          if (!secret) {
+            otpError.textContent = "Enter a valid 2FA secret";
+            otpBox.textContent = "------";
+            otpWrap.style.display = "none";
+            return;
+          }
+
+          try {
+            const token = authenticator.generate(secret);
+            otpBox.textContent = token;
+            otpError.textContent = "";
+            otpWrap.style.display = "block";
+          } catch (error) {
+            otpError.textContent = "Invalid secret key";
+            otpBox.textContent = "------";
+            otpWrap.style.display = "none";
+          }
+        }
+
+        function clear2FA() {
+          otpSecretField.value = "";
+          currentSecret = "";
+          update2FA();
+        }
+
+        function update2FATimer() {
+          const remaining = 30 - (Math.floor(Date.now() / 1000) % 30);
+          timerText.textContent = remaining;
+          if (currentSecret) update2FA();
+        }
+
+        function genPass() {
+          const length = Math.max(8, Math.min(50, parseInt(passLength.value || "12", 10)));
+          passLength.value = length;
+          const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%^&*_-=?";
+          let out = "";
+
+          for (let i = 0; i < length; i += 1) {
+            out += chars[Math.floor(Math.random() * chars.length)];
+          }
+
+          passOutput.textContent = out;
+        }
+
+        function randomFrom(list) {
+          return list[Math.floor(Math.random() * list.length)];
+        }
+
+        function generateEmails() {
+          const qty = Math.max(1, Math.min(100, parseInt(eqty.value || "10", 10)));
+          eqty.value = qty;
+
+          const sets = {
+            bd: ["rahim", "karim", "sadia", "nusrat", "tanvir", "shuvo", "mim", "hasan", "jannat", "rifat"],
+            usa: ["james", "olivia", "liam", "emma", "noah", "ava", "mia", "logan", "sophia", "mason"],
+            india: ["arjun", "priya", "rahul", "anika", "aman", "neha", "ishita", "rohan", "aditya", "kavya"],
+            uk: ["oliver", "amelia", "harry", "isla", "jack", "freya", "george", "grace", "alfie", "lily"],
+            pak: ["ahmed", "fatima", "ali", "ayesha", "hamza", "zara", "usman", "hina", "danish", "sana"]
+          };
+
+          const base = sets[ecountry.value] || sets.bd;
+          const domain = edomain.value;
+
+          emailContainer.innerHTML = "";
+
+          for (let i = 0; i < qty; i += 1) {
+            const name = randomFrom(base);
+            const suffix = Math.floor(1000 + Math.random() * 900000);
+            const email = name + suffix + "@" + domain;
+            const div = document.createElement("div");
+            div.className = "gmail-email-item";
+            div.textContent = email;
+            div.title = "Click to copy";
+            div.addEventListener("click", function () {
+              copyText(email);
+            });
+            emailContainer.appendChild(div);
+          }
+        }
+
+        otpSecretField.addEventListener("input", update2FA);
+        clear2faBtn.addEventListener("click", clear2FA);
+
+        otpCodePanel.addEventListener("click", function () {
+          copyText(otpBox.textContent, otpCopyBtn);
+        });
+        otpBox.addEventListener("click", function () {
+          copyText(otpBox.textContent, otpCopyBtn);
+        });
+        otpCopyBtn.addEventListener("click", function () {
+          copyText(otpBox.textContent, otpCopyBtn);
+        });
+
+        generatePassBtn.addEventListener("click", genPass);
+        passOutputBox.addEventListener("click", function () {
+          copyText(passOutput.textContent, passCopyBtn);
+        });
+        passOutput.addEventListener("click", function () {
+          copyText(passOutput.textContent, passCopyBtn);
+        });
+        passCopyBtn.addEventListener("click", function () {
+          copyText(passOutput.textContent, passCopyBtn);
+        });
+
+        generateEmailsBtn.addEventListener("click", generateEmails);
+
+        setInterval(update2FATimer, 1000);
+        genPass();
+        update2FA();
+      }
+
+      initializeWhenReady();
+    })();
+  </script>
+</div>
+
 
         <!-- বয়স ক্যালকুলেটর বিভাগ -->
         <div id="ageCalculatorContent" class="calculator-content">
@@ -8255,7 +8799,6 @@ body.sidebar-open #sidebarOverlay {
                         <p class="result-section-title">আজকের তারিখ</p>
                         <p id="todayGregorianDateDisplay"></p>
                         <p id="todayBengaliDateDisplay"></p>
-                        <p id="todayHijriDateDisplay"></p>
                         <p id="todayDayDisplay"></p> <!-- আজকের দিনের জন্য নতুন সারি -->
                         <p id="todayTimeDisplay"></p>
                     </div>
@@ -8265,25 +8808,11 @@ body.sidebar-open #sidebarOverlay {
                         <p class="result-section-title">আগামীকালের তারিখ</p>
                         <p id="tomorrowGregorianDateDisplay"></p>
                         <p id="tomorrowBengaliDateDisplay"></p>
-                        <p id="tomorrowHijriDateDisplay"></p>
                         <p id="tomorrowDayDisplay"></p> <!-- আগামীকালের দিনের জন্য নতুন সারি -->
                         <p id="tomorrowTimeDisplay"></p>
                     </div>
                 </div>
 
-<!-- ইংরেজি থেকে বাংলা ও হিজরি তারিখ রূপান্তর বৈশিষ্ট্য -->
-				<h3 class="text-xl font-bold text-gray-700 mb-4 dark:text-gray-200 p-5">ইংরেজি থেকে বাংলা ও হিজরি তারিখ</h3>
-                <div class="input-group mt-0">
-                    <label for="englishDateInput" class="text-gray-700 font-semibold text-left block mb-2">ইংরেজি তারিখ লিখুন:</label>
-                    <input type="date" id="englishDateInput" class="rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full p-1 border border-gray-300">
-                </div>
-                <button id="convertEnglishToBengaliBtn" class="show-date-button rounded-xl mt-4">তারিখ রূপান্তর করুন</button>
-                <div id="bengaliConvertedDateDisplay" class="result-area mt-4">
-                    <p class="result-section-title">রূপান্তরিত তারিখ</p>
-                    <p id="convertedBengaliDate"></p>
-                    <p id="convertedHijriDate"></p> <!-- হিজরি তারিখের জন্য নতুন লাইন -->
-                    <p id="convertedDayDisplay"></p>
-                </div>
 <!-- বাংলা থেকে ইংরেজি তারিখ রূপান্তর বৈশিষ্ট্য (নতুন) -->
 <h3 class="text-xl font-bold text-gray-700 mb-4 dark:text-gray-200 p-5">বাংলা থেকে ইংরেজি তারিখ বের করুন</h3>
     <div class="input-group mt-4">
@@ -8318,64 +8847,6 @@ body.sidebar-open #sidebarOverlay {
         <p id="convertedEnglishDayDisplay"></p>
     </div>
 
-<!-- হিজরি থেকে ইংরেজি তারিখ রূপান্তর বৈশিষ্ট্য (নতুন যুক্ত করা হয়েছে) -->
-<h3 class="text-xl font-bold text-gray-700 mb-4 dark:text-gray-200 p-5">হিজরি থেকে ইংরেজি তারিখ বের করুন</h3>
-    <div class="input-group mt-4">
-        <label for="hijriDayInput" class="text-gray-700 font-semibold text-left block mb-2">হিজরি তারিখ (দিন) লিখুন:</label>
-        <input type="number" id="hijriDayInput" placeholder="যেমন: ১০" class="rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full p-1 border border-gray-300">
-    </div>
-    <div class="input-group mt-4">
-        <label for="hijriMonthInput" class="text-gray-700 font-semibold text-left block mb-2">হিজরি মাস নির্বাচন করুন:</label>
-        <select id="hijriMonthInput" class="rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full p-2 border border-gray-300 bg-white dark:bg-gray-700">
-            <option value="1">মুহাররম</option>
-            <option value="2">সফর</option>
-            <option value="3">রবিউল আউয়াল</option>
-            <option value="4">রবিউস সানি</option>
-            <option value="5">জমাদিউল আউয়াল</option>
-            <option value="6">জমাদিউস সানি</option>
-            <option value="7">রজব</option>
-            <option value="8">শাবান</option>
-            <option value="9">রমজান</option>
-            <option value="10">শাওয়াল</option>
-            <option value="11">জিলকদ</option>
-            <option value="12">জিলহজ</option>
-        </select>
-    </div>
-    <div class="input-group mt-6">
-        <label for="hijriYearInput" class="text-gray-700 font-semibold text-left block mb-2">হিজরি সন লিখুন:</label>
-        <input type="number" id="hijriYearInput" placeholder="যেমন: ১৪৪৫" class="rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full p-2 border border-gray-300">
-    </div>
-    <button id="convertHijriToEnglishBtn" class="show-date-button rounded-xl mt-4">ইংরেজি তারিখে রূপান্তর করুন</button>
-    <div id="englishFromHijriDateDisplay" class="result-area mt-4">
-        <p class="result-section-title">রূপান্তরিত ইংরেজি তারিখ</p>
-        <p id="convertedEnglishFromHijriDate"></p>
-        <p id="convertedEnglishFromHijriDayDisplay"></p>
-    </div>
-	
-	                <h3 class="text-xl font-bold text-gray-700 mb-4 dark:text-gray-200">সময়ের ব্যবধান ক্যালকুলেটর</h3>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">দুটি সময়ের মধ্যবর্তী ব্যবধান বের করুন। তারিখ না দিলে শুধু সময়ের ব্যবধান দেখাবে।</p>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="input-group">
-                        <label class="block mb-2 font-semibold text-gray-700 dark:text-gray-300">শুরুর সময়</label>
-                        <div class="flex flex-col gap-2">
-                            <input type="date" id="diffStartDate" class="w-full p-3 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                            <input type="time" id="diffStartTime" class="w-full p-3 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label class="block mb-2 font-semibold text-gray-700 dark:text-gray-300">শেষ সময়</label>
-                        <div class="flex flex-col gap-2">
-                            <input type="date" id="diffEndDate" class="w-full p-3 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                            <input type="time" id="diffEndTime" class="w-full p-3 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                        </div>
-                    </div>
-                </div>
-                
-                <button id="calcTimeDiffBtn" class="w-full mt-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg shadow transition-colors">
-                    ব্যবধান হিসাব করুন
-                </button>
-                
                 <div id="timeDiffResult" class="result-area mt-6 hidden bg-indigo-50 dark:bg-gray-800 p-4 rounded-lg border border-indigo-200 dark:border-gray-600 text-left">
                     <h4 class="font-bold text-indigo-700 dark:text-indigo-300 mb-3 text-lg border-b border-indigo-200 dark:border-gray-600 pb-2">ফলাফল:</h4>
                     <div id="diffOutputContent" class="text-gray-800 dark:text-gray-200 space-y-2"></div>
@@ -9215,7 +9686,7 @@ body.sidebar-open #sidebarOverlay {
                         <strong class="text-indigo-700 dark:text-indigo-400 hover:text-indigo-600 cursor-pointer transition-colors">সাধারণ ও সাইন্টিফিক ক্যালকুলেটর:</strong> মৌলিক এবং জটিল গাণিতিক গণনার সুবিধা। প্রতিটি গণনার জন্য জেমিনি দ্বারা সহজ ব্যাখ্যা পাওয়ার সুযোগ রয়েছে।
                     </li>
                     <li class="mb-2">
-                        <strong class="text-indigo-700 dark:text-indigo-400 hover:text-indigo-600 cursor-pointer transition-colors">বয়স ও তারিখ ক্যালকুলেটর:</strong> সঠিক বয়স গণনা, নির্দিষ্ট বছর আগে বা পরের তারিখ অনুসন্ধান এবং গ্রেগরিয়ান, বাংলা ও হিজরি তারিখ দেখার সুবিধা।
+                        <strong class="text-indigo-700 dark:text-indigo-400 hover:text-indigo-600 cursor-pointer transition-colors">বয়স ও তারিখ ক্যালকুলেটর:</strong> সঠিক বয়স গণনা, নির্দিষ্ট বছর আগে বা পরের তারিখ অনুসন্ধান এবং গ্রেগরিয়ান, বাংলা তারিখ দেখার সুবিধা।
                     </li>
                     <li class="mb-2">
                         <strong class="text-green-700 dark:text-green-400 hover:text-green-600 cursor-pointer transition-colors">পরিমাপ (ইউনিট কনভার্টার):</strong> দৈর্ঘ্য, ওজন, ক্ষেত্রফল, তাপমাত্রা এবং বিএমআই (BMI) সহজেই গণনা ও রূপান্তর করুন।
@@ -11255,18 +11726,6 @@ body.sidebar-open #sidebarOverlay {
         </div>
 -->
 
-        <!-- NEW: হিজরি তারিখ অ্যাডজাস্টার -->
-        <div class="setting-item">
-            <div class="setting-text" style="flex-grow: 1; margin-right: 15px;">
-                <label for="hijriDateAdjustInput" class="font-semibold text-gray-700 dark:text-gray-300">হিজরি তারিখ অ্যাডজাস্টার</label>
-                <p class="text-sm text-gray-500 dark:text-gray-400">হিজরি তারিখ ১-২ দিন কম/বেশি করতে এখানে সংখ্যা লিখুন (যেমন: -1 বা 1)। ডিফল্ট: -2</p>
-                <div class="flex gap-2 mt-2">
-                    <input type="number" id="hijriDateAdjustInput" placeholder="-2" class="flex-grow p-2 border rounded-lg dark:bg-gray-600 dark:border-gray-500 dark:text-white focus:ring-2 focus:ring-indigo-500 text-sm">
-                    <button id="saveHijriAdjustBtn" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded text-sm">সেভ</button>
-                </div>
-            </div>
-        </div>
-
         <!-- NEW: বাংলা তারিখ অ্যাডজাস্টার -->
         <div class="setting-item">
             <div class="setting-text" style="flex-grow: 1; margin-right: 15px;">
@@ -12525,22 +12984,6 @@ async function clearExpiredItems() {
 // ====================================================================
 
 // ====================================================================
-// START: GLOBAL HIJRI ADJUSTMENT SETTING
-// ====================================================================
-
-// হিজরি তারিখ অ্যাডজাস্টমেন্টের জন্য সেন্ট্রাল ফাংশন
-function getGlobalHijriAdjustment() {
-    // যদি সেটিংসে ইউজার কিছু সেট না করে থাকে, তবে এই ভ্যালুটি কাজ করবে।
-    const defaultValue = '-2'; 
-    
-    return parseInt(localStorage.getItem('hijriDateAdjustment') || defaultValue, 10);
-}
-
-// ====================================================================
-// END: GLOBAL HIJRI ADJUSTMENT SETTING
-// ====================================================================
-
-// ====================================================================
 // START: DEVELOPER CRICKET TICKER SETTING
 // ====================================================================
 // ডেভেলপার হিসেবে এখানে লিংক বসালে সেটি ডিফল্ট হিসেবে কাজ করবে।
@@ -13251,22 +13694,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return seasons[monthIndex] || ""; 
         }
 
-        const arabicToBengaliNumbers = (text) => {
-            const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-            const bengaliDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
-            let converted = text;
-            for (let i = 0; i < arabicDigits.length; i++) {
-                converted = converted.replace(new RegExp(arabicDigits[i], 'g'), bengaliDigits[i]);
-            }
-            return converted;
-        };
-
-        const hijriMonthArabicToBengali = {
-            'محرم': 'মুহাররম', 'صفر': 'সফর', 'ربيع الأول': 'রবিউল আউয়াল', 'ربيع الآخر': 'রবিউস সানি',
-            'جمادى الأولى': 'জমাদিউল আউয়াল', 'جمادى الآخرة': 'জমাদিউস সানি', 'رجب': 'রজব', 'شعبان': 'শাবান',
-            'رمضان': 'রমজান', 'شوال': 'শাওয়াল', 'ذو القعدة': 'জিলকদ', 'ذو الحجة': 'জিলহজ'
-        };
-
         // ক্যাশিং ভেরিয়েবল (CPU অপ্টিমাইজেশনের জন্য)
         let cachedDatePartHTML = "";
         let lastDateUpdateTimestamp = 0;
@@ -13358,30 +13785,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const bengaliDateString = bengaliDateInfo.formatted;
                 const bengaliSeason = getBengaliSeason(bengaliDateInfo.monthIndex);
 
-                // Hijri Date
-                let hijriCalculationDate = new Date(now);
-                
-                // পরিবর্তন: এখন গ্লোবাল ফাংশন থেকে ভ্যালু নেওয়া হচ্ছে
-                const hijriAdjustment = getGlobalHijriAdjustment();
-                
-                hijriCalculationDate.setDate(hijriCalculationDate.getDate() + hijriAdjustment);
-
-                const hijriDateFormatter = new Intl.DateTimeFormat('ar-SA', {
-                    calendar: 'islamic', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Dhaka'
-                });
-                const hijriParts = hijriDateFormatter.formatToParts(hijriCalculationDate);
-
-                let hijriDay = '', hijriMonthArabic = '', hijriYear = '';
-                for (const part of hijriParts) {
-                    if (part.type === 'day') hijriDay = arabicToBengaliNumbers(part.value);
-                    else if (part.type === 'month') hijriMonthArabic = part.value;
-                    else if (part.type === 'year') hijriYear = arabicToBengaliNumbers(part.value);
-                }
-                const hijriMonthBengali = hijriMonthArabicToBengali[hijriMonthArabic] || hijriMonthArabic;
-                const hijriDateString = `${hijriDay} ${hijriMonthBengali} ${hijriYear} হিজরি`;
-
                 // ক্যাশ করা HTML আপডেট
-                cachedDatePartHTML = `<span class="text-green-700 dark:text-green-300">আজ</span> <span class="text-green-700 dark:text-green-300">${dayOfWeekBengali}</span>, <span class="text-blue-700 dark:text-blue-300">${gregorianDateString} ইং</span>, <span class="text-green-700 dark:text-green-300">${bengaliDateString.replace('বঙ্গাব্দ', '')} বঙ্গাব্দ, ${bengaliSeason}</span>, <span class="text-purple-700 dark:text-purple-300">${hijriDateString}</span>, <span class="text-green-700 dark:text-green-300">এখন সময়</span>`;
+                cachedDatePartHTML = `<span class="text-green-700 dark:text-green-300">আজ</span> <span class="text-green-700 dark:text-green-300">${dayOfWeekBengali}</span>, <span class="text-blue-700 dark:text-blue-300">${gregorianDateString} ইং</span>, <span class="text-green-700 dark:text-green-300">${bengaliDateString.replace('বঙ্গাব্দ', '')} বঙ্গাব্দ, ${bengaliSeason}</span>, <span class="text-green-700 dark:text-green-300">এখন সময়</span>`;
                 
                 lastDateUpdateTimestamp = currentTime;
                 
@@ -14886,8 +15291,7 @@ function showCustomAlert(message) {
 // ====================================================================
 // START: Load Converter Data from IndexedDB on page load
 // ====================================================================
-document.addEventListener('DOMContentLoaded', async () => {
-
+document.addEventListener('DOMContentLoaded', async () => { try
 <!-- START: UNICODE TEXTBOX WORD COUNTER SCRIPT -->
 const textAreaLeftForCounter = document.getElementById('textAreaLeft');
 const unicodeCounterStats = document.getElementById('unicodeCounterStats');
@@ -14936,7 +15340,7 @@ if (textAreaLeftForCounter) {
     // Initial call in case text is loaded from storage
     setTimeout(updateUnicodeCounter, 500); // Small delay to ensure data is loaded
 }
-<!-- END: UNICODE TEXTBOX WORD COUNTER SCRIPT -->
+// END: UNICODE TEXTBOX WORD COUNTER SCRIPT -->
 		
 try {
     // Clear expired items on startup
@@ -16564,13 +16968,11 @@ if (expenseTrackerTab) expenseTrackerTab.addEventListener('click', () => {    sh
 
                 const todayGregorianDateDisplay = document.getElementById('todayGregorianDateDisplay');
                 const todayBengaliDateDisplay = document.getElementById('todayBengaliDateDisplay');
-                const todayHijriDateDisplay = document.getElementById('todayHijriDateDisplay');
                 const todayDayDisplay = document.getElementById('todayDayDisplay'); // আজকের দিনের জন্য নতুন উপাদান
                 const todayTimeDisplay = document.getElementById('todayTimeDisplay');
 
                 const tomorrowGregorianDateDisplay = document.getElementById('tomorrowGregorianDateDisplay');
                 const tomorrowBengaliDateDisplay = document.getElementById('tomorrowBengaliDateDisplay');
-                const tomorrowHijriDateDisplay = document.getElementById('tomorrowHijriDateDisplay');
                 const tomorrowDayDisplay = document.getElementById('tomorrowDayDisplay'); // আগামীকালের দিনের জন্য নতুন উপাদান
                 const tomorrowTimeDisplay = document.getElementById('tomorrowTimeDisplay');
 
@@ -16603,13 +17005,11 @@ if (expenseTrackerTab) expenseTrackerTab.addEventListener('click', () => {    sh
                     // পূর্ববর্তী কন্টেন্ট পরিষ্কার করুন
                     if (todayGregorianDateDisplay) todayGregorianDateDisplay.innerHTML = '';
                     if (todayBengaliDateDisplay) todayBengaliDateDisplay.innerHTML = '';
-                    if (todayHijriDateDisplay) todayHijriDateDisplay.innerHTML = '';
                     if (todayDayDisplay) todayDayDisplay.innerHTML = ''; // দিনের ডিসপ্লে পরিষ্কার করুন
                     if (todayTimeDisplay) todayTimeDisplay.innerHTML = '';
 
                     if (tomorrowGregorianDateDisplay) tomorrowGregorianDateDisplay.innerHTML = '';
                     if (tomorrowBengaliDateDisplay) tomorrowBengaliDateDisplay.innerHTML = '';
-                    if (tomorrowHijriDateDisplay) tomorrowHijriDateDisplay.innerHTML = '';
                     if (tomorrowDayDisplay) tomorrowDayDisplay.innerHTML = ''; // দিনের ডিসপ্লে পরিষ্কার করুন
                     if (tomorrowTimeDisplay) tomorrowTimeDisplay.innerHTML = '';
 
@@ -16623,49 +17023,12 @@ if (expenseTrackerTab) expenseTrackerTab.addEventListener('click', () => {    sh
                     const gregorianDateFormatted = dateToDisplay.toLocaleDateString('bn-BD', {
                         year: 'numeric',
                         month: 'long',
-                        day: 'numeric'
-                    });
-                    const dayOfWeek = dateToDisplay.toLocaleDateString('bn-BD', {
-                        weekday: 'long'
-                    }); // সপ্তাহের দিন পান
-
-                    // বাংলা তারিখ
-                    const bengaliDateInfo = getBengaliDate(dateToDisplay);
-                    const bengaliDateFormatted = bengaliDateInfo.formatted;
-                    const bengaliSeason = getBengaliSeason(bengaliDateInfo.monthIndex); // *** নতুন: ঋতু আনা হয়েছে ***
-
-                    // হিজরি তারিখ (সেটিংস থেকে অ্যাডজাস্টমেন্ট সহ)
-                    let hijriCalculationDate = new Date(dateToDisplay);
-                    
-                    // পরিবর্তন: এখন গ্লোবাল ফাংশন থেকে ভ্যালু নেওয়া হচ্ছে
-                    const hijriAdjustment = getGlobalHijriAdjustment();
-                    
-                    hijriCalculationDate.setDate(hijriCalculationDate.getDate() + hijriAdjustment);
-
-                    const hijriDateFormatter = new Intl.DateTimeFormat('ar-SA', {
-                        calendar: 'islamic',
-                        year: 'numeric',
-                        month: 'long',
                         day: 'numeric',
-                        timeZone: 'Asia/Dhaka'
                     });
-                    const hijriParts = hijriDateFormatter.formatToParts(hijriCalculationDate);
-
-                    let hijriDay = '';
-                    let hijriMonthArabic = '';
-                    let hijriYear = '';
-
-                    for (const part of hijriParts) {
-                        if (part.type === 'day') {
-                            hijriDay = arabicToBengaliNumbers(part.value);
-                        } else if (part.type === 'month') {
-                            hijriMonthArabic = part.value;
-                        } else if (part.type === 'year') {
-                            hijriYear = arabicToBengaliNumbers(part.value);
-                        }
-                    }
-                    const hijriMonthBengali = hijriMonthArabicToBengali[hijriMonthArabic] || hijriMonthArabic;
-                    const hijriDateFormatted = `${hijriDay} ${hijriMonthBengali} ${hijriYear} হিজরি`;
+                    // বাংলা তারিখ
+                          bengaliDateInfo = getBengaliDate(dateToDisplay);
+                          bengaliDateFormatted = bengaliDateInfo.formatted;
+                          bengaliSeason = getBengaliSeason(bengaliDateInfo.monthIndex); // *** নতুন: ঋতু আনা হয়েছে ***
 
                     // সময়
                     const timeFormatted = dateToDisplay.toLocaleTimeString('bn-BD', {
@@ -16674,7 +17037,7 @@ if (expenseTrackerTab) expenseTrackerTab.addEventListener('click', () => {    sh
                         second: '2-digit',
                         hour12: true,
                         timeZone: 'Asia/Dhaka' // বাংলাদেশের সময়ের জন্য স্পষ্টভাবে সেট করুন
-                    });
+                        });
 
                     // 26 বা তার বেশি তারিখের জন্য হাইলাইট লজিক
                     let gregorianHighlightClass = '';
@@ -16686,46 +17049,7 @@ if (expenseTrackerTab) expenseTrackerTab.addEventListener('click', () => {    sh
                     if (bengaliDateInfo.day >= 26) {
                         bengaliHighlightClass = 'text-red-800'; // গাঢ় লাল
                     }
-
-                    let hijriHighlightClass = '';
-                    // তুলনার জন্য hijriDay কে সংখ্যায় রূপান্তর করুন
-                    if (parseInt(hijriDay) >= 26) {
-                        hijriHighlightClass = 'text-red-800'; // গাঢ় লাল
-                    }
-
-
-                    if (period === 'today') {
-                        if (todayResultSection) todayResultSection.style.display = 'block';
-                        if (todayGregorianDateDisplay) todayGregorianDateDisplay.innerHTML = `<strong>খ্রিষ্টাব্দ:</strong> <span class="${gregorianHighlightClass}">${gregorianDateFormatted}</span>`;
-                        if (todayBengaliDateDisplay) todayBengaliDateDisplay.innerHTML = `<strong>বাংলা তারিখ:</strong> <span class="${bengaliHighlightClass}">${bengaliDateFormatted.replace('বঙ্গাব্দ', '')}, ${bengaliSeason}</span>`; // *** পরিবর্তিত: ঋতু যোগ করা হয়েছে ***
-                        if (todayHijriDateDisplay) todayHijriDateDisplay.innerHTML = `<strong>হিজরি:</strong> <span class="${hijriHighlightClass}">${hijriDateFormatted}</span>`;
-                        if (todayDayDisplay) todayDayDisplay.innerHTML = `<strong>বার:</strong> ${dayOfWeek}`; // দিন প্রদর্শন করুন
-                        if (todayTimeDisplay) todayTimeDisplay.innerHTML = `<strong>সময়:</strong> ${timeFormatted}`;
-                    } else if (period === 'tomorrow') {
-                        if (tomorrowResultSection) tomorrowResultSection.style.display = 'block';
-                        if (tomorrowGregorianDateDisplay) tomorrowGregorianDateDisplay.innerHTML = `<strong>খ্রিষ্টাব্দ:</strong> <span class="${gregorianHighlightClass}">${gregorianDateFormatted}</span>`;
-                        if (tomorrowBengaliDateDisplay) tomorrowBengaliDateDisplay.innerHTML = `<strong>বাংলা তারিখ:</strong> <span class="${bengaliHighlightClass}">${bengaliDateFormatted.replace('বঙ্গাব্দ', '')}, ${bengaliSeason}</span>`; // *** পরিবর্তিত: ঋতু যোগ করা হয়েছে ***
-                        if (tomorrowHijriDateDisplay) tomorrowHijriDateDisplay.innerHTML = `<strong>হিজরি:</strong> <span class="${hijriHighlightClass}">${hijriDateFormatted}</span>`;
-                        if (tomorrowDayDisplay) tomorrowDayDisplay.innerHTML = `<strong>বার:</strong> ${dayOfWeek}`; // দিন প্রদর্শন করুন
-                        if (tomorrowTimeDisplay) tomorrowTimeDisplay.innerHTML = `<strong>সময়:</strong> ${timeFormatted}`;
-                    }
-                }
-
-// ইংরেজি থেকে বাংলা ও হিজরি তারিখ রূপান্তর লজিক
-                if (convertEnglishToBengaliBtn) {
-                    convertEnglishToBengaliBtn.addEventListener('click', () => {
-                        console.log('ইংরেজি থেকে বাংলা ও হিজরি রূপান্তর বোতামে ক্লিক করা হয়েছে।');
-                        const englishDateValue = englishDateInput ? englishDateInput.value : '';
-                        const convertedHijriDate = document.getElementById('convertedHijriDate'); // হিজরি ডিসপ্লে এলিমেন্ট
-
-                        if (!englishDateValue) {
-                            if (convertedBengaliDate) convertedBengaliDate.innerText = 'অনুগ্রহ করে একটি ইংরেজি তারিখ নির্বাচন করুন।';
-                            if (convertedHijriDate) convertedHijriDate.innerText = '';
-                            if (convertedDayDisplay) convertedDayDisplay.innerText = '';
-                            return;
-                        }
-
-                        const gregorianDate = new Date(englishDateValue);
+                    const gregorianDate = new Date(englishDateValue);
                         if (isNaN(gregorianDate.getTime())) {
                             if (convertedBengaliDate) convertedBengaliDate.innerText = 'অবৈধ তারিখ ফরম্যাট।';
                             return;
@@ -16733,41 +17057,9 @@ if (expenseTrackerTab) expenseTrackerTab.addEventListener('click', () => {    sh
 
                         // ১. বাংলা তারিখ বের করা
                         const bengaliDateInfo = getBengaliDate(gregorianDate);
-                        const bengaliSeason = getBengaliSeason(bengaliDateInfo.monthIndex);
-                        const dayOfWeek = gregorianDate.toLocaleDateString('bn-BD', { weekday: 'long' });
+                         bengaliSeason = getBengaliSeason(bengaliDateInfo.monthIndex);
+                         dayOfWeek = gregorianDate.toLocaleDateString('bn-BD', { weekday: 'long' });
 
-                        // ২. হিজরি তারিখ বের করা (সেটিংস থেকে অ্যাডজাস্টমেন্ট সহ)
-                        let hijriCalculationDate = new Date(gregorianDate);
-                        
-                        // পরিবর্তন: এখন গ্লোবাল ফাংশন থেকে ভ্যালু নেওয়া হচ্ছে
-                        const hijriAdjustment = getGlobalHijriAdjustment();
-                        
-                        hijriCalculationDate.setDate(hijriCalculationDate.getDate() + hijriAdjustment);
-
-                        const hijriDateFormatter = new Intl.DateTimeFormat('ar-SA', {
-                            calendar: 'islamic',
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                            timeZone: 'Asia/Dhaka'
-                        });
-                        const hijriParts = hijriDateFormatter.formatToParts(hijriCalculationDate);
-
-                        let hijriDay = '', hijriMonthArabic = '', hijriYear = '';
-                        for (const part of hijriParts) {
-                            if (part.type === 'day') hijriDay = arabicToBengaliNumbers(part.value);
-                            else if (part.type === 'month') hijriMonthArabic = part.value;
-                            else if (part.type === 'year') hijriYear = arabicToBengaliNumbers(part.value);
-                        }
-                        const hijriMonthBengali = hijriMonthArabicToBengali[hijriMonthArabic] || hijriMonthArabic;
-                        const hijriDateFormatted = `${hijriDay} ${hijriMonthBengali} ${hijriYear} হিজরি`;
-
-                        // ৩. ফলাফল প্রদর্শন
-                        if (convertedBengaliDate) convertedBengaliDate.innerHTML = `<strong>বাংলা:</strong> ${bengaliDateInfo.formatted.replace('বঙ্গাব্দ', '')}, ${bengaliSeason}`;
-                        if (convertedHijriDate) convertedHijriDate.innerHTML = `<strong>হিজরি:</strong> ${hijriDateFormatted}`;
-                        if (convertedDayDisplay) convertedDayDisplay.innerHTML = `<strong>বার:</strong> ${dayOfWeek}`;
-                    });
-                }
 
 // --- নতুন: বাংলা থেকে ইংরেজি তারিখ রূপান্তর লজিক ---
     const bengaliYearInput = document.getElementById('bengaliYearInput');
@@ -16863,70 +17155,7 @@ if (expenseTrackerTab) expenseTrackerTab.addEventListener('click', () => {    sh
         });
     }
 
-// --- নতুন: হিজরি থেকে ইংরেজি তারিখ রূপান্তর লজিক ---
-    const hijriYearInput = document.getElementById('hijriYearInput');
-    const hijriMonthInput = document.getElementById('hijriMonthInput');
-    const hijriDayInput = document.getElementById('hijriDayInput');
-    const convertHijriToEnglishBtn = document.getElementById('convertHijriToEnglishBtn');
-    const convertedEnglishFromHijriDate = document.getElementById('convertedEnglishFromHijriDate');
-    const convertedEnglishFromHijriDayDisplay = document.getElementById('convertedEnglishFromHijriDayDisplay');
-
-    // হিজরি থেকে গ্রেগরিয়ান কনভার্সন ফাংশন (কুয়েতি অ্যালগরিদম ভিত্তিক বা সাধারণ গাণিতিক)
-    function hijriToGregorian(hYear, hMonth, hDay) {
-        var jd = Math.floor((11 * hYear + 3) / 30) + 354 * hYear + 30 * hMonth - Math.floor((hMonth - 1) / 2) + hDay + 1948440 - 385;
-        var l = jd + 68569;
-        var n = Math.floor((4 * l) / 146097);
-        l = l - Math.floor((146097 * n + 3) / 4);
-        var i = Math.floor((4000 * (l + 1)) / 1461001);
-        l = l - Math.floor((1461 * i) / 4) + 31;
-        var j = Math.floor((80 * l) / 2447);
-        var d = l - Math.floor((2447 * j) / 80);
-        l = Math.floor(j / 11);
-        var m = j + 2 - 12 * l;
-        var y = 100 * (n - 49) + i + l;
-        return new Date(y, m - 1, d);
-    }
-
-    if (convertHijriToEnglishBtn) {
-        convertHijriToEnglishBtn.addEventListener('click', () => {
-            console.log('হিজরি থেকে ইংরেজি রূপান্তর বোতামে ক্লিক করা হয়েছে।');
-            
-            const hYear = parseInt(hijriYearInput.value, 10);
-            const hMonth = parseInt(hijriMonthInput.value, 10);
-            const hDay = parseInt(hijriDayInput.value, 10);
-
-            if (isNaN(hYear) || isNaN(hMonth) || isNaN(hDay) || hDay < 1 || hDay > 30) {
-                convertedEnglishFromHijriDate.innerText = 'অনুগ্রহ করে সঠিক হিজরি সন, মাস ও দিন লিখুন।';
-                convertedEnglishFromHijriDayDisplay.innerText = '';
-                return;
-            }
-
-            const gregDate = hijriToGregorian(hYear, hMonth, hDay);
-            
-            // *** সেটিংসের অ্যাডজাস্টমেন্টের সাথে সমন্বয় ***
-            // পরিবর্তন: এখন গ্লোবাল ফাংশন থেকে ভ্যালু নেওয়া হচ্ছে
-            const hijriAdjustment = getGlobalHijriAdjustment();
-            
-            // হিজরি -> ইংরেজি কনভার্সনের জন্য ডাইনামিক অ্যাডজাস্টমেন্ট লজিক:
-            // যদি hijriAdjustment = -2 হয়, তাহলে (-2 + 1) = -1 (১ দিন কমবে)।
-            // যদি hijriAdjustment = -1 হয়, তাহলে (-1 + 1) = 0 (অপরিবর্তিত থাকবে)।
-            
-            gregDate.setDate(gregDate.getDate() + (hijriAdjustment + 2));
-
-            const gregorianDateFormatted = gregDate.toLocaleDateString('bn-BD', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-            const dayOfWeek = gregDate.toLocaleDateString('bn-BD', {
-                weekday: 'long'
-            });
-
-            convertedEnglishFromHijriDate.innerHTML = `<strong>ইংরেজি তারিখ:</strong> ${gregorianDateFormatted}`;
-            convertedEnglishFromHijriDayDisplay.innerHTML = `<strong>বার:</strong> ${dayOfWeek}`;
-        });
-    }
-	   // --- নতুন: সময়ের ব্যবধান ক্যালকুলেটর লজিক (NEW) ---
+	         // --- নতুন: সময়ের ব্যবধান ক্যালকুলেটর লজিক (NEW) ---
     const calcTimeDiffBtn = document.getElementById('calcTimeDiffBtn');
     const timeDiffResultArea = document.getElementById('timeDiffResult');
     const diffOutputContent = document.getElementById('diffOutputContent');
@@ -21942,18 +22171,17 @@ if (pasteButtonRight) {
     pasteButtonRight.addEventListener('click', () => pasteFromClipboard('textAreaRight'));
 }
 
-            } catch (e) {
-                console.error('DOMContentLoaded এক্সিকিউশনের সময় একটি ত্রুটি ঘটেছে:', e);
-                const mainContainer = document.querySelector('.main-container');
-                if (mainContainer) {
-                    const errorMessageDiv = document.createElement('div');
-                    errorMessageDiv.className = 'text-red-600 font-bold mt-4 p-4 border border-red-300 rounded-lg';
-                    errorMessageDiv.innerText = 'অ্যাপ লোড করতে সমস্যা হয়েছে। অনুগ্রহ করে কনসোল চেক করুন।';
-                    mainContainer.prepend(errorMessageDiv);
-                }
-            }
-			
-        });
+} catch (e) {
+        console.error('DOMContentLoaded এক্সিকিউশনের সময় একটি ত্রুটি ঘটেছে:', e);
+        const mainContainer = document.querySelector('.main-container');
+        if (mainContainer) {
+            const errorMessageDiv = document.createElement('div');
+            errorMessageDiv.className = 'text-red-600 font-bold mt-4';
+            errorMessageDiv.innerText = 'অ্যাপ লোড করতে সমস্যা হয়েছে।';
+            mainContainer.prepend(errorMessageDiv);
+        }
+    }
+});
 // ====================================================================
 // END: PASTE BUTTON FOR FONT CONVERTER
 // ====================================================================
@@ -27465,9 +27693,9 @@ document.addEventListener('DOMContentLoaded', () => {
 // END: LIVE CRICKET TICKER SCRIPT (UPDATED & REFINED)
 // ====================================================================
 
-<!-- ==================================================================== -->
-<!-- START: FEATURED YOUTUBE VIDEO SCRIPT (UPDATED FOR SIDEBAR & PROXY & LOCAL VIDEO) -->
-<!-- ==================================================================== -->
+//-- ==================================================================== -->
+//-- START: FEATURED YOUTUBE VIDEO SCRIPT (UPDATED FOR SIDEBAR & PROXY & LOCAL VIDEO) -->
+//-- ==================================================================== -->
 
 function initFeaturedVideoSystem() {
     const videoContainer = document.getElementById('rightSideVideoContainer');
@@ -27784,9 +28012,12 @@ function initFeaturedVideoSystem() {
 // স্ক্রিপ্ট লোড
 document.addEventListener('DOMContentLoaded', initFeaturedVideoSystem);
 
-<!-- ==================================================================== -->
-<!-- END: FEATURED YOUTUBE VIDEO SCRIPT -->
-<!-- ==================================================================== -->
+//-- ==================================================================== -->
+//-- END: FEATURED YOUTUBE VIDEO SCRIPT --
+
+
+
+//-- ==================================================================== -->
     
 // ====================================================================
 // START: আরও সেটিংস (More Settings) TAB SCRIPT (Updated)
@@ -27974,14 +28205,7 @@ function initializeMoreSettings() {
 
         // প্রম্পট: বর্তমান তারিখের জন্য সঠিক বাংলা ও হিজরি দিন চাওয়া হচ্ছে
         const prompt = `Current system date is ${dateStr}. 
-        Determine the accurate current date in Bangladesh (Timezone Asia/Dhaka) right now.
-        I need the Bengali Date (Day only) and Hijri Date (Day only) according to the official calendars used in Bangladesh today.
-        
-        Response JSON format ONLY:
-        {
-          "bengali_day": integer,
-          "hijri_day": integer
-        }`;
+        Determine the accurate current date in Bangladesh (Timezone Asia/Dhaka) right now.`;
 
         const model = localStorage.getItem('geminiModel') || "gemini-flash-latest";
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
@@ -28000,7 +28224,6 @@ function initializeMoreSettings() {
         const result = await response.json();
         const data = JSON.parse(result.candidates[0].content.parts[0].text);
 
-        if (data.bengali_day && data.hijri_day) {
             // বাংলা তারিখ অ্যাডজাস্টমেন্ট ক্যালকুলেশন
             const oldBenAdj = localStorage.getItem('bengaliDateAdjustment');
             let foundBen = false;
@@ -28017,36 +28240,7 @@ function initializeMoreSettings() {
             }
             if (!foundBen) localStorage.setItem('bengaliDateAdjustment', oldBenAdj); // না মিললে আগের অবস্থায় ফেরত
 
-            // হিজরি তারিখ অ্যাডজাস্টমেন্ট ক্যালকুলেশন
-            const oldHijriAdj = localStorage.getItem('hijriDateAdjustment');
-            let foundHijri = false;
-            
-            // হিজরি চেক করার জন্য একটি টেম্পোরারি ফাংশন বা লজিক
-            const checkHijri = (adj) => {
-                let d = new Date(now);
-                d.setDate(d.getDate() + adj);
-                const f = new Intl.DateTimeFormat('ar-SA', { calendar: 'islamic', day: 'numeric', timeZone: 'Asia/Dhaka' });
-                // আরবী সংখ্যা থেকে ইংরেজি সংখ্যায় কনভার্ট করে তুলনা
-                const part = f.formatToParts(d).find(p => p.type === 'day');
-                const dayVal = parseInt(part.value.replace(/[٠-٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d)));
-                return dayVal === data.hijri_day;
-            };
 
-            for (let i = -3; i <= 3; i++) {
-                if (checkHijri(i)) {
-                    localStorage.setItem('hijriDateAdjustment', i.toString());
-                    foundHijri = true;
-                    // ইনপুট ফিল্ড আপডেট
-                    const hijriInput = document.getElementById('hijriDateAdjustInput');
-                    if (hijriInput) hijriInput.value = i;
-                    break;
-                }
-            }
-            if (!foundHijri) localStorage.setItem('hijriDateAdjustment', oldHijriAdj);
-
-            return true;
-        }
-        throw new Error("Invalid Data from Gemini");
     }
 
     if (refreshDateBtn && autoUpdateDateToggle) {
@@ -28086,23 +28280,6 @@ function initializeMoreSettings() {
                 }
             }
         });
-    }
-
-// ৪. হিজরি তারিখ অ্যাডজাস্টার লজিক
-    const hijriDateAdjustInput = document.getElementById('hijriDateAdjustInput');
-    const saveHijriAdjustBtn = document.getElementById('saveHijriAdjustBtn');
-
-    if (hijriDateAdjustInput && saveHijriAdjustBtn) {
-        // যদি লোকাল স্টোরেজে কিছু না থাকে, তবে আমাদের গ্লোবাল ডিফল্ট ভ্যালুটি দেখাবে
-        const currentAdjustment = getGlobalHijriAdjustment();
-        hijriDateAdjustInput.value = currentAdjustment;
-
-        saveHijriAdjustBtn.onclick = () => {
-            const val = hijriDateAdjustInput.value;
-            localStorage.setItem('hijriDateAdjustment', val);
-            showCustomAlert(`হিজরি অ্যাডজাস্টমেন্ট (${val}) সেভ করা হয়েছে।`);
-            updateDateTimeBanner(true);
-        };
     }
 
     // ৫. বাংলা তারিখ অ্যাডজাস্টার লজিক
@@ -32519,14 +32696,14 @@ function getBaseUrl() {
 <script type="module">
     // আপনার ওয়েব অ্যাপের Firebase কনফিগারেশন
     const firebaseConfig = {
-        apiKey: "AIzaSyBmTptSZWbNB5MrT8jIWVm6knak2L2Xv40",
-        authDomain: "bangla-toolbox1.firebaseapp.com",
-        projectId: "bangla-toolbox1",
-        storageBucket: "bangla-toolbox1.firebasestorage.app",
-        messagingSenderId: "345647713379",
-        appId: "1:345647713379:web:d3e121c3a7e258b971bc56",
-        measurementId: "G-6NVS7YFNBX"
-    };
+    apiKey: "AIzaSyDvYDOYTNISCRHns_Ipn5JtpLDvO4DjcZs",
+    authDomain: "multitoolpro.firebaseapp.com",
+    projectId: "multitoolpro",
+    storageBucket: "multitoolpro.firebasestorage.app",
+    messagingSenderId: "195409739520",
+    appId: "1:195409739520:web:006f3033a47ddc22d83de5",
+    measurementId: "G-82NCD6QZK2"
+  };
 
     // Firebase ফাংশনগুলো ইম্পোর্ট (setDoc যুক্ত করা হয়েছে)
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -33643,7 +33820,7 @@ async function initializePublicComments() {
 <!-- START: Profile and File Transfer FIREBASE LOGIC (MODULE) -->
 <!-- ভবিষ্যতে ইম্লিমেন্ট করা হবে তাই কমেন্ট করে রাখা হলো।
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
     import { 
         getAuth, 
         signInAnonymously, 
@@ -33653,27 +33830,27 @@ async function initializePublicComments() {
         signOut, 
         setPersistence, 
         browserLocalPersistence 
-    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
     import { 
         getFirestore, doc, setDoc, getDoc, collection, onSnapshot, 
         query, where, getDocs, writeBatch, orderBy, deleteDoc, 
         serverTimestamp, addDoc, runTransaction 
-    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
     import { 
         getStorage, ref, uploadBytesResumable, getDownloadURL, 
         getBytes 
-    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
+    } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-storage.js";
 
     // কনফিগারেশন
     const firebaseConfig = {
-        apiKey: "AIzaSyBmTptSZWbNB5MrT8jIWVm6knak2L2Xv40",
-        authDomain: "bangla-toolbox1.firebaseapp.com",
-        projectId: "bangla-toolbox1",
-        storageBucket: "bangla-toolbox1.firebasestorage.app",
-        messagingSenderId: "345647713379",
-        appId: "1:345647713379:web:d3e121c3a7e258b971bc56",
-        measurementId: "G-6NVS7YFNBX"
-    };
+    apiKey: "AIzaSyDvYDOYTNISCRHns_Ipn5JtpLDvO4DjcZs",
+    authDomain: "multitoolpro.firebaseapp.com",
+    projectId: "multitoolpro",
+    storageBucket: "multitoolpro.firebasestorage.app",
+    messagingSenderId: "195409739520",
+    appId: "1:195409739520:web:006f3033a47ddc22d83de5",
+    measurementId: "G-82NCD6QZK2"
+  };
 
     // ডাইনামিক অ্যাপ আইডি (ডোমেইন অনুযায়ী ডাটা আলাদা হবে)
     // লোকালহোস্টে টেস্ট করলে 'localhost' হবে, গিটহাবে হলে ডোমেইন নেম হবে
