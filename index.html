@@ -15291,8 +15291,8 @@ function showCustomAlert(message) {
 // ====================================================================
 // START: Load Converter Data from IndexedDB on page load
 // ====================================================================
-document.addEventListener('DOMContentLoaded', async () => { try
-<!-- START: UNICODE TEXTBOX WORD COUNTER SCRIPT -->
+document.addEventListener('DOMContentLoaded', async () => {
+// START: UNICODE TEXTBOX WORD COUNTER SCRIPT
 const textAreaLeftForCounter = document.getElementById('textAreaLeft');
 const unicodeCounterStats = document.getElementById('unicodeCounterStats');
 const unicodeWordCountEl = document.getElementById('unicodeWordCount');
@@ -22171,16 +22171,9 @@ if (pasteButtonRight) {
     pasteButtonRight.addEventListener('click', () => pasteFromClipboard('textAreaRight'));
 }
 
-} catch (e) {
-        console.error('DOMContentLoaded এক্সিকিউশনের সময় একটি ত্রুটি ঘটেছে:', e);
-        const mainContainer = document.querySelector('.main-container');
-        if (mainContainer) {
-            const errorMessageDiv = document.createElement('div');
-            errorMessageDiv.className = 'text-red-600 font-bold mt-4';
-            errorMessageDiv.innerText = 'অ্যাপ লোড করতে সমস্যা হয়েছে।';
-            mainContainer.prepend(errorMessageDiv);
-        }
-    }
+                }  // closes displayDates function
+            } catch(e) { console.error("Script init error:", e); }  // closes try at 15404
+
 });
 // ====================================================================
 // END: PASTE BUTTON FOR FONT CONVERTER
