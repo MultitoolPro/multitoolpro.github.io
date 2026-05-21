@@ -1,6 +1,6 @@
 {
-  "name": "MultiToolPro",
-  "short_name": "MultiToolPro",
+  "name": "MultitoolPro",
+  "short_name": "MultitoolPro",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -8,12 +8,12 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "https://MultiToolPro.github.io/converticon.png",
+      "src": "https://MultitoolPro.github.io/converticon.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://MultiToolPro.github.io/converticon.png",
+      "src": "https://MultitoolPro.github.io/converticon.png",
       "sizes": "512x512",
       "type": "image/png"
     }
