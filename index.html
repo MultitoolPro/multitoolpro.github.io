@@ -234,30 +234,30 @@
                 border-radius: 50%;
             }
         }
-
 		/* body ট্যাগের font-family পরিবর্তন করে Bornomala ফন্টটিকে প্রধান ফন্ট হিসেবে সেট করা হয়েছে। */
 			body {
-			font-family: 'Bornomala', 'Inter', 'Hind Siliguri', sans-serif;
-			display: flex;
-			justify-content: center; /* অনুভূমিকভাবে মাঝখানে রাখার জন্য */
-			align-items: flex-start;     /* উল্লম্বভাবে ওপরে অ্যালাইন করার জন্য (স্ক্রোলের জন্য গুরুত্বপূর্ণ) */
-			min-height: 100vh;
-			background-color: transparent; /* অ্যানিমেটেড ব্যাকগ্রাউন্ডের জন্য স্বচ্ছ করা হয়েছে */
-			padding: 5px 5px; /* ওপরে এবং নিচে প্যাডিং বাড়ানো হয়েছে */
-			}
-
+            font-family: 'Bornomala', 'Inter', 'Hind Siliguri', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            background-color: transparent;
+            padding: 5px 5px;
+            overflow-x: hidden;
+		}
         .main-container {
-            background-color: rgba(255, 255, 255, 0.85); /* Slightly transparent white */
-            backdrop-filter: blur(10px); /* Frosted glass effect */
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            padding: 10px; /* বর্ধিত প্যাডিং */
-            border-radius: 20px; /* গোলাকার কোণ */
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); /* গভীর ছায়া */
-            max-width: 1000px; /* সমস্ত কন্টেন্টের জন্য বর্ধিত সর্বোচ্চ প্রস্থ */
-            width: 100%; /* প্রতিক্রিয়াশীল প্রস্থ */
+            padding: 10px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            max-width: 1500px;
+            width: 100%;
+            margin: 0 auto;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            visibility: hidden; /* Initially hidden */
+
         }
         .dark .main-container {
             background-color: rgba(26, 32, 44, 0.85); /* গাঢ় ব্যাকগ্রাউন্ড */
@@ -314,17 +314,15 @@
             flex-wrap: nowrap;
         }
 
-
-        .tab-buttons {
-            display: flex;
-            justify-content: center;
-            align-items: center; /* উল্লম্বভাবে কেন্দ্র করার জন্য যোগ করা হয়েছে */
-            margin-bottom: 5px; /* বর্ধিত মার্জিন */
-            gap: 8px; /* বর্ধিত ফাঁক */
-            flex-wrap: wrap; /* ছোট স্ক্রিনে ট্যাবগুলি মোড়ানো */
+       .tab-buttons {
+           display: flex;
+           justify-content: center;
+            align-items: center; /* ... */
+            margin-bottom: 5px; /* ... */
+            gap: 8px; /* ... */
+            flex-wrap: wrap; /* ... */
         }
 
-        
 /* ========================================= */
 /* START: ট্যাব থিম ভেরিয়েবল ও ডায়নামিক স্টাইল */
 /* ========================================= */
@@ -7996,13 +7994,12 @@ body.sidebar-open #sidebarOverlay {
             </div> 
             <!-- থিম টগল বাটন কন্টেইনার শেষ -->
             
-            <button id="basicCalcTab" class="tab-button active rounded-xl has-tooltip" data-tooltip="শর্টকাট: Alt+C">সাধারণ ক্যালকুলেটর</button>
+    <button id="converterTab" class="tab-button active rounded-xl has-tooltip" data-tooltip="শর্টকাট: Alt+B">কনভার্টার</button>
     <button id="scientificCalcTab" class="tab-button rounded-xl has-tooltip" data-tooltip="শর্টকাট: Alt+S">সাইন্টিফিক ক্যালকুলেটর</button>
 	<button id="dateCalcTab" class="tab-button rounded-xl">তারিখ ও সময়</button>
     <button id="ageCalcTab" class="tab-button rounded-xl">বয়স ক্যালকুলেটর</button>
 	<button id="webSearchTab" class="tab-button rounded-xl has-tooltip" data-tooltip="শর্টকাট: Alt+G">ওয়েব সার্চ</button>
 	<button id="textAssistantTab" class="tab-button rounded-xl has-tooltip" data-tooltip="শর্টকাট: Alt+A">টেক্সট অ্যাসিস্ট্যান্ট</button>
-	<button id="converterTab" class="tab-button rounded-xl has-tooltip" data-tooltip="শর্টকাট: Alt+B">কনভার্টার</button>
 	<button id="canvasTab" class="tab-button rounded-xl has-tooltip" data-tooltip="মাল্টি-টুলস হাব">ক্যানভাস</button>
     <button id="translatorTab" class="tab-button rounded-xl has-tooltip" data-tooltip="শর্টকাট: Alt+T">ট্রান্সলেটর</button>
 	<button id="wordMeaningTab" class="tab-button rounded-xl">শব্দের অর্থ</button>
@@ -8081,7 +8078,7 @@ body.sidebar-open #sidebarOverlay {
     </div>
 </div>
 
-<div id="basicCalculatorContent" class="calculator-content active">
+<div id="basicCalculatorContent" class="calculator-content">
   <style>
     #basicCalculatorContent .gmail-tool-wrap,
     #basicCalculatorContent .gmail-tool-wrap * {
@@ -9255,7 +9252,7 @@ body.sidebar-open #sidebarOverlay {
 
         <!-- ফন্ট কনভার্টার বিভাগ (আনডু/রিডু সহ আপডেট করা হয়েছে) -->
 <!-- ফন্ট কনভার্টার বিভাগ (প্রিসেট বাটনসহ আপডেট করা হয়েছে) -->
-<div id="converterContent" class="calculator-content">
+<div id="converterContent" class="calculator-content active">
 
 <!--
     <h1 style="color:green">যেকোনো ভাঙ্গা বিজয় লেখা বিজয় টেক্সট বক্সে রেখে ফিক্স করুন বাটনে ক্লিক করলে অথবা ইউনিকোড করে আবার বিজয় করলেও ঠিক হবে।</h1>
@@ -10542,43 +10539,45 @@ body.sidebar-open #sidebarOverlay {
 </div>
 
 
- 
-            <a href="https://toffeeshare.com/" target="_blank" class="link-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                <span>ফাইল ট্রান্সফার</span>
-            </a>
-            <a href="https://www.remove.bg/" target="_blank" class="link-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                <span>ব্যাকগ্রাউন্ড রিমুভ</span>
-            </a>
-            <a href="https://www.camscanner.com/" target="_blank" class="link-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                <span>ক্যামস্ক্যানার</span>
-            </a>
-            <a href="https://www.sejda.com/" target="_blank" class="link-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                <span>পিডিএফ এডিটর</span>
-            </a>
-            <a href="https://crex.com/live-matches" target="_blank" class="link-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                <span>ক্রিকেট লাইভ স্কোর</span>
-            </a>
-          
-          
-            <!-- Example Link 3: Facebook -->
-            <a href="https://www.facebook.com/bidhan.nilphamari" target="_blank" class="link-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-                <span>ফেসবুক</span>
-        
-        </div>
+ <div class="important-links-container">
+    <div class="space-y-3">
+        <a href="https://toffeeshare.com/" target="_blank" class="link-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            <span>ফাইল ট্রান্সফার</span>
+        </a>
 
-        <!-- Social Icons Section -->
-        <div class="flex justify-center gap-6 mt-8">
-            <a href="https://www.facebook.com/bidhan.nilphamari" target="_blank" class="social-icon" title="LinkedIn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-            </a>
-       
-        </div>
+        <a href="https://www.remove.bg/" target="_blank" class="link-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            <span>ব্যাকগ্রাউন্ড রিমুভ</span>
+        </a>
+
+        <a href="https://www.camscanner.com/" target="_blank" class="link-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            <span>ক্যামস্ক্যানার</span>
+        </a>
+
+        <a href="https://www.sejda.com/" target="_blank" class="link-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            <span>পিডিএফ এডিটর</span>
+        </a>
+
+        <a href="https://crex.com/live-matches" target="_blank" class="link-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            <span>ক্রিকেট লাইভ স্কোর</span>
+        </a>
+
+        <a href="https://www.facebook.com/bidhan.nilphamari" target="_blank" class="link-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+            <span>ফেসবুক</span>
+        </a>
+    </div>
+
+    <div class="flex justify-center gap-6 mt-8">
+        <a href="https://www.facebook.com/bidhan.nilphamari" target="_blank" class="social-icon" title="LinkedIn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+        </a>
+    </div>
+
 <!-- ভিজিটর কাউন্টার সেকশন শুরু -->
 <!-- এই সম্পূর্ণ div টি আপনার পুরনো visitor-counter-section div এর পরিবর্তে বসান -->
 <div id="visitor-counter-section" class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-600 grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -15749,10 +15748,13 @@ window.addEventListener('click', () => {
                 };
 
                 // localStorage থেকে সেভ করা ডিফল্ট হোমপেজ আইডি লোড করুন।
-                const defaultTabId = localStorage.getItem('defaultHomepageTab') || 'converterTab';
+    const defaultTabId = localStorage.getItem('defaultHomepageTab') || 'converterTab';
                 
                 // আইডি থেকে সঠিক কী তৈরি করে ব্যবহারকারীর পছন্দ অনুযায়ী প্রাথমিক ট্যাবটি দেখান।
-                showTab(getTabKey(defaultTabId));
+    if (defaultTabId) {
+        showTab(getTabKey(defaultTabId));
+
+}
 
 // ====================================================================
 // END: ডিফল্ট ট্যাব লোডিং লজিক (আপডেটেড)
