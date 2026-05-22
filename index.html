@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
@@ -58,7 +58,7 @@
     </script>
 
     <!-- Tailwind CSS CDN -->
-<script src="https://cdn.jsdelivr.net/gh/MultitoolPro/MultitoolPro.github.io@main/tailwind.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -245,7 +245,7 @@
             background-color: transparent;
             padding: 5px 5px;
             overflow-x: hidden;
-		}
+        }
         .main-container {
             background-color: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(10px);
@@ -257,7 +257,6 @@
             width: 100%;
             margin: 0 auto;
             text-align: center;
-
         }
         .dark .main-container {
             background-color: rgba(26, 32, 44, 0.85); /* গাঢ় ব্যাকগ্রাউন্ড */
@@ -5528,29 +5527,32 @@ input:checked + .slider:before {
 /* ======================================================== */
 /* Sidebar Styles */
 #sidebar {
-    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 50; /* Ensure sidebar is on top */
+    position: fixed !important;
+    top: 0 !important;
+    left: -300px !important;
+    width: 300px !important;
+    height: 100vh !important;
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    z-index: 50 !important;
 }
 .dark #sidebar {
-    background-color: #1f2937 !important; /* Tailwind CSS-এর bg-gray-800 এর রঙ */
+    background-color: #1f2937 !important;
 }
-#sidebarOverlay { 
+#sidebarOverlay {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%; /* পুরো প্রস্থ কভার করে */
-    height: 100%; /* পুরো উচ্চতা কভার করে */
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
-    display: none; /* Initially hidden */
-    z-index: 40; /* Should be below sidebar but above main content */
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 40;
     cursor: pointer;
 }
-body.sidebar-open #sidebar {
-    left: 0;
-}
 body.sidebar-open #sidebarOverlay {
-    display: block; /* Visible when sidebar is open */
+    display: block;
 }
+
 /* Custom scrollbar for sidebar */
 #sidebar-tool-list::-webkit-scrollbar {
     width: 6px;
@@ -7995,11 +7997,7 @@ body.sidebar-open #sidebarOverlay {
             <!-- থিম টগল বাটন কন্টেইনার শেষ -->
             
     <button id="converterTab" class="tab-button active rounded-xl has-tooltip" data-tooltip="শর্টকাট: Alt+B">কনভার্টার</button>
-    <button id="scientificCalcTab" class="tab-button rounded-xl has-tooltip" data-tooltip="শর্টকাট: Alt+S">সাইন্টিফিক ক্যালকুলেটর</button>
-	<button id="dateCalcTab" class="tab-button rounded-xl">তারিখ ও সময়</button>
     <button id="ageCalcTab" class="tab-button rounded-xl">বয়স ক্যালকুলেটর</button>
-	<button id="webSearchTab" class="tab-button rounded-xl has-tooltip" data-tooltip="শর্টকাট: Alt+G">ওয়েব সার্চ</button>
-	<button id="textAssistantTab" class="tab-button rounded-xl has-tooltip" data-tooltip="শর্টকাট: Alt+A">টেক্সট অ্যাসিস্ট্যান্ট</button>
 	<button id="canvasTab" class="tab-button rounded-xl has-tooltip" data-tooltip="মাল্টি-টুলস হাব">ক্যানভাস</button>
     <button id="translatorTab" class="tab-button rounded-xl has-tooltip" data-tooltip="শর্টকাট: Alt+T">ট্রান্সলেটর</button>
 	<button id="wordMeaningTab" class="tab-button rounded-xl">শব্দের অর্থ</button>
@@ -8009,7 +8007,6 @@ body.sidebar-open #sidebarOverlay {
 	<button id="typingTestTab" class="tab-button rounded-xl has-tooltip" data-tooltip="শর্টকাট: Alt+Y">টাইপিং টেস্ট</button>
 	<button id="sttTab" class="tab-button rounded-xl">কথা থেকে লেখা</button>
     <button id="ttsTab" class="tab-button rounded-xl">লেখা থেকে কথা</button>
-	<button id="mapTab" class="tab-button rounded-xl">গুগল ম্যাপ</button>
     <button id="weatherTab" class="tab-button rounded-xl has-tooltip" data-tooltip="শর্টকাট: Alt+W">আবহাওয়া</button>
 	<button id="measurementTab" class="tab-button rounded-xl">পরিমাপ</button>
 	<button id="notepadTab" class="tab-button rounded-xl has-tooltip" data-tooltip="শর্টকাট: Alt+N">নোটপ্যাড</button>
@@ -8026,9 +8023,6 @@ body.sidebar-open #sidebarOverlay {
 		<div id="moreMenuDropdown" class="absolute right-0 mt-1 w-auto bg-white dark:bg-gray-800 rounded-lg shadow-xl z-20 hidden ring-1 ring-black ring-opacity-5">
 			<div class="tab-menu-container">
 				<!-- ভবিষ্যতে নতুন ট্যাব এখানে যোগ করা যাবে -->
-				<button id="clockTab" class="tab-button rounded-xl has-tooltip" data-tooltip="শর্টকাট: Alt+O">ঘড়ি</button>
-				<button id="playerTab" class="tab-button rounded-xl has-tooltip" data-tooltip="শর্টকাট: Alt+P">প্লেয়ার</button>
-				<button id="quizTab" class="tab-button rounded-xl">কুইজ</button>
 				<button id="historyTab" class="tab-button rounded-xl has-tooltip" data-tooltip="শর্টকাট: Alt+H">ইতিহাস</button>
 				<button id="daysObservancesTab" class="tab-button rounded-xl">দিবসসমূহ</button>
 				<button id="holidayListTab" class="tab-button rounded-xl">ছুটির তালিকা</button>
@@ -8037,13 +8031,9 @@ body.sidebar-open #sidebarOverlay {
 				<button id="colorPickerTab" class="tab-button rounded-xl">রঙ বাছাইকারী</button>
 				<button id="invoiceTab" class="tab-button rounded-xl has-tooltip" data-tooltip="শর্টকাট: Alt+i">ইনভয়েজ</button>
 				<button id="imageResizerTab" class="tab-button rounded-xl R">ছবি রিসাইজার</button>
-				<button id="healthLifestyleTab" class="tab-button rounded-xl">স্বাস্থ্য ও জীবনধারা</button>
-				<button id="emiCalcTab" class="tab-button rounded-xl">ইএমআই ক্যালকুলেটর</button>
 				<button id="currencyTab" class="tab-button rounded-xl">মুদ্রা রূপান্তরকারী</button>
-				<button id="unitPriceTab" class="tab-button rounded-xl">দামের তুলনা</button>
 				<button id="ipInfoTab" class="tab-button rounded-xl">আইপি ও ডিভাইস ইনফো</button>
 				<button id="speedTestTab" class="tab-button rounded-xl">ইন্টারনেট স্পিড</button>
-				<button id="recipeTab" class="tab-button rounded-xl">রেসিপি জেনারেটর</button>
 				<button id="pdfToolsTab" class="tab-button rounded-xl">পিডিএফ টুলস</button>
 				<button id="jsonFormatterTab" class="tab-button rounded-xl">জেসন ফর্মাটার</button>
 				<button id="seoMetaGenTab" class="tab-button rounded-xl">এসইও মেটা ট্যাগ</button>
@@ -8051,14 +8041,12 @@ body.sidebar-open #sidebarOverlay {
 				<button id="randomPickerTab" class="tab-button rounded-xl">র‍্যান্ডম পিকার</button>
 				<button id="screenRecorderTab" class="tab-button rounded-xl">স্ক্রিন রেকর্ডার</button>
 				<button id="emergencyNumbersTab" class="tab-button rounded-xl">জরুরি নম্বর</button>
-				<button id="tasbeehTab" class="tab-button rounded-xl">তাসবিহ</button>
 				<button id="diffCheckerTab" class="tab-button rounded-xl">ডিফ চেকার (Diff)</button>
 				<button id="wordCounterTab" class="tab-button rounded-xl">ওয়ার্ড কাউন্টার</button>
 				<button id="textEncryptionTab" class="tab-button rounded-xl">টেক্সট এনক্রিপশন</button>
 				<button id="expenseTrackerTab" class="tab-button rounded-xl has-tooltip" data-tooltip="শর্টকাট: Alt+E">আয়-ব্যয়</button>
 				<button id="allFeaturesTab" class="tab-button rounded-xl has-tooltip" data-tooltip="শর্টকাট: Alt+F">সকল ফিচার</button>
 				<button id="importantLinksTab" class="tab-button rounded-xl has-tooltip" data-tooltip="শর্টকাট: Alt+K">গুরুত্বপূর্ণ লিংকসমূহ</button>
-				<button id="donateTab" class="tab-button rounded-xl has-tooltip" data-tooltip="শর্টকাট: Alt+J">ডোনেট</button>
 			</div>
 		</div>
     </div>
@@ -8076,646 +8064,7 @@ body.sidebar-open #sidebarOverlay {
             </div>
         </div>
     </div>
-</div>
-
-<div id="basicCalculatorContent" class="calculator-content">
-  <style>
-    #basicCalculatorContent .gmail-tool-wrap,
-    #basicCalculatorContent .gmail-tool-wrap * {
-      box-sizing: border-box;
-    }
-
-    #basicCalculatorContent .gmail-tool-wrap {
-      --gmail-accent: #7eb3ff;
-      --gmail-deep-blue: #5d82ff;
-      --gmail-fire: #ff6259;
-      --gmail-success: #22c55e;
-      --gmail-glass: rgba(25, 32, 63, 0.58);
-      --gmail-glass-border: rgba(255, 255, 255, 0.14);
-      --gmail-glass-shadow: 0 18px 45px rgba(9, 14, 38, 0.32);
-      --gmail-text: #eef2ff;
-      --gmail-muted: #b8c2dd;
-      width: 100%;
-      color: var(--gmail-text);
-      font-family: Inter, Segoe UI, Arial, sans-serif;
-    }
-
-    #basicCalculatorContent .gmail-tools-shell {
-      width: 100%;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 8px 0;
-    }
-
-    #basicCalculatorContent .gmail-tools-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 1fr 1fr;
-      gap: 20px;
-      align-items: start;
-    }
-
-    #basicCalculatorContent .gmail-panel {
-      background: linear-gradient(135deg, rgba(20, 27, 74, 0.96), rgba(38, 31, 77, 0.94));
-      border: 1px solid var(--gmail-glass-border);
-      border-radius: 24px;
-      box-shadow: var(--gmail-glass-shadow);
-      padding: 18px;
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
-    }
-
-    #basicCalculatorContent .gmail-title {
-      margin: 0 0 14px;
-      font-size: 14px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #f8fbff;
-    }
-
-    #basicCalculatorContent .gmail-label {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      color: var(--gmail-muted);
-    }
-
-    #basicCalculatorContent .gmail-input,
-    #basicCalculatorContent .gmail-select,
-    #basicCalculatorContent .gmail-textarea,
-    #basicCalculatorContent .gmail-button {
-      font: inherit;
-    }
-
-    #basicCalculatorContent .gmail-input,
-    #basicCalculatorContent .gmail-select,
-    #basicCalculatorContent .gmail-textarea {
-      width: 100%;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      background: rgba(10, 15, 36, 0.36);
-      color: var(--gmail-text);
-      border-radius: 14px;
-      outline: none;
-      padding: 12px 14px;
-    }
-
-    #basicCalculatorContent .gmail-textarea::placeholder,
-    #basicCalculatorContent .gmail-input::placeholder {
-      color: rgba(226, 232, 240, 0.58);
-    }
-
-    #basicCalculatorContent .gmail-mono {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    }
-
-    #basicCalculatorContent .gmail-row {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
-    #basicCalculatorContent .gmail-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    #basicCalculatorContent .gmail-icon-btn,
-    #basicCalculatorContent .gmail-action-btn {
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      background: rgba(33, 40, 77, 0.5);
-      color: var(--gmail-text);
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
-
-    #basicCalculatorContent .gmail-action-btn {
-      height: 42px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      padding: 0 14px;
-    }
-
-    #basicCalculatorContent .gmail-action-btn:hover,
-    #basicCalculatorContent .gmail-icon-btn:hover {
-      transform: translateY(-1px);
-      border-color: rgba(126, 179, 255, 0.32);
-    }
-
-    #basicCalculatorContent .gmail-icon-btn {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      position: relative;
-      overflow: hidden;
-    }
-
-    #basicCalculatorContent .gmail-icon-btn svg {
-      width: 18px;
-      height: 18px;
-      position: relative;
-      z-index: 2;
-    }
-
-    #basicCalculatorContent .gmail-copy-burst {
-      position: absolute;
-      inset: 0;
-      background: var(--gmail-success);
-      transform: scale(0);
-      opacity: 0;
-      transition: 0.28s ease;
-      z-index: 1;
-    }
-
-    #basicCalculatorContent .gmail-icon-btn.copied .gmail-copy-burst {
-      transform: scale(1);
-      opacity: 1;
-    }
-
-    #basicCalculatorContent .gmail-code-box,
-    #basicCalculatorContent .gmail-output-box,
-    #basicCalculatorContent .gmail-email-list {
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(0, 0, 0, 0.24);
-      border-radius: 16px;
-    }
-
-    #basicCalculatorContent .gmail-code-box {
-      min-height: 76px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 14px;
-      cursor: pointer;
-    }
-
-    #basicCalculatorContent .gmail-otp-code {
-      font-size: clamp(28px, 4vw, 46px);
-      font-weight: 900;
-      letter-spacing: 0.04em;
-      line-height: 1;
-      color: #ffffff;
-      text-align: center;
-      white-space: nowrap;
-    }
-
-    #basicCalculatorContent .gmail-timer {
-      text-align: center;
-      font-size: 12px;
-      color: var(--gmail-muted);
-      margin-top: 6px;
-    }
-
-    #basicCalculatorContent .gmail-error {
-      min-height: 16px;
-      font-size: 12px;
-      color: var(--gmail-fire);
-    }
-
-    #basicCalculatorContent .gmail-output-box {
-      min-height: 64px;
-      padding: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-
-    #basicCalculatorContent .gmail-password-text {
-      font-size: 20px;
-      font-weight: 800;
-      color: #22c55e;
-      text-align: center;
-      word-break: break-all;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    }
-
-    #basicCalculatorContent .gmail-length-wrap {
-      width: 72px;
-      flex-shrink: 0;
-    }
-
-    #basicCalculatorContent .gmail-email-controls {
-      display: grid;
-      grid-template-columns: 88px 1fr 1fr;
-      gap: 10px;
-    }
-
-    #basicCalculatorContent .gmail-email-list {
-      min-height: 280px;
-      max-height: 280px;
-      overflow: auto;
-      padding: 12px;
-    }
-
-    #basicCalculatorContent .gmail-email-item {
-      padding: 8px 10px;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.04);
-      font-size: 13px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      color: #dbeafe;
-      margin-bottom: 8px;
-      word-break: break-all;
-      cursor: pointer;
-    }
-
-    #basicCalculatorContent .gmail-email-item:last-child {
-      margin-bottom: 0;
-    }
-
-    #basicCalculatorContent .gmail-section-sub {
-      font-size: 11px;
-      color: var(--gmail-muted);
-    }
-
-    #basicCalculatorContent .gmail-help {
-      margin-top: 18px;
-      padding: 16px 18px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      text-align: left;
-      color: #dbeafe;
-    }
-
-    #basicCalculatorContent .gmail-help h4 {
-      margin: 0 0 8px;
-      font-size: 15px;
-      font-weight: 800;
-      color: #ffffff;
-    }
-
-    #basicCalculatorContent .gmail-help p {
-      margin: 0;
-      font-size: 13px;
-      line-height: 1.65;
-    }
-
-    @media (max-width: 980px) {
-      #basicCalculatorContent .gmail-tools-grid {
-        grid-template-columns: 1fr;
-      }
-
-      #basicCalculatorContent .gmail-email-controls {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
-
-  <div class="gmail-tool-wrap">
-    <div class="gmail-tools-shell">
-      <div class="gmail-tools-grid">
-        <section class="gmail-panel">
-          <h2 class="gmail-title">2FA</h2>
-
-          <div class="gmail-stack">
-            <div>
-              <label class="gmail-label" for="gmailOtpSecretField">Enter 2FA Secret</label>
-              <div class="gmail-row">
-                <textarea
-                  id="gmailOtpSecretField"
-                  class="gmail-textarea gmail-mono"
-                  rows="2"
-                  placeholder="ENTER 2FA SECRET"
-                ></textarea>
-                <button class="gmail-icon-btn gmail-button" id="gmailClear2faBtn" type="button" title="Clear">
-                  <span class="gmail-copy-burst"></span>
-                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12"></path>
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 7V5h6v2"></path>
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 10v6M15 10v6"></path>
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7l.6 11a1 1 0 001 .95h4.8a1 1 0 001-.95L16 7"></path>
-                  </svg>
-                </button>
-              </div>
-              <div id="gmailOtpError" class="gmail-error">Enter a valid 2FA secret</div>
-            </div>
-
-            <div id="gmailOtpWrap" style="display:none;">
-              <div class="gmail-section-sub">The current 2FA verification code is</div>
-              <div class="gmail-row" style="margin-top:8px;">
-                <div id="gmailOtpCodePanel" class="gmail-code-box" style="flex:1;">
-                  <div id="gmailOtpBox" class="gmail-otp-code gmail-mono">------</div>
-                </div>
-                <button class="gmail-icon-btn gmail-button" id="gmailOtpCopyBtn" type="button" title="Copy code">
-                  <span class="gmail-copy-burst"></span>
-                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2">
-                    <path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
-                  </svg>
-                </button>
-              </div>
-              <div class="gmail-timer">(<span id="gmailTimerText">30</span> seconds)</div>
-            </div>
-          </div>
-        </section>
-
-        <section class="gmail-panel">
-          <h2 class="gmail-title">Password Generator</h2>
-
-          <div class="gmail-stack">
-            <div class="gmail-row">
-              <div id="gmailPassOutputBox" class="gmail-output-box" style="flex:1;">
-                <div id="gmailPassOutput" class="gmail-password-text">Ready...</div>
-              </div>
-              <button class="gmail-icon-btn gmail-button" id="gmailPassCopyBtn" type="button" title="Copy password">
-                <span class="gmail-copy-burst"></span>
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2">
-                  <path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
-                </svg>
-              </button>
-            </div>
-
-            <div class="gmail-row">
-              <button id="gmailGeneratePassBtn" class="gmail-icon-btn gmail-button" type="button" title="Generate password">
-                <span class="gmail-copy-burst"></span>
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v6h6"></path>
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M20 20v-6h-6"></path>
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M20 10A8 8 0 007 6l-3 4"></path>
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 14a8 8 0 0013 4l3-4"></path>
-                </svg>
-              </button>
-
-              <div class="gmail-length-wrap">
-                <label class="gmail-label" for="gmailPassLength">Length</label>
-                <input id="gmailPassLength" type="number" min="8" max="50" value="12" class="gmail-input gmail-mono" />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="gmail-panel">
-          <h2 class="gmail-title">Email Generator</h2>
-
-          <div class="gmail-stack">
-            <div class="gmail-email-controls">
-              <div>
-                <label class="gmail-label" for="gmailEqty">Quantity</label>
-                <input id="gmailEqty" type="number" min="1" max="100" value="10" class="gmail-input gmail-mono" />
-              </div>
-
-              <div>
-                <label class="gmail-label" for="gmailEcountry">Country</label>
-                <select id="gmailEcountry" class="gmail-select">
-                  <option value="bd">Bangladesh</option>
-                  <option value="usa">USA</option>
-                  <option value="india">India</option>
-                  <option value="uk">UK</option>
-                  <option value="pak">Pakistan</option>
-                </select>
-              </div>
-
-              <div>
-                <label class="gmail-label" for="gmailEdomain">Domain</label>
-                <select id="gmailEdomain" class="gmail-select">
-                  <option value="gmail.com">gmail.com</option>
-                  <option value="outlook.com" selected>outlook.com</option>
-                  <option value="yahoo.com">yahoo.com</option>
-                  <option value="hotmail.com">hotmail.com</option>
-                  <option value="icloud.com">icloud.com</option>
-                </select>
-              </div>
-            </div>
-
-            <button id="gmailGenerateEmailsBtn" class="gmail-action-btn gmail-button" type="button">Generate Emails</button>
-
-            <div id="gmailEmailContainer" class="gmail-email-list"></div>
-          </div>
-        </section>
-      </div>
-
-      <div class="gmail-help">
-        <h4>Gmail</h4>
-        <p>এখানে 2FA code generate, strong password তৈরি, আর random email generate করা যাবে। সব CSS, HTML আর JavaScript এই block-এর ভেতরেই namespaced করা আছে, তাই existing page-এর অন্য tool-এর সাথে conflict হওয়ার chance খুব কম।</p>
-      </div>
-    </div>
-  </div>
-
-  <script src="https://unpkg.com/@otplib/preset-browser@latest/buffer.js"></script>
-  <script src="https://unpkg.com/@otplib/preset-browser@latest/index.js"></script>
-
-  <script>
-    (function () {
-      if (window.__gmailToolsInitialized) return;
-      window.__gmailToolsInitialized = true;
-
-      function initializeWhenReady() {
-        if (!window.otplib || !window.otplib.authenticator) {
-          setTimeout(initializeWhenReady, 120);
-          return;
-        }
-
-        const authenticator = window.otplib.authenticator;
-        const otpSecretField = document.getElementById("gmailOtpSecretField");
-        const otpError = document.getElementById("gmailOtpError");
-        const otpWrap = document.getElementById("gmailOtpWrap");
-        const otpBox = document.getElementById("gmailOtpBox");
-        const timerText = document.getElementById("gmailTimerText");
-        const otpCodePanel = document.getElementById("gmailOtpCodePanel");
-        const otpCopyBtn = document.getElementById("gmailOtpCopyBtn");
-        const clear2faBtn = document.getElementById("gmailClear2faBtn");
-
-        const passLength = document.getElementById("gmailPassLength");
-        const passOutput = document.getElementById("gmailPassOutput");
-        const passOutputBox = document.getElementById("gmailPassOutputBox");
-        const passCopyBtn = document.getElementById("gmailPassCopyBtn");
-        const generatePassBtn = document.getElementById("gmailGeneratePassBtn");
-
-        const eqty = document.getElementById("gmailEqty");
-        const ecountry = document.getElementById("gmailEcountry");
-        const edomain = document.getElementById("gmailEdomain");
-        const emailContainer = document.getElementById("gmailEmailContainer");
-        const generateEmailsBtn = document.getElementById("gmailGenerateEmailsBtn");
-
-        if (
-          !otpSecretField || !otpError || !otpWrap || !otpBox || !timerText ||
-          !otpCodePanel || !otpCopyBtn || !clear2faBtn || !passLength || !passOutput ||
-          !passOutputBox || !passCopyBtn || !generatePassBtn || !eqty || !ecountry ||
-          !edomain || !emailContainer || !generateEmailsBtn
-        ) {
-          return;
-        }
-
-        let currentSecret = "";
-
-        function animateCopy(btn) {
-          btn.classList.add("copied");
-          setTimeout(function () {
-            btn.classList.remove("copied");
-          }, 520);
-        }
-
-        async function copyText(text, btn) {
-          if (!text || text === "------" || text === "Ready...") return;
-
-          try {
-            await navigator.clipboard.writeText(text);
-          } catch (error) {
-            const temp = document.createElement("textarea");
-            temp.value = text;
-            document.body.appendChild(temp);
-            temp.select();
-            document.execCommand("copy");
-            temp.remove();
-          }
-
-          if (btn) animateCopy(btn);
-        }
-
-        function sanitizeSecret(raw) {
-          return String(raw || "").replace(/\s+/g, "").trim();
-        }
-
-        function update2FA() {
-          const secret = sanitizeSecret(otpSecretField.value);
-          currentSecret = secret;
-
-          if (!secret) {
-            otpError.textContent = "Enter a valid 2FA secret";
-            otpBox.textContent = "------";
-            otpWrap.style.display = "none";
-            return;
-          }
-
-          try {
-            const token = authenticator.generate(secret);
-            otpBox.textContent = token;
-            otpError.textContent = "";
-            otpWrap.style.display = "block";
-          } catch (error) {
-            otpError.textContent = "Invalid secret key";
-            otpBox.textContent = "------";
-            otpWrap.style.display = "none";
-          }
-        }
-
-        function clear2FA() {
-          otpSecretField.value = "";
-          currentSecret = "";
-          update2FA();
-        }
-
-        function update2FATimer() {
-          const remaining = 30 - (Math.floor(Date.now() / 1000) % 30);
-          timerText.textContent = remaining;
-          if (currentSecret) update2FA();
-        }
-
-        function genPass() {
-          const length = Math.max(8, Math.min(50, parseInt(passLength.value || "12", 10)));
-          passLength.value = length;
-          const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%^&*_-=?";
-          let out = "";
-
-          for (let i = 0; i < length; i += 1) {
-            out += chars[Math.floor(Math.random() * chars.length)];
-          }
-
-          passOutput.textContent = out;
-        }
-
-        function randomFrom(list) {
-          return list[Math.floor(Math.random() * list.length)];
-        }
-
-        function generateEmails() {
-          const qty = Math.max(1, Math.min(100, parseInt(eqty.value || "10", 10)));
-          eqty.value = qty;
-
-          const sets = {
-            bd: ["rahim", "karim", "sadia", "nusrat", "tanvir", "shuvo", "mim", "hasan", "jannat", "rifat"],
-            usa: ["james", "olivia", "liam", "emma", "noah", "ava", "mia", "logan", "sophia", "mason"],
-            india: ["arjun", "priya", "rahul", "anika", "aman", "neha", "ishita", "rohan", "aditya", "kavya"],
-            uk: ["oliver", "amelia", "harry", "isla", "jack", "freya", "george", "grace", "alfie", "lily"],
-            pak: ["ahmed", "fatima", "ali", "ayesha", "hamza", "zara", "usman", "hina", "danish", "sana"]
-          };
-
-          const base = sets[ecountry.value] || sets.bd;
-          const domain = edomain.value;
-
-          emailContainer.innerHTML = "";
-
-          for (let i = 0; i < qty; i += 1) {
-            const name = randomFrom(base);
-            const suffix = Math.floor(1000 + Math.random() * 900000);
-            const email = name + suffix + "@" + domain;
-            const div = document.createElement("div");
-            div.className = "gmail-email-item";
-            div.textContent = email;
-            div.title = "Click to copy";
-            div.addEventListener("click", function () {
-              copyText(email);
-            });
-            emailContainer.appendChild(div);
-          }
-        }
-
-        otpSecretField.addEventListener("input", update2FA);
-        clear2faBtn.addEventListener("click", clear2FA);
-
-        otpCodePanel.addEventListener("click", function () {
-          copyText(otpBox.textContent, otpCopyBtn);
-        });
-        otpBox.addEventListener("click", function () {
-          copyText(otpBox.textContent, otpCopyBtn);
-        });
-        otpCopyBtn.addEventListener("click", function () {
-          copyText(otpBox.textContent, otpCopyBtn);
-        });
-
-        generatePassBtn.addEventListener("click", genPass);
-        passOutputBox.addEventListener("click", function () {
-          copyText(passOutput.textContent, passCopyBtn);
-        });
-        passOutput.addEventListener("click", function () {
-          copyText(passOutput.textContent, passCopyBtn);
-        });
-        passCopyBtn.addEventListener("click", function () {
-          copyText(passOutput.textContent, passCopyBtn);
-        });
-
-        generateEmailsBtn.addEventListener("click", generateEmails);
-
-        setInterval(update2FATimer, 1000);
-        genPass();
-        update2FA();
-      }
-
-      initializeWhenReady();
-    })();
-  </script>
-</div>
-
-
-        <!-- বয়স ক্যালকুলেটর বিভাগ -->
-        <div id="ageCalculatorContent" class="calculator-content">
-            <div class="age-calculator-content">
-                <!-- Existing Age Calculator -->
-                <h3 class="text-xl font-bold text-gray-700 mb-4">বয়স গণনা করুন</h3>
-                <div class="input-group">
-                    <label for="birthDate">জন্ম তারিখ:</label>
-                    <input type="date" id="birthDate" class="rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                </div>
-                <div class="input-group">
-                    <label for="currentDate">বর্তমান তারিখ:</label>
-                    <input type="date" id="currentDate" class="rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                </div>
-                <button id="calculateAgeBtn" class="calculate-button rounded-xl">বয়স গণনা করুন</button>
-                <div id="ageResultArea" class="result-area">
-                    <p id="ageResult" class="text-xl"></p>
-                    <p id="ageErrorMessage" class="error-message"></p>
-                </div>
-                
+</div>    
                 <!-- Divider -->
                 <hr class="my-8 border-gray-300">
 
@@ -8780,145 +8129,6 @@ body.sidebar-open #sidebarOverlay {
                     </div>
                 </div>
                 <!-- Info Section End -->
-        </div>
-
-
-        <!-- তারিখ ও সময় ক্যালকুলেটর বিভাগ -->
-        <div id="dateCalculatorContent" class="calculator-content">
-            <div class="date-time-content">
-                <div class="button-group">
-                    <button id="showTodayDatesBtn" class="show-date-button rounded-xl">আজকের তারিখ ও সময়</button>
-                    <button id="showTomorrowDatesBtn" class="show-date-button rounded-xl">আগামীকালের তারিখ ও সময়</button>
-                </div>
-                <div id="dateDisplayResult" class="result-area">
-                    <!-- আজকের তারিখের জন্য -->
-                    <div id="todayResultSection">
-                        <p class="result-section-title">আজকের তারিখ</p>
-                        <p id="todayGregorianDateDisplay"></p>
-                        <p id="todayBengaliDateDisplay"></p>
-                        <p id="todayDayDisplay"></p> <!-- আজকের দিনের জন্য নতুন সারি -->
-                        <p id="todayTimeDisplay"></p>
-                    </div>
-
-                    <!-- আগামীকালের তারিখের জন্য -->
-                    <div id="tomorrowResultSection" style="display: none;">
-                        <p class="result-section-title">আগামীকালের তারিখ</p>
-                        <p id="tomorrowGregorianDateDisplay"></p>
-                        <p id="tomorrowBengaliDateDisplay"></p>
-                        <p id="tomorrowDayDisplay"></p> <!-- আগামীকালের দিনের জন্য নতুন সারি -->
-                        <p id="tomorrowTimeDisplay"></p>
-                    </div>
-                </div>
-
-<!-- বাংলা থেকে ইংরেজি তারিখ রূপান্তর বৈশিষ্ট্য (নতুন) -->
-<h3 class="text-xl font-bold text-gray-700 mb-4 dark:text-gray-200 p-5">বাংলা থেকে ইংরেজি তারিখ বের করুন</h3>
-    <div class="input-group mt-4">
-        <label for="bengaliDayInput" class="text-gray-700 font-semibold text-left block mb-2">বাংলা তারিখ (দিন) লিখুন:</label>
-        <input type="number" id="bengaliDayInput" placeholder="যেমন: ১" class="rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full p-1 border border-gray-300">
-    </div>
-    <div class="input-group mt-4">
-        <label for="bengaliMonthInput" class="text-gray-700 font-semibold text-left block mb-2">বাংলা মাস নির্বাচন করুন:</label>
-        <select id="bengaliMonthInput" class="rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full p-2 border border-gray-300 bg-white dark:bg-gray-700">
-            <option value="0">বৈশাখ</option>
-            <option value="1">জ্যৈষ্ঠ</option>
-            <option value="2">আষাঢ়</option>
-            <option value="3">শ্রাবণ</option>
-            <option value="4">ভাদ্র</option>
-            <option value="5">আশ্বিন</option>
-            <option value="6">কার্তিক</option>
-            <option value="7">অগ্রহায়ণ</option>
-            <option value="8">পৌষ</option>
-            <option value="9">মাঘ</option>
-            <option value="10">ফাল্গুন</option>
-            <option value="11">চৈত্র</option>
-        </select>
-    </div>
-    <div class="input-group mt-6">
-        <label for="bengaliYearInput" class="text-gray-700 font-semibold text-left block mb-2">বাংলা সন লিখুন:</label>
-        <input type="number" id="bengaliYearInput" placeholder="যেমন: ১৪৩১" class="rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full p-2 border border-gray-300">
-    </div>
-    <button id="convertBengaliToEnglishBtn" class="show-date-button rounded-xl mt-4">ইংরেজি তারিখে রূপান্তর করুন</button>
-    <div id="englishConvertedDateDisplay" class="result-area mt-4">
-        <p class="result-section-title">রূপান্তরিত ইংরেজি তারিখ</p>
-        <p id="convertedEnglishDate"></p>
-        <p id="convertedEnglishDayDisplay"></p>
-    </div>
-
-                <div id="timeDiffResult" class="result-area mt-6 hidden bg-indigo-50 dark:bg-gray-800 p-4 rounded-lg border border-indigo-200 dark:border-gray-600 text-left">
-                    <h4 class="font-bold text-indigo-700 dark:text-indigo-300 mb-3 text-lg border-b border-indigo-200 dark:border-gray-600 pb-2">ফলাফল:</h4>
-                    <div id="diffOutputContent" class="text-gray-800 dark:text-gray-200 space-y-2"></div>
-                </div>
-				
-                <!-- নতুন বোতাম এবং লিংক -->
-                <a href="https://ajkertarikh.com" target="_blank" class="show-date-button rounded-xl mt-4 block mx-auto text-center">প্রয়োজনে এখানে তারিখ দেখুন</a>
-				<a href="https://www.bangladatetoday.com/" target="_blank" class="show-date-button rounded-xl mt-4 block mx-auto text-center">অথবা এখানে তারিখ দেখুন</a>
-            </div>
-        </div>
-
-<!-- বৈজ্ঞানিক ক্যালকুলেটর বিভাগ -->
-        <div id="scientificCalculatorContent" class="calculator-content">
-            <div class="scientific-calculator-content">
-                <!-- ডিসপ্লে সেকশন (আপডেট করা হয়েছে) -->
-                <div class="input-area" style="background-color: #1c262b; border-radius: 12px; padding: 15px; margin-bottom: 15px; border: 1px solid #455a64; display: flex; flex-direction: column; justify-content: flex-end; height: 110px;">
-                    <!-- উপরের ছোট এক্সপ্রেশন ডিসপ্লে -->
-                    <div id="scientificHistoryDisplay" style="text-align: right; color: rgba(255, 255, 255, 0.6); font-size: 1.3rem; min-height: 25px; font-family: monospace; overflow: hidden; white-space: nowrap;"></div>
-                    <!-- নিচের বড় ইনপুট/ফলাফল ডিসপ্লে -->
-                    <input type="text" id="scientificExpressionInput" class="expression-input" placeholder="0" style="width: 100%; border: none !important; background: transparent !important; color: white !important; font-size: 2.8rem !important; text-align: right !important; padding: 0 !important; margin: 0 !important; height: auto !important; box-shadow: none !important;">
-                </div>
-
-                <div class="scientific-buttons-grid">
-                    <!-- সারি ১: ফাংশনস -->
-                    <button class="scientific-button rounded-lg" data-sci-input="sin">sin</button>
-                    <button class="scientific-button rounded-lg" data-sci-input="cos">cos</button>
-                    <button class="scientific-button rounded-lg" data-sci-input="tan">tan</button>
-                    <button class="scientific-button rounded-lg" data-sci-input="log">log</button>
-
-                    <!-- সারি ২: ফাংশনস -->
-                    <button class="scientific-button rounded-lg" data-sci-input="ln">ln</button>
-                    <button class="scientific-button rounded-lg" data-sci-input="(">(</button>
-                    <button class="scientific-button rounded-lg" data-sci-input=")">)</button>
-                    <button class="scientific-button rounded-lg" data-sci-input="^">^</button>
-
-                    <!-- সারি ৩: ফাংশনস ও ক্লিয়ার -->
-                    <button class="scientific-button rounded-lg" data-sci-input="sqrt">√</button>
-                    <button class="scientific-button rounded-lg" data-sci-input="π">π</button>
-                    <button class="scientific-button clear-btn rounded-lg" data-sci-input="C">C</button>
-                    <button class="scientific-button rounded-lg" style="background-color: #ef5350;" data-sci-input="DEL">DEL</button>
-
-                    <!-- সারি ৪: ৭-৮-৯ এবং ভাগ -->
-                    <button class="scientific-button rounded-lg" data-sci-input="7">7</button>
-                    <button class="scientific-button rounded-lg" data-sci-input="8">8</button>
-                    <button class="scientific-button rounded-lg" data-sci-input="9">9</button>
-                    <button class="scientific-button operator-btn rounded-lg" data-sci-input="÷">÷</button>
-
-                    <!-- সারি ৫: ৪-৫-৬ এবং গুণ -->
-                    <button class="scientific-button rounded-lg" data-sci-input="4">4</button>
-                    <button class="scientific-button rounded-lg" data-sci-input="5">5</button>
-                    <button class="scientific-button rounded-lg" data-sci-input="6">6</button>
-                    <button class="scientific-button operator-btn rounded-lg" data-sci-input="×">×</button>
-
-                    <!-- সারি ৬: ১-২-৩ এবং বিয়োগ -->
-                    <button class="scientific-button rounded-lg" data-sci-input="1">1</button>
-                    <button class="scientific-button rounded-lg" data-sci-input="2">2</button>
-                    <button class="scientific-button rounded-lg" data-sci-input="3">3</button>
-                    <button class="scientific-button operator-btn rounded-lg" data-sci-input="-">-</button>
-
-                    <!-- সারি ৭: ডট, ০, পার্সেন্ট, যোগ (সোয়াপ করা হয়েছে) -->
-                    <button class="scientific-button rounded-lg" data-sci-input=".">.</button>
-                    <button class="scientific-button rounded-lg" data-sci-input="0">0</button>
-                    <button class="scientific-button rounded-lg" data-sci-input="%">%</button>
-                    <button class="scientific-button operator-btn rounded-lg" data-sci-input="+">+</button>
-
-                    <!-- সারি ৮: সমান (পুরো জায়গা জুড়ে) -->
-                    <button class="scientific-button equals-btn rounded-lg" data-sci-equals style="grid-column: span 4;">=</button>
-                </div>
-            </div>
-            
-            <div id="scientificErrorMessage" class="error-message"></div>
-            <!-- LLM-চালিত ব্যাখ্যা বৈশিষ্ট্য -->
-            <button id="explainScientificBtn" class="explain-button rounded-xl">ব্যাখ্যা করুন ✨</button>
-            <div id="scientificExplanationLoading" class="loading-indicator">জেমিনি ব্যাখ্যা করছে</div>
-            <div id="scientificExplanation" class="response-area rounded-lg mt-4" style="background-color: #e6f7ff; border: 1px solid #b3e0ff;"></div>
         </div>
 
 <!-- পরিমাপ (ইউনিট কনভার্টার) বিভাগ শুরু -->
@@ -9641,35 +8851,6 @@ body.sidebar-open #sidebarOverlay {
 </div>
 
 
-<!-- টেক্সট অ্যাসিস্ট্যান্ট (চ্যাট) বিভাগ -->
-<div id="textAssistantContent" class="calculator-content">
-    <div class="text-assistant-content">
-        <div class="chat-header">
-            <h3>জেমিনির সাথে চ্যাট করুন</h3>
-            <!-- এখান থেকে ড্রপডাউনটি সরানো হয়েছে -->
-            <button id="clearChatBtn" class="clear-chat-button">চ্যাট মুছুন</button>
-        </div>
-        <div id="chatWindow" class="chat-window">
-            <!-- চ্যাট বার্তা এখানে যুক্ত করা হবে -->
-        </div>
-        <div id="assistantLoading" class="loading-indicator">জেমিনি চিন্তা করছে...</div>
-        <!-- ফাইল প্রিভিউ কন্টেইনার -->
-        <div id="filePreviewContainer" class="hidden mb-2 p-2 border rounded-lg relative">
-            <!-- প্রিভিউ এখানে JS দ্বারা যুক্ত করা হবে -->
-        </div>
-        <div class="input-container">
-            <!-- ফাইল আপলোড বাটন -->
-            <label for="fileUploadInput" class="flex items-center justify-center p-2.5 rounded-lg bg-gray-200 hover:bg-gray-300 cursor-pointer dark:bg-gray-600 dark:hover:bg-gray-500 transition-colors" title="ফাইল আপলোড করুন">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-600 dark:text-gray-300"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
-            </label>
-            <input type="file" id="fileUploadInput" class="hidden" accept="image/png, image/jpeg, image/webp, text/*, audio/*, video/*">
-            <textarea id="assistantInput" placeholder="এখানে আপনার প্রশ্ন লিখুন..."></textarea>
-            <button id="askGeminiBtn" class="ask-button">পাঠান</button>
-        </div>
-    </div>
-</div>
-<!-- টেক্সট অ্যাসিস্ট্যান্ট (চ্যাট) বিভাগ শেষ -->
-
 <!-- সকল ফিচার বিভাগ -->
 <div id="allFeaturesContent" class="calculator-content">
     <div class="news-content !p-2 sm:!p-5"> <!-- মোবাইলে প্যাডিং কমানো হয়েছে -->
@@ -9942,33 +9123,6 @@ body.sidebar-open #sidebarOverlay {
 </div>
 <!-- শেষ: সকল ফিচার ট্যাব -->
 
-
-		
-<!-- নতুন: গুগল ম্যাপ বিভাগ -->
-<div id="mapContent" class="calculator-content">
-    <div class="map-container">
-        <h3 class="text-xl font-bold text-gray-700 mb-4 dark:text-gray-200">গুগল ম্যাপ - বাংলাদেশ</h3>
-        <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3746118.913102029!2d88.10075841566833!3d23.49058226042993!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30adaaed80e18ba7%3A0xf2d28e0c4e1fc6b!2sBangladesh!5e0!3m2!1sen!2sbd!4v1675346780000!5m2!1sen!2sbd"
-            width="100%"
-            height="450"
-            style="border:0;"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade">
-			
-        </iframe>
-		<!-- এই কোডটি mapContent div-এর ভেতরের iframe ট্যাগের পরে যোগ করুন -->
-		<div class="map-features mt-4 p-4 bg-white dark:bg-gray-700 rounded-lg shadow-inner">
-    <!-- স্থান খুঁজুন -->
-    <div class="feature-section mb-4">
-        <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">স্থান খুঁজুন (Search Location)</h4>
-        <div class="flex flex-col sm:flex-row gap-2">
-            <input type="text" id="searchInput" placeholder="যেমন: ঢাকা বিশ্ববিদ্যালয়" class="flex-grow p-2 border rounded-lg dark:bg-gray-600 dark:border-gray-500 dark:text-white focus:ring-2 focus:ring-blue-500">
-            <button id="searchBtn" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors">খুঁজুন</button>
-        </div>
-    </div>
-
     <!-- আমার অবস্থান -->
     <div class="feature-section mb-4">
         <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">আমার অবস্থান (My Location)</h4>
@@ -9988,81 +9142,9 @@ body.sidebar-open #sidebarOverlay {
 	</div>
 </div>
 
-<!-- নতুন: ওয়েব সার্চ বিভাগ -->
-<div id="webSearchContent" class="calculator-content">
-    <div class="web-browser-content">
-        <!-- ব্রাউজার টুলবার -->
-        <div class="browser-toolbar">
-            <!-- হোম বাটন -->
-            <button id="browserHomeBtn" class="browser-btn" title="হোম">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-            </button>
-            
-            <!-- অ্যাড্রেস বার -->
-            <input type="text" id="browserAddress" class="address-bar" placeholder="সার্চ করুন বা ইউআরএল লিখুন">
-            
-            <!-- গো বাটন -->
-            <button id="browserGoBtn" class="browser-btn" title="এখানেই খুঁজুন">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            </button>
-
-            <!-- ব্রাউজারে খুলুন বাটন -->
-            <button id="browserOpenExternalBtn" class="browser-btn" style="background-color: #ef4444;" title="বাইরে খুলুন (নতুন ট্যাবে)">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"></path></svg>
-            </button>
-        </div>
-
-        <!-- কুইক লিংকস -->
-        <div id="shortcutsContainer" class="flex flex-wrap justify-center gap-2 mb-2">
-		
-			<!-- WhatsApp -->
-            <button onclick="window.open('https://web.whatsapp.com', '_blank')" class="px-3 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-full text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors text-green-500 flex items-center gap-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg> WhatsApp
-            </button>
-			
-		    <!-- Gmail -->
-            <button onclick="window.open('https://mail.google.com', '_blank')" class="px-3 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-full text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors text-red-500 flex items-center gap-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/></svg> Gmail
-            </button>
-			
-            <!-- Google -->
-            <button onclick="window.open('https://google.com', '_blank')" class="px-3 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-full text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors flex items-center gap-1">
-                <span class="text-blue-500">G</span><span class="text-red-500">o</span><span class="text-yellow-500">o</span><span class="text-blue-500">g</span><span class="text-green-500">l</span><span class="text-red-500">e</span>
-            </button>
-            
-            <!-- YouTube -->
-            <button onclick="window.open('https://youtube.com', '_blank')" class="px-3 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-full text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors flex items-center gap-1 text-red-600">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/></svg> YouTube
-            </button>
-		
-            <!-- Facebook -->
-            <button onclick="window.open('https://facebook.com', '_blank')" class="px-3 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-full text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors text-blue-600">Facebook</button>
-
-
-            <!-- ChatGPT -->
-            <button onclick="window.open('https://chatgpt.com', '_blank')" class="px-3 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-full text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors text-emerald-600">ChatGPT</button>
-            
-            <!-- Gemini -->
-            <button onclick="window.open('https://gemini.google.com', '_blank')" class="px-3 py-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-full text-sm font-semibold hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors text-blue-600 flex items-center gap-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0a1 1 0 0 1 1 1v5.5a1 1 0 0 0 .5.5H15a1 1 0 0 1 1 1v.5a1 1 0 0 1-1 1h-5.5a1 1 0 0 0-.5.5V15a1 1 0 0 1-1 1h-.5a1 1 0 0 1-1-1v-5.5a1 1 0 0 0-.5-.5H1a1 1 0 0 1-1-1v-.5a1 1 0 0 1 1-1h5.5a1 1 0 0 0 .5-.5V1a1 1 0 0 1 1-1h.5z"/></svg> Gemini
-            </button>
-            
-            <!-- Add Shortcut Button -->
-            <button id="addShortcutBtn" class="px-3 py-1 bg-gray-200 dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded-full text-sm font-bold hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors text-gray-700 dark:text-gray-200 flex items-center gap-1" title="নতুন শর্টকাট যুক্ত করুন">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2z"/></svg>
-            </button>
-        </div>
-        
         <!-- আইফ্রেম -->
         <!-- পরিবর্তন: sandbox থেকে allow-popups সরানো হয়েছে যাতে নতুন ট্যাব ওপেন করা ব্লক হয়, এবং গুগল ব্যবহার করা হচ্ছে যা আইফ্রেমে কাজ করে -->
         <iframe id="browserFrame" class="browser-frame" src="" sandbox="allow-scripts allow-same-origin allow-forms allow-presentation"></iframe>
-        <p class="text-xs text-gray-500 mt-1 text-center">নোট: আইফ্রেমের ভেতরে লিংক ওপেন রাখতে এখানে গুগল সার্চ ব্যবহার করা হয়েছে। অনেক ওয়েবসাইট (যেমন: ফেসবুক, ইউটিউব) আইফ্রেমে লোড হতে দেয় না, সেগুলো লাল বাটনে ক্লিক করে খুলুন।</p>
-    </div>
-</div>
-
-
-        <!-- আপডেট করা দ্রষ্টব্য -->
-        <p class="mt-4 text-sm text-gray-500 dark:text-gray-400">দ্রষ্টব্য: সময়সূচি aladhan.com API থেকে আনা হয়েছে (হিসাব পদ্ধতি: University of Islamic Sciences, Karachi)। এটি ইসলামিক ফাউন্ডেশনের সময়ের সাথে কিছুটা ভিন্ন হতে পারে।</p>
     </div>
 </div>
 
@@ -10251,234 +9333,6 @@ body.sidebar-open #sidebarOverlay {
     </div>
 </div>
 
-<!-- নতুন: ঘড়ি ট্যাব (স্টপওয়াচ, অ্যালার্ম, বিশ্ব ঘড়ি, কাউন্টডাউন) -->
-<div id="clockContent" class="calculator-content">
-    <div class="clock-container">
-        <!-- স্টপওয়াচ সেকশন -->
-        <div class="clock-section stopwatch">
-            <h3 class="section-title">স্টপওয়াচ</h3>
-            <div class="stopwatch-display">00:00:00.000</div>
-            <div class="stopwatch-controls">
-                <button id="startStopwatch" class="control-btn start-btn">শুরু</button>
-                <button id="stopStopwatch" class="control-btn stop-btn">থামুন</button>
-                <button id="resetStopwatch" class="control-btn reset-btn">রিসেট</button>
-                <button id="lapStopwatch" class="control-btn lap-btn">ল্যাপ</button>
-            </div>
-            <div class="laps-container">
-                <h4>ল্যাপ টাইম</h4>
-                <ul id="lapsList"></ul>
-            </div>
-        </div>
-
-        <!-- অ্যালার্ম সেকশন -->
-        <div class="clock-section alarm">
-            <h3 class="section-title">অ্যালার্ম</h3>
-            <div class="alarm-input-group">
-                <input type="time" id="alarmTimeInput" class="alarm-time-input">
-            </div>
-            <!-- অ্যালার্ম সাউন্ড সিলেকশন -->
-            <div class="alarm-sound-selector mb-4">
-                <label for="alarmSoundSelect" class="block text-left mb-2 font-semibold text-gray-700 dark:text-gray-200">ডিফল্ট অ্যালার্ম সাউন্ড:</label>
-                <select id="alarmSoundSelect" class="w-full p-2 border rounded-lg dark:bg-gray-600 dark:border-gray-500 dark:text-white">
-                    <option value="beep">বিপ</option>
-                    <option value="chime">চাইম</option>
-                    <option value="radar">রাডার</option>
-                </select>
-                
-                <!-- কাস্টম অডিও আপলোড -->
-                <div class="mt-4">
-                    <label class="block text-left text-sm font-medium text-gray-600 dark:text-gray-300">অথবা নিজের অডিও ফাইল দিন (mp3, wav, ogg):</label>
-                    <div class="flex items-center gap-2 mt-2">
-                        <input type="file" id="customAlarmSoundInput" class="hidden" accept="audio/*">
-                        <label for="customAlarmSoundInput" class="custom-file-upload-small">ফাইল বাছাই করুন</label>
-                        <span id="customAlarmFileName" class="text-sm text-gray-500 dark:text-gray-400 truncate" style="max-width: 120px;">কোনো ফাইল নেই</span>
-                        <button id="removeCustomAlarmSound" class="hidden" title="কাস্টম সাউন্ড সরান">&times;</button>
-                    </div>
-                </div>
-            </div>
-            <div class="alarm-controls">
-                <button id="setAlarmBtn" class="control-btn set-alarm-btn">অ্যালার্ম সেট করুন</button>
-                <button id="stopAlarmBtn" class="control-btn stop-btn hidden">অ্যালার্ম থামান</button>
-                <button id="clearAlarmBtn" class="control-btn clear-alarm-btn">অ্যালার্ম মুছুন</button>
-            </div>
-            <div id="alarmStatus" class="alarm-status">কোনো অ্যালার্ম সেট করা নেই।</div>
-        </div>
-
-        <!-- বিশ্ব ঘড়ি সেকশন -->
-        <div class="clock-section world-clock">
-            <h3 class="section-title">বিশ্ব ঘড়ি</h3>
-            <div class="mb-4">
-                <label for="timezone-select" class="block mb-2 font-semibold text-gray-700 dark:text-gray-200">অন্যান্য দেশের সময় দেখুন:</label>
-                <select id="timezone-select" class="w-full p-2 border rounded-lg dark:bg-gray-600 dark:border-gray-500 dark:text-white focus:ring-2 focus:ring-blue-500"></select>
-            </div>
-            <div class="world-clock-grid">
-                <!-- ঘড়িগুলো এখানে যুক্ত হবে -->
-            </div>
-        </div>
-
-<!-- কাউন্টডাউন টাইমার সেকশন (আপডেটেড) -->
-        <div class="clock-section countdown">
-            <h3 class="section-title">কাউন্টডাউন টাইমার</h3>
-            
-            <!-- টাইটেল ইনপুট -->
-            <div class="mb-4">
-                 <input type="text" id="cdTitle" placeholder="টাইমারের নাম দিন (যেমন: কুইজ, ইফতার)" class="w-full p-2 border rounded-lg text-center font-semibold dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:ring-2 focus:ring-blue-500">
-            </div>
-            
-            <!-- মোড সিলেকশন -->
-            <div class="flex justify-center gap-6 mb-4 p-2 bg-gray-100 dark:bg-gray-700 rounded-lg">
-                <label class="inline-flex items-center cursor-pointer">
-                    <input type="radio" name="cdMode" value="duration" checked class="form-radio text-indigo-600 h-4 w-4">
-                    <span class="ml-2 text-gray-700 dark:text-gray-300 font-medium text-sm">সময়কাল (Duration)</span>
-                </label>
-                <label class="inline-flex items-center cursor-pointer">
-                    <input type="radio" name="cdMode" value="datetime" class="form-radio text-indigo-600 h-4 w-4">
-                    <span class="ml-2 text-gray-700 dark:text-gray-300 font-medium text-sm">নির্দিষ্ট তারিখ ও সময়</span>
-                </label>
-            </div>
-
-            <!-- ইনপুট গ্রিড (Duration) -->
-            <div id="cdDurationInputs" class="grid grid-cols-4 gap-2 mb-4 transition-all">
-                <div class="flex flex-col">
-                    <input type="number" id="cdDays" placeholder="0" min="0" class="w-full p-3 text-center text-xl font-bold border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600">
-                    <span class="text-xs text-center mt-1 dark:text-gray-300 font-semibold">দিন</span>
-                </div>
-                <div class="flex flex-col">
-                    <input type="number" id="cdHours" placeholder="0" min="0" class="w-full p-3 text-center text-xl font-bold border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600">
-                    <span class="text-xs text-center mt-1 dark:text-gray-300 font-semibold">ঘণ্টা</span>
-                </div>
-                <div class="flex flex-col">
-                    <input type="number" id="cdMinutes" placeholder="0" min="0" max="59" class="w-full p-3 text-center text-xl font-bold border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600">
-                    <span class="text-xs text-center mt-1 dark:text-gray-300 font-semibold">মিনিট</span>
-                </div>
-                <div class="flex flex-col">
-                    <input type="number" id="cdSeconds" placeholder="0" min="0" max="59" class="w-full p-3 text-center text-xl font-bold border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600">
-                    <span class="text-xs text-center mt-1 dark:text-gray-300 font-semibold">সেকেন্ড</span>
-                </div>
-            </div>
-            
-            <!-- ইনপুট গ্রিড (DateTime) - নতুন -->
-            <div id="cdDateTimeInputs" class="hidden mb-4">
-                <input type="datetime-local" id="cdTargetDateTime" class="w-full p-3 text-center text-lg font-bold border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:ring-2 focus:ring-indigo-500">
-                <p class="text-xs text-center mt-1 text-gray-500 dark:text-gray-400">কাঙ্ক্ষিত তারিখ ও সময় নির্বাচন করুন</p>
-            </div>
-
-            <!-- ডিসপ্লে -->
-            <div id="countdownDisplay" class="stopwatch-display" style="font-family: 'Bornomala', sans-serif;">00 : 00 : 00 : 00</div>
-            
-            <div class="stopwatch-controls">
-                <button id="startCountdown" class="control-btn start-btn">শুরু</button>
-                <button id="pauseCountdown" class="control-btn stop-btn hidden">থামান</button>
-                <button id="resetCountdown" class="control-btn reset-btn">রিসেট</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- নতুন: প্লেয়ার ট্যাব -->
-<div id="playerContent" class="calculator-content">
-    <div class="player-container">
-        <h3 class="text-xl font-bold text-gray-700 mb-4 dark:text-gray-200">মিডিয়া প্লেয়ার</h3>
-
-        <!-- অডিও সেকশন -->
-        <div class="player-section">
-            <h4 class="player-section-title">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-                <span>অডিও প্লেয়ার</span>
-            </h4>
-            <div class="player-content-area">
-                <audio id="audioPlayer" controls class="w-full"></audio>
-                <div class="player-input-area flex flex-wrap items-center gap-2">
-                    <label for="audioInput" class="custom-file-upload">অডিও ফাইল বাছাই করুন</label>
-                    <input type="file" id="audioInput" accept="audio/*">
-                    <p id="audioFileName" class="file-name-display truncate max-w-[150px] sm:max-w-[250px]"></p>
-                    
-                    <!-- অডিও মুছুন বাটন -->
-                    <button id="clearAudioBtn" class="hidden text-red-500 hover:text-red-700 p-1 rounded-full hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors" title="অডিও মুছুন">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                        </svg>
-                    </button>
-
-                    <!-- অডিওর জন্য লুপ টগল সুইচ -->
-                    <div class="flex items-center gap-2 ml-auto">
-                        <span class="font-semibold text-gray-700 dark:text-gray-300 text-sm">লুপ</span>
-                        <label class="switch">
-                            <input type="checkbox" id="audioLoopToggle">
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ছবি সেকশন -->
-        <div class="player-section">
-            <h4 class="player-section-title">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                <span>ছবি প্রদর্শক</span>
-            </h4>
-            <div class="player-content-area">
-                <div class="image-preview-box">
-                    <img id="imagePreview" src="https://placehold.co/600x400/e2e8f0/4a5568?text=ছবি+লোড+করুন" alt="Image Preview">
-                </div>
-                <div class="player-input-area flex flex-wrap items-center gap-2">
-                    <label for="imageInput" class="custom-file-upload">ছবি বাছাই করুন</label>
-                    <input type="file" id="imageInput" accept="image/*">
-                    
-                    <!-- ছবি মুছুন বাটন -->
-                    <button id="clearImageBtn" class="hidden text-red-500 hover:text-red-700 p-1 rounded-full hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors" title="ছবি মুছুন">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- ভিডিও সেকশন -->
-        <div class="player-section">
-            <h4 class="player-section-title">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-                <span>ভিডিও প্লেয়ার</span>
-            </h4>
-            <div class="player-content-area">
-                <video id="videoPlayer" controls class="w-full rounded-lg bg-black"></video>
-                <div class="player-input-area flex flex-wrap items-center gap-2">
-                    <label for="videoInput" class="custom-file-upload">ভিডিও ফাইল বাছাই করুন</label>
-                    <input type="file" id="videoInput" accept="video/*">
-                    
-                    <!-- ভিডিও মুছুন বাটন -->
-                    <button id="clearVideoBtn" class="hidden text-red-500 hover:text-red-700 p-1 rounded-full hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors" title="ভিডিও মুছুন">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                        </svg>
-                    </button>
-
-                    <!-- মুভ টু অডিও বাটন -->
-                    <button id="moveToAudioBtn" class="hidden px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-semibold transition-colors flex items-center gap-1" title="ভিডিওটি অডিও প্লেয়ারে বাজান">
-                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-                       অডিওতে নিন
-                    </button>
-
-                     <!-- ভিডিওর জন্য লুপ টগল সুইচ -->
-                    <div class="flex items-center gap-2 ml-auto">
-                        <span class="font-semibold text-gray-700 dark:text-gray-300 text-sm">লুপ</span>
-                        <label class="switch">
-                            <input type="checkbox" id="videoLoopToggle">
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-
-
 <!-- নতুন: কিউআর কোড জেনারেটর বিভাগ (আপলোড ফিচার এবং লাইভ জেনারেশনসহ) -->
 <div id="qrCodeContent" class="calculator-content">
     <div class="qr-code-content">
@@ -10626,110 +9480,6 @@ body.sidebar-open #sidebarOverlay {
     </div>
 </div>
 
-<!-- নতুন: স্বাস্থ্য ও জীবনধারা ট্যাব -->
-<div id="healthLifestyleContent" class="calculator-content">
-    <div class="health-lifestyle-content">
-        <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-6 text-center">স্বাস্থ্য ও জীবনধারা</h3>
-        <div class="health-grid">
-            <!-- প্রেগন্যান্সি ডিউ ডেট ক্যালকুলেটর -->
-            <div class="health-section">
-                <h4 class="health-section-title">
-                    <svg xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
-                    <span>প্রেগন্যান্সি ডিউ ডেট ক্যালকুলেটর</span>
-                </h4>
-                <div class="health-input-group">
-                    <label for="lmpDate">আপনার শেষ মাসিকের প্রথম দিন:</label>
-                    <input type="date" id="lmpDate" class="health-input">
-                </div>
-                <button id="calculateDueDateBtn" class="health-calculate-btn">হিসাব করুন</button>
-                <div id="dueDateResultArea" class="health-result-area">
-                    <p>অনুগ্রহ করে তারিখ নির্বাচন করুন।</p>
-                </div>
-            </div>
-
-            <!-- পানি পানের পরিমাণ ক্যালকুলেটর -->
-            <div class="health-section">
-                <h4 class="health-section-title">
-                    <svg xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/></svg>
-                    <span>দৈনিক পানি পানের পরিমাণ</span>
-                </h4>
-                <div class="health-input-group">
-                    <label for="userAge">বয়স (বছর):</label>
-                    <input type="number" id="userAge" placeholder="যেমন: 25" class="health-input">
-                </div>
-                <div class="health-input-group">
-                    <label for="userWeight">ওজন (কেজি):</label>
-                    <input type="number" id="userWeight" placeholder="যেমন: 65" class="health-input">
-                </div>
-                <div class="health-input-group">
-                    <label for="activityLevel">কাজের ধরন:</label>
-                    <select id="activityLevel" class="health-select">
-                        <option value="0">বসে কাজ (Sedentary)</option>
-                        <option value="30">হালকা সক্রিয় (Lightly Active)</option>
-                        <option value="60">মাঝারি সক্রিয় (Moderately Active)</option>
-                        <option value="90">খুব সক্রিয় (Very Active)</option>
-                    </select>
-                </div>
-                <button id="calculateWaterIntakeBtn" class="health-calculate-btn">হিসাব করুন</button>
-                <div id="waterIntakeResultArea" class="health-result-area">
-                    <p>অনুগ্রহ করে তথ্য দিন।</p>
-                </div>
-            </div>
-			<!-- BMI ক্যালকুলেটরের শুরু -->
-<div id="bmi-calculator-container" class="bmi-calculator">
-    <h3 class="bmi-title">বিএমআই (BMI) ক্যালকুলেটর</h3>
-    <p class="bmi-subtitle">আপনার ওজন ও উচ্চতা নিচের ঘরে লিখুন।</p>
-    
-    <!-- ওজন ইনপুট -->
-    <div class="bmi-input-group">
-        <label for="bmi-weight">ওজন (কেজি)</label>
-        <input type="number" id="bmi-weight" placeholder="যেমন: 70">
-    </div>
-    
-    <!-- উচ্চতা ইনপুট -->
-    <div class="bmi-input-group">
-        <label>উচ্চতা (ফিট ও ইঞ্চি)</label>
-        <div class="bmi-height-inputs">
-            <input type="number" id="bmi-height-feet" placeholder="ফিট">
-            <input type="number" id="bmi-height-inches" placeholder="ইঞ্চি">
-        </div>
-    </div>
-    
-    <!-- হিসাব করার বাটন -->
-    <button id="bmi-calculate-btn">হিসাব করুন</button>
-    
-    <!-- ফলাফল দেখানোর স্থান -->
-    <div id="bmi-result" class="bmi-result-section"></div>
-</div>
-<!-- BMI ক্যালকুলেটরের শেষ -->
-        </div>
-    </div>
-</div>
-
-<!-- নতুন: দিবসসমূহ ট্যাব -->
-<div id="daysObservancesContent" class="calculator-content">
-    <div class="days-observances-container">
-        <h3 class="text-xl font-bold text-gray-700 mb-4 dark:text-gray-200">দিবসসমূহ</h3>
-
-        <!-- ***** নতুন: আজকের দিবস সেকশন ***** -->
-        <div id="todayObservances" class="upcoming-observances-container mb-6">
-            <div id="todayNationalDay" class="today-day-card national">
-                <!-- JavaScript দ্বারা পূর্ণ হবে -->
-            </div>
-            <div id="todayInternationalDay" class="today-day-card international">
-                <!-- JavaScript দ্বারা পূর্ণ হবে -->
-            </div>
-        </div>
-		
-        <!-- নতুন: আগত দিবস সেকশন -->
-        <div id="upcomingObservances" class="upcoming-observances-container mb-6">
-            <div id="upcomingNationalDay" class="upcoming-day-card national">
-                <!-- JavaScript দ্বারা পূর্ণ হবে -->
-            </div>
-            <div id="upcomingInternationalDay" class="upcoming-day-card international">
-                <!-- JavaScript দ্বারা পূর্ণ হবে -->
-            </div>
-        </div>
         <!-- ***** নতুন সেকশন শেষ ***** -->
         <div class="year-selector-wrapper mb-6">
             <label for="observanceYearSelect" class="font-semibold text-gray-700 dark:text-gray-300 mr-2">বছর নির্বাচন করুন:</label>
@@ -10975,57 +9725,6 @@ body.sidebar-open #sidebarOverlay {
     </div>
 </div>
 <!-- END: Currency Converter Tab Content -->
-
-<!-- ======================================================== -->
-<!-- START: EMI Calculator Tab Content -->
-<!-- ======================================================== -->
-<div id="emiCalcContent" class="calculator-content">
-    <!-- পরিবর্তন: ইনলাইন স্টাইল থেকে ব্যাকগ্রাউন্ড কালার সরিয়ে ক্লাস যোগ করা হয়েছে -->
-    <div class="calculator-grid bg-white dark:bg-gray-800" style="max-width: 500px; margin: 0 auto; display: block;">
-        <h3 class="text-xl font-bold text-gray-700 mb-6 dark:text-gray-200 text-center">ইএমআই (EMI) ক্যালকুলেটর</h3>
-        
-        <div class="mb-4">
-            <label class="block mb-2 font-semibold text-gray-700 dark:text-gray-300">ঋণের পরিমাণ (টাকা)</label>
-            <input type="number" id="emiPrincipal" placeholder="যেমন: 100000" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
-        </div>
-        
-        <div class="mb-4">
-            <label class="block mb-2 font-semibold text-gray-700 dark:text-gray-300">সুদের হার (বার্ষিক %)</label>
-            <input type="number" id="emiRate" placeholder="যেমন: 9" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
-        </div>
-        
-        <div class="mb-6">
-            <label class="block mb-2 font-semibold text-gray-700 dark:text-gray-300">সময়কাল</label>
-            <div class="flex gap-2">
-                <input type="number" id="emiTenure" placeholder="সময়" class="w-2/3 p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
-                <select id="emiTenureType" class="w-1/3 p-3 border rounded-lg bg-gray-100 dark:bg-gray-600 dark:text-white">
-                    <option value="years">বছর</option>
-                    <option value="months">মাস</option>
-                </select>
-            </div>
-        </div>
-
-        <button id="calculateEmiBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg transition-colors">হিসাব করুন</button>
-
-        <div id="emiResult" class="mt-6 p-4 bg-indigo-50 dark:bg-gray-700 rounded-lg hidden">
-            <div class="text-center mb-4">
-                <p class="text-sm text-gray-600 dark:text-gray-300">মাসিক কিস্তি (EMI)</p>
-                <h2 id="emiMonthly" class="text-3xl font-bold text-indigo-700 dark:text-indigo-300">৳ ০</h2>
-            </div>
-            <div class="grid grid-cols-2 gap-4 text-sm border-t border-gray-300 dark:border-gray-600 pt-4">
-                <div>
-                    <p class="text-gray-500 dark:text-gray-400">মোট সুদ</p>
-                    <p id="emiTotalInterest" class="font-bold text-gray-800 dark:text-white">৳ ০</p>
-                </div>
-                <div class="text-right">
-                    <p class="text-gray-500 dark:text-gray-400">মোট পরিশোধ</p>
-                    <p id="emiTotalPayment" class="font-bold text-gray-800 dark:text-white">৳ ০</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- END: EMI Calculator Tab Content -->
 
 <!-- START: IP & Device Info Tab Content -->
 <!-- ======================================================== -->
@@ -12032,143 +10731,6 @@ body.sidebar-open #sidebarOverlay {
 <!-- ======================================================== -->
 <!-- END: Random Picker Content -->
 <!-- ======================================================== -->
-
-<!-- ======================================================== -->
-<!-- START: Unit Price Comparator Content -->
-<!-- ======================================================== -->
-<div id="unitPriceContent" class="calculator-content">
-    <div class="converter-section" style="max-width: 600px; margin: 0 auto;">
-        <h3 class="text-xl font-bold text-gray-700 mb-4 dark:text-gray-200">⚖️ দামের তুলনা (কোনটি সাশ্রয়ী?)</h3>
-        <p class="text-sm text-gray-500 mb-6 dark:text-gray-400">দুটি পণ্যের দাম ও পরিমাণ লিখুন। আমরা বলে দেব কোনটি কেনা লাভজনক।</p>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- পণ্য ক (Item A) -->
-            <div class="bg-blue-50 dark:bg-gray-800 p-4 rounded-lg border border-blue-200 dark:border-gray-600">
-                <h4 class="font-bold text-blue-600 dark:text-blue-400 mb-3 text-lg">পণ্য ১</h4>
-                <div class="mb-3">
-                    <label class="block text-sm font-semibold text-gray-600 dark:text-gray-300 mb-1">দাম (টাকা)</label>
-                    <input type="number" id="priceA" placeholder="যেমন: 50" class="w-full p-2 border rounded dark:bg-gray-700 dark:text-white">
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-600 dark:text-gray-300 mb-1">পরিমাণ (গ্রাম/লিটার/পিস)</label>
-                    <input type="number" id="qtyA" placeholder="যেমন: 500" class="w-full p-2 border rounded dark:bg-gray-700 dark:text-white">
-                </div>
-            </div>
-
-            <!-- পণ্য খ (Item B) -->
-            <div class="bg-purple-50 dark:bg-gray-800 p-4 rounded-lg border border-purple-200 dark:border-gray-600">
-                <h4 class="font-bold text-purple-600 dark:text-purple-400 mb-3 text-lg">পণ্য ২</h4>
-                <div class="mb-3">
-                    <label class="block text-sm font-semibold text-gray-600 dark:text-gray-300 mb-1">দাম (টাকা)</label>
-                    <input type="number" id="priceB" placeholder="যেমন: 90" class="w-full p-2 border rounded dark:bg-gray-700 dark:text-white">
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-600 dark:text-gray-300 mb-1">পরিমাণ (গ্রাম/লিটার/পিস)</label>
-                    <input type="number" id="qtyB" placeholder="যেমন: 1000" class="w-full p-2 border rounded dark:bg-gray-700 dark:text-white">
-                </div>
-            </div>
-        </div>
-
-        <button id="comparePriceBtn" class="w-full mt-6 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all flex justify-center items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" /></svg>
-            তুলনা করুন
-        </button>
-
-        <!-- ফলাফল এরিয়া -->
-        <div id="compareResult" class="hidden mt-6 p-5 rounded-xl border-2 text-center transition-all duration-300">
-            <h4 id="winnerTitle" class="text-2xl font-bold mb-2"></h4>
-            <p id="savingsText" class="text-lg font-medium"></p>
-            <div class="mt-4 text-sm text-gray-600 dark:text-gray-400 grid grid-cols-2 gap-4">
-                <div>পণ্য ১ এর প্রতি ইউনিটের দাম:<br><span id="unitPriceA" class="font-bold">0.00</span> টাকা</div>
-                <div>পণ্য ২ এর প্রতি ইউনিটের দাম:<br><span id="unitPriceB" class="font-bold">0.00</span> টাকা</div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- ======================================================== -->
-<!-- END: Unit Price Comparator Content -->
-<!-- ======================================================== -->
-
-<!-- ডিজিটাল তাসবিহ সেকশন শুরু -->
-<div id="tasbeehContent" class="calculator-content">
-    <div class="tasbeeh-container-modern">
-        
-        <!-- হেডার এবং প্রোফাইল সিলেকশন -->
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-            <div>
-                <h3 class="text-2xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
-                    📿 ডিজিটাল তাসবিহ
-                </h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                    বর্তমান প্রোফাইল: <span id="currentProfileName" class="font-bold text-blue-600 dark:text-blue-400">ডিফল্ট</span>
-                </p>
-            </div>
-            
-            <button id="toggleUserListBtn" class="px-4 py-2 bg-indigo-100 dark:bg-gray-700 text-indigo-700 dark:text-indigo-300 rounded-xl font-semibold hover:bg-indigo-200 dark:hover:bg-gray-600 transition-colors flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                প্রোফাইল তালিকা
-            </button>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- বাম পাশ: কাউন্টার -->
-            <div class="lg:col-span-2 flex flex-col items-center">
-                <!-- মেইন কাউন্টার বাটন -->
-                <div id="tasbeehDisplayArea" class="tasbeeh-counter-ring">
-                    <div id="tasbeehCountDisplay" class="tasbeeh-count-text">০</div>
-                    <div class="tasbeeh-label">গণনা করতে ক্লিক করুন</div>
-                </div>
-
-                <!-- কন্ট্রোল বাটনস -->
-                <div class="flex flex-wrap justify-center gap-4 w-full max-w-md">
-                    <button id="tasbeehUndoBtn" class="flex-1 px-4 py-3 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-xl font-bold hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors flex justify-center items-center gap-2 disabled:opacity-50" disabled>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5v0a5.5 5.5 0 0 1-5.5 5.5H11"/></svg>
-                        আনডু
-                    </button>
-                    
-                    <button id="tasbeehResetBtn" class="flex-1 px-4 py-3 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-xl font-bold hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors flex justify-center items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 12"/></svg>
-                        রিসেট
-                    </button>
-
-                    <button id="tasbeehRedoBtn" class="flex-1 px-4 py-3 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-xl font-bold hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors flex justify-center items-center gap-2 disabled:opacity-50" disabled>
-                        রিডু
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 14 5-5-5-5"/><path d="M20 9H9.5A5.5 5.5 0 0 0 4 14.5v0A5.5 5.5 0 0 0 9.5 20H13"/></svg>
-                    </button>
-                </div>
-                
-                <!-- টার্গেট/ম্যানুয়াল সেট -->
-                <div class="mt-6 w-full max-w-md p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
-                    <label class="block text-sm font-semibold text-gray-600 dark:text-gray-300 mb-2">সংখ্যা সেট করুন:</label>
-                    <div class="flex gap-2">
-                        <input type="number" id="tasbeehManualInput" class="w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="0">
-                        <button id="tasbeehSetBtn" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg">সেট</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ডান পাশ: ইউজার লিস্ট (ডিফল্টভাবে ডেস্কটপে দেখা যাবে, মোবাইলে টগল হবে) -->
-            <div id="tasbeehUserSection" class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-xl border border-gray-200 dark:border-gray-700 hidden lg:block">
-                <h4 class="text-lg font-bold text-gray-700 dark:text-gray-200 mb-4 border-b pb-2 dark:border-gray-600">ব্যবহারকারী / প্রোফাইল</h4>
-                
-                <!-- নতুন প্রোফাইল যোগ -->
-                <div class="flex gap-2 mb-4">
-                    <input type="text" id="newProfileName" placeholder="নতুন নাম লিখুন..." class="flex-grow p-2 text-sm border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500">
-                    <button id="addProfileBtn" class="bg-green-500 hover:bg-green-600 text-white p-2 rounded-lg" title="যোগ করুন">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                    </button>
-                </div>
-
-                <!-- লিস্ট -->
-                <div id="tasbeehProfilesList" class="user-list-container">
-                    <!-- জাভাস্ক্রিপ্ট দিয়ে লিস্ট এখানে জেনারেট হবে -->
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ডিজিটাল তাসবিহ সেকশন শেষ -->
 
 <!-- নতুন: ডিফ চেকার বিভাগ -->
 <div id="diffCheckerContent" class="calculator-content">
@@ -13574,260 +12136,6 @@ document.addEventListener('DOMContentLoaded', () => {
 // End Typing Script
 // ====================================================================
 
-
-// ====================================================================
-// START: DATE AND TIME BANNER SCRIPT (ঋতুসহ আপডেট করা হয়েছে - CPU Optimized)
-// ====================================================================
-
-        // নতুন ফাংশন: ঘড়ি ট্যাবের অ্যালার্ম সেকশনে যাওয়ার জন্য
-        function switchToClockTab() {
-            // ১. ঘড়ি ট্যাব ওপেন করুন
-            if (typeof showTab === 'function') {
-                showTab('clock');
-            } else {
-                const clockTabBtn = document.getElementById('clockTab');
-                if (clockTabBtn) clockTabBtn.click();
-            }
-
-            // ২. অ্যালার্ম সেকশনে স্ক্রল করুন (সামান্য ডিলে দিয়ে যাতে ট্যাব রেন্ডার হতে পারে)
-            setTimeout(() => {
-                const alarmSection = document.querySelector('.clock-section.alarm');
-                if (alarmSection) {
-                    alarmSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    // ব্যবহারকারীর দৃষ্টি আকর্ষণের জন্য বর্ডার বা শ্যাডো ইফেক্ট
-                    alarmSection.classList.add('ring-4', 'ring-blue-500', 'ring-opacity-50');
-                    setTimeout(() => {
-                        alarmSection.classList.remove('ring-4', 'ring-blue-500', 'ring-opacity-50');
-                    }, 2000);
-                }
-            }, 100);
-        }
-
-// গ্রেগরিয়ান তারিখকে বাংলা তারিখে রূপান্তর করার ফাংশন (বাংলাদেশ স্ট্যান্ডার্ড)
-        function getBengaliDate(originalGregorianDate) {
-            // সেটিংস থেকে বাংলা তারিখ অ্যাডজাস্টমেন্ট লোড করুন (ডিফল্ট ০)
-            const adjustment = parseInt(localStorage.getItem('bengaliDateAdjustment') || '0', 10);
-            
-            // তারিখ কপি করে অ্যাডজাস্টমেন্ট যোগ করুন
-            const gregorianDate = new Date(originalGregorianDate);
-            gregorianDate.setDate(gregorianDate.getDate() + adjustment);
-            // সময়ের ব্যবধান সমস্যা এড়াতে সময় রিসেট করা হলো
-            gregorianDate.setHours(0, 0, 0, 0);
-
-            const year = gregorianDate.getFullYear();
-            const month = gregorianDate.getMonth(); // 0-11
-            const day = gregorianDate.getDate();
-
-            let bengaliYear;
-            const bengaliMonthNames = [
-                "বৈশাখ", "জ্যৈষ্ঠ", "আষাঢ়", "শ্রাবণ", "ভাদ্র", "আশ্বিন",
-                "কার্তিক", "অগ্রহায়ণ", "পৌষ", "মাঘ", "ফাল্গুন", "চৈত্র"
-            ];
-
-            // পহেলা বৈশাখ ১৪ এপ্রিল
-            if (month < 3 || (month === 3 && day < 14)) { 
-                bengaliYear = year - 594;
-            } else { 
-                bengaliYear = year - 593;
-            }
-
-            // সংশোধিত ক্যালেন্ডার অনুযায়ী মাসের দিন সংখ্যা (প্রথম ৬ মাস ৩১ দিন)
-            const bengaliMonthLengths = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 29, 30];
-            
-            // লিপ ইয়ার চেক: ফাল্গুন মাস যে গ্রেগরিয়ান বছরে পড়ে (অর্থাৎ পরের বছর), সেই বছর চেক করতে হবে
-            const gregorianYearForBengaliLeapCheck = bengaliYear + 594;
-            const isGregorianLeapYear = (gregorianYearForBengaliLeapCheck % 4 === 0 && gregorianYearForBengaliLeapCheck % 100 !== 0) || gregorianYearForBengaliLeapCheck % 400 === 0;
-
-            if (isGregorianLeapYear) {
-                bengaliMonthLengths[10] = 30; // অধিবর্ষে ফাল্গুন ৩০ দিন
-            }
-
-            // বাংলা বছরের শুরু (১৪ এপ্রিল)
-            const startOfCurrentBengaliYearGregorian = new Date(year, 3, 14);
-            startOfCurrentBengaliYearGregorian.setHours(0, 0, 0, 0);
-
-            if (gregorianDate < startOfCurrentBengaliYearGregorian) {
-                startOfCurrentBengaliYearGregorian.setFullYear(year - 1);
-            }
-
-            // দিনের পার্থক্য বের করা
-            const diffTime = gregorianDate.getTime() - startOfCurrentBengaliYearGregorian.getTime();
-            let daysPassedSinceBengaliYearStart = Math.round(diffTime / (1000 * 60 * 60 * 24));
-
-            let currentBengaliMonthIndex = 0;
-            let currentBengaliDay = 0;
-
-            for (let i = 0; i < bengaliMonthNames.length; i++) {
-                if (daysPassedSinceBengaliYearStart < bengaliMonthLengths[i]) {
-                    currentBengaliMonthIndex = i;
-                    currentBengaliDay = daysPassedSinceBengaliYearStart + 1; 
-                    break;
-                }
-                daysPassedSinceBengaliYearStart -= bengaliMonthLengths[i];
-            }
-
-            const toBengaliNumber = (num) => {
-                const numbers = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
-                return num.toString().split('').map(digit => numbers[parseInt(digit)]).join('');
-            };
-
-            return {
-                day: currentBengaliDay,
-                month: bengaliMonthNames[currentBengaliMonthIndex],
-                year: bengaliYear,
-                monthIndex: currentBengaliMonthIndex, 
-                formatted: `${toBengaliNumber(currentBengaliDay)} ${bengaliMonthNames[currentBengaliMonthIndex]} ${toBengaliNumber(bengaliYear)} বঙ্গাব্দ`
-            };
-        }
-
-        // ঋতু বের করার ফাংশন
-        function getBengaliSeason(monthIndex) {
-            const seasons = [
-                "গ্রীষ্মকাল", "গ্রীষ্মকাল", 
-                "বর্ষাকাল", "বর্ষাকাল",   
-                "শরৎকাল", "শরৎকাল",   
-                "হেমন্তকাল", "হেমন্তকাল", 
-                "শীতকাল", "শীতকাল",     
-                "বসন্তকাল", "বসন্তকাল"  
-            ];
-            return seasons[monthIndex] || ""; 
-        }
-
-        // ক্যাশিং ভেরিয়েবল (CPU অপ্টিমাইজেশনের জন্য)
-        let cachedDatePartHTML = "";
-        let lastDateUpdateTimestamp = 0;
-        const UPDATE_INTERVAL_MS = 10 * 60 * 1000; // ১০ মিনিট
-
-        // অনলাইন থেকে সঠিক সময় এবং তারিখ আনার ফাংশন
-        async function fetchOnlineDate() {
-            try {
-                // WorldTimeAPI ব্যবহার করে ঢাকার সময় আনা হচ্ছে
-                const response = await fetch('https://worldtimeapi.org/api/timezone/Asia/Dhaka');
-                if (!response.ok) throw new Error('Network response was not ok');
-                const data = await response.json();
-                
-                // ডেট অবজেক্ট তৈরি
-                const onlineDate = new Date(data.datetime);
-                
-                // লোকাল স্টোরেজে সেভ করা (ব্যানারের জন্য)
-                // আমরা পুরো ডেট স্ট্রিং সেভ করছি না, বরং অফসেট বা বেস ডেট সেভ করছি
-                localStorage.setItem('lastOnlineDateCheck', new Date().toISOString());
-                
-                return onlineDate;
-            } catch (error) {
-                console.error("Online date fetch failed:", error);
-                return new Date(); // ফেইল করলে সিস্টেম টাইম ব্যবহার করবে
-            }
-        }
-
-        // মডিফাইড updateDateTimeBanner ফাংশন (Async করা হয়েছে)
-        async function updateDateTimeBanner(forceUpdate = false) {
-            const bannerElement = document.getElementById('currentDateTimeBanner');
-            if (!bannerElement) return;
-
-            // সেটিংস চেক
-            const isTimeBannerEnabled = localStorage.getItem('timeBannerEnabled') !== 'false';
-            if (!isTimeBannerEnabled) {
-                bannerElement.style.display = 'none';
-                return; 
-            } else {
-                bannerElement.style.display = 'flex';
-            }
-
-            // বর্তমান সময় (সিস্টেম)
-            let now = new Date();
-            const currentTime = Date.now();
-            const currentDay = now.getDate();
-
-            // অটো আপডেট লজিক চেক (পরিবর্তিত: ডিফল্ট false করা হয়েছে)
-            // পরিবর্তন: === 'true' ব্যবহার করা হয়েছে যাতে ডিফল্ট false থাকে
-            const isAutoUpdate = localStorage.getItem('autoUpdateDate') === 'true';
-            
-            // বিশেষ শর্ত: মাসের ২৭ তারিখের পর থেকে পরবর্তী মাসের ৩ তারিখ পর্যন্ত
-            const isTransitionPeriod = (currentDay >= 27 || currentDay <= 3);
-            
-            // লাস্ট আপডেটের সময় চেক (প্রতি ঘণ্টায় একবার অটো চেক করতে চাইলে)
-            const lastCheck = localStorage.getItem('lastOnlineDateCheck');
-            const shouldCheckOnline = forceUpdate || 
-                                     (isAutoUpdate && (!lastCheck || (currentTime - new Date(lastCheck).getTime() > 3600000))) || 
-                                     (isTransitionPeriod && (!lastCheck || (currentTime - new Date(lastCheck).getTime() > 3600000)));
-
-            // ১০ মিনিট পর পর অথবা ফোর্স আপডেট হলে তারিখ ক্যালকুলেশন হবে
-            if (forceUpdate || currentTime - lastDateUpdateTimestamp > UPDATE_INTERVAL_MS || !cachedDatePartHTML) {
-                
-                // যদি শর্ত মিলে, তবে অনলাইন থেকে তারিখ আনবে
-                if (shouldCheckOnline) {
-                    try {
-                        const onlineDate = await fetchOnlineDate();
-                        // সিস্টেম টাইমের সাথে অনলাইন টাইমের পার্থক্য থাকলে, আমরা অনলাইন ডেটকে বেস হিসেবে ধরবো
-                        // তবে সাধারণ প্রদর্শনের জন্য আমরা 'now' ভেরিয়েবল আপডেট করছি ক্যালকুলেশনের জন্য
-                        now = onlineDate; 
-                    } catch (e) {
-                        // ফেইল করলে সাইলেন্টলি সিস্টেম টাইমই থাকবে
-                    }
-                }
-
-                const toBengaliNumber = (num) => {
-                    const numbers = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
-                    return String(num).split('').map(digit => !isNaN(parseInt(digit)) ? numbers[parseInt(digit)] : digit).join('');
-                };
-
-                // Gregorian Date
-                const gregorianDay = toBengaliNumber(now.getDate());
-                const gregorianMonth = now.toLocaleDateString('bn-BD', { month: 'long' });
-                const gregorianYear = toBengaliNumber(now.getFullYear());
-                const gregorianDateString = `${gregorianDay} ${gregorianMonth} ${gregorianYear}`;
-                const dayOfWeekBengali = now.toLocaleDateString('bn-BD', { weekday: 'long' });
-
-                // Bengali Date
-                const bengaliDateInfo = getBengaliDate(now);
-                const bengaliDateString = bengaliDateInfo.formatted;
-                const bengaliSeason = getBengaliSeason(bengaliDateInfo.monthIndex);
-
-                // ক্যাশ করা HTML আপডেট
-                cachedDatePartHTML = `<span class="text-green-700 dark:text-green-300">আজ</span> <span class="text-green-700 dark:text-green-300">${dayOfWeekBengali}</span>, <span class="text-blue-700 dark:text-blue-300">${gregorianDateString} ইং</span>, <span class="text-green-700 dark:text-green-300">${bengaliDateString.replace('বঙ্গাব্দ', '')} বঙ্গাব্দ, ${bengaliSeason}</span>, <span class="text-green-700 dark:text-green-300">এখন সময়</span>`;
-                
-                lastDateUpdateTimestamp = currentTime;
-                
-                // লোকাল স্টোরেজে ক্যালকুলেটেড ডাটা সেভ রাখা (যদি পরে অফলাইনে দরকার হয়)
-                localStorage.setItem('cachedBannerData', JSON.stringify({
-                    html: cachedDatePartHTML,
-                    timestamp: currentTime
-                }));
-            } else {
-                // পেজ লোডের সময় যদি ভেরিয়েবল খালি থাকে তবে স্টোরেজ থেকে নেয়ার চেষ্টা
-                if (!cachedDatePartHTML) {
-                    const savedData = JSON.parse(localStorage.getItem('cachedBannerData') || '{}');
-                    if (savedData.html) {
-                        cachedDatePartHTML = savedData.html;
-                    }
-                }
-            }
-
-            // Time (সময়) - এটি সিস্টেম ক্লক থেকেই চলবে যাতে সেকেন্ডের কাঁটা স্মুথ থাকে
-            const timeNow = new Date();
-            const timeString = timeNow.toLocaleTimeString('bn-BD', {
-                hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true, timeZone: 'Asia/Dhaka'
-            });
-
-            // সেকেন্ডের ফেড এফেক্ট
-            if (timeNow.getSeconds() === 0) bannerElement.style.opacity = '1';
-            else if (timeNow.getSeconds() === 59) bannerElement.style.opacity = '0';
-            else if (timeNow.getSeconds() === 1 && bannerElement.style.opacity !== '1') bannerElement.style.opacity = '1';
-
-            // ফাইনাল আউটপুট
-            bannerElement.innerHTML = `${cachedDatePartHTML}<span class="text-green-700 dark:text-green-300 cursor-pointer hover:underline" onclick="switchToClockTab()" title="অ্যালার্ম সেট করতে ক্লিক করুন"> ${timeString}</span>`;
-        }
-
-        // প্রতি সেকেন্ডে আপডেট হবে
-        setInterval(() => updateDateTimeBanner(false), 1000);
-        updateDateTimeBanner(false); // শুরুতে একবার কল করা
-
-// ====================================================================
-// END: DATE AND TIME BANNER SCRIPT
-// ====================================================================
-
-
 // ====================================================================
 // START: DARK MODE / LIGHT MODE TOGGLE SCRIPT
 // ====================================================================
@@ -14571,186 +12879,7 @@ document.addEventListener('DOMContentLoaded', () => {
  // ====================================================================
  // END: NEW FILE UPLOAD SCRIPT FOR TEXT ASSISTANT PART
  // ====================================================================
-		
-// ====================================================================
-// START: GOOGLE MAP SCRIPT
-// ====================================================================		
-        // --- গুগল ম্যাপ ফিচার ---
-    document.addEventListener('DOMContentLoaded', () => {
-        const searchInput = document.getElementById('searchInput');
-        const searchBtn = document.getElementById('searchBtn');
-        const myLocationBtn = document.getElementById('myLocationBtn');
-        const directionsFrom = document.getElementById('directionsFrom');
-        const directionsTo = document.getElementById('directionsTo');
-        const directionsBtn = document.getElementById('directionsBtn');
 
-        // 1. স্থান খোঁজার জন্য ইভেন্ট লিসেনার
-        if (searchBtn) {
-            searchBtn.addEventListener('click', () => {
-                const query = searchInput.value.trim();
-                if (query) {
-                    const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
-                    window.open(url, '_blank');
-                } else {
-                    showCustomAlert('অনুগ্রহ করে খোঁজার জন্য একটি স্থানের নাম লিখুন।');
-                }
-            });
-             // Enter চেপে সার্চ করার সুবিধা
-            searchInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    searchBtn.click();
-                }
-            });
-        }
-
-        // 2. আমার অবস্থানের জন্য ইভেন্ট লিসেনার
-        if (myLocationBtn) {
-            myLocationBtn.addEventListener('click', () => {
-                // এই URLটি গুগল ম্যাপকে ব্যবহারকারীর বর্তমান অবস্থান খুঁজতে বলবে
-                const url = 'https://www.google.com/maps/search/My+Location';
-                window.open(url, '_blank');
-            });
-        }
-
-        // 3. দিকনির্দেশনার জন্য ইভেন্ট লিসেনার
-        if (directionsBtn) {
-            directionsBtn.addEventListener('click', () => {
-                const origin = directionsFrom.value.trim();
-                const destination = directionsTo.value.trim();
-                if (origin && destination) {
-                    const url = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}`;
-                    window.open(url, '_blank');
-                } else {
-                    showCustomAlert('অনুগ্রহ করে শুরু এবং গন্তব্য উভয় স্থান লিখুন।');
-                }
-            });
-            // Enter চেপে দিকনির্দেশনা খোঁজার সুবিধা
-            directionsTo.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    directionsBtn.click();
-                }
-            });
-             directionsFrom.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    directionsBtn.click();
-                }
-            });
-        }
-    });
-// ====================================================================
-// END: GOOGLE MAP SCRIPT
-
-// ====================================================================
-// START: NEW FILE UPLOAD SCRIPT FOR TEXT ASSISTANT
-// ====================================================================
-    // জেমিনিকে জিজ্ঞাসা করার ফাংশন আপডেট করুন
-    async function handleAskGemini() {
-        const assistantInput = document.getElementById('assistantInput');
-        const assistantLoading = document.getElementById('assistantLoading');
-        const askGeminiBtn = document.getElementById('askGeminiBtn');
-        const chatWindow = document.getElementById('chatWindow');
-        const modelSelection = document.getElementById('modelSelection');
-        
-        let chatHistory = window.chatHistory || [];
-
-        const promptText = assistantInput.value.trim();
-        if (!promptText && !uploadedFile) return;
-
-        // ব্যবহারকারীর বার্তা প্রদর্শন করুন
-        addMessageToChat(promptText, 'user', uploadedFile);
-        assistantInput.value = '';
-
-        let userParts = [];
-        if (promptText) {
-            userParts.push({
-                text: promptText
-            });
-        }
-        if (uploadedFile) {
-            userParts.push({
-                inlineData: {
-                    mimeType: uploadedFile.type,
-                    data: uploadedFile.base64
-                }
-            });
-        }
-
-        chatHistory.push({
-            role: "user",
-            parts: userParts
-        });
-        window.chatHistory = chatHistory;
-
-        // ফাইল পাঠানোর পর প্রিভিউ সরিয়ে ফেলুন
-        removeFile();
-
-        if (assistantLoading) assistantLoading.style.display = 'block';
-        if (askGeminiBtn) askGeminiBtn.disabled = true;
-
-        try {
-            const apiKey = localStorage.getItem('geminiApiKey');
-            if (!apiKey) {
-                addMessageToChat('জেমিনি API কী সেট করা হয়নি। অনুগ্রহ করে "API কী সেট করুন" বাটনে ক্লিক করে কী সেট করুন।', 'gemini-error');
-                return;
-            }
-
-            const payload = {
-                contents: chatHistory
-            };
-
-            // --- আপডেট: সেটিংস থেকে Google সার্চ স্ট্যাটাস চেক করুন (ডিফল্ট: চালু) ---
-            const isGoogleSearchEnabled = localStorage.getItem('googleSearchEnabled') !== 'false';
-
-            // যদি সেটিংস চালু থাকে, তাহলে payload-এ 'tools' যুক্ত করুন
-            if (isGoogleSearchEnabled) {
-                payload.tools = [{ "google_search": {} }];
-            }
-            // --- শেষ: আপডেট ---
-
-
-			// --- সেটিংস থেকে গ্লোবাল মডেল ব্যবহার ---
-            const model = localStorage.getItem('geminiModel') || "gemini-flash-latest";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-            // --- পরিবর্তন শেষ ---
-
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload) // পরিবর্তিত payload এখানে ব্যবহৃত হচ্ছে
-            });
-
-            const result = await response.json();
-            let geminiText;
-
-            if (result.candidates && result.candidates[0]?.content?.parts?.[0]?.text) {
-                geminiText = result.candidates[0].content.parts[0].text;
-                chatHistory.push({
-                    role: "model",
-                    parts: [{
-                        text: geminiText
-                    }]
-                });
-                window.chatHistory = chatHistory;
-            } else {
-                geminiText = 'দুঃখিত, এই মুহূর্তে উত্তর দেওয়া সম্ভব হচ্ছেনা। অনুগ্রহ করে কানেকশন চেক করে আবার চেষ্টা করুন অথবা এপিআইটি বৈধ বা সঠিক নয়, চেক করে দেখুন অথবা সেটিংস থেকে জেমিনি মডেল পরিবর্তন করে আবার চেষ্টা করুন।';
-                console.error('API Response Error:', result);
-            }
-            addMessageToChat(geminiText, 'gemini');
-
-        } catch (error) {
-            const errorMessage = 'একটি ত্রুটি ঘটেছে: ' + error.message;
-            addMessageToChat(errorMessage, 'gemini-error');
-            console.error('API Call Error:', error);
-        } finally {
-            if (assistantLoading) assistantLoading.style.display = 'none';
-            if (askGeminiBtn) askGeminiBtn.disabled = false;
-        }
-    }
-    // ====================================================================
-    // END: NEW FILE UPLOAD SCRIPT FOR TEXT ASSISTANT SCRIPT
-    // ====================================================================
 
 // ====================================================================
 // START: UNIT CONVERTER (MEASUREMENT) SCRIPT (CORRECTED)
@@ -14866,77 +12995,6 @@ function initializeUnitConverters() {
         }
     });
 }
-// BMI Calculator Script - শুরু
-const weightInput = document.getElementById('bmi-weight');
-const heightFeetInput = document.getElementById('bmi-height-feet');
-const heightInchesInput = document.getElementById('bmi-height-inches');
-const calculateBtn = document.getElementById('bmi-calculate-btn');
-const resultDiv = document.getElementById('bmi-result');
-
-if (calculateBtn) {
-    calculateBtn.addEventListener('click', () => {
-        const weight = parseFloat(weightInput.value);
-        const feet = parseFloat(heightFeetInput.value) || 0;
-        const inches = parseFloat(heightInchesInput.value) || 0;
-
-        if (isNaN(weight) || weight <= 0) {
-            showResult('অনুগ্রহ করে সঠিক ওজন লিখুন।', 'bmi-obese');
-            return;
-        }
-
-        if ((isNaN(feet) && isNaN(inches)) || (feet <= 0 && inches <= 0)) {
-            showResult('অনুগ্রহ করে সঠিক উচ্চতা লিখুন।', 'bmi-obese');
-            return;
-        }
-
-        // Convert height to meters
-        const totalInches = (feet * 12) + inches;
-        const heightInMeters = totalInches * 0.0254;
-
-        if (heightInMeters <= 0) {
-            showResult('অনুগ্রহ করে সঠিক উচ্চতা লিখুন।', 'bmi-obese');
-            return;
-        }
-
-        // Calculate BMI
-        const bmi = weight / (heightInMeters * heightInMeters);
-        const bmiFormatted = bmi.toFixed(2);
-
-        // Determine BMI category
-        let category = '';
-        let categoryClass = '';
-        if (bmi < 18.5) {
-            category = 'কম ওজন (Underweight)';
-            categoryClass = 'bmi-underweight';
-        } else if (bmi >= 18.5 && bmi <= 24.9) {
-            category = 'স্বাভাবিক ওজন (Normal)';
-            categoryClass = 'bmi-normal';
-        } else if (bmi >= 25 && bmi <= 29.9) {
-            category = 'অতিরিক্ত ওজন (Overweight)';
-            categoryClass = 'bmi-overweight';
-        } else {
-            category = 'স্থূলতা (Obese)';
-            categoryClass = 'bmi-obese';
-        }
-
-        const resultText = `আপনার BMI: <strong>${bmiFormatted}</strong><br>আপনি '${category}' শ্রেণীতে আছেন।`;
-        showResult(resultText, categoryClass);
-    });
-}
-
-
-function showResult(message, className) {
-    resultDiv.style.display = 'block';
-    resultDiv.innerHTML = message;
-    // Reset classes
-    resultDiv.className = 'bmi-result-section';
-    // Add new class
-    if(className) {
-        resultDiv.classList.add(className);
-    }
-}
-// BMI Calculator Script - শেষ
-
 
 // START: Time Converter (24-hour to 12-hour) Script
 
@@ -15401,26 +13459,14 @@ try {
 
             console.log('DOMContentLoaded ইভেন্ট চালু হয়েছে। স্ক্রিপ্ট চলছে।');
             try {
-                const basicCalcTab = document.getElementById('basicCalcTab');
 				// এই চারটি লাইন আপনার বিদ্যমান const ভেরিয়েবলের সাথে যুক্ত করুন
-				const aboutUsTab = document.getElementById('aboutUsTab');
-				const contactUsTab = document.getElementById('contactUsTab');
-				const privacyPolicyTab = document.getElementById('privacyPolicyTab');
-				const termsTab = document.getElementById('termsTab');
 				const pcVoiceClientTab = document.getElementById('pcVoiceClientTab');
 				const pcVoiceClientContent = document.getElementById('pcVoiceClientContent');
-				const aboutUsContent = document.getElementById('aboutUsContent');
-				const contactUsContent = document.getElementById('contactUsContent');
-				const privacyPolicyContent = document.getElementById('privacyPolicyContent');
-				const termsContent = document.getElementById('termsContent');
                 const ageCalcTab = document.getElementById('ageCalcTab');
-                const dateCalcTab = document.getElementById('dateCalcTab');
-                const scientificCalcTab = document.getElementById('scientificCalcTab');
                 const imageResizerTab = document.getElementById('imageResizerTab');
 				const imageResizerContent = document.getElementById('imageResizerContent');
                 const converterTab = document.getElementById('converterTab');
                 const measurementTab = document.getElementById('measurementTab'); // Add this line
-                const textAssistantTab = document.getElementById('textAssistantTab');
                 const allFeaturesTab = document.getElementById('allFeaturesTab');
                 const setApiKeyBtn = document.getElementById('setApiKeyBtn');
                 const spellCheckTab = document.getElementById('spellCheckTab');
@@ -15431,40 +13477,26 @@ try {
 				const fileTransferTab = document.getElementById('fileTransferTab');
 				const fileTransferContent = document.getElementById('fileTransferContent');
 				const typingTestTab = document.getElementById('typingTestTab'); // এই লাইনটি যোগ করুন
-                const basicCalculatorContent = document.getElementById('basicCalculatorContent');
                 const ageCalculatorContent = document.getElementById('ageCalculatorContent');
-                const dateCalculatorContent = document.getElementById('dateCalculatorContent');
-                const scientificCalculatorContent = document.getElementById('scientificCalculatorContent');
                 const newsContent = document.getElementById('newsContent');
                 const converterContent = document.getElementById('converterContent');
                 const measurementContent = document.getElementById('measurementContent'); // Add this line
-                const textAssistantContent = document.getElementById('textAssistantContent');
                 const allFeaturesContent = document.getElementById('allFeaturesContent');
                 const spellCheckerContent = document.getElementById('spellCheckerContent');
                 const textBeautifierContent = document.getElementById('textBeautifierContent');
                 const wordMeaningContent = document.getElementById('wordMeaningContent');
                 const textToSpeechContent = document.getElementById('textToSpeechContent'); // TTS কন্টেন্ট
                 const speechToTextContent = document.getElementById('speechToTextContent'); // STT কন্টেন্ট
-				const mapTab = document.getElementById('mapTab');
-				const mapContent = document.getElementById('mapContent');
-				const playerTab = document.getElementById('playerTab');
-				const playerContent = document.getElementById('playerContent');
 				const qrCodeTab = document.getElementById('qrCodeTab');
 				const qrCodeContent = document.getElementById('qrCodeContent');
 				const emergencyNumbersTab = document.getElementById('emergencyNumbersTab');
 				const importantLinksTab = document.getElementById('importantLinksTab');
 				const importantLinksContent = document.getElementById('importantLinksContent');
 				const emergencyNumbersContent = document.getElementById('emergencyNumbersContent');
-				const healthLifestyleTab = document.getElementById('healthLifestyleTab');
-				const healthLifestyleContent = document.getElementById('healthLifestyleContent');
 				const daysObservancesTab = document.getElementById('daysObservancesTab');
 				const daysObservancesContent = document.getElementById('daysObservancesContent');
 				const holidayListTab = document.getElementById('holidayListTab');
 				const holidayListContent = document.getElementById('holidayListContent');
-				const quizTab = document.getElementById('quizTab');
-				const quizContent = document.getElementById('quizContent');
-				const donateTab = document.getElementById('donateTab');
-				const donateContent = document.getElementById('donateContent');
 				const invoiceTab = document.getElementById('invoiceTab');
 				const invoiceContent = document.getElementById('invoiceContent');
 				const colorPickerTab = document.getElementById('colorPickerTab');
@@ -15474,15 +13506,9 @@ try {
 				const barcodeGenContent = document.getElementById('barcodeGenContent');
 				const randomPickerTab = document.getElementById('randomPickerTab');
 				const randomPickerContent = document.getElementById('randomPickerContent');
-				const unitPriceTab = document.getElementById('unitPriceTab');
-				const unitPriceContent = document.getElementById('unitPriceContent');
-				const tasbeehTab = document.getElementById('tasbeehTab');
-				const tasbeehContent = document.getElementById('tasbeehContent');
 				const canvasTab = document.getElementById('canvasTab');
 				const canvasContent = document.getElementById('canvasContent');
 
-const webSearchTab = document.getElementById('webSearchTab');
-const webSearchContent = document.getElementById('webSearchContent');
 // নতুন ফিচার ট্যাব ও কন্টেন্ট ভেরিয়েবল
 const screenRecorderTab = document.getElementById('screenRecorderTab');
 const screenRecorderContent = document.getElementById('screenRecorderContent');
@@ -15696,7 +13722,6 @@ window.addEventListener('click', () => {
                 const apiKeyMessage = document.getElementById('apiKeyMessage');
 
                 // নিশ্চিত করুন যে সমস্ত DOM উপাদান সঠিকভাবে নির্বাচিত হয়েছে
-                console.log('basicCalcTab:', basicCalcTab);
                 console.log('setApiKeyBtn:', setApiKeyBtn);
                 console.log('apiKeyModal:', apiKeyModal);
 
@@ -15708,24 +13733,20 @@ window.addEventListener('click', () => {
                 /**
                  * ট্যাব আইডি থেকে showTab() ফাংশনের জন্য সঠিক কী (key) তৈরি করে।
                  * এটি বিশাল tabIdToShowTabKeyMap অবজেক্টের প্রয়োজনীয়তা দূর করে।
-                 * @param {string} id - ট্যাবের বাটন আইডি (যেমন: 'basicCalcTab')।
-                 * @returns {string} - showTab() ফাংশনের জন্য ব্যবহৃত কী (যেমন: 'basic')।
+                 * @param {string} id - ট্যাবের বাটন আইডি (যেমন: 'ageCalcTab')।
+                 * @returns {string} - showTab() ফাংশনের জন্য ব্যবহৃত কী (যেমন: 'age')।
                  */
            const getTabKey = (id) => {
                     if (!id) return 'converter'; // ডিফল্ট ফলব্যাক
 
-                    // কিছু ট্যাবের জন্য বিশেষ সংক্ষিপ্ত রূপ ব্যবহার করা হয়েছে, সেগুলোর জন্য একটি ছোট ম্যাপ।
+                    // কিছু ট্যাবের জন্য বিশেষ সংক্ষিপ্ত রূপ ব্যবহার করা হয়েছে, সেগুলোর জন্য একটি ছোট ম্যাপ।
                     const abbreviations = {
-                        'basicCalcTab': 'basic',
                         'ageCalcTab': 'age',
-                        'dateCalcTab': 'date',
-                        'scientificCalcTab': 'scientific',
                         'textBeautifierTab': 'beautify',
                         'wordMeaningTab': 'meaning',
                         // নতুন সংযোজন: এই ট্যাবগুলোর জন্য সংক্ষিপ্ত কী যোগ করা হয়েছে
                         'emergencyNumbersTab': 'emergency',
                         'barcodeGenTab': 'barcode',
-                        'emiCalcTab': 'emi',
                         'ipInfoTab': 'ip',
                         'textEncryptionTab': 'encryption',
                         'holidayListTab': 'holiday',
@@ -15833,10 +13854,6 @@ window.addEventListener('click', (e) => {
 
 // নতুন ফাংশন: কনভার্টার ট্যাব অ্যাকটিভ হলে অন্য সকল ভারী কার্যক্রম বন্ধ করার জন্য
 function stopOtherTabActivities() {
-    // ১. বিশ্ব ঘড়ি আপডেট থামান (ঘড়ি ট্যাবের লাইভ টাইম আপডেট বন্ধ করা)
-    if (window.worldClockIntervalId) {
-        clearInterval(window.worldClockIntervalId);
-    }
     // ২. আবহাওয়া আপডেট থামান (নতুন যোগ করা হয়েছে)
     if (window.weatherRefreshIntervalId) {
         clearInterval(window.weatherRefreshIntervalId);
@@ -15846,20 +13863,21 @@ function stopOtherTabActivities() {
 
 function showTab(tabId) {
     const tabs = [
-        basicCalcTab,colorPickerTab, dashboardTab,imageResizerTab,moreSettingsTab,historyTab,currencyTab, emiCalcTab, ipInfoTab, recipeTab, pdfToolsTab,screenRecorderTab, jsonFormatterTab, memeGenTab, speedTestTab,
-        ageCalcTab, dateCalcTab, scientificCalcTab,  converterTab, measurementTab, typingTestTab, healthLifestyleTab,donateTab,barcodeGenTab, randomPickerTab,pcVoiceClientTab,
-        translatorTab, mapTab, imageToTextTab, wordCounterTab, weatherTab, notepadTab, clockTab,playerTab,daysObservancesTab,canvasTab,fileTransferTab,
-        qrCodeTab,emergencyNumbersTab, spellCheckTab, textBeautifierTab, wordMeaningTab, ttsTab, sttTab, importantLinksTab,invoiceTab, webSearchTab, seoMetaGenTab,
-        textAssistantTab,holidayListTab,quizTab,unitPriceTab,tasbeehTab,diffCheckerTab,expenseTrackerTab,textEncryptionTab,aboutUsTab, contactUsTab, privacyPolicyTab, termsTab,
-        allFeaturesTab
+        colorPickerTab, dashboardTab,imageResizerTab,moreSettingsTab,historyTab,currencyTab, ipInfoTab, pdfToolsTab,screenRecorderTab, jsonFormatterTab, memeGenTab, speedTestTab,
+        ageCalcTab, converterTab, measurementTab, typingTestTab,barcodeGenTab, randomPickerTab,pcVoiceClientTab,
+        translatorTab, imageToTextTab, wordCounterTab, weatherTab, notepadTab,daysObservancesTab,canvasTab,fileTransferTab,
+        qrCodeTab,emergencyNumbersTab, spellCheckTab, textBeautifierTab, wordMeaningTab, ttsTab, sttTab, importantLinksTab,invoiceTab, seoMetaGenTab,
+        holidayListTab,diffCheckerTab,expenseTrackerTab,textEncryptionTab,
+    
+
     ];
     const contents = [
-        basicCalculatorContent,colorPickerContent,dashboardContent,imageResizerContent,moreSettingsContent,historyContent,currencyContent, emiCalcContent, ipInfoContent, recipeContent, pdfToolsContent,screenRecorderContent, jsonFormatterContent, memeGenContent, speedTestContent,
-        ageCalculatorContent, dateCalculatorContent, emergencyNumbersContent,scientificCalculatorContent,  converterContent,healthLifestyleContent,daysObservancesContent,holidayListContent,quizContent,invoiceContent, webSearchContent,
-        measurementContent, typingTestContent, translatorContent, mapContent, imageToTextContent, wordCounterContent, donateContent, barcodeGenContent, randomPickerContent,pcVoiceClientContent,
-        weatherContent, notepadContent, clockContent, playerContent,qrCodeContent, spellCheckerContent, textBeautifierContent, wordMeaningContent, seoMetaGenContent,fileTransferContent,
-        textToSpeechContent, speechToTextContent, textAssistantContent,importantLinksContent,unitPriceContent,tasbeehContent,canvasContent,
-		diffCheckerContent,expenseTrackerContent,textEncryptionContent,aboutUsContent, contactUsContent, privacyPolicyContent, termsContent,
+        basicCalculatorContent,colorPickerContent,dashboardContent,imageResizerContent,moreSettingsContent,historyContent,currencyContent, ipInfoContent, pdfToolsContent,screenRecorderContent, jsonFormatterContent, memeGenContent, speedTestContent,
+        ageCalculatorContent, emergencyNumbersContent, converterContent,daysObservancesContent,holidayListContent,invoiceContent, 
+        measurementContent, typingTestContent, translatorContent, imageToTextContent, wordCounterContent, barcodeGenContent, randomPickerContent,pcVoiceClientContent,
+        weatherContent, notepadContent,qrCodeContent, spellCheckerContent, textBeautifierContent, wordMeaningContent, seoMetaGenContent,fileTransferContent,
+        textToSpeechContent, speechToTextContent,importantLinksContent,canvasContent,
+		diffCheckerContent,expenseTrackerContent,textEncryptionContent,
         allFeaturesContent
     ];
 
@@ -15903,19 +13921,6 @@ function showTab(tabId) {
 //নিচের অংশে নতুন ট্যাবের কেস যুক্ত করতে হয় বা বসাতে হয় ।
 
     switch (tabId) {
-case 'basic':
-            activeTab = basicCalcTab;
-            activeContent = basicCalculatorContent;
-            // ডেস্কটপে (নন-টাচ ডিভাইস) ফোকাস ক্লিয়ার করা যাতে সরাসরি টাইপ করা যায়
-            setTimeout(() => {
-                if (!window.matchMedia("(pointer: coarse)").matches) {
-                    // বর্তমানে ফোকাস থাকা এলিমেন্ট (যেমন ট্যাব বাটন) থেকে ফোকাস সরিয়ে নিন
-                    if (document.activeElement instanceof HTMLElement) {
-                        document.activeElement.blur();
-                    }
-                }
-            }, 100);
-            break;
         case 'age':
             activeTab = ageCalcTab;
             activeContent = ageCalculatorContent;
@@ -15924,26 +13929,6 @@ case 'basic':
                 activeTab = imageResizerTab;
                 activeContent = imageResizerContent;
                 initializeImageResizer();
-            break;
-        case 'date':
-            activeTab = dateCalcTab;
-            activeContent = dateCalculatorContent;
-        break;
-			case 'expenseTracker':
-			activeTab = expenseTrackerTab;
-			activeContent = expenseTrackerContent;
-			initializeExpenseTracker();
-		break;
-		case 'scientific':
-            activeTab = scientificCalcTab;
-            activeContent = scientificCalculatorContent;
-            // নতুন: ডেস্কটপে (নন-টাচ ডিভাইস) অটো-ফোকাস লজিক
-            setTimeout(() => {
-                // টাচ ডিভাইস না হলে এবং ইনপুট এলিমেন্ট থাকলে ফোকাস করুন
-                if (scientificExpressionInput && !window.matchMedia("(pointer: coarse)").matches) {
-                    scientificExpressionInput.focus();
-                }
-            }, 100); 
             break;
         case 'converter':
             activeTab = converterTab;
@@ -15976,35 +13961,16 @@ case 'basic':
             activeTab = translatorTab;
             activeContent = translatorContent;
             break;
-        case 'map':
-            activeTab = mapTab;
-            activeContent = mapContent;
-            break;
 		case 'seoMetaGen':
 			activeTab = seoMetaGenTab;
 			activeContent = seoMetaGenContent;
 			initializeSeoMetaGenerator();
-		break;
-			case 'tasbeeh':
-			activeTab = tasbeehTab;
-			activeContent = tasbeehContent;
-			initializeTasbeeh();
 		break;
 		case 'canvas':
 			activeTab = canvasTab;
 			activeContent = canvasContent;
 			initializeCanvasTools(); // ক্যানভাস চালু করার ফাংশন
 		break;
-        case 'daysObservances':
-            activeTab = daysObservancesTab;
-            activeContent = daysObservancesContent;
-            initializeDaysObservancesTab();
-        break;
-			    case 'unitPrice':
-        activeTab = unitPriceTab;
-        activeContent = unitPriceContent;
-        initializeUnitPriceComparator();
-        break;
         case 'imageToText':
             activeTab = imageToTextTab;
             activeContent = imageToTextContent;
@@ -16013,10 +13979,6 @@ case 'basic':
             activeTab = wordCounterTab;
             activeContent = wordCounterContent;
             break;
-        case 'healthLifestyle':
-            activeTab = healthLifestyleTab;
-            activeContent = healthLifestyleContent;
-            break;
         case 'weather': // নতুন এই case টি যোগ করুন
             activeTab = weatherTab;
             activeContent = weatherContent;
@@ -16024,11 +13986,6 @@ case 'basic':
         case 'notepad':
             activeTab = notepadTab;
             activeContent = notepadContent;
-            break;
-        case 'clock':
-            activeTab = clockTab;
-            activeContent = clockContent;
-            initializeClockTab(); // নতুন ফাংশন কল করুন
             break;
         case 'qrCode':
             activeTab = qrCodeTab;
@@ -16047,10 +14004,6 @@ case 'basic':
             activeTab = holidayListTab;
             activeContent = holidayListContent;
             initializeHolidayListTab();
-            break;
-        case 'player':
-            activeTab = playerTab;
-            activeContent = playerContent;
             break;
         case 'spellCheck':
             activeTab = spellCheckTab;
@@ -16081,11 +14034,6 @@ case 'basic':
             activeContent = emergencyNumbersContent;
             initializeEmergencyNumbers(); // Tab-টি চালু করার সময় ফাংশন কল করুন
             break;
-        case 'quiz':
-            activeTab = quizTab;
-            activeContent = quizContent;
-            initializeQuiz(); // এই ফাংশন কুইজ শুরু করবে
-            break;
         case 'moreSettings': 
             activeTab = moreSettingsTab;
             activeContent = moreSettingsContent;
@@ -16095,10 +14043,6 @@ case 'basic':
             activeTab = colorPickerTab;
             activeContent = colorPickerContent;
             initializeColorPicker(); // ট্যাব দেখানোর সময় ফাংশনটি কল করুন
-            break;
-        case 'donate':
-            activeTab = donateTab;
-            activeContent = donateContent;
             break;
         case 'invoice':
             activeTab = invoiceTab;
@@ -16112,32 +14056,17 @@ case 'basic':
             activeTab = dashboardTab;
             activeContent = dashboardContent;
             break;
-            case 'webSearch':
-            activeTab = webSearchTab;
-            activeContent = webSearchContent;
-            initializeWebSearch(); // নিচে এই ফাংশনটি ডিফাইন করা হয়েছে
-            break;
 			// switch (tabId) ব্লকে যোগ করুন:
 case 'currency':
     activeTab = currencyTab;
     activeContent = currencyContent;
     initializeCurrencyConverter();
     break;
-case 'emi':
-    activeTab = emiCalcTab;
-    activeContent = emiCalcContent;
-    initializeEMICalculator();
-    break;
 case 'ip':
     activeTab = ipInfoTab;
     activeContent = ipInfoContent;
     initializeIpInfo();
     if(window.fetchIpInfo) window.fetchIpInfo(); // Auto load
-    break;
-case 'recipe':
-    activeTab = recipeTab;
-    activeContent = recipeContent;
-    initializeRecipeGenerator();
     break;
 case 'pdf':
     activeTab = pdfToolsTab;
@@ -16175,22 +14104,6 @@ case 'randomPicker':
     initializeTextEncryption();
     break;
 	// switch (tabId) ব্লকের ভেতরে নিচের case-গুলো যুক্ত করুন
-        case 'about':
-            activeTab = aboutUsTab;
-            activeContent = aboutUsContent;
-            break;
-        case 'contact':
-            activeTab = contactUsTab;
-            activeContent = contactUsContent;
-            break;
-        case 'privacy':
-            activeTab = privacyPolicyTab;
-            activeContent = privacyPolicyContent;
-            break;
-        case 'terms':
-            activeTab = termsTab;
-            activeContent = termsContent;
-            break;
 case 'speedTest':
     activeTab = speedTestTab;
     activeContent = speedTestContent;
@@ -16221,12 +14134,12 @@ case 'speedTest':
     // --- নতুন: ড্রপডাউন মেনু হাইলাইট করার লজিক ---
     // 'আরও' মেনুর অন্তর্ভুক্ত ট্যাব আইডি সমূহ tabidmap
     const moreMenuTabs = [
-        'clock', 'player', 'quiz', 'history', 'daysObservances', 'tasbeeh','diffChecker',
-        'holiday',  'qrCode', 'colorPicker', 'invoice', 'unitPrice', 'wordCounter',
-        'imageResizer', 'emergency', 'healthLifestyle', 'expenseTracker',
-        'currency', 'emi', 'ip', 'recipe', 'pdf', 'randomPicker','barcode','seoMetaGen',
+        'history', 'diffChecker',
+        'holiday',  'qrCode', 'colorPicker', 'invoice', 'wordCounter',
+        'imageResizer', 'emergency', 'expenseTracker',
+        'currency', 'ip', 'pdf', 'randomPicker','barcode','seoMetaGen',
         'screenRecorder', 'jsonFormatter', 'memeGen', 'speedTest', 'encryption',
-        'allFeatures', 'importantLinks', 'donate'
+        'allFeatures', 'importantLinks',
     ];
 
     // 'সেটিংস' মেনুর অন্তর্ভুক্ত ট্যাব আইডি সমূহ
@@ -16276,15 +14189,8 @@ initializeBackButtons();
 // ====================================================================
 //নিচের এই সেকশনে নতুন ট্যাবের ইফ লাইনটি যুক্ত করতে হয় বা বসাতে হয় ।
 
-    if (basicCalcTab) basicCalcTab.addEventListener('click', () => showTab('basic'));
 	// এই চারটি লাইন আপনার বিদ্যমান event listener-গুলোর সাথে যুক্ত করুন
-	if (aboutUsTab) aboutUsTab.addEventListener('click', () => showTab('about'));
-	if (contactUsTab) contactUsTab.addEventListener('click', () => showTab('contact'));
-	if (privacyPolicyTab) privacyPolicyTab.addEventListener('click', () => showTab('privacy'));
-	if (termsTab) termsTab.addEventListener('click', () => showTab('terms'));
     if (ageCalcTab) ageCalcTab.addEventListener('click', () => showTab('age'));
-    if (dateCalcTab) dateCalcTab.addEventListener('click', () => showTab('date'));
-    if (scientificCalcTab) scientificCalcTab.addEventListener('click', () => showTab('scientific'));
     if (converterTab) converterTab.addEventListener('click', () => showTab('converter'));
     if (measurementTab) measurementTab.addEventListener('click', () => showTab('measurement')); 
     if (spellCheckTab) spellCheckTab.addEventListener('click', () => showTab('spellCheck'));
@@ -16293,12 +14199,9 @@ initializeBackButtons();
     if (ttsTab) ttsTab.addEventListener('click', () => showTab('tts')); 
     if (sttTab) sttTab.addEventListener('click', () => showTab('stt')); 
     if (typingTestTab) typingTestTab.addEventListener('click', () => showTab('typingTest')); 
-    if (mapTab) mapTab.addEventListener('click', () => showTab('map'));
     if (imageToTextTab) imageToTextTab.addEventListener('click', () => showTab('imageToText'));
     if (wordCounterTab) wordCounterTab.addEventListener('click', () => showTab('wordCounter'));
     if (weatherTab) weatherTab.addEventListener('click', () => showTab('weather'));
-    if (quizTab) quizTab.addEventListener('click', () => showTab('quiz'));
-    if (donateTab) donateTab.addEventListener('click', () => showTab('donate'));
     if (notepadTab) notepadTab.addEventListener('click', async () => {
         showTab('notepad');
         await initializeNotepad(); // Notepad চালু করার জন্য এই ফাংশন কল করুন
@@ -16310,7 +14213,6 @@ initializeBackButtons();
         if (layoutDropdown) layoutDropdown.classList.add('hidden');
 		});
 		}
-    if (webSearchTab) webSearchTab.addEventListener('click', () => showTab('webSearch'));
 	if (pcVoiceClientTab) {
     pcVoiceClientTab.addEventListener('click', () => {
         showTab('pcVoiceClient');
@@ -16319,17 +14221,12 @@ initializeBackButtons();
         if (layoutDropdown) layoutDropdown.classList.add('hidden');
     });
 }
-    if (healthLifestyleTab) healthLifestyleTab.addEventListener('click', () => {showTab('healthLifestyle');	initializeHealthLifestyleTab();});
-    if (clockTab) clockTab.addEventListener('click', () => showTab('clock'));
-    if (playerTab) playerTab.addEventListener('click', () => showTab('player'));
     if (imageResizerTab) imageResizerTab.addEventListener('click', () => showTab('imageResizer'));
 	if (canvasTab) canvasTab.addEventListener('click', () => showTab('canvas'));
     if (qrCodeTab) qrCodeTab.addEventListener('click', () => showTab('qrCode'));
     if (importantLinksTab) importantLinksTab.addEventListener('click', () => showTab('importantLinks'));
-    if (textAssistantTab) textAssistantTab.addEventListener('click', () => showTab('textAssistant'));
     if (allFeaturesTab) allFeaturesTab.addEventListener('click', () => showTab('allFeatures'));
     if (emergencyNumbersTab) emergencyNumbersTab.addEventListener('click', () => showTab('emergency'));
-    if (daysObservancesTab) daysObservancesTab.addEventListener('click', () => showTab('daysObservances'));
     if (holidayListTab) holidayListTab.addEventListener('click', () => showTab('holiday'));
     if (invoiceTab) invoiceTab.addEventListener('click', () => showTab('invoice'));
     if (colorPickerTab) colorPickerTab.addEventListener('click', () => showTab('colorPicker'));
@@ -16337,10 +14234,7 @@ initializeBackButtons();
     if (moreSettingsTab) moreSettingsTab.addEventListener('click', () => showTab('moreSettings'));
     if (historyTab) historyTab.addEventListener('click', () => showTab('history'));
 	if (currencyTab) currencyTab.addEventListener('click', () => showTab('currency'));
-if (emiCalcTab) emiCalcTab.addEventListener('click', () => showTab('emi'));
-if (unitPriceTab) unitPriceTab.addEventListener('click', () => showTab('unitPrice'));
 if (ipInfoTab) ipInfoTab.addEventListener('click', () => showTab('ip'));
-if (recipeTab) recipeTab.addEventListener('click', () => showTab('recipe'));
 if (pdfToolsTab) pdfToolsTab.addEventListener('click', () => showTab('pdf'));
 if (screenRecorderTab) screenRecorderTab.addEventListener('click', () => showTab('screenRecorder'));
 if (jsonFormatterTab) jsonFormatterTab.addEventListener('click', () => showTab('jsonFormatter'));
@@ -16349,8 +14243,7 @@ if (speedTestTab) speedTestTab.addEventListener('click', () => showTab('speedTes
 if (textEncryptionTab) textEncryptionTab.addEventListener('click', () => showTab('encryption'));
 if (barcodeGenTab) barcodeGenTab.addEventListener('click', () => showTab('barcode'));
 if (randomPickerTab) randomPickerTab.addEventListener('click', () => showTab('randomPicker'));
-if (tasbeehTab) {tasbeehTab.addEventListener('click', () => {showTab('tasbeeh');
-        initializeTasbeeh(); // ফাংশনটি কল করুন
+
     });
 }
 if (diffCheckerTab) diffCheckerTab.addEventListener('click', () => showTab('diffChecker'));
@@ -26014,141 +23907,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const sidebarSearch = document.getElementById('sidebarSearch');
         const toolList = document.getElementById('sidebar-tool-list');
 
-        if (!sidebar || !sidebarToggle || !sidebarOverlay || !sidebarSearch || !toolList || !sidebarCloseBtn) return;
+if (!sidebar || !sidebarToggle || !sidebarOverlay || !sidebarSearch || !toolList || !sidebarCloseBtn) return;
+
+document.body.classList.remove('sidebar-open');
+sidebar.style.left = '-300px';
+sidebarOverlay.style.display = 'none';
         
-        // মিডিয়া প্লেয়ার চালু আছে কিনা চেক করার ফাংশন
-        const isMediaPlaying = () => {
-            const audio = document.getElementById('audioPlayer');
-            const video = document.getElementById('videoPlayer');
-            const isAudioPlaying = audio && !audio.paused && !audio.ended && audio.currentTime > 0;
-            const isVideoPlaying = video && !video.paused && !video.ended && video.currentTime > 0;
-            return isAudioPlaying || isVideoPlaying;
-        };
-
-        // ওয়েব সার্চে অডিও/ভিডিও বাজছে কিনা চেক করার ফাংশন
-        const isWebSearchPlaying = () => {
-            try {
-                const iframe = document.getElementById('browserFrame');
-                if (iframe && iframe.contentDocument) {
-                    const medias = iframe.contentDocument.querySelectorAll('audio, video');
-                    for (let media of medias) {
-                        if (!media.paused && !media.ended && media.currentTime > 0) return true;
-                    }
-                }
-            } catch (e) {
-                return false;
-            }
-            return false;
-        };
-        
-        // নতুন: ফ্লোটিং প্লেয়ারে মিডিয়া বাজছে কিনা চেক করার ফাংশন
-        const isFloatingPlayerPlaying = () => {
-            const container = document.getElementById('rightSideVideoContainer');
-            // যদি কন্টেইনার হাইড থাকে, তবে বাজছে না
-            if (!container || container.classList.contains('hidden')) return false;
-
-            // ১. লোকাল ভিডিও চেক
-            const localVideo = document.getElementById('featuredLocalVideo');
-            if (localVideo && !localVideo.paused && !localVideo.ended && localVideo.currentTime > 0) return true;
-
-            // ২. ইউটিউব আইফ্রেম চেক (আমরা সরাসরি পজিশন জানতে পারি না, তাই দৃশ্যমান থাকলেই 'বাজছে' ধরা হবে)
-            const iframe = document.getElementById('featuredVideoFrame');
-            if (iframe && iframe.src && iframe.src !== 'about:blank' && !iframe.classList.contains('hidden')) return true;
-
-            return false;
-        };
-
-        // সাইডবার হাইলাইট আপডেট করার ফাংশন
-        const updateSidebarHighlights = () => {
-            const links = toolList.querySelectorAll('a');
-            
-            let isAlarmActive = false;
-            const stopAlarmBtn = document.getElementById('stopAlarmBtn');
-            if (stopAlarmBtn && !stopAlarmBtn.classList.contains('hidden')) {
-                isAlarmActive = true;
-            }
-
-            let isAnyMediaActive = false;
-            // ফ্লোটিং প্লেয়ার চেক
-            const isFloatingActive = isFloatingPlayerPlaying();
-
-            links.forEach(a => {
-                const targetTabId = a.dataset.tabId;
-                const targetElement = document.getElementById(targetTabId);
-                const isActive = targetElement && targetElement.classList.contains('active');
-
-                if (!a.dataset.originalText) {
-                    a.dataset.originalText = a.textContent;
-                }
-                const originalText = a.dataset.originalText;
-
-                let newClass = "block w-full text-left p-2 rounded-lg transition-colors duration-200 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-indigo-500"; 
-                let iconHtml = ""; 
-
-                if (targetTabId === 'clockTab' && isAlarmActive) {
-                    newClass += ' bg-yellow-400 text-black font-bold shadow-md animate-pulse';
-                    iconHtml = '<span>🔔</span>';
-                    isAnyMediaActive = true;
-                }
-                else if ((targetTabId === 'playerTab' && isMediaPlaying()) || 
-                         (targetTabId === 'webSearchTab' && isWebSearchPlaying())) {
-                    newClass += ' bg-yellow-400 text-black font-bold shadow-md';
-                    iconHtml = `
-                        <span class="playing-icon" title="মিডিয়া বাজছে">
-                            <span class="bar"></span>
-                            <span class="bar"></span>
-                            <span class="bar"></span>
-                        </span>`;
-                    isAnyMediaActive = true;
-                }
-                // নতুন: ফ্লোটিং প্লেয়ার চালু থাকলে "আরও সেটিংস" হাইলাইট করা এবং ভিজুয়ালাইজার দেখানো
-                else if (targetTabId === 'moreSettingsTab' && isFloatingActive) {
-                    newClass += ' bg-yellow-400 text-black font-bold shadow-md';
-                    iconHtml = `
-                        <span class="playing-icon" title="ভিডিও প্লেয়ার চালু">
-                            <span class="bar"></span>
-                            <span class="bar"></span>
-                            <span class="bar"></span>
-                        </span>`;
-                    isAnyMediaActive = true;
-                }
-                else if (isActive) {
-                    newClass += ' bg-indigo-600 text-white shadow-md font-semibold';
-                } 
-                else {
-                    newClass += ' hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300';
-                }
-
-                if (a.className !== newClass) {
-                    a.className = newClass;
-                }
-                
-                const newInnerHtml = `<span>${originalText}</span>${iconHtml}`;
-                if (a.innerHTML !== newInnerHtml) {
-                    a.innerHTML = newInnerHtml;
-                }
-            });
-
-            if (sidebarToggle) {
-                const currentState = sidebarToggle.getAttribute('data-visualizer-active');
-                const newState = isAnyMediaActive ? 'true' : 'false';
-
-                if (currentState !== newState) {
-                    if (isAnyMediaActive) {
-                        sidebarToggle.innerHTML = `
-                            <span class="playing-icon" style="margin:0; width: 24px; height: 24px; gap: 4px;">
-                                <span class="bar" style="width: 3px; background-color: white;"></span>
-                                <span class="bar" style="width: 3px; background-color: white; animation-delay: 0.2s;"></span>
-                                <span class="bar" style="width: 3px; background-color: white; animation-delay: 0.4s;"></span>
-                            </span>`;
-                    } else {
-                        sidebarToggle.innerHTML = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>`;
-                    }
-                    sidebarToggle.setAttribute('data-visualizer-active', newState);
-                }
-            }
-        };
-
         const tabButtons = document.querySelectorAll('.tab-button');
         if (toolList.children.length === 0) { 
             tabButtons.forEach(button => {
@@ -26195,39 +23959,34 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function closeSidebar() {
-            document.body.classList.remove('sidebar-open');
-            // সাইডবার বন্ধ হলে টগল বাটনে ফোকাস ফেরত দিন (অ্যাক্সেসিবিলিটির জন্য)
-            if(sidebarToggle) sidebarToggle.focus();
-        }
+    document.body.classList.remove('sidebar-open');
+    if (sidebarToggle) sidebarToggle.focus();
+}
 
-        // টগল বাটন ক্লিক - আপডেট করা হয়েছে
-        sidebarToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            
-            // সাইডবার খোলার আগে হাইলাইট আপডেট করুন
-            if (!document.body.classList.contains('sidebar-open')) {
-                updateSidebarHighlights();
-            }
-            document.body.classList.toggle('sidebar-open');
-            
-            // সাইডবার ওপেন হলে একটিভ ট্যাবে স্ক্রল করুন
-            if (document.body.classList.contains('sidebar-open')) {
-                setTimeout(() => {
-                    // একটিভ লিংক খুঁজে বের করা (যেটিতে bg-indigo-600 অথবা bg-yellow-400 ক্লাস আছে)
-                    const activeLink = toolList.querySelector('a.bg-indigo-600, a.bg-yellow-400');
-                    if (activeLink) {
-                        activeLink.scrollIntoView({ block: 'center', behavior: 'smooth' });
-                    }
-                }, 300); // ট্রানজিশন শেষ হওয়ার জন্য সময় দেওয়া হলো
-            }
-        });
-        
-        sidebarCloseBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            closeSidebar();
-        });
+sidebarToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
 
-        sidebarOverlay.addEventListener('click', closeSidebar);
+    if (!document.body.classList.contains('sidebar-open')) {
+        updateSidebarHighlights();
+    }
+
+    document.body.classList.toggle('sidebar-open');
+
+    if (document.body.classList.contains('sidebar-open')) {
+        setTimeout(() => {
+            const activeLink = toolList.querySelector('a.bg-indigo-600, a.bg-yellow-400');
+            if (activeLink) {
+                activeLink.scrollIntoView({ block: 'center', behavior: 'smooth' });
+            }
+        }, 300);
+    }
+});
+
+sidebarCloseBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeSidebar();
+
+});
 
         // --- সাইডবার কিবোর্ড নেভিগেশন ---
         
@@ -26285,16 +24044,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const searchTerm = e.target.value.toLowerCase();
             const toolSynonyms = {
                 'imageResizerTab': ['picture', 'photo', 'crop', 'resize', 'jpg', 'png', 'image editor', 'রিসাইজ', 'ছবি'],
-                'basicCalcTab': ['math', 'calculation', 'add', 'subtract', 'হিসাব', 'গণনা', 'যোগ', 'ক্যালকুলেটর'],
-                'scientificCalcTab': ['science', 'math', 'complex', 'cos', 'sin', 'বিজ্ঞান'],
                 'notepadTab': ['write', 'todo', 'list', 'text', 'save', 'নোট', 'লিখুন', 'খাতা'],
                 'weatherTab': ['temperature', 'rain', 'sun', 'forecast', 'আবহাওয়া', 'তাপমাত্রা', 'বৃষ্টি'],
                 'translatorTab': ['language', 'english', 'bengali', 'translate', 'অনুবাদ', 'ভাষা'],
                 'converterTab': ['bijoy', 'avro', 'unicode', 'font', 'writing', 'বিজয়', 'অভ্র', 'কনভার্ট'],
                 'ageCalcTab': ['birthday', 'years', 'old', 'জন্মদিন', 'বয়স'],
-                'dateCalcTab': ['calendar', 'time', 'day', 'তারিখ', 'সময়'],
                 'qrCodeTab': ['scan', 'generate', 'code', 'কিউআর', 'কোড'],
-                'textAssistantTab': ['ai', 'chat', 'gemini', 'gpt', 'help', 'এআই', 'চ্যাট', 'বট'],
                 'colorPickerTab': ['hex', 'rgb', 'palette', 'রঙ', 'কালার'],
                 'speedTestTab': ['internet', 'wifi', 'data', 'mbps', 'নেট', 'স্পিড', 'গতি'],
                 'screenRecorderTab': ['video', 'capture', 'record', 'রেকর্ড', 'স্ক্রিন'],
@@ -26302,16 +24057,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 'pdfToolsTab': ['document', 'convert', 'merge', 'পিডিএফ', 'ফাইল'],
                 'sttTab': ['voice', 'speech', 'record', 'কথা', 'ভয়েস'],
                 'ttsTab': ['listen', 'read', 'speech', 'শোনা', 'পাঠ'],
-                'mapTab': ['location', 'gps', 'navigation', 'মানচিত্র', 'ম্যাপ'],
                 'currencyTab': ['money', 'dollar', 'taka', 'exchange', 'মুদ্রা', 'টাকা'],
-                'emiCalcTab': ['loan', 'interest', 'bank', 'ঋণ', 'কিস্তি'],
-                'healthLifestyleTab': ['bmi', 'water', 'health', 'শরীর', 'স্বাস্থ্য'],                'unitPriceTab': ['compare', 'price', 'shop', 'বাজার', 'দাম'],
                 'barcodeGenTab': ['product', 'scan', 'বারকোড'],
                 'randomPickerTab': ['lottery', 'winner', 'draw', 'লটারি', 'ভাগ্য'],
                 'jsonFormatterTab': ['code', 'developer', 'debug', 'জেসন'],
                 'diffCheckerTab': ['compare text', 'code compare', 'পার্থক্য'],
                 'expenseTrackerTab': ['cost', 'budget', 'income', 'খরচ', 'হিসাব'],
-                'tasbeehTab': ['zikr', 'count', 'pray', 'তাসবিহ', 'জিকির'],
                 'historyTab': ['today', 'past', 'event', 'ইতিহাস'],
 				'seoMetaGenTab': ['seo', 'meta', 'tags', 'generator', 'ওয়েবসাইট', 'মেটা ট্যাগ', 'এসইও'],
                 'holidayListTab': ['vacation', 'off day', 'calendar', 'ছুটি']
@@ -26530,16 +24281,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!featuresList) return;
 
         const featureToTabIdMap = {
-            'সাধারণ ও সাইন্টিফিক ক্যালকুলেটর': 'basicCalcTab',
             'বয়স ও তারিখ ক্যালকুলেটর': 'ageCalcTab',
             'পরিমাপ (ইউনিট কনভার্টার)': 'measurementTab',
-            'স্বাস্থ্য ও জীবনধারা': 'healthLifestyleTab',
             'টাইপিং টেস্ট': 'typingTestTab',
             'ফন্ট কনভার্টার': 'converterTab',
             'ওয়ার্ড কাউন্টার': 'wordCounterTab',
             'ট্রান্সলেটর (জেমিনি)': 'translatorTab',
             'বানান সংশোধন': 'spellCheckTab',
-            'ডিজিটাল তাসবিহ': 'tasbeehTab',
             'লেখা সাজানো': 'textBeautifierTab',
             'শব্দের অর্থ': 'wordMeaningTab',
             'স্পিচ টুলস': 'sttTab',
@@ -26549,9 +24297,6 @@ document.addEventListener('DOMContentLoaded', () => {
             'স্পিচ টু টেক্সট (জেমিনি)': 'sttTab',
             'ছবি থেকে লেখা (OCR - জেমিনি)': 'imageToTextTab',
             'ছবি রিসাইজার': 'imageResizerTab',
-            'টেক্সট অ্যাসিস্ট্যান্ট (জেমিনি)': 'textAssistantTab',
-            'ওয়েব সার্চ': 'webSearchTab',
-            'গুগল ম্যাপ': 'mapTab',
             'আবহাওয়া': 'weatherTab',
 			'এসইও মেটা ট্যাগ': 'seoMetaGenTab',
             'দিবসসমূহ': 'daysObservancesTab',
@@ -26560,14 +24305,9 @@ document.addEventListener('DOMContentLoaded', () => {
             'রঙ বাছাইকারী': 'colorPickerTab',
             'জরুরি নম্বর': 'emergencyNumbersTab',
             'ইনভয়েজ': 'invoiceTab',
-            'ঘড়ি': 'clockTab',
-            'প্লেয়ার': 'playerTab',
             'নোটপ্যাড / টু-ডু লিস্ট': 'notepadTab',
             'মুদ্রা রূপান্তরকারী': 'currencyTab',
-            'দামের তুলনা': 'unitPriceTab',
-            'ইএমআই ক্যালকুলেটর': 'emiCalcTab',
             'আইপি ও ডিভাইস ইনফো': 'ipInfoTab',
-            'রেসিপি জেনারেটর (জেমিনি)': 'recipeTab',
             'পিডিএফ টুলস': 'pdfToolsTab',
             'স্ক্রিন রেকর্ডার': 'screenRecorderTab',
             'জেসন ফর্মাটার': 'jsonFormatterTab',
@@ -30107,12 +27847,7 @@ function processVoiceCommand(command) {
     // কমান্ড এবং ট্যাব বাটনের আইডির ম্যাপিং
     const commandMap = {
         // ট্যাবসমূহ (পুরো নাম এবং সংক্ষিপ্ত কিওয়ার্ড সহ)
-        'সাধারণ, ক্যালকুলেটর, হিসাব, বেসিক': 'basicCalcTab',
-        'সাইন্টিফিক,  সাইন্টিফিক ক্যালকুলের, বিজ্ঞান': 'scientificCalcTab',
-        'তারিখ ও সময়, তারিখ, সময়': 'dateCalcTab',
         'বয়স ক্যালকুলেটর, বয়স': 'ageCalcTab',
-        'ওয়েব সার্চ, ওয়েব, সার্চ, ব্রাউজার': 'webSearchTab',
-     'টেক্সট, টেক্সট এ্যাসিসটেন্ট, text, এ্যাসিসট্যান্ট, অ্যাসিস্ট্যান্ট, চ্যাট, জেমিনি': 'textAssistantTab',
         'কনভার্টার, ফন্ট কনভার্টার, বিজয়, অভ্র': 'converterTab',
         'ট্রান্সলেটর, অনুবাদ': 'translatorTab',
         'ওয়ার্ড কাউন্টার, ওয়ার্ড': 'wordCounterTab',
@@ -30123,13 +27858,10 @@ function processVoiceCommand(command) {
         'টাইপিং, টেস্ট, টাইপিং, টাইপ': 'typingTestTab',
         'কথা থেকে, কোথা থেকে, টিটিএস, কোথা থেকে লেখা, ভয়েস টু টেক্সট': 'sttTab',
         'লেখা থেকে, টেক্সট টু স্পিচ, পড়ে শোনাও': 'ttsTab',
-        'গুগল ম্যাপ, ম্যাপ, মানচিত্র': 'mapTab',
         'আবহাওয়া, আবহাওয়া': 'weatherTab',
         'পরিমাপ, ইউনিট': 'measurementTab',
-        'নোটপ্যাড, নোট, টুডু': 'notepadTab',
+        'নোটপ্যড, নোট, টুডু': 'notepadTab',
         'ড্যাশবোর্ড, হোম': 'dashboardTab',
-        'ঘড়ি, ঘড়ি, স্টপওয়াচ, টাইমার, ক্লক, এলার্ম, alarm, বিশ্ব ঘড়ি, বিশ্বঘড়ি': 'clockTab',
-        'প্লেয়ার, প্লেয়ার, গান, ভিডিও': 'playerTab',
         'ইতিহাস, আজকের দিন': 'historyTab',
         'দিবসসমূহ, দিবস': 'daysObservancesTab',
         'ছুটির তালিকা, ছুটি, বন্ধ': 'holidayListTab',
@@ -30137,25 +27869,19 @@ function processVoiceCommand(command) {
         'বারকোড, বার কোড, বারকোড জেনারেটর': 'barcodeGenTab',
         'রঙ বাছাইকারী, কালার পিকার, রং, কালার': 'colorPickerTab',
         'জরুরি নম্বর, জরুরি, নাম্বার': 'emergencyNumbersTab',
-        'ইনভয়েজ, ইনভয়েস, বিল': 'invoiceTab',
+        'ইনভয়েজ, ইনভয়েস, বিল': 'invoiceTab',
         'ছবি রিসাইজার, রিসাইজার, ছবি এডিট': 'imageResizerTab',
-        'স্বাস্থ্য ও জীবনধারা, স্বাস্থ্য, বিএমআই': 'healthLifestyleTab',
-        'ইএমআই ক্যালকুলেটর, ইএমআই, লোন': 'emiCalcTab',
         'মুদ্রা রূপান্তরকারী, মুদ্রা, কারেন্সি, টাকা': 'currencyTab',
-        'দামের তুলনা, দাম, তুলনা': 'unitPriceTab',
         'আইপি ও ডিভাইস ইনফো, আইপি': 'ipInfoTab',
-        'রেসিপি জেনারেটর, রেসিপি, রান্না': 'recipeTab',
         'পিডিএফ টুলস, পিডিএফ': 'pdfToolsTab',
         'জেসন ফর্মাটার, জেসন': 'jsonFormatterTab',
 		'এসইও, এসইও মেটা, মেটা ট্যাগ, seo': 'seoMetaGenTab',
         'মিম জেনারেটর, মিম': 'memeGenTab',
         'র‍্যান্ডম পিকার, লটারি': 'randomPickerTab',
         'স্ক্রিন রেকর্ডার, রেকর্ডার, স্ক্রিন': 'screenRecorderTab',
-        'ডিজিটাল তাসবিহ, তাসবিহ, জিকির': 'tasbeehTab',
         'ডিফ চেকার, ডিফ, পার্থক্য': 'diffCheckerTab',
         'আয়-ব্যয় হিসাব, আয় ব্যয়, খরচ': 'expenseTrackerTab',
-        'ডোনেট, সাহায্য': 'donateTab',
-        'গুরুত্বপূর্ণ লিংকসমূহ, শহীদুজ্জামান, শহিদুজ্জামান, সিফাত, লিংক, প্রোফাইল': 'importantLinksTab',
+        'গুরুত্বপূর্ণ লিংকসমূহ, বিধান, চন্দ্র, রায়,   লিংক, প্রোফাইল': 'importantLinksTab',
         'ইন্টারনেট স্পিড, স্পিড, গতি': 'speedTestTab',
         'এনক্রিপশন, এনক্রিপ্ট, ডিক্রিপ্ট, লক, আনলক, পাসওয়ার্ড': 'textEncryptionTab',
 
@@ -30339,27 +28065,19 @@ function initializeGlobalShortcuts() {
 
             // শর্টকাট ম্যাপিং (Alt + Key)
             const shortcutMap = {
-                'c': 'basicCalcTab',        // Calculator
-                's': 'scientificCalcTab',   // Scientific
                 'n': 'notepadTab',          // Notepad
                 'w': 'weatherTab',          // Weather
                 't': 'translatorTab',       // Translator
                 'b': 'converterTab',        // Font Converter (Bijoy)
-                'p': 'playerTab',           // Player
                 'h': 'historyTab',          // History
                 'q': 'qrCodeTab',           // QR Code
                 'i': 'invoiceTab',          // Invoice
-                'm': 'comment-fab',              // Public Massage
-                'a': 'textAssistantTab',    // AI Assistant
                 'd': 'dashboardTab',        // Dashboard
-                'g': 'webSearchTab',        // Browser
                 'r': 'imageResizerTab',     // Resizer
                 'e': 'expenseTrackerTab',    // Expense
                 'v': 'voiceCommandBtn', // Voicecommand 
                 'l': 'theme-toggle', // Theme Toggle 
                 'u': 'moreSettingsTab', // Settings
-                'o': 'clockTab', // Clock 
-                'j': 'donateTab', //Donate
                 'f': 'allFeaturesTab', //All Feature 
                 'k': 'importantLinksTab', //Important Links
 				'y': 'typingTestTab',  //Typing
@@ -32657,28 +30375,21 @@ function getBaseUrl() {
 
 //এই কমেন্টের আগেও নতুন ট্যাব এর স্ক্রিপ্ট বসানো যাবে বা বসাতে হয় ।
         window.onload = function() {
-            const preloader = document.getElementById('preloader');
-            const mainContainer = document.querySelector('.main-container');
+    const preloader = document.getElementById('preloader');
+    const mainContainer = document.querySelector('.main-container');
 
-            if (preloader) {
-                preloader.classList.add('preloader-hidden');
-                preloader.addEventListener('transitionend', () => {
-                    if (mainContainer) {
-                        // মূল কন্টেন্ট দৃশ্যমান করুন
-                        mainContainer.style.visibility = 'visible';
-                        mainContainer.style.animation = 'fadeInContent 2s ease-out forwards'; // 0.75s থেকে 2s করা হয়েছে
-                    }
-                }, {
-                    once: true
-                }); 
-            } else {
-                if (mainContainer) {
-                    mainContainer.style.visibility = 'visible';
-                    mainContainer.style.opacity = '1';
-                }
-            }
-        };
+    // content সাথে সাথে দেখাও
+    if (mainContainer) {
+        mainContainer.style.visibility = 'visible';
+        mainContainer.style.opacity = '1';
+    }
 
+    // preloader সরাও
+    if (preloader) {
+        preloader.classList.add('preloader-hidden');
+        setTimeout(() => { preloader.style.display = 'none'; }, 2000);
+    }
+};
     </script>
 <!-- ====================================================================-->
 <!-- END: MAIN SCRIPT-->
@@ -33471,13 +31182,12 @@ async function initializePublicComments() {
 </button>
 
 <!-- Sidebar Menu -->
-<div id="sidebar" class="fixed top-0 left-[-300px] w-[300px] h-full bg-white dark:bg-gray-800 shadow-xl z-50 transition-left duration-300 ease-in-out">
-    <div class="p-4">
+<div id="sidebar" class="bg-white dark:bg-gray-800 shadow-xl" style="left:-300px;">
+    <div class="relative p-4">
         <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4">সকল টুলস</h3>
-		<!-- নতুন সাইডবার ক্লোজ বাটন: সাইডবার ওপেন হলে ডানদিকে প্রদর্শিত হবে -->
-<button id="sidebarClose" class="absolute top-4 right-4 z-50 text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
-    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-</button>
+        <button id="sidebarClose" class="absolute top-4 right-4 z-50 text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+        </button>
         <input type="text" id="sidebarSearch" class="w-full p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-indigo-500" placeholder="টুলস খুঁজুন...">
         <ul id="sidebar-tool-list" class="mt-4 space-y-2 h-[calc(100vh-120px)] overflow-y-auto">
             <!-- Tool list will be populated by JavaScript -->
@@ -33511,91 +31221,15 @@ async function initializePublicComments() {
 	
 </div>
 
-<!-- ==================================================================== -->
-<!-- START: PUBLIC COMMENTS SECTION (UPDATED & REFINED) -->
-<!-- ==================================================================== -->
-<!-- ফ্লোটিং বাটন (FAB) -->
-<div id="comment-fab" class="relative" title="মন্তব্য করুন (শর্টকাট: Alt+M)">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-    <span id="comment-notification-dot" class="absolute top-0 right-0 w-3 h-3 bg-red-600 border-2 border-white dark:border-gray-800 rounded-full hidden"></span>
-</div>
-
-<!-- কমেন্ট উইন্ডো কন্টেইনার -->
-<div id="comment-section-container">
-    <!-- হেডার (ফুলস্ক্রিন বাটনসহ) -->
-    <div class="comment-header">
-        <span>পাবলিক মেসেজ</span>
-        <div class="flex items-center gap-2 ml-auto">
-             <span id="active-user-count" class="bg-white text-blue-600 px-3 py-1 rounded-full text-xs font-bold shadow-sm flex items-center gap-1 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors" title="ভিজিটর কাউন্টার দেখুন">
-                <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span></span>
-                একটিভ: ১
-            </span>
-            <!-- নতুন: ফুলস্ক্রিন বাটন -->
-            <button id="toggle-fullscreen-comment-btn" class="hover:bg-blue-700 p-1 rounded-full transition" title="ফুলস্ক্রিন">
-                <svg id="icon-fullscreen-enter" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
-                <svg id="icon-fullscreen-exit" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path></svg>
-            </button>
-            <button id="close-comment-btn" class="hover:bg-blue-700 p-1 rounded-full transition">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
-        </div>
-    </div>
-    
-    <!-- পিন করা মেসেজ সেকশন -->
-    <div id="pinned-comments-container" class="hidden">
-        <button id="pinned-nav-prev" class="pinned-nav-btn" disabled>&lt;</button>
-        <div class="overflow-hidden mx-8">
-            <div id="pinned-comments-wrapper"></div>
-        </div>
-        <button id="pinned-nav-next" class="pinned-nav-btn" disabled>&gt;</button>
-    </div>
-
-    <!-- মেসেজ লিস্ট -->
-    <div id="comment-list" class="comment-list">
-        <div class="text-center text-gray-500 mt-10 text-sm">লোডিং...</div>
-    </div>
-
-<!-- ইনপুট এরিয়া -->
-<div class="comment-input-area">
-    <div id="emoji-picker-container" class="hidden"></div>
-    <div class="flex gap-2 mb-2">
-        <button id="emoji-selector-btn" class="p-2 border rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 text-xl transition-colors w-12 flex items-center justify-center" title="প্রোফাইল ইমোজি সেট করুন">👤</button>
-        <div class="flex-grow flex relative">
-            <input type="text" id="comment-username" placeholder="আপনার নাম (লক হবে)" class="w-full p-2 text-sm border rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white pr-8" maxlength="20">
-            <button id="edit-username-btn" class="absolute right-1 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-500 hidden" title="নাম পরিবর্তন করুন">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5L14.732 3.732z" /></svg>
-            </button>
-        </div>
-    </div>
-    <div id="reply-preview-container" class="hidden relative bg-gray-100 dark:bg-gray-600 p-2 mb-2 rounded-lg border-l-4 border-blue-500 text-xs"></div>
-    <div class="flex gap-2">
-        <!-- এই wrapper div-কে relative করা হয়েছে -->
-        <div id="comment-message-wrapper" class="flex-grow p-2 text-sm border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent relative">
-            <!-- নতুন প্লেসহোল্ডার এলিমেন্ট -->
-            <div id="comment-placeholder" class="absolute top-2 left-2 text-gray-400 dark:text-gray-500 pointer-events-none select-none">মেসেজ লিখুন</div>
-            <!-- contenteditable div (অপরিবর্তিত, শুধু data-placeholder অ্যাট্রিবিউট সরানো হয়েছে) -->
-            <div id="comment-message" contenteditable="true" class="focus:outline-none"></div>
-        </div>
-        <button id="send-comment-btn" class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg flex items-center justify-center transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed w-10">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-        </button>
-    </div>
-    <p class="text-[10px] text-gray-400 mt-1 text-center">মন্তব্য ২৪ ঘণ্টা পর মুছে যাবে। যেকেউ ডিলিট করতে পারে।</p>
-</div>
-</div>
-<!-- ==================================================================== -->
-<!-- END: PUBLIC COMMENTS SECTION -->
-<!-- ==================================================================== -->
-
 <!-- Sidebar Overlay -->
-<div id="sidebarOverlay" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-30 hidden"></div>
+<div id="sidebarOverlay"></div>
 
 <!-- ====================================================================-->
 <!-- END: SIDEBAR SCRIPT-->
 <!-- ====================================================================-->
 
 <!-- ======================================================== -->
-<!-- START: ফ্লোটিং সাইডবার ভিডিও প্লেয়ার (ডান পাশে) -->
+<!-- START: ফ্লোটিং সাইডবার ভিডিও প্লেয়ার (ডান পাশে) -->
 <!-- ======================================================== -->
 <div id="rightSideVideoContainer" class="hidden">
     <!-- ড্র্যাগ বা মুভ করার বার এবং ক্লোজ বাটন -->
@@ -34279,11 +31913,61 @@ async function initializePublicComments() {
         }
     }
 </script>
--->
-<!-- END: Profile and File Transfer FIREBASE LOGIC -->
+<script>
+(function() {
+    // সাইডবারের এলিমেন্ট নির্বাচন
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('sidebarToggle');
+    const overlay = document.getElementById('sidebarOverlay');
+    const closeBtn = document.getElementById('sidebarClose');
 
-<!-- ============================================== -->
-<!-- END: প্রোফাইল, স্টোরেজ উইন্ডো এবং নোটিফিকেশন Experimental -->
-<!-- ============================================== -->
+    if (!sidebar || !toggleBtn) return;
+
+    // 1. শুরুতে সাইডবার লুকান (জোর করে !important সহ)
+    sidebar.style.setProperty('left', '-300px', 'important');
+    if (overlay) overlay.style.display = 'none';
+    document.body.classList.remove('sidebar-open');
+
+    // 2. টগল ফাংশন (খোলা/বন্ধ)
+    function toggleSidebar() {
+        const isOpen = document.body.classList.contains('sidebar-open');
+        if (isOpen) {
+            sidebar.style.setProperty('left', '-300px', 'important');
+            if (overlay) overlay.style.display = 'none';
+            document.body.classList.remove('sidebar-open');
+        } else {
+            sidebar.style.setProperty('left', '0', 'important');
+            if (overlay) overlay.style.display = 'block';
+            document.body.classList.add('sidebar-open');
+        }
+    }
+
+    // 3. ইভেন্ট লিসেনার
+    toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleSidebar();
+    });
+
+    if (overlay) {
+        overlay.addEventListener('click', () => {
+            if (document.body.classList.contains('sidebar-open')) toggleSidebar();
+        });
+    }
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            if (document.body.classList.contains('sidebar-open')) toggleSidebar();
+        });
+    }
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && document.body.classList.contains('sidebar-open')) {
+            toggleSidebar();
+        }
+    });
+})();
+</script>
+
+    
 </body>
 </html>
+
+
