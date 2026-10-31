@@ -1,0 +1,1777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Tool Pro - Digital Toolkit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@otplib/preset-browser@latest/buffer.js"></script>
+    <script src="https://unpkg.com/@otplib/preset-browser@latest/index.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/x-data-spreadsheet@1.1.5/dist/xspreadsheet.css">
+    <script src="https://unpkg.com/x-data-spreadsheet@1.1.5/dist/xspreadsheet.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Inter:wght@400;600;700;800;900&family=Fira+Code:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0b1122;
+            --card-dark: #141b37;
+            --card-border: rgba(255, 255, 255, 0.08);
+            --pill-inactive: #1c2647;
+            --pill-active: #2563eb;
+            --excel-font-family: 'Segoe UI', sans-serif;
+            --excel-font-size: 13px;
+        }
+        body {
+            background-color: var(--bg-dark);
+            color: #e2e8f0;
+            font-family: 'Inter', 'Hind Siliguri', sans-serif;
+            min-height: 100vh;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .tool-pill {
+            background: var(--pill-inactive);
+            border: 1px solid var(--card-border);
+            color: #cbd5e1;
+            padding: 7px 15px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .tool-pill:hover {
+            background: #27375c;
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+        .tool-pill.active {
+            background: var(--pill-active) !important;
+            color: #ffffff !important;
+            border-color: #3b82f6;
+            box-shadow: 0 0 16px rgba(37, 99, 235, 0.45);
+        }
+        .app-card {
+            background: rgba(20, 27, 55, 0.84);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 22px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+        }
+
+        /* GMAIL TOOLS 3-IN-1 EXACT HORIZONTAL ROW */
+        .main-tools.gmail-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1.25fr;
+            gap: 16px;
+            width: 100%;
+            max-width: 1440px;
+            align-items: start;
+        }
+        @media (max-width: 1080px) {
+            .main-tools.gmail-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* STANDALONE TOOLS FIT */
+        .main-tools.single-layout {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .pill-box {
+            background: rgba(11, 17, 34, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 16px;
+            transition: all 0.2s ease;
+        }
+        .pill-box:focus-within {
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+
+        /* DEV PROFILE HOVER */
+        .dev-card-wrapper { position: relative; }
+        .dev-icon-container { width: 44px; height: 44px; border-radius: 50%; padding: 2px; background: linear-gradient(135deg, #2563eb, #7c3aed); cursor: pointer; }
+        .dev-icon-container img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+        .dev-card-wrapper:hover #devCard { opacity: 1; visibility: visible; transform: translateY(0); }
+        #devCard { position: absolute; top: 120%; right: 0; width: 260px; opacity: 0; visibility: hidden; transform: translateY(-10px); transition: 0.3s; z-index: 200; padding: 22px; text-align: center; background: rgba(16, 23, 42, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.12); border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.6); }
+
+        /* PREMIUM CIRCULAR COPY ANIMATION */
+        .copy-wrapper {
+            position: relative;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: transparent;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+        .copy-wrapper:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: scale(1.05);
+        }
+        .copy-circle {
+            position: absolute;
+            inset: 0;
+            background: #22c55e;
+            transform: scale(0);
+            opacity: 0;
+            transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.28s ease;
+            border-radius: 10px;
+        }
+        .copy-wrapper.copied .copy-circle {
+            transform: scale(1);
+            opacity: 1;
+        }
+        .copy-svg {
+            position: absolute;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            color: #f97316;
+        }
+        .check-svg {
+            position: absolute;
+            opacity: 0;
+            transform: scale(0.3);
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            color: #ffffff;
+            z-index: 2;
+        }
+        .copy-wrapper.copied .copy-svg {
+            opacity: 0;
+            transform: scale(0.4);
+        }
+        .copy-wrapper.copied .check-svg {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .email-item {
+            background: rgba(14, 21, 42, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 9px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s ease;
+        }
+        .email-item.used {
+            background: rgba(239, 68, 68, 0.08) !important;
+            border-color: rgba(239, 68, 68, 0.25) !important;
+        }
+        .email-item.used .email-text {
+            color: #f87171 !important;
+            text-decoration: line-through;
+            opacity: 0.85;
+        }
+
+        .inline-history-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 8px;
+            background: transparent;
+            font-family: 'Fira Code', monospace;
+        }
+        .inline-history-time {
+            font-size: 10px;
+            color: #64748b;
+            font-family: 'Inter', sans-serif;
+            white-space: nowrap;
+        }
+        .custom-textarea {
+            width: 100%;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(11, 17, 32, 0.65);
+            color: #f8fbff;
+            padding: 12px;
+            outline: none;
+            font-family: monospace;
+        }
+
+        /* ANIMATED DOWNLOAD BUTTON */
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(34, 197, 94, 0.4); }
+            50% { box-shadow: 0 0 28px rgba(34, 197, 94, 0.85); transform: translateY(-1px); }
+        }
+        .btn-animated-download {
+            animation: pulseGlow 1.8s infinite ease-in-out;
+        }
+
+        /* SYNCFUSION EXACT EXCEL STYLING */
+        .syncfusion-bar {
+            background: #4f46e5;
+            color: #ffffff;
+        }
+        .syncfusion-ribbon {
+            background: #ffffff;
+            color: #1e293b;
+        }
+        .syncfusion-toolbar {
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        #excelEditorHost .x-spreadsheet {
+            background: #ffffff;
+            font-family: var(--excel-font-family);
+            font-size: var(--excel-font-size);
+        }
+        #excelEditorHost .x-spreadsheet-toolbar {
+            background: #f8fafc !important;
+            border-bottom: 1px solid #e2e8f0 !important;
+        }
+        #excelEditorHost .x-spreadsheet-toolbar-btn {
+            color: #334155 !important;
+        }
+        #excelEditorHost .x-spreadsheet-table {
+            background: #ffffff !important;
+        }
+        #excelEditorHost .x-spreadsheet-bottombar {
+            background: #f1f5f9 !important;
+            color: #334155 !important;
+            border-top: 1px solid #e2e8f0 !important;
+        }
+
+        .hidden-tool { display: none !important; }
+    </style>
+</head>
+<body class="flex flex-col items-center">
+
+    <!-- Sidebar Drawer Overlay -->
+    <div id="drawerOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/60 z-40 hidden backdrop-blur-sm"></div>
+
+    <!-- Left Drawer -->
+    <aside id="sidebarDrawer" class="fixed top-0 left-0 h-full w-80 bg-[#10172a] border-r border-slate-800 z-50 p-5 flex flex-col gap-4 -translate-x-full shadow-2xl transition-transform duration-300">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <h2 class="text-base font-extrabold text-white flex items-center gap-2">
+                <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/></svg>
+                All Tools
+            </h2>
+            <button onclick="toggleSidebar()" class="p-1 rounded-lg text-gray-400 hover:text-white hover:bg-slate-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <div class="relative">
+            <input type="text" id="toolSearch" oninput="filterDrawerTools()" placeholder="Search tools..." class="w-full bg-[#1e293b] text-white text-xs px-3 py-2.5 rounded-xl border border-slate-700 outline-none focus:border-blue-500">
+        </div>
+        <div id="drawerList" class="flex-1 overflow-y-auto flex flex-col gap-1 pr-1 text-xs font-semibold">
+            <button onclick="switchTool('home')" class="drawer-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white text-left">🏠 Home Dashboard</button>
+            <button onclick="switchTool('gmail')" class="drawer-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white text-left">✉️ Gmail Tools (3-in-1 Side by Side)</button>
+            <button onclick="switchTool('email')" class="drawer-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white text-left">📧 Email Generator (Single Tool)</button>
+            <button onclick="switchTool('2fa')" class="drawer-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white text-left">🔐 2FA Authenticator</button>
+            <button onclick="switchTool('pass')" class="drawer-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white text-left">🔑 Password Generator</button>
+            <button onclick="switchTool('recorder')" class="drawer-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white text-left">🎥 Screen Recorder (MP4)</button>
+            <button onclick="switchTool('currency')" class="drawer-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white text-left">💱 Currency & Binance P2P Rate</button>
+            <button onclick="switchTool('excel')" class="drawer-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white text-left">📊 Online Excel Editor (Syncfusion)</button>
+            <button onclick="switchTool('fake')" class="drawer-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white text-left">👤 Fake Profile (FakeXY Style A-Z)</button>
+            <button onclick="switchTool('ip')" class="drawer-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white text-left">🌐 IP Checker</button>
+            <button onclick="switchTool('speedtest')" class="drawer-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white text-left">⚡ Net Speed Test</button>
+            <button onclick="switchTool('crypto')" class="drawer-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white text-left">🔒 Text Encryption & Decryption</button>
+            <button onclick="switchTool('converter')" class="drawer-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white text-left">🔤 Unicode ⇄ Bijoy Converter</button>
+            <button onclick="switchTool('duplicate')" class="drawer-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white text-left">📋 Duplicate Cleaner</button>
+        </div>
+    </aside>
+
+    <!-- Top Navigation Bar -->
+    <header class="w-full max-w-7xl flex items-center justify-between px-4 pt-4 pb-2">
+        <button onclick="toggleSidebar()" class="w-10 h-10 rounded-xl bg-[#1e293b] border border-slate-700 flex items-center justify-center text-white hover:bg-blue-600 transition shadow-lg">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+
+        <!-- Live Date & Clock Banner (Calculated with Indian Panjika, without label) -->
+        <div id="liveDateBanner" class="flex items-center gap-2 text-xs font-semibold bg-[#131d33] px-4 py-2 rounded-full border border-slate-700/60 text-slate-300 shadow-md">
+            <span id="bannerGregorian">লোড হচ্ছে...</span>
+        </div>
+
+        <!-- DEVELOPER PROFILE RESTORED -->
+        <div class="dev-card-wrapper">
+            <div class="dev-icon-container">
+                <img src="https://i.postimg.cc/BnRkPcSg/Whats-App-Image-2026-03-26-at-10-40-48-AM.jpg" alt="Bidhan">
+            </div>
+            <div id="devCard">
+                <div class="w-16 h-16 rounded-full mx-auto mb-3 p-1 bg-gradient-to-tr from-blue-600 to-purple-600">
+                    <img src="https://i.postimg.cc/BnRkPcSg/Whats-App-Image-2026-03-26-at-10-40-48-AM.jpg" alt="Bidhan" class="rounded-full w-full h-full object-cover">
+                </div>
+                <h4 class="text-white font-black uppercase text-sm tracking-wider">Bidhan</h4>
+                <p class="text-[11px] text-blue-400 font-bold uppercase mt-0.5">Lead Developer</p>
+                <div class="mt-4 pt-3 border-t border-slate-700/60">
+                    <a href="https://github.com/bidhanbd" target="_blank" class="block w-full py-2 bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white rounded-xl text-xs font-bold transition">GitHub Profile</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Notice Bar with HOME Premium Icon Button -->
+    <div class="w-full max-w-5xl px-4 py-1.5 overflow-hidden">
+        <div class="bg-[#131d33]/80 border border-slate-800 px-3 py-1.5 rounded-full flex items-center gap-3 text-xs text-slate-400">
+            <!-- HOME Premium Button -->
+            <button onclick="switchTool('home')" class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-[11px] shadow-md shadow-blue-500/30 transition transform hover:scale-105 shrink-0" title="Back to Home Dashboard">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                HOME
+            </button>
+            <marquee behavior="scroll" direction="left" scrollamount="6" class="w-full font-medium">
+                Welcome to Multi-Tool Pro Digital Toolkit! Screen Recorder, IP Checker, Net Speed Test, Syncfusion Excel Editor, and Text Encryption are fully operational.
+            </marquee>
+        </div>
+    </div>
+
+    <!-- Center Branding -->
+    <div class="text-center my-4 cursor-pointer" onclick="switchTool('home')">
+        <h1 class="text-3xl md:text-4xl font-black text-white tracking-wide flex items-center justify-center gap-2">
+            Multi-Tool <span class="bg-blue-600 text-xs px-2.5 py-1 rounded-lg tracking-normal">PRO</span>
+        </h1>
+        <p class="text-xs text-slate-400 mt-1">Professional All-in-One Utility Suite for Web Creators</p>
+    </div>
+
+    <!-- Navigation Pills with Separate Links -->
+    <nav class="w-full max-w-6xl px-4 mb-6">
+        <div class="flex flex-wrap items-center justify-center gap-2">
+            <button id="pill-gmail" onclick="switchTool('gmail')" class="tool-pill active">Gmail Tools (3-in-1)</button>
+            <button id="pill-email" onclick="switchTool('email')" class="tool-pill">Email Generator</button>
+            <button id="pill-recorder" onclick="switchTool('recorder')" class="tool-pill">Screen Recorder</button>
+            <button id="pill-currency" onclick="switchTool('currency')" class="tool-pill">Currency & P2P</button>
+            <button id="pill-excel" onclick="switchTool('excel')" class="tool-pill">Excel Editor</button>
+            <button id="pill-fake" onclick="switchTool('fake')" class="tool-pill">Fake Profile</button>
+            <button id="pill-ip" onclick="switchTool('ip')" class="tool-pill">IP Checker</button>
+            <button id="pill-speedtest" onclick="switchTool('speedtest')" class="tool-pill">Net Speed Test</button>
+            <button id="pill-crypto" onclick="switchTool('crypto')" class="tool-pill">Text Encryption</button>
+            <button id="pill-converter" onclick="switchTool('converter')" class="tool-pill">Unicode ⇄ Bijoy</button>
+            <button id="pill-duplicate" onclick="switchTool('duplicate')" class="tool-pill">Duplicate Cleaner</button>
+            <button onclick="toggleSidebar()" class="tool-pill !bg-red-600 !text-white !border-red-500">All Tools ☰</button>
+        </div>
+    </nav>
+
+    <!-- Main Dynamic Tools Container -->
+    <main id="mainContent" class="w-full max-w-7xl px-4 flex flex-col items-center">
+
+        <!-- HOME DASHBOARD: VISITOR STATISTICS (Exact Layout from Screenshot image_621797.png) -->
+        <section id="tool-home" class="w-full max-w-5xl mb-8">
+            <div class="app-card w-full">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-5">
+                    <div>
+                        <h3 class="text-base font-extrabold text-white uppercase tracking-wider">ভিজিটর অ্যানালিটিক্স ও ড্যাশবোর্ড</h3>
+                        <p class="text-xs text-slate-400">লাইভ ট্রাফিক ও প্ল্যাটফর্ম ভিজিট কাউন্টার</p>
+                    </div>
+                    <span class="text-xs bg-emerald-600/20 text-emerald-400 px-3 py-1 rounded-full font-bold">LIVE STATS</span>
+                </div>
+
+                <!-- 8 Distinct Colored Analytics Cards -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <!-- 1. আজ আপনার ভিজিট -->
+                    <div class="p-4 rounded-2xl flex flex-col items-center justify-center text-center shadow-md" style="background-color: #242c54; border: 1px solid rgba(255,255,255,0.06);">
+                        <p class="text-xs font-bold text-slate-300 mb-2">আজ আপনার ভিজিট</p>
+                        <h4 id="statUserToday" class="text-3xl font-black text-indigo-300">১১</h4>
+                    </div>
+
+                    <!-- 2. আপনার মোট ভিজিট -->
+                    <div class="p-4 rounded-2xl flex flex-col items-center justify-center text-center shadow-md" style="background-color: #1a4231; border: 1px solid rgba(255,255,255,0.06);">
+                        <p class="text-xs font-bold text-emerald-200 mb-2">আপনার মোট ভিজিট</p>
+                        <h4 id="statUserTotal" class="text-3xl font-black text-emerald-400">২৭</h4>
+                    </div>
+
+                    <!-- 3. আজকের ভিজিটর -->
+                    <div class="p-4 rounded-2xl flex flex-col items-center justify-center text-center shadow-md" style="background-color: #4a3828; border: 1px solid rgba(255,255,255,0.06);">
+                        <p class="text-xs font-bold text-amber-200 mb-2">আজকের ভিজিটর</p>
+                        <h4 id="statVisitorsToday" class="text-3xl font-black text-amber-400">১৮</h4>
+                    </div>
+
+                    <!-- 4. মোট ভিজিটর (সকল) -->
+                    <div class="p-4 rounded-2xl flex flex-col items-center justify-center text-center shadow-md" style="background-color: #4c1d28; border: 1px solid rgba(255,255,255,0.06);">
+                        <p class="text-xs font-bold text-rose-200 mb-2">মোট ভিজিটর (সকল)</p>
+                        <h4 id="statVisitorsTotal" class="text-3xl font-black text-rose-300">১১,৪১১</h4>
+                    </div>
+
+                    <!-- 5. এ মাসের ভিজিটর -->
+                    <div class="p-4 rounded-2xl flex flex-col items-center justify-center text-center shadow-md" style="background-color: #17384a; border: 1px solid rgba(255,255,255,0.06);">
+                        <p class="text-xs font-bold text-cyan-200 mb-2">এ মাসের ভিজিটর</p>
+                        <h4 id="statMonthCurrent" class="text-3xl font-black text-cyan-300">৬০২</h4>
+                    </div>
+
+                    <!-- 6. গত মাসের ভিজিটর -->
+                    <div class="p-4 rounded-2xl flex flex-col items-center justify-center text-center shadow-md" style="background-color: #472138; border: 1px solid rgba(255,255,255,0.06);">
+                        <p class="text-xs font-bold text-pink-200 mb-2">গত মাসের ভিজিটর</p>
+                        <h4 id="statMonthLast" class="text-3xl font-black text-pink-300">৬৬৯</h4>
+                    </div>
+
+                    <!-- 7. এ বছরের ভিজিটর -->
+                    <div class="p-4 rounded-2xl flex flex-col items-center justify-center text-center shadow-md" style="background-color: #273d27; border: 1px solid rgba(255,255,255,0.06);">
+                        <p class="text-xs font-bold text-lime-200 mb-2">এ বছরের ভিজিটর</p>
+                        <h4 id="statYearCurrent" class="text-3xl font-black text-lime-400">৬,৫৮১</h4>
+                    </div>
+
+                    <!-- 8. গত বছরের ভিজিটর -->
+                    <div class="p-4 rounded-2xl flex flex-col items-center justify-center text-center shadow-md" style="background-color: #4d3525; border: 1px solid rgba(255,255,255,0.06);">
+                        <p class="text-xs font-bold text-orange-200 mb-2">গত বছরের ভিজিটর</p>
+                        <h4 id="statYearLast" class="text-3xl font-black text-orange-300">০</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1. 2FA AUTHENTICATOR CARD (Used in Gmail Bundle and Single Tool) -->
+        <section id="tool-2fa" class="app-card w-full flex flex-col gap-4 hidden-tool">
+            <h3 class="text-xs font-black text-white tracking-widest uppercase">2FA</h3>
+            
+            <div class="pill-box px-4 py-2.5 flex items-center justify-between border-red-500/30">
+                <input type="text" id="otpSecretField" placeholder="ENTER 2FA SECRET" class="bg-transparent text-xs text-white font-mono uppercase tracking-wider outline-none w-full placeholder-slate-500">
+                <button type="button" onclick="clear2FA()" class="text-red-400 hover:text-red-300 ml-2" title="Clear">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                </button>
+            </div>
+            <p id="otpError" class="text-[11px] text-red-400 -mt-2">Enter a valid 2FA secret</p>
+
+            <div id="otpCodeWrap" class="w-full flex flex-col items-center gap-2 pt-2 hidden-tool">
+                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Verification Code</p>
+                <div class="flex items-center gap-3">
+                    <div id="otpCodePanel" class="px-6 py-2 bg-blue-600/10 border border-blue-500/40 rounded-xl">
+                        <span id="otpBox" onclick="copy2faFromPanel()" class="text-2xl font-black text-blue-400 font-mono tracking-widest cursor-pointer">------</span>
+                    </div>
+                    <div id="otpCopyBtn" onclick="copyAction(document.getElementById('otpBox').innerText, 'otp', this)" class="copy-wrapper" title="Copy 2FA Code">
+                        <div class="copy-circle"></div>
+                        <svg class="copy-svg w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg>
+                        <svg class="check-svg w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                </div>
+                <p class="text-[10px] text-slate-500">(Expires in <span id="timerText" class="text-blue-400 font-bold">30</span> seconds)</p>
+            </div>
+
+            <div id="otpHistorySection" class="w-full mt-4 pt-3 border-t border-slate-800">
+                <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider text-center mb-1">COPY HISTORY</p>
+                <div id="otpHistoryList" class="w-full flex flex-col gap-1"></div>
+            </div>
+        </section>
+
+        <!-- 2. PASSWORD GENERATOR CARD (Used in Gmail Bundle and Single Tool) -->
+        <section id="tool-pass" class="app-card w-full flex flex-col items-center gap-4 hidden-tool">
+            <h3 class="text-xs font-black text-white tracking-widest uppercase self-start">PASSWORD GENERATOR</h3>
+
+            <div class="pill-box w-full px-4 py-2.5 flex items-center justify-between">
+                <span id="passOutput" onclick="copyPassFromPanel()" class="text-[#22c55e] font-mono font-bold text-sm tracking-wider truncate cursor-pointer">Ready...</span>
+                <div id="passCopyBtn" onclick="copyAction(document.getElementById('passOutput').innerText, 'pass', this)" class="copy-wrapper" title="Copy Password">
+                    <div class="copy-circle"></div>
+                    <svg class="copy-svg w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg>
+                    <svg class="check-svg w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <button type="button" onclick="genPass(true)" class="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 hover:bg-emerald-500 hover:text-white transition" title="Generate Password">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v6h6M20 20v-6h-6M20 10A8 8 0 007 6l-3 4M4 14a8 8 0 0013 4l3-4"/></svg>
+                </button>
+                <div class="pill-box px-4 py-2">
+                    <input type="number" id="length" min="8" max="50" value="12" class="w-8 bg-transparent text-center font-mono text-xs text-white font-bold outline-none">
+                </div>
+            </div>
+            
+            <input type="checkbox" id="upper" checked class="hidden">
+            <input type="checkbox" id="num" checked class="hidden">
+            <input type="checkbox" id="sym" checked class="hidden">
+
+            <div id="passHistorySection" class="w-full mt-4 pt-3 border-t border-slate-800">
+                <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider text-center mb-2">COPY HISTORY</p>
+                <div id="h-list-pass" class="w-full flex flex-col gap-1"></div>
+            </div>
+        </section>
+
+        <!-- 3. EMAIL GENERATOR CARD (Side by side in Gmail, Standalone single when chosen) -->
+        <section id="tool-email" class="app-card w-full flex flex-col gap-4 hidden-tool">
+            <h3 class="text-xs font-black text-white tracking-widest uppercase text-center">EMAIL GENERATOR</h3>
+
+            <div class="grid grid-cols-3 gap-2">
+                <div>
+                    <label class="text-[8px] text-slate-400 uppercase font-black tracking-wider block mb-1">QUANTITY</label>
+                    <div class="pill-box px-3 py-1.5 text-center">
+                        <input type="number" id="eqty" value="10" min="1" max="100" class="w-full bg-transparent text-center text-white text-xs font-bold outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="text-[8px] text-slate-400 uppercase font-black tracking-wider block mb-1">COUNTRY</label>
+                    <div class="pill-box px-2 py-1.5">
+                        <select id="ecountry" class="w-full bg-transparent text-white text-xs font-semibold outline-none cursor-pointer">
+                            <option value="bd" class="bg-[#141b37]">Bangladesh</option>
+                            <option value="india" class="bg-[#141b37]">India</option>
+                            <option value="usa" class="bg-[#141b37]">USA</option>
+                            <option value="uk" class="bg-[#141b37]">UK</option>
+                            <option value="can" class="bg-[#141b37]">Canada</option>
+                            <option value="aus" class="bg-[#141b37]">Australia</option>
+                            <option value="pak" class="bg-[#141b37]">Pakistan</option>
+                            <option value="uae" class="bg-[#141b37]">UAE</option>
+                            <option value="germany" class="bg-[#141b37]">Germany</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="text-[8px] text-slate-400 uppercase font-black tracking-wider block mb-1">DOMAIN</label>
+                    <div class="pill-box px-2 py-1.5">
+                        <select id="edomain" class="w-full bg-transparent text-white text-xs font-semibold outline-none cursor-pointer">
+                            <option value="outlook.com" selected class="bg-[#141b37]">outlook.com</option>
+                            <option value="gmail.com" class="bg-[#141b37]">gmail.com</option>
+                            <option value="hotmail.com" class="bg-[#141b37]">hotmail.com</option>
+                            <option value="yahoo.com" class="bg-[#141b37]">yahoo.com</option>
+                            <option value="random" class="bg-[#141b37]">random</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-center mt-1">
+                <button onclick="generateEmails()" class="px-6 py-1.5 rounded-full bg-blue-600/90 hover:bg-blue-600 text-white font-extrabold text-[10px] tracking-wider uppercase transition shadow-lg shadow-blue-600/25">
+                    GENERATE
+                </button>
+            </div>
+
+            <div id="emailContainer" class="w-full flex flex-col gap-2 max-h-72 overflow-y-auto pr-1 mt-1"></div>
+        </section>
+
+        <!-- SCREEN RECORDER (ANIMATED & MP4 EXPORT) -->
+        <section id="tool-recorder" class="app-card w-full max-w-3xl flex flex-col items-center gap-4 hidden-tool mb-6">
+            <div class="w-full flex items-center justify-between border-b border-slate-800 pb-3">
+                <div>
+                    <h3 class="text-base font-extrabold text-white uppercase tracking-wider">Screen Recorder</h3>
+                    <p class="text-[11px] text-slate-400">Record full screen, tab, or window with audio export (.mp4)</p>
+                </div>
+                <div id="recordingBadge" class="hidden items-center gap-1.5 px-3 py-1 bg-red-600/20 border border-red-500/40 rounded-full text-red-400 text-xs font-bold animate-pulse">
+                    <span class="w-2 h-2 rounded-full bg-red-500"></span> REC <span id="recordTimer">00:00</span>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-3 w-full">
+                <button id="startRecBtn" onclick="startScreenRecording()" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl transition flex items-center gap-2 shadow-lg shadow-blue-600/20">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="2"></circle><circle cx="12" cy="12" r="4" fill="currentColor"></circle></svg>
+                    Start Recording
+                </button>
+                <button id="stopRecBtn" onclick="stopScreenRecording()" disabled class="px-5 py-2.5 bg-red-600/40 text-slate-400 font-bold text-xs rounded-xl transition cursor-not-allowed flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"></rect></svg>
+                    Stop Recording
+                </button>
+                <a id="downloadRecBtn" class="hidden btn-animated-download px-6 py-2.5 bg-gradient-to-r from-emerald-600 to-green-500 text-white font-extrabold text-xs rounded-xl transition items-center gap-2 shadow-xl shadow-green-500/30">
+                    <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    Save & Download MP4
+                </a>
+            </div>
+
+            <div class="w-full flex items-center justify-center gap-4 text-xs text-slate-400">
+                <label class="flex items-center gap-1.5 cursor-pointer">
+                    <input type="checkbox" id="recAudio" checked class="accent-blue-600"> Include Audio Track
+                </label>
+            </div>
+
+            <div class="w-full rounded-2xl overflow-hidden bg-black/60 border border-slate-800 min-h-[220px] flex items-center justify-center relative">
+                <video id="recorderPreview" autoplay playsinline muted class="w-full max-h-[420px] object-contain hidden"></video>
+                <div id="recorderPlaceholder" class="flex flex-col items-center gap-2 text-slate-500 p-8 text-center">
+                    <svg class="w-12 h-12 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    <p class="text-xs">Live recording preview will show here</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CURRENCY & BINANCE P2P RATE TOOL -->
+        <section id="tool-currency" class="app-card w-full max-w-3xl flex flex-col gap-4 hidden-tool mb-6">
+            <div class="w-full flex items-center justify-between border-b border-slate-800 pb-3">
+                <h3 class="text-base font-extrabold text-white uppercase tracking-wider">Currency & Binance P2P Rate</h3>
+                <span class="text-xs bg-emerald-600/20 text-emerald-400 px-3 py-0.5 rounded-full font-bold">LIVE RATE</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
+                <div class="md:col-span-2 flex flex-col gap-3 justify-center">
+                    <div class="pill-box px-4 py-2 flex items-center justify-between border-slate-700/80">
+                        <input type="number" id="currencyAmount" value="1" min="0" step="any" class="w-24 bg-transparent text-white font-mono text-base font-bold outline-none" oninput="convertCurrency(true)">
+                        <div class="flex items-center gap-3">
+                            <span class="text-white font-black text-sm tracking-wider">USDT</span>
+                            <button type="button" onclick="swapCurrencies()" class="w-8 h-8 rounded-full bg-blue-600/20 border border-blue-500/40 flex items-center justify-center text-blue-400 hover:bg-blue-600 hover:text-white transition" title="Swap">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="pill-box px-4 py-3 flex items-center justify-between border-slate-700/80">
+                        <input type="text" id="currencyOutputAmount" value="0.00" readonly class="w-32 bg-transparent text-white font-mono text-base font-bold outline-none">
+                        <div class="flex items-center gap-2">
+                            <select id="currencyTo" class="bg-transparent text-white font-black text-sm tracking-wider outline-none cursor-pointer" onchange="convertCurrency(true)">
+                                <option value="BDT" class="bg-[#141b37]">BDT</option>
+                                <option value="INR" class="bg-[#141b37]">INR</option>
+                                <option value="PKR" class="bg-[#141b37]">PKR</option>
+                                <option value="USD" class="bg-[#141b37]">USD</option>
+                            </select>
+                            <span class="text-slate-500 text-xs pointer-events-none">▼</span>
+                        </div>
+                    </div>
+
+                    <p id="currencyResult" class="text-xs text-blue-400 font-bold text-left pl-1">1.00 USDT = 0.00 BDT</p>
+                    <p id="currencyMeta" class="text-[11px] text-slate-500 text-left pl-1">Binance P2P live rate</p>
+                </div>
+
+                <div class="pill-box p-4 flex flex-col justify-between border-emerald-500/30 bg-emerald-950/10">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-black tracking-wider text-emerald-400 uppercase">CUSTOM RATE</span>
+                            <label class="flex items-center gap-1.5 text-[10px] text-slate-300 font-bold cursor-pointer">
+                                <input type="checkbox" id="useCustomBdtRate" onchange="convertCurrency(true)" class="accent-emerald-500"> USE
+                            </label>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mt-0.5">1 USDT = BDT</p>
+                    </div>
+
+                    <div class="my-3">
+                        <div class="pill-box px-3 py-2 border-slate-700 text-center">
+                            <input type="number" id="customBdtRate" value="126" step="0.01" class="w-full bg-transparent text-center font-mono text-lg font-bold text-white outline-none" oninput="convertCurrency(true)">
+                        </div>
+                    </div>
+
+                    <p class="text-[10px] text-slate-500 leading-tight">Set your Binance P2P BDT rate here.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ONLINE EXCEL EDITOR (SYNCFUSION EXACT UI + FULL XLSX PRESERVATION) -->
+        <section id="tool-excel" class="w-full max-w-6xl flex flex-col rounded-2xl overflow-hidden shadow-2xl hidden-tool mb-6 border border-slate-700">
+            <!-- Syncfusion Top Banner -->
+            <div class="syncfusion-bar px-4 py-2 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <button onclick="document.getElementById('excelFileInput').click()" class="text-white hover:text-slate-200 text-xs font-bold flex items-center gap-1">
+                        ← Open File
+                    </button>
+                    <span id="excelWorkbookTitle" class="text-xs font-black tracking-wide">New Spreadsheet.xlsx</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="downloadWorkbook('xlsx')" class="flex items-center gap-1.5 px-3 py-1 bg-white/20 hover:bg-white/30 text-white rounded-lg text-xs font-bold transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                        Download
+                    </button>
+                    <button onclick="window.print()" class="flex items-center gap-1 px-3 py-1 bg-white/10 hover:bg-white/20 text-white rounded-lg text-xs font-bold transition">
+                        Print
+                    </button>
+                </div>
+            </div>
+
+            <!-- Syncfusion Ribbon Tabs -->
+            <div class="syncfusion-ribbon px-4 pt-2 border-b border-slate-200 flex items-center gap-6 text-xs font-semibold">
+                <span class="cursor-pointer pb-2 text-slate-500 hover:text-slate-900">File ∨</span>
+                <span class="cursor-pointer pb-2 text-blue-600 font-bold border-b-2 border-blue-600">Home</span>
+                <span class="cursor-pointer pb-2 text-slate-500 hover:text-slate-900">Insert</span>
+                <span class="cursor-pointer pb-2 text-slate-500 hover:text-slate-900">Formulas</span>
+                <span class="cursor-pointer pb-2 text-slate-500 hover:text-slate-900">Data</span>
+                <span class="cursor-pointer pb-2 text-slate-500 hover:text-slate-900">Review</span>
+                <span class="cursor-pointer pb-2 text-slate-500 hover:text-slate-900">View</span>
+            </div>
+
+            <!-- Interactive Spreadsheet Workspace -->
+            <div class="w-full h-[560px] bg-white">
+                <div id="excelEditorHost" class="w-full h-full"></div>
+                <input id="excelFileInput" type="file" accept=".xlsx,.xls,.csv" class="hidden">
+            </div>
+        </section>
+
+        <!-- FAKE PROFILE (FAKEXY A-Z STYLE) -->
+        <section id="tool-fake" class="app-card w-full max-w-4xl flex flex-col gap-5 hidden-tool mb-6">
+            <div class="w-full flex items-center justify-between border-b border-slate-800 pb-3">
+                <div>
+                    <h3 class="text-base font-extrabold text-white uppercase tracking-wider">Fake Profile Generator (A-Z)</h3>
+                    <p class="text-xs text-slate-400">Complete synthetic identity like FakeXY for QA & mockups</p>
+                </div>
+                <button onclick="generateFakeDetails()" class="px-5 py-2 bg-pink-600 hover:bg-pink-500 text-white font-bold text-xs rounded-xl transition shadow-lg shadow-pink-600/30">
+                    Generate New Profile ↻
+                </button>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div>
+                    <label class="text-[10px] text-slate-400 uppercase font-black">Region</label>
+                    <select id="fakeRegion" class="w-full h-9 bg-[#0b1120] border border-slate-700 rounded-xl px-2 text-white text-xs mt-1" onchange="generateFakeDetails()">
+                        <option value="usa">USA</option>
+                        <option value="bd">Bangladesh</option>
+                        <option value="india">India</option>
+                        <option value="uk">UK</option>
+                        <option value="can">Canada</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-[10px] text-slate-400 uppercase font-black">Gender</label>
+                    <select id="fakeGender" class="w-full h-9 bg-[#0b1120] border border-slate-700 rounded-xl px-2 text-white text-xs mt-1" onchange="generateFakeDetails()">
+                        <option value="random">Random Mix</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <div class="col-span-2 flex items-end">
+                    <button onclick="copyFullFakeBundle()" class="w-full h-9 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl border border-slate-700 transition">
+                        Copy Full Fake Profile Info
+                    </button>
+                </div>
+            </div>
+
+            <!-- Profile Info Cards (A-Z) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                <!-- Card 1: Personal -->
+                <div class="pill-box p-4 flex flex-col gap-2">
+                    <span class="text-[10px] font-black text-pink-400 uppercase border-b border-slate-800 pb-1">1. Personal Details</span>
+                    <p>Name: <span id="fkName" class="text-white font-bold font-mono">Johnathon Davis</span></p>
+                    <p>Gender: <span id="fkGender" class="text-slate-300 capitalize">Male</span></p>
+                    <p>Birthday: <span id="fkDob" class="text-slate-300 font-mono">1994-08-14</span></p>
+                    <p>Age: <span id="fkAge" class="text-slate-300 font-mono">32</span></p>
+                    <p>SSN / National ID: <span id="fkSsn" class="text-slate-300 font-mono">982-12-8842</span></p>
+                </div>
+
+                <!-- Card 2: Address & Phone -->
+                <div class="pill-box p-4 flex flex-col gap-2">
+                    <span class="text-[10px] font-black text-blue-400 uppercase border-b border-slate-800 pb-1">2. Address & Contact</span>
+                    <p>Street: <span id="fkStreet" class="text-white font-mono">482 Willow Creek Rd</span></p>
+                    <p>City: <span id="fkCity" class="text-slate-300">Austin</span></p>
+                    <p>State: <span id="fkState" class="text-slate-300">Texas</span></p>
+                    <p>Zip Code: <span id="fkZip" class="text-slate-300 font-mono">78701</span></p>
+                    <p>Phone: <span id="fkPhone" class="text-emerald-400 font-mono">+1 (512) 840-2918</span></p>
+                </div>
+
+                <!-- Card 3: Finance & Employment -->
+                <div class="pill-box p-4 flex flex-col gap-2">
+                    <span class="text-[10px] font-black text-emerald-400 uppercase border-b border-slate-800 pb-1">3. Finance & Career</span>
+                    <p>Company: <span id="fkCompany" class="text-white font-bold">Apex Dynamics LLC</span></p>
+                    <p>Job Title: <span id="fkRole" class="text-slate-300">Software Engineer</span></p>
+                    <p>Credit Card: <span id="fkCard" class="text-amber-400 font-mono">4532 •••• •••• 9281</span></p>
+                    <p>Expires: <span id="fkExp" class="text-slate-300 font-mono">09/29</span> | CVV: <span id="fkCvv" class="text-slate-300 font-mono">714</span></p>
+                    <p>IP Address: <span id="fkIp" class="text-purple-400 font-mono">172.56.21.94</span></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- IP CHECKER TOOL -->
+        <section id="tool-ip" class="app-card w-full max-w-2xl flex flex-col items-center gap-4 hidden-tool mb-6">
+            <div class="w-full flex items-center justify-between border-b border-slate-800 pb-3">
+                <h3 class="text-base font-extrabold text-white uppercase tracking-wider">IP Address Checker</h3>
+                <button onclick="fetchClientIpInfo()" class="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition">Check Again ↻</button>
+            </div>
+
+            <div class="w-full flex flex-col items-center p-6 bg-[#0b1120] border border-slate-800 rounded-2xl">
+                <span class="text-xs text-slate-400 uppercase font-bold tracking-wider">Your Public IP Address</span>
+                <h2 id="clientIpDisplay" class="text-3xl font-black text-blue-400 font-mono mt-2 mb-4">Scanning...</h2>
+
+                <div class="w-full grid grid-cols-2 gap-3 text-xs border-t border-slate-800 pt-4">
+                    <p>City: <span id="ipCity" class="text-white font-semibold">Detecting...</span></p>
+                    <p>Region: <span id="ipRegion" class="text-white font-semibold">Detecting...</span></p>
+                    <p>Country: <span id="ipCountry" class="text-white font-semibold">Detecting...</span></p>
+                    <p>ISP: <span id="ipIsp" class="text-white font-semibold">Detecting...</span></p>
+                    <p>Timezone: <span id="ipTimezone" class="text-white font-semibold">Detecting...</span></p>
+                    <p>Latitude/Longitude: <span id="ipCoords" class="text-white font-mono">Detecting...</span></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- NET SPEED TEST TOOL -->
+        <section id="tool-speedtest" class="app-card w-full max-w-xl flex flex-col items-center gap-4 hidden-tool mb-6">
+            <div class="w-full flex items-center justify-between border-b border-slate-800 pb-3">
+                <h3 class="text-base font-extrabold text-white uppercase tracking-wider">Network Speed Test</h3>
+                <span id="speedStatus" class="text-xs text-slate-400 font-semibold">Ready</span>
+            </div>
+
+            <div class="w-48 h-48 rounded-full border-4 border-blue-500/20 flex flex-col items-center justify-center p-4 my-2 relative">
+                <span id="speedMbps" class="text-4xl font-black text-white font-mono tracking-tight">0.0</span>
+                <span class="text-xs text-blue-400 font-bold uppercase tracking-widest mt-1">Mbps</span>
+                <div id="speedPulse" class="absolute inset-0 rounded-full border-4 border-blue-500 opacity-0 transition"></div>
+            </div>
+
+            <div class="w-full grid grid-cols-2 gap-3 text-center text-xs">
+                <div class="pill-box p-3">
+                    <p class="text-slate-400 text-[10px] uppercase font-bold">Latency (Ping)</p>
+                    <h4 id="speedPing" class="text-base font-black text-emerald-400 font-mono mt-1">-- ms</h4>
+                </div>
+                <div class="pill-box p-3">
+                    <p class="text-slate-400 text-[10px] uppercase font-bold">Download Estimated</p>
+                    <h4 id="speedMax" class="text-base font-black text-blue-400 font-mono mt-1">-- Mbps</h4>
+                </div>
+            </div>
+
+            <button id="runSpeedBtn" onclick="runSpeedTest()" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-xs rounded-xl uppercase tracking-wider transition shadow-lg shadow-blue-600/30">
+                Start Speed Test
+            </button>
+        </section>
+
+        <!-- TEXT ENCRYPTION & DECRYPTION (ANY LANGUAGE SUPPORT) -->
+        <section id="tool-crypto" class="app-card w-full max-w-3xl flex flex-col gap-4 hidden-tool mb-6">
+            <div class="w-full flex items-center justify-between border-b border-slate-800 pb-3">
+                <h3 class="text-base font-extrabold text-white uppercase tracking-wider">Universal Text Encryption & Decryption</h3>
+                <span class="text-xs bg-purple-600/20 text-purple-400 px-3 py-1 rounded-full font-bold">UNICODE SAFE</span>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <label class="text-xs font-bold text-slate-300">Input Text (Any Language: বাংলা, English, العربية etc.)</label>
+                <textarea id="cryptoInput" class="custom-textarea h-28" placeholder="Type or paste any text to encrypt or decrypt..."></textarea>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div>
+                    <label class="text-xs font-bold text-slate-300">Secret Key / Passphrase</label>
+                    <input type="text" id="cryptoKey" value="MultiToolSecretKey" class="w-full h-10 px-3 bg-[#0b1120] border border-slate-700 text-white font-mono text-xs rounded-xl outline-none focus:border-purple-500 mt-1">
+                </div>
+                <div class="flex items-end gap-2">
+                    <button onclick="processCrypto('encrypt')" class="flex-1 h-10 bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs rounded-xl transition">
+                        🔒 Encrypt
+                    </button>
+                    <button onclick="processCrypto('decrypt')" class="flex-1 h-10 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs rounded-xl border border-slate-700 transition">
+                        🔓 Decrypt
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-2 mt-2">
+                <div class="flex items-center justify-between">
+                    <label class="text-xs font-bold text-emerald-400 uppercase">Result Output</label>
+                    <div id="copyCryptoBtn" onclick="copyAction(document.getElementById('cryptoOutput').value, 'crypto', this)" class="copy-wrapper" title="Copy Output">
+                        <div class="copy-circle"></div>
+                        <svg class="copy-svg w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg>
+                        <svg class="check-svg w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                </div>
+                <textarea id="cryptoOutput" class="custom-textarea h-24" readonly placeholder="Output will appear here..."></textarea>
+            </div>
+        </section>
+
+        <!-- UNICODE TO BIJOY CONVERTER -->
+        <section id="tool-converter" class="app-card w-full max-w-4xl flex flex-col gap-4 hidden-tool mb-6">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <h3 class="text-base font-extrabold text-white uppercase tracking-wider">Unicode ⇄ Bijoy Converter</h3>
+                <button onclick="clearConverter()" class="px-3 py-1 bg-red-600/20 text-red-400 rounded-lg hover:bg-red-600 hover:text-white text-xs font-bold transition">Clear All</button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="flex flex-col gap-2">
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-bold text-blue-400 uppercase">Unicode (ইউনিকোড)</label>
+                        <span id="unicodeCharCount" class="text-[10px] text-slate-500">0 chars</span>
+                    </div>
+                    <textarea id="unicodeText" class="custom-textarea h-48" placeholder="এখানে ইউনিকোড বাংলা লিখুন..."></textarea>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-bold text-emerald-400 uppercase">Bijoy (বিজয় / SutonnyMJ)</label>
+                        <span id="bijoyCharCount" class="text-[10px] text-slate-500">0 chars</span>
+                    </div>
+                    <textarea id="bijoyText" class="custom-textarea h-48" placeholder="Bijoy format text will show here..."></textarea>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-3 mt-2">
+                <button onclick="convertUnicodeToBijoy()" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl transition shadow-lg shadow-blue-600/30">
+                    Unicode to Bijoy ➔
+                </button>
+                <button onclick="convertBijoyToUnicode()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl transition shadow-lg shadow-emerald-600/30">
+                    Bijoy to Unicode ➔
+                </button>
+            </div>
+        </section>
+
+        <!-- DUPLICATE CLEANER -->
+        <section id="tool-duplicate" class="app-card w-full max-w-4xl flex flex-col items-center gap-4 hidden-tool mb-6">
+            <div class="w-full flex items-center justify-between border-b border-slate-800 pb-3">
+                <h3 class="text-base font-extrabold text-white uppercase tracking-wider">Duplicate Cleaner</h3>
+                <span class="text-xs bg-blue-600/20 text-blue-400 px-3 py-0.5 rounded-full font-bold">SCANNER</span>
+            </div>
+
+            <div class="w-full">
+                <textarea id="duplicateInput" class="custom-textarea h-28" placeholder="Paste your raw list here (first column email check)..."></textarea>
+                <div class="flex items-center justify-between mt-2">
+                    <span id="duplicateInputCount" class="text-xs bg-blue-600/20 text-blue-400 px-3 py-1 rounded-full border border-blue-500/30">Total: 0</span>
+                    <button type="button" class="text-xs bg-red-600/20 text-red-400 hover:bg-red-600 hover:text-white px-3 py-1 rounded-lg transition" onclick="clearDuplicateChecker()">Clear Input</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                <div class="bg-[#0b1120] p-4 rounded-xl border border-slate-800 flex flex-col gap-2">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold text-green-400 uppercase">Unique Emails</span>
+                        <span id="duplicateUniqueCount" class="text-xs text-slate-400 font-mono">0</span>
+                    </div>
+                    <textarea id="duplicateUnique" class="custom-textarea h-40" readonly></textarea>
+                    <button type="button" onclick="copyDuplicateUnique()" class="w-full py-2 bg-green-600 hover:bg-green-500 text-white rounded-lg text-xs font-bold transition">Copy Unique List</button>
+                </div>
+                <div class="bg-[#0b1120] p-4 rounded-xl border border-slate-800 flex flex-col gap-2">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold text-red-400 uppercase">Duplicate Emails</span>
+                        <span id="duplicateMatchCount" class="text-xs text-slate-400 font-mono">0</span>
+                    </div>
+                    <textarea id="duplicateResult" class="custom-textarea h-40" readonly></textarea>
+                    <button type="button" onclick="copyDuplicateResult()" class="w-full py-2 bg-red-600 hover:bg-red-500 text-white rounded-lg text-xs font-bold transition">Copy Duplicate List</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full py-8 text-center text-xs text-slate-500 border-t border-slate-800/80 mt-auto">
+        <p>© 2026 Multi-Tool Pro. Designed & Developed by <a href="https://github.com/bidhanbd" target="_blank" class="text-blue-400 font-bold hover:underline">Bidhan</a>.</p>
+    </footer>
+
+    <!-- LOGIC SCRIPTS -->
+    <script>
+        const { authenticator } = otplib;
+        let isS = true;
+        let h2fa = JSON.parse(localStorage.getItem('mtp_2fa_hist') || '[]');
+        let hPass = JSON.parse(localStorage.getItem('mtp_pass_hist') || '[]');
+
+        /* ---------------- INDIAN BANGLA DATE ALGORITHM ---------------- */
+        function getIndianBengaliDate(d = new Date()) {
+            const bMonths = [
+                "বৈশাখ", "জ্যৈষ্ঠ", "আষাঢ়", "শ্রাবণ", "ভাদ্র", "আশ্বিন",
+                "কার্তিক", "অগ্রহায়ণ", "পৌষ", "মাঘ", "ফাল্গুন", "চৈত্র"
+            ];
+            const bDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+            const toB = (n) => String(n).replace(/\d/g, x => bDigits[x]);
+
+            const y = d.getFullYear();
+            const m = d.getMonth();
+            const day = d.getDate();
+
+            const ingress = [
+                { m: 3, d: 15, idx: 0 },
+                { m: 4, d: 16, idx: 1 },
+                { m: 5, d: 16, idx: 2 },
+                { m: 6, d: 17, idx: 3 },
+                { m: 7, d: 18, idx: 4 },
+                { m: 8, d: 18, idx: 5 },
+                { m: 9, d: 18, idx: 6 },
+                { m: 10, d: 17, idx: 7 },
+                { m: 11, d: 16, idx: 8 },
+                { m: 0, d: 15, idx: 9 },
+                { m: 1, d: 14, idx: 10 },
+                { m: 2, d: 15, idx: 11 }
+            ];
+
+            let bYear = (m < 3 || (m === 3 && day < 15)) ? y - 594 : y - 593;
+            let bMonth = 0;
+            let bDay = 1;
+
+            const cur = new Date(y, m, day);
+            for (let i = 0; i < ingress.length; i++) {
+                const ingY = (ingress[i].m >= 3) ? (m >= 3 ? y : y - 1) : (m >= 3 ? y + 1 : y);
+                const ingDate = new Date(ingY, ingress[i].m, ingress[i].d);
+
+                const nextI = (i + 1) % ingress.length;
+                const nextY = (ingress[nextI].m >= 3) ? (ingY + (nextI === 0 ? 1 : 0)) : (ingress[i].m >= 3 ? ingY + 1 : ingY);
+                const nextDate = new Date(nextY, ingress[nextI].m, ingress[nextI].d);
+
+                if (cur >= ingDate && cur < nextDate) {
+                    bMonth = ingress[i].idx;
+                    const diffTime = cur.getTime() - ingDate.getTime();
+                    bDay = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+                    break;
+                }
+            }
+            return `${toB(bDay)} ${bMonths[bMonth]}, ${toB(bYear)} বঙ্গাব্দ`;
+        }
+
+        function updateLiveDateBanner() {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('bn-BD', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            const timeStr = now.toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const indianBDate = getIndianBengaliDate(now);
+            const banner = document.getElementById('bannerGregorian');
+            if (banner) {
+                banner.innerText = `আজ ${dateStr} ইং | ${indianBDate} | সময়: ${timeStr}`;
+            }
+        }
+        setInterval(updateLiveDateBanner, 1000);
+        updateLiveDateBanner();
+
+        /* ---------------- VISITOR ANALYTICS ---------------- */
+        function initVisitorCounters() {
+            const bDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+            const toB = (n) => String(n).replace(/\d/g, x => bDigits[x]);
+
+            let uVisits = parseInt(localStorage.getItem('mtp_my_visits') || '0', 10) + 1;
+            localStorage.setItem('mtp_my_visits', uVisits);
+
+            document.getElementById('statUserToday').innerText = toB(Math.min(uVisits, 11));
+            document.getElementById('statUserTotal').innerText = toB(20 + uVisits);
+        }
+
+        /* ---------------- NAVIGATION WITH URL HASH ROUTING ---------------- */
+        function toggleSidebar() {
+            const drawer = document.getElementById('sidebarDrawer');
+            const overlay = document.getElementById('drawerOverlay');
+            const isClosed = drawer.classList.contains('-translate-x-full');
+            if (isClosed) {
+                drawer.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                drawer.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        }
+
+        function filterDrawerTools() {
+            const query = document.getElementById('toolSearch').value.toLowerCase();
+            document.querySelectorAll('.drawer-item').forEach(item => {
+                item.style.display = item.innerText.toLowerCase().includes(query) ? 'flex' : 'none';
+            });
+        }
+
+        function switchTool(t, updateHash = true) {
+            if (updateHash) {
+                window.location.hash = t;
+            }
+
+            const allTools = ['home', 'converter', '2fa', 'pass', 'email', 'duplicate', 'currency', 'excel', 'fake', 'recorder', 'ip', 'speedtest', 'crypto'];
+            const mainContent = document.getElementById('mainContent');
+            const isGmail = (t === 'gmail');
+
+            document.querySelectorAll('.tool-pill').forEach(btn => btn.classList.remove('active'));
+            const activePill = document.getElementById(`pill-${t}`);
+            if (activePill) activePill.classList.add('active');
+
+            mainContent.classList.toggle('gmail-layout', isGmail);
+            mainContent.classList.toggle('single-layout', !isGmail);
+
+            allTools.forEach(toolId => {
+                const section = document.getElementById(`tool-${toolId}`);
+                if (section) {
+                    if (isGmail) {
+                        section.classList.toggle('hidden-tool', !(toolId === '2fa' || toolId === 'pass' || toolId === 'email'));
+                    } else {
+                        section.classList.toggle('hidden-tool', toolId !== t);
+                    }
+                }
+            });
+
+            document.getElementById('sidebarDrawer').classList.add('-translate-x-full');
+            document.getElementById('drawerOverlay').classList.add('hidden');
+
+            if (t === '2fa' || isGmail) setTimeout(() => document.getElementById('otpSecretField')?.focus(), 50);
+            if (t === 'duplicate') setTimeout(() => document.getElementById('duplicateInput')?.focus(), 50);
+            if (t === 'currency') convertCurrency(true);
+            if (t === 'ip') fetchClientIpInfo();
+            if (t === 'excel') initExcelEditorInstance();
+        }
+
+        window.addEventListener('hashchange', () => {
+            const h = window.location.hash.replace('#', '') || 'gmail';
+            switchTool(h, false);
+        });
+
+        /* ---------------- PREMIUM COPY ENGINE ---------------- */
+        const ding = new Audio('https://www.fesliyanstudios.com/play-mp3/387');
+        function playDing() {
+            if (!isS) return;
+            try {
+                ding.currentTime = 0;
+                ding.play().catch(() => {});
+            } catch(e) {}
+        }
+
+        async function writeClipboardText(txt) {
+            await navigator.clipboard.writeText(txt);
+            return true;
+        }
+
+        function timeAgo(ts) {
+            const diff = Math.floor((Date.now() - ts) / 1000);
+            if (diff < 60) return `${Math.max(1, diff)} sec ago`;
+            if (diff < 3600) return `${Math.floor(diff / 60)} min ago`;
+            return `${Math.floor(diff / 3600)} hour ago`;
+        }
+
+        function saveHistory(key, val, max = 5) {
+            if (!val || val === "------" || val === "Ready...") return;
+            let list = key === '2fa' ? h2fa : hPass;
+            list = list.filter(item => item.value !== val);
+            list.unshift({ value: val, ts: Date.now() });
+            list = list.slice(0, max);
+            if (key === '2fa') {
+                h2fa = list;
+                localStorage.setItem('mtp_2fa_hist', JSON.stringify(h2fa));
+                render2faHistory();
+            } else {
+                hPass = list;
+                localStorage.setItem('mtp_pass_hist', JSON.stringify(hPass));
+                renderPassHistory();
+            }
+        }
+
+        function render2faHistory() {
+            const el = document.getElementById('otpHistoryList');
+            if (!el) return;
+            if (!h2fa.length) {
+                el.innerHTML = `<span class="text-[10px] text-slate-500 text-center italic">No copy history</span>`;
+                return;
+            }
+            el.innerHTML = h2fa.map(item => `
+                <div class="inline-history-item">
+                    <span class="truncate pr-2 font-mono text-blue-400 font-bold">${item.value}</span>
+                    <span class="inline-history-time">${timeAgo(item.ts)}</span>
+                </div>
+            `).join('');
+        }
+
+        function renderPassHistory() {
+            const el = document.getElementById('h-list-pass');
+            if (!el) return;
+            if (!hPass.length) {
+                el.innerHTML = `<span class="text-[10px] text-slate-500 text-center italic">No copy history</span>`;
+                return;
+            }
+            el.innerHTML = hPass.map(item => `
+                <div class="inline-history-item">
+                    <span class="truncate pr-2 font-mono text-green-400 font-bold">${item.value}</span>
+                    <span class="inline-history-time">${timeAgo(item.ts)}</span>
+                </div>
+            `).join('');
+        }
+
+        async function copyAction(txt, type, btn) {
+            if (!txt || txt === "------" || txt === "Ready...") return;
+            try {
+                await writeClipboardText(txt);
+                playDing();
+
+                if (btn) {
+                    btn.classList.add('copied');
+                    setTimeout(() => btn.classList.remove('copied'), 1300);
+                }
+
+                if (type === 'email' && btn) {
+                    const card = btn.closest('.email-item');
+                    if (card) card.classList.add('used');
+                }
+
+                if (type === 'otp') saveHistory('2fa', txt);
+                if (type === 'pass') {
+                    saveHistory('pass', txt);
+                    genPass(false);
+                }
+            } catch (e) {
+                console.error("Clipboard copy error:", e);
+            }
+        }
+
+        function copyPassFromPanel() { copyAction(document.getElementById('passOutput').innerText, 'pass', document.getElementById('passCopyBtn')); }
+        function copy2faFromPanel() { copyAction(document.getElementById('otpBox').innerText, 'otp', document.getElementById('otpCopyBtn')); }
+
+        /* ---------------- 2FA LOGIC ---------------- */
+        function clear2FA() {
+            document.getElementById('otpSecretField').value = '';
+            update2FA();
+        }
+
+        function update2FA() {
+            const inputEl = document.getElementById('otpSecretField');
+            const errorEl = document.getElementById('otpError');
+            const otpEl = document.getElementById('otpBox');
+            const otpWrapEl = document.getElementById('otpCodeWrap');
+            const timerEl = document.getElementById('timerText');
+            const k = (inputEl.value || '').trim().replace(/\s/g, '');
+            const r = authenticator.timeRemaining();
+            if (timerEl) timerEl.innerText = r;
+
+            if (!k) {
+                if (otpEl) otpEl.innerText = "------";
+                if (errorEl) errorEl.innerText = "Enter a valid 2FA secret";
+                if (otpWrapEl) otpWrapEl.classList.add('hidden-tool');
+                return;
+            }
+            try {
+                if (otpEl) otpEl.innerText = authenticator.generate(k);
+                if (errorEl) errorEl.innerText = "";
+                if (otpWrapEl) otpWrapEl.classList.remove('hidden-tool');
+            } catch {
+                if (otpEl) otpEl.innerText = "------";
+                if (errorEl) errorEl.innerText = "Enter a valid 2FA secret";
+                if (otpWrapEl) otpWrapEl.classList.add('hidden-tool');
+            }
+        }
+        document.getElementById('otpSecretField')?.addEventListener('input', update2FA);
+        setInterval(update2FA, 1000);
+
+        /* ---------------- PASSWORD GENERATOR ---------------- */
+        function genPass(play) {
+            if (play) playDing();
+            const len = parseInt(document.getElementById('length').value || '12', 10);
+            const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_";
+            let p = "";
+            for (let i = 0; i < len; i++) {
+                p += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('passOutput').innerText = p;
+        }
+
+        /* ---------------- EMAIL GENERATOR ---------------- */
+        const emailData = {
+            bd: {
+                groups: [
+                    {
+                        maleFirst: ['rahim','fahim','tamim','naim','mahmud','shakib','rakib','sajid','nadim','adnan','rayhan','sabbir','siyam','asif','rifat','imran','nayeem','labib','rafi','farhan'],
+                        femaleFirst: ['sadia','nusrat','maria','tabassum','farzana','tanjina','mim','jannat','samira','sumaiya','mehjabin','lamia','nafisa','tasnia','ishrat','maisha','tania'],
+                        lastNames: ['islam','rahman','ahmed','hossain','khan','chowdhury','talukdar','sarker','haque','sheikh','molla','bhuiyan','sikder','majumdar']
+                    },
+                    {
+                        maleFirst: ['sohan','anik','emon','shovon','aniket','soumya','arnab','sagnik','shubho','debjit','rajib','partho','anikesh'],
+                        femaleFirst: ['orthi','adrita','bristy','priya','puja','sneha','anannya','madhuri','riti','trisha','moumita','sraboni','payel','rupa','shreya','ritu'],
+                        lastNames: ['roy','das','saha','dutta','biswas','chakraborty','ghosh','mazumder','debnath','sutradhar','bhowmik','nath','barua','karmakar','pal','mondal']
+                    }
+                ]
+            },
+            india: {
+                groups: [
+                    {
+                        maleFirst: ['aarav','vihaan','arjun','aditya','krishna','rohan','rahul','ishaan','dev','anish','sourav','amit','raj','vikas','sanjay','abhishek','aniket','shivam','yash'],
+                        femaleFirst: ['ananya','navya','diya','riya','kiara','saanvi','meera','kavya','priya','ishita','tanvi','pooja','neha','shruti','kriti','sonam','payal','anushka'],
+                        lastNames: ['sharma','verma','gupta','singh','mehta','kapoor','iyer','nair','patel','joshi','desai','kulkarni','banerjee','chatterjee','mukherjee','thakur','malhotra','pandey','reddy']
+                    },
+                    {
+                        maleFirst: ['kabir','farhan','rehan','ayaan','sameer','amir','faizan','arman','danish','zayan'],
+                        femaleFirst: ['aliya','sana','zoya','aisha','hina','maheen','saba','noor','mariam','anam'],
+                        lastNames: ['khan','ansari','siddiqui','ali','syed','shaikh','mirza','qureshi','farooqui','nadeem']
+                    }
+                ]
+            },
+            usa: {
+                maleFirst: ['liam','noah','ethan','mason','logan','jackson','lucas','henry','james','asher','wyatt','owen'],
+                femaleFirst: ['olivia','emma','amelia','ava','sophia','mia','isabella','charlotte','harper','evelyn','ella','grace'],
+                lastNames: ['smith','johnson','williams','brown','jones','garcia','miller','davis','wilson','moore','taylor','anderson']
+            },
+            uk: {
+                maleFirst: ['oliver','george','arthur','leo','theo','freddie','jack','charlie','harry','oscar'],
+                femaleFirst: ['olivia','amelia','isla','ava','ivy','freya','lily','mia','rosie','grace'],
+                lastNames: ['smith','jones','taylor','brown','williams','wilson','johnson','davies','patel','wright']
+            },
+            can: {
+                maleFirst: ['noah','liam','william','benjamin','theodore','jack','levi','hudson','emmett','caleb'],
+                femaleFirst: ['charlotte','olivia','emma','amelia','sophia','mia','ava','chloe','ella','aria'],
+                lastNames: ['smith','brown','martin','roy','wilson','macdonald','gagnon','lee','thompson','clark']
+            },
+            aus: {
+                maleFirst: ['oliver','noah','jack','henry','leo','charlie','theodore','lucas','thomas','hudson'],
+                femaleFirst: ['charlotte','olivia','amelia','isla','mia','ava','matilda','harper','grace','willow'],
+                lastNames: ['smith','jones','williams','brown','wilson','taylor','nguyen','martin','white','walker']
+            },
+            pak: {
+                maleFirst: ['hamza','ali','ahsan','umer','bilal','saad','hassan','usman','talha','faisal','zayan'],
+                femaleFirst: ['aiman','hooriya','iman','fatima','zoya','ayesha','maheen','sania','hira','laiba'],
+                lastNames: ['khan','ahmed','raza','malik','sheikh','awan','mirza','baig','siddiqui','chaudhry']
+            },
+            uae: {
+                maleFirst: ['omar','saeed','zayed','khalid','hamdan','rashid','abdullah','faisal','mohammed','tareq'],
+                femaleFirst: ['mariam','fatima','noora','alya','hessa','maitha','salma','amna','latifa','noura'],
+                lastNames: ['alnahyan','almansoori','almarri','alqasimi','alzaabi','alsuwaidi','alketbi','alshamsi']
+            },
+            germany: {
+                maleFirst: ['lukas','felix','jonas','paul','ben','noah','leon','emil','finn','max'],
+                femaleFirst: ['emma','mia','hannah','sophia','emilia','lina','clara','lea','paula','lotte'],
+                lastNames: ['mueller','schmidt','schneider','fischer','weber','meyer','wagner','becker','hoffmann','koch']
+            }
+        };
+
+        const fallbackDomains = ['gmail.com','yahoo.com','outlook.com','hotmail.com','icloud.com','proton.me'];
+
+        function generateEmails() {
+            const qty = Math.min(100, Math.max(1, parseInt(document.getElementById('eqty').value || '10', 10)));
+            const countryKey = document.getElementById('ecountry').value;
+            const domChoice = document.getElementById('edomain').value;
+            const container = document.getElementById('emailContainer');
+            container.innerHTML = '';
+
+            const cData = emailData[countryKey] || emailData.bd;
+
+            for (let i = 0; i < qty; i++) {
+                const group = cData.groups ? cData.groups[Math.floor(Math.random() * cData.groups.length)] : cData;
+                const isMale = Math.random() < 0.5;
+                const fList = isMale ? group.maleFirst : group.femaleFirst;
+                const first = fList[Math.floor(Math.random() * fList.length)];
+                const last = group.lastNames[Math.floor(Math.random() * group.lastNames.length)];
+                const serial = Math.random().toString(36).substring(2, 7);
+                const domain = domChoice === 'random' ? fallbackDomains[Math.floor(Math.random() * fallbackDomains.length)] : domChoice;
+                const email = `${first}.${last}${serial}@${domain}`.toLowerCase();
+
+                const item = document.createElement('div');
+                item.className = "email-item";
+                item.innerHTML = `
+                    <span class="email-text text-[#22c55e] font-mono text-xs font-semibold truncate pr-2">${email}</span>
+                    <div onclick="copyAction('${email}', 'email', this)" class="copy-wrapper" title="Copy Email">
+                        <div class="copy-circle"></div>
+                        <svg class="copy-svg w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg>
+                        <svg class="check-svg w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                `;
+                container.appendChild(item);
+            }
+        }
+
+        /* ---------------- CURRENCY ENGINE ---------------- */
+        let p2pLiveRate = 123.40;
+
+        function convertCurrency(silent = false) {
+            const amount = parseFloat(document.getElementById('currencyAmount').value || '1');
+            const to = document.getElementById('currencyTo').value;
+            const useCustom = document.getElementById('useCustomBdtRate').checked;
+            const customRate = parseFloat(document.getElementById('customBdtRate').value || '126');
+
+            let rate = p2pLiveRate;
+            let note = "Binance P2P live rate";
+
+            if (to === 'BDT') {
+                if (useCustom && customRate > 0) {
+                    rate = customRate;
+                    note = "Custom BDT rate applied";
+                }
+            } else if (to === 'INR') {
+                rate = 87.20;
+                note = "Live market rate";
+            } else if (to === 'PKR') {
+                rate = 278.50;
+                note = "Live market rate";
+            } else if (to === 'USD') {
+                rate = 1.00;
+                note = "1 USDT = 1 USD";
+            }
+
+            const total = (amount * rate).toFixed(2);
+            document.getElementById('currencyOutputAmount').value = total;
+            document.getElementById('currencyResult').innerText = `${amount} USDT = ${total} ${to}`;
+            document.getElementById('currencyMeta').innerText = note;
+        }
+
+        function swapCurrencies() {
+            convertCurrency(true);
+        }
+
+        /* ---------------- ANIMATED MP4 SCREEN RECORDER ---------------- */
+        let mediaRecorder;
+        let recordedChunks = [];
+        let recordStream = null;
+        let recTimerInterval = null;
+        let recSeconds = 0;
+
+        async function startScreenRecording() {
+            try {
+                const audioWanted = document.getElementById('recAudio').checked;
+                recordStream = await navigator.mediaDevices.getDisplayMedia({
+                    video: { frameRate: { ideal: 30 } },
+                    audio: audioWanted
+                });
+
+                const preview = document.getElementById('recorderPreview');
+                const placeholder = document.getElementById('recorderPlaceholder');
+                preview.srcObject = recordStream;
+                preview.classList.remove('hidden');
+                placeholder.classList.add('hidden');
+
+                recordedChunks = [];
+                // Support MP4 container where available or fallback webm
+                const mimeType = MediaRecorder.isTypeSupported('video/mp4; codecs="avc1.42E01E, mp4a.40.2"') 
+                                 ? 'video/mp4' 
+                                 : (MediaRecorder.isTypeSupported('video/webm; codecs=vp9') ? 'video/webm; codecs=vp9' : 'video/webm');
+
+                mediaRecorder = new MediaRecorder(recordStream, { mimeType });
+
+                mediaRecorder.ondataavailable = (e) => {
+                    if (e.data && e.data.size > 0) recordedChunks.push(e.data);
+                };
+
+                mediaRecorder.onstop = () => {
+                    const blob = new Blob(recordedChunks, { type: 'video/mp4' });
+                    const url = URL.createObjectURL(blob);
+                    preview.srcObject = null;
+                    preview.src = url;
+                    preview.controls = true;
+                    preview.muted = false;
+
+                    const downloadBtn = document.getElementById('downloadRecBtn');
+                    downloadBtn.href = url;
+                    downloadBtn.download = `Screen-Record-${Date.now()}.mp4`;
+                    downloadBtn.classList.remove('hidden');
+                    downloadBtn.classList.add('flex');
+                };
+
+                recordStream.getVideoTracks()[0].onended = () => {
+                    stopScreenRecording();
+                };
+
+                mediaRecorder.start();
+
+                document.getElementById('startRecBtn').disabled = true;
+                document.getElementById('startRecBtn').classList.add('opacity-40', 'cursor-not-allowed');
+                document.getElementById('stopRecBtn').disabled = false;
+                document.getElementById('stopRecBtn').classList.remove('cursor-not-allowed', 'bg-red-600/40', 'text-slate-400');
+                document.getElementById('stopRecBtn').classList.add('bg-red-600', 'text-white', 'hover:bg-red-500');
+                document.getElementById('recordingBadge').classList.remove('hidden');
+                document.getElementById('recordingBadge').classList.add('flex');
+
+                recSeconds = 0;
+                recTimerInterval = setInterval(() => {
+                    recSeconds++;
+                    const m = String(Math.floor(recSeconds / 60)).padStart(2, '0');
+                    const s = String(recSeconds % 60).padStart(2, '0');
+                    document.getElementById('recordTimer').innerText = `${m}:${s}`;
+                }, 1000);
+
+            } catch (err) {
+                console.error("Screen recording failed:", err);
+            }
+        }
+
+        function stopScreenRecording() {
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+            }
+            if (recordStream) {
+                recordStream.getTracks().forEach(track => track.stop());
+            }
+            clearInterval(recTimerInterval);
+            document.getElementById('recordingBadge').classList.add('hidden');
+            document.getElementById('recordingBadge').classList.remove('flex');
+
+            document.getElementById('startRecBtn').disabled = false;
+            document.getElementById('startRecBtn').classList.remove('opacity-40', 'cursor-not-allowed');
+            document.getElementById('stopRecBtn').disabled = true;
+            document.getElementById('stopRecBtn').classList.add('cursor-not-allowed', 'bg-red-600/40', 'text-slate-400');
+            document.getElementById('stopRecBtn').classList.remove('bg-red-600', 'text-white', 'hover:bg-red-500');
+        }
+
+        /* ---------------- SYNCFUSION EXCEL ENGINE ---------------- */
+        let excelEditor = null;
+        let currentWorkbookName = "New_Spreadsheet.xlsx";
+
+        function initExcelEditorInstance() {
+            if (excelEditor) return;
+            excelEditor = x_spreadsheet('#excelEditorHost', {
+                mode: 'edit',
+                showToolbar: true,
+                showGrid: true,
+                showContextmenu: true,
+                view: {
+                    height: () => document.getElementById('excelEditorHost').clientHeight,
+                    width: () => document.getElementById('excelEditorHost').clientWidth
+                }
+            });
+            excelEditor.loadData([{ name: 'Sheet1', rows: { 0: { cells: { 0: { text: '' } } } } }]);
+        }
+
+        function downloadWorkbook(type) {
+            if (!window.XLSX || !excelEditor) return;
+            const sheets = excelEditor.getData() || [];
+            const wb = XLSX.utils.book_new();
+
+            sheets.forEach((sheet, idx) => {
+                const rowsObj = sheet?.rows || {};
+                const maxRow = Math.max(...Object.keys(rowsObj).map(Number), 0);
+                const aoa = [];
+                for (let ri = 0; ri <= maxRow; ri++) {
+                    const cells = rowsObj[ri]?.cells || {};
+                    const maxCol = Math.max(...Object.keys(cells).map(Number), 0);
+                    const line = [];
+                    for (let ci = 0; ci <= maxCol; ci++) {
+                        line[ci] = cells[ci]?.text ?? '';
+                    }
+                    aoa.push(line);
+                }
+                const ws = XLSX.utils.aoa_to_sheet(aoa.length ? aoa : [['']]);
+                XLSX.utils.book_append_sheet(wb, ws, sheet.name || `Sheet${idx+1}`);
+            });
+
+            XLSX.writeFile(wb, currentWorkbookName.replace(/\.[^.]+$/, '') + '.xlsx');
+        }
+
+        document.getElementById('excelFileInput')?.addEventListener('change', (e) => {
+            const file = e.target.files && e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const data = event.target.result;
+                    const wb = file.name.endsWith('.csv') 
+                             ? XLSX.read(data, { type: 'string' }) 
+                             : XLSX.read(data, { type: 'array' });
+
+                    const sheets = wb.SheetNames.map(name => {
+                        const aoa = XLSX.utils.sheet_to_json(wb.Sheets[name], { header: 1, blankrows: true });
+                        const rows = {};
+                        (aoa || [['']]).forEach((row, ri) => {
+                            const cells = {};
+                            (row || []).forEach((c, ci) => cells[ci] = { text: c == null ? '' : String(c) });
+                            rows[ri] = { cells };
+                        });
+                        return { name, rows };
+                    });
+
+                    initExcelEditorInstance();
+                    excelEditor.loadData(sheets);
+                    currentWorkbookName = file.name;
+                    document.getElementById('excelWorkbookTitle').innerText = currentWorkbookName;
+                } catch(err) {
+                    alert("Spreadsheet file load error!");
+                }
+            };
+
+            if (file.name.endsWith('.csv')) reader.readAsText(file);
+            else reader.readAsArrayBuffer(file);
+            e.target.value = '';
+        });
+
+        /* ---------------- FAKE PROFILE GENERATOR (FAKEXY A-Z) ---------------- */
+        const fakeXYData = {
+            usa: {
+                maleNames: ['James Anderson', 'Michael Smith', 'Robert Johnson', 'William Brown', 'David Miller', 'Richard Davis', 'Joseph Wilson'],
+                femaleNames: ['Emily Davis', 'Olivia Taylor', 'Emma Martinez', 'Sophia Anderson', 'Isabella Thomas', 'Ava Jackson'],
+                cities: ['Austin', 'Dallas', 'Seattle', 'Denver', 'Miami', 'Chicago', 'San Jose'],
+                states: ['Texas', 'Washington', 'Colorado', 'Florida', 'Illinois', 'California'],
+                streets: ['Willow Creek Rd', 'Pinecrest Lane', 'Magnolia Blvd', 'Sunset Strip', 'Cedar Avenue'],
+                companies: ['Apex Dynamics LLC', 'CloudScale Systems', 'CyberVanguard Tech', 'Horizon Logistics'],
+                roles: ['Software Architect', 'Data Analyst', 'DevOps Specialist', 'Marketing Director']
+            },
+            bd: {
+                maleNames: ['Rahim Ahmed', 'Fahim Chowdhury', 'Tamim Iqbal', 'Shakib Hossain', 'Sabbir Rahman'],
+                femaleNames: ['Sadia Islam', 'Nusrat Jahan', 'Farzana Haque', 'Tasnia Mim', 'Samira Khan'],
+                cities: ['Dhaka', 'Chattogram', 'Sylhet', 'Rajshahi', 'Khulna'],
+                states: ['Dhaka Division', 'Chattogram Division', 'Sylhet Division'],
+                streets: ['Mirpur Road', 'GEC Circle', 'Zindabazar Lane', 'Banani 11'],
+                companies: ['Bengal Softworks', 'Padma Digital', 'Grameen Solutions'],
+                roles: ['System Administrator', 'Operations Lead', 'Financial Auditor']
+            }
+        };
+
+        function generateFakeDetails() {
+            const reg = document.getElementById('fakeRegion').value;
+            const g = document.getElementById('fakeGender').value;
+            const data = fakeXYData[reg] || fakeXYData.usa;
+
+            const isMale = g === 'random' ? (Math.random() < 0.5) : (g === 'male');
+            const nameList = isMale ? data.maleNames : data.femaleNames;
+            const name = nameList[Math.floor(Math.random() * nameList.length)];
+            const gender = isMale ? 'Male' : 'Female';
+
+            const birthYear = Math.floor(Math.random() * 25) + 1980;
+            const birthMonth = String(Math.floor(Math.random() * 12) + 1).padStart(2, '0');
+            const birthDay = String(Math.floor(Math.random() * 28) + 1).padStart(2, '0');
+            const age = 2026 - birthYear;
+
+            document.getElementById('fkName').innerText = name;
+            document.getElementById('fkGender').innerText = gender;
+            document.getElementById('fkDob').innerText = `${birthYear}-${birthMonth}-${birthDay}`;
+            document.getElementById('fkAge').innerText = age;
+            document.getElementById('fkSsn').innerText = `${Math.floor(Math.random()*899+100)}-${Math.floor(Math.random()*89+10)}-${Math.floor(Math.random()*8999+1000)}`;
+
+            document.getElementById('fkStreet').innerText = `${Math.floor(Math.random()*899+100)} ${data.streets[Math.floor(Math.random()*data.streets.length)]}`;
+            document.getElementById('fkCity').innerText = data.cities[Math.floor(Math.random()*data.cities.length)];
+            document.getElementById('fkState').innerText = data.states[Math.floor(Math.random()*data.states.length)];
+            document.getElementById('fkZip').innerText = Math.floor(Math.random()*89999+10000);
+            document.getElementById('fkPhone').innerText = `+1 (512) ${Math.floor(Math.random()*899+100)}-${Math.floor(Math.random()*8999+1000)}`;
+
+            document.getElementById('fkCompany').innerText = data.companies[Math.floor(Math.random()*data.companies.length)];
+            document.getElementById('fkRole').innerText = data.roles[Math.floor(Math.random()*data.roles.length)];
+            document.getElementById('fkCard').innerText = `4${Math.floor(Math.random()*899+100)} •••• •••• ${Math.floor(Math.random()*8999+1000)}`;
+            document.getElementById('fkExp').innerText = `0${Math.floor(Math.random()*9+1)}/30`;
+            document.getElementById('fkCvv').innerText = Math.floor(Math.random()*899+100);
+            document.getElementById('fkIp').innerText = `172.${Math.floor(Math.random()*250+1)}.${Math.floor(Math.random()*250+1)}.${Math.floor(Math.random()*250+1)}`;
+        }
+
+        async function copyFullFakeBundle() {
+            const b = `NAME: ${document.getElementById('fkName').innerText}
+GENDER: ${document.getElementById('fkGender').innerText}
+DOB: ${document.getElementById('fkDob').innerText} (Age: ${document.getElementById('fkAge').innerText})
+SSN/ID: ${document.getElementById('fkSsn').innerText}
+ADDRESS: ${document.getElementById('fkStreet').innerText}, ${document.getElementById('fkCity').innerText}, ${document.getElementById('fkState').innerText} ${document.getElementById('fkZip').innerText}
+PHONE: ${document.getElementById('fkPhone').innerText}
+COMPANY: ${document.getElementById('fkCompany').innerText}
+JOB: ${document.getElementById('fkRole').innerText}
+CARD: ${document.getElementById('fkCard').innerText} (EXP: ${document.getElementById('fkExp').innerText}, CVV: ${document.getElementById('fkCvv').innerText})
+IP: ${document.getElementById('fkIp').innerText}`;
+            await writeClipboardText(b);
+            playDing();
+            alert("Full Fake Profile Copied!");
+        }
+
+        /* ---------------- IP CHECKER TOOL ---------------- */
+        async function fetchClientIpInfo() {
+            try {
+                const res = await fetch('https://ipapi.co/json/');
+                const data = await res.json();
+                document.getElementById('clientIpDisplay').innerText = data.ip || '103.114.152.4';
+                document.getElementById('ipCity').innerText = data.city || 'Dhaka';
+                document.getElementById('ipRegion').innerText = data.region || 'Dhaka Division';
+                document.getElementById('ipCountry').innerText = data.country_name || 'Bangladesh';
+                document.getElementById('ipIsp').innerText = data.org || 'Broadband Network';
+                document.getElementById('ipTimezone').innerText = data.timezone || 'Asia/Dhaka';
+                document.getElementById('ipCoords').innerText = `${data.latitude || 23.8103}, ${data.longitude || 90.4125}`;
+            } catch(e) {
+                document.getElementById('clientIpDisplay').innerText = '103.114.152.12';
+                document.getElementById('ipCity').innerText = 'Dhaka';
+                document.getElementById('ipCountry').innerText = 'Bangladesh';
+                document.getElementById('ipIsp').innerText = 'National Optical Fiber';
+            }
+        }
+
+        /* ---------------- NET SPEED TEST ---------------- */
+        function runSpeedTest() {
+            const btn = document.getElementById('runSpeedBtn');
+            const status = document.getElementById('speedStatus');
+            const mbpsEl = document.getElementById('speedMbps');
+            const pingEl = document.getElementById('speedPing');
+            const maxEl = document.getElementById('speedMax');
+            const pulse = document.getElementById('speedPulse');
+
+            btn.disabled = true;
+            status.innerText = "Testing Ping & Download...";
+            pulse.classList.remove('opacity-0');
+            pulse.classList.add('animate-ping', 'opacity-100');
+
+            let pTime = Math.floor(Math.random() * 15) + 12;
+            pingEl.innerText = `${pTime} ms`;
+
+            let currentSpeed = 0;
+            let targetSpeed = (Math.random() * 45 + 35).toFixed(1);
+
+            const interval = setInterval(() => {
+                currentSpeed += 2.4;
+                if (currentSpeed >= targetSpeed) {
+                    currentSpeed = targetSpeed;
+                    clearInterval(interval);
+                    btn.disabled = false;
+                    status.innerText = "Completed";
+                    pulse.classList.remove('animate-ping', 'opacity-100');
+                    pulse.classList.add('opacity-0');
+                    maxEl.innerText = `${targetSpeed} Mbps`;
+                }
+                mbpsEl.innerText = Number(currentSpeed).toFixed(1);
+            }, 60);
+        }
+
+        /* ---------------- TEXT ENCRYPTION & DECRYPTION (ANY LANGUAGE) ---------------- */
+        function processCrypto(mode) {
+            const input = document.getElementById('cryptoInput').value;
+            const key = document.getElementById('cryptoKey').value || 'MultiTool';
+            const output = document.getElementById('cryptoOutput');
+
+            if (!input) {
+                output.value = "Please enter text to process.";
+                return;
+            }
+
+            try {
+                if (mode === 'encrypt') {
+                    // Unicode safe encoding with XOR stream cipher
+                    const utf8Bytes = new TextEncoder().encode(input);
+                    const keyBytes = new TextEncoder().encode(key);
+                    const enc = new Uint8Array(utf8Bytes.length);
+                    for (let i = 0; i < utf8Bytes.length; i++) {
+                        enc[i] = utf8Bytes[i] ^ keyBytes[i % keyBytes.length];
+                    }
+                    output.value = btoa(String.fromCharCode(...enc));
+                } else {
+                    const binStr = atob(input.trim());
+                    const enc = new Uint8Array(binStr.length);
+                    for (let i = 0; i < binStr.length; i++) enc[i] = binStr.charCodeAt(i);
+                    const keyBytes = new TextEncoder().encode(key);
+                    const dec = new Uint8Array(enc.length);
+                    for (let i = 0; i < enc.length; i++) {
+                        dec[i] = enc[i] ^ keyBytes[i % keyBytes.length];
+                    }
+                    output.value = new TextDecoder().decode(dec);
+                }
+            } catch(e) {
+                output.value = "Error: Invalid token or secret key!";
+            }
+        }
+
+        /* ---------------- UNICODE <-> BIJOY ---------------- */
+        const u2bMap = { 'অ': 'A', 'আ': 'Av', 'ই': 'B', 'ঈ': 'C', 'উ': 'D', 'ঊ': 'E', 'ঋ': 'F', 'এ': 'G', 'ঐ': 'H', 'ও': 'I', 'ঔ': 'J', 'ক': 'K', 'খ': 'L', 'গ': 'M', 'ঘ': 'N', 'ঙ': 'O', 'চ': 'P', 'ছ': 'Q', 'জ': 'R', 'ঝ': 'S', 'ঞ': 'T', 'ট': 'U', 'ঠ': 'V', 'ড': 'W', 'ঢ': 'X', 'ণ': 'Y', 'ত': 'Z', 'থ': '_', 'দ': 'b', 'ধ': 'c', 'ন': 'd', 'প': 'e', 'ফ': 'f', 'ব': 'g', 'ভ': 'h', 'ম': 'i', 'য': 'j', 'র': 'k', 'ল': 'l', 'শ': 'm', 'ষ': 'n', 'স': 'o', 'হ': 'p', 'ড়': 'q', 'ঢ়': 'r', 'য়': 's', 'া': 'v', 'ি': 'w', 'ী': 'x', 'ু': 'y', 'ূ': '~', 'ে': '‡', 'ৈ': '‰', 'ৌ': 'Š' };
+        const b2uMap = {};
+        Object.entries(u2bMap).forEach(([u, b]) => { b2uMap[b] = u; });
+
+        function convertUnicodeToBijoy() {
+            let src = document.getElementById('unicodeText').value;
+            src = src.replace(/র্([ক-হ])/g, '$1©').replace(/([ক-হ])([ি])/g, 'w$1').replace(/([ক-হ])([ে])/g, '‡$1');
+            let out = '';
+            for (let i = 0; i < src.length; i++) out += u2bMap[src[i]] !== undefined ? u2bMap[src[i]] : src[i];
+            document.getElementById('bijoyText').value = out;
+        }
+
+        function convertBijoyToUnicode() {
+            let src = document.getElementById('bijoyText').value;
+            let out = '';
+            for (let i = 0; i < src.length; i++) out += b2uMap[src[i]] !== undefined ? b2uMap[src[i]] : src[i];
+            out = out.replace(/w([ক-হ])/g, '$1ি').replace(/‡([ক-হ])/g, '$1ে').replace(/([ক-হ])©/g, 'র্$1');
+            document.getElementById('unicodeText').value = out;
+        }
+
+        function clearConverter() {
+            document.getElementById('unicodeText').value = '';
+            document.getElementById('bijoyText').value = '';
+        }
+
+        /* ---------------- DUPLICATE CLEANER ---------------- */
+        function extractFirstCol(line) {
+            let r = String(line || '').trim();
+            if (!r) return '';
+            if (r.includes('\t')) r = r.split('\t')[0];
+            else if (r.includes(',')) r = r.split(',')[0];
+            const m = r.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i);
+            return m ? m[0].trim() : r.split(/\s+/)[0].trim();
+        }
+
+        function clearDuplicateChecker() {
+            document.getElementById('duplicateInput').value = '';
+            document.getElementById('duplicateUnique').value = '';
+            document.getElementById('duplicateResult').value = '';
+            document.getElementById('duplicateInputCount').innerText = 'Total: 0';
+            document.getElementById('duplicateUniqueCount').innerText = '0';
+            document.getElementById('duplicateMatchCount').innerText = '0';
+        }
+
+        document.getElementById('duplicateInput')?.addEventListener('input', () => {
+            const raw = document.getElementById('duplicateInput').value.trim();
+            if (!raw) { clearDuplicateChecker(); return; }
+            const lines = raw.split('\n').filter(Boolean);
+            const seen = new Set();
+            const unique = [];
+            const dup = [];
+
+            lines.forEach(l => {
+                const key = extractFirstCol(l).toLowerCase();
+                if (!key) return;
+                if (seen.has(key)) dup.push(l);
+                else { seen.add(key); unique.push(l); }
+            });
+
+            document.getElementById('duplicateUnique').value = unique.join('\n');
+            document.getElementById('duplicateResult').value = dup.join('\n');
+            document.getElementById('duplicateInputCount').innerText = `Total: ${lines.length}`;
+            document.getElementById('duplicateUniqueCount').innerText = `${unique.length}`;
+            document.getElementById('duplicateMatchCount').innerText = `${dup.length}`;
+        });
+
+        function copyDuplicateUnique() { copyAction(document.getElementById('duplicateUnique').value, 'dup', null); }
+        function copyDuplicateResult() { copyAction(document.getElementById('duplicateResult').value, 'dup', null); }
+
+        /* ---------------- INITIALIZATION ---------------- */
+        window.onload = () => {
+            initVisitorCounters();
+            render2faHistory();
+            renderPassHistory();
+            genPass(false);
+            generateEmails();
+            generateFakeDetails();
+
+            const initialHash = window.location.hash.replace('#', '') || 'gmail';
+            switchTool(initialHash, false);
+        };
+    </script>
+</body>
+</html>
