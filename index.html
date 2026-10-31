@@ -14140,26 +14140,10 @@ document.addEventListener('DOMContentLoaded', () => {
         let lastDateUpdateTimestamp = 0;
         const UPDATE_INTERVAL_MS = 10 * 60 * 1000; // ১০ মিনিট
 
-        // অনলাইন থেকে সঠিক সময় এবং তারিখ আনার ফাংশন
+        // অনলাইন থেকে সঠিক সময় এবং তারিখ আনার ফাংশন
         async function fetchOnlineDate() {
-            try {
-                // WorldTimeAPI ব্যবহার করে ঢাকার সময় আনা হচ্ছে
-                const response = await fetch('https://worldtimeapi.org/api/timezone/Asia/Dhaka');
-                if (!response.ok) throw new Error('Network response was not ok');
-                const data = await response.json();
-                
-                // ডেট অবজেক্ট তৈরি
-                const onlineDate = new Date(data.datetime);
-                
-                // লোকাল স্টোরেজে সেভ করা (ব্যানারের জন্য)
-                // আমরা পুরো ডেট স্ট্রিং সেভ করছি না, বরং অফসেট বা বেস ডেট সেভ করছি
-                localStorage.setItem('lastOnlineDateCheck', new Date().toISOString());
-                
-                return onlineDate;
-            } catch (error) {
-                console.error("Online date fetch failed:", error);
-                return new Date(); // ফেইল করলে সিস্টেম টাইম ব্যবহার করবে
-            }
+            localStorage.setItem('lastOnlineDateCheck', new Date().toISOString());
+            return new Date();
         }
 
         // মডিফাইড updateDateTimeBanner ফাংশন (Async করা হয়েছে)
@@ -30736,7 +30720,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // START: Multitoolpro SCRIPT
 // ====================================================================
 (function() {
-    const _hexName = "\x4d\x64\x20\x53\x68\x61\x68\x69\x64\x75\x7a\x7a\x61\x6d\x61\x6e\x20\x53\x69\x66\x61\x74";
+    const _hexName = "\x4d\x75\x6c\x74\x69\x74\x6f\x6f\x6c\x20\x50\x72\x6f";
     
     function setAndProtectName(jsonName) {
         const targets = [
@@ -30768,23 +30752,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    async function initIdentity() {
-        const githubUrl = 'https://raw.githubusercontent.com/multitoolpro/multitoolpro.github.io/main/author.json';
-        try {
-            const response = await fetch(githubUrl);
-            if (!response.ok) throw new Error('GitHub Fetch Failed');
-            
-            const data = await response.json();
-            if (data && data.name) {
-                setAndProtectName(data.name);
-            } else {
-                throw new Error('Invalid Data');
-            }
-        } catch (error) {
-            // console.log("Offline Mode Active for Identity");
-            setAndProtectName(_hexName);
-        }
-    }
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initIdentity);
@@ -37160,88 +37127,6 @@ async function initializePublicComments() {
     </div>
 </div>
 
-<!-- ফাইল শেয়ারিং চ্যাট উইন্ডো -->
-<div id="cloudWindow" class="hidden fixed bottom-24 right-6 w-80 bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 z-50 flex flex-col overflow-hidden text-bangla transition-all">
-    <div class="bg-indigo-600 p-4 text-white flex justify-between items-center">
-        <h3 class="font-bold">ফাইল ট্রান্সফার (P2P) <span style="color:yellow">(Testing)</span></h3>
-        <button onclick="toggleCloudWindow()" class="hover:text-gray-200"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
-    </div>
-    
-    <div class="p-4 flex-1 flex flex-col gap-3 overflow-y-auto max-h-96">
-        <!-- Send Section -->
-        <div class="bg-indigo-50 dark:bg-gray-700 p-3 rounded-lg">
-            <label class="block text-xs font-bold text-indigo-700 dark:text-indigo-300 mb-1">কাকে পাঠাবেন (User/Email)?</label>
-            <input type="text" id="recipientInput" placeholder="ইউজারনেম বা ইমেইল লিখুন..." class="w-full p-2 text-sm border rounded mb-2 dark:bg-gray-600 dark:border-gray-500 dark:text-white">
-            
-            <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-3 text-center hover:bg-white dark:hover:bg-gray-600 transition-colors cursor-pointer" onclick="document.getElementById('cloudFileInput').click()">
-                <span class="text-xs font-medium text-gray-600 dark:text-gray-300" id="cloudFileLabel">ফাইল বাছুন</span>
-                <input type="file" id="cloudFileInput" class="hidden" onchange="handleCloudFileSelect(event)">
-            </div>
-            
-            <button id="uploadBtn" onclick="uploadFileToFirebase()" class="w-full mt-2 bg-indigo-600 text-white py-1.5 text-sm rounded-md hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                পাঠান
-            </button>
-             <!-- প্রোগ্রেস বার -->
-            <div id="uploadProgressContainer" class="hidden w-full bg-gray-200 rounded-full h-1.5 dark:bg-gray-700 mt-2">
-                <div id="uploadProgressBar" class="bg-indigo-600 h-1.5 rounded-full" style="width: 0%"></div>
-            </div>
-            <!-- লিঙ্ক রেজাল্ট -->
-            <div id="uploadResult" class="hidden mt-2">
-                <div class="flex items-center gap-1">
-                    <input type="text" id="sharedFileLink" readonly class="text-[10px] flex-1 p-1 border rounded bg-white dark:bg-gray-800 dark:text-white">
-                    <button onclick="copySharedLink()" class="p-1 bg-green-600 text-white rounded hover:bg-green-700 text-xs">কপি</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Inbox Section -->
-        <div class="border-t dark:border-gray-600 pt-2">
-            <h4 class="text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" /></svg>
-                ইনবক্স (আগত ফাইল)
-            </h4>
-            <div id="inboxList" class="space-y-2 text-sm text-gray-500 dark:text-gray-400">
-                <p class="text-center text-xs py-2">কোনো নতুন ফাইল নেই</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<script>
-    // প্রোফাইল উইন্ডো টগল
-    function toggleProfileWindow() {
-        const profileWin = document.getElementById('profileWindow');
-        const cloudWin = document.getElementById('cloudWindow');
-        const commentContainer = document.getElementById('comment-section-container');
-        
-        if(cloudWin) cloudWin.classList.add('hidden');
-        if(commentContainer) commentContainer.classList.remove('active'); // মন্তব্য উইন্ডো বন্ধ করুন
-        
-        if(profileWin) profileWin.classList.toggle('hidden');
-    }
-
-    // ক্লাউড উইন্ডো টগল
-    function toggleCloudWindow() {
-        const profileWin = document.getElementById('profileWindow');
-        const cloudWin = document.getElementById('cloudWindow');
-        const commentContainer = document.getElementById('comment-section-container');
-        
-        if(profileWin) profileWin.classList.add('hidden');
-        if(commentContainer) commentContainer.classList.remove('active'); // মন্তব্য উইন্ডো বন্ধ করুন
-        
-        if(cloudWin) cloudWin.classList.toggle('hidden');
-    }
-
-    // এনাউন্সমেন্ট বন্ধ করা
-    function closeAnnouncement() {
-        const banner = document.getElementById('globalAnnouncementBanner');
-        if(banner) {
-            banner.classList.add('-translate-y-full');
-            setTimeout(() => banner.classList.add('hidden'), 500);
-        }
-    }
-    
     // এই ফাংশনটি ফায়ারবেস থেকে কল করা হবে
     function showAnnouncementBanner(message) {
         const banner = document.getElementById('globalAnnouncementBanner');
