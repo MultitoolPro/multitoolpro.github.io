@@ -1,0 +1,2580 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Tool Pro - v18.4</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@otplib/preset-browser@latest/buffer.js"></script>
+    <script src="https://unpkg.com/@otplib/preset-browser@latest/index.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/x-data-spreadsheet@1.1.5/dist/xspreadsheet.css">
+    <script src="https://unpkg.com/x-data-spreadsheet@1.1.5/dist/xspreadsheet.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --accent: #7eb3ff; --deep-blue: #5d82ff; --fire: #ff6259; --gold: #ffcc00; --bg: #0f1538; --success: #22c55e;
+            --gemini-start: #2f457d; --gemini-end: #33295c;
+            --glass: rgba(25, 32, 63, 0.58); --glass-border: rgba(255, 255, 255, 0.14);
+            --glass-shadow: 0 18px 45px rgba(9, 14, 38, 0.32);
+            --panel-ink: #f8fbff;
+            --panel-ink-strong: #f5f7ff;
+            --panel-muted: #b8c2dd;
+            --excel-font-family: 'Segoe UI', sans-serif;
+            --excel-font-size: 13px;
+        }
+        .light-mode { --bg: #0f1538; --glass: rgba(25, 32, 63, 0.58); --glass-border: rgba(255, 255, 255, 0.14); }
+        body { background: linear-gradient(135deg, #141b4a 0%, #1a2559 34%, #241f4d 66%, #2f2550 100%); color: #eef2ff; font-family: 'Segoe UI', sans-serif; transition: 0.4s; min-height: 100vh; overflow-x: hidden; display: flex; flex-direction: column; align-items: center; position: relative; }
+        body.light-mode { color: #eef2ff; }
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 18%, rgba(255,255,255,0.12) 0, rgba(255,255,255,0.12) 1px, transparent 1.6px) 0 0/24px 24px,
+                radial-gradient(ellipse at top left, rgba(89,131,255,0.14), transparent 42%),
+                radial-gradient(ellipse at bottom right, rgba(117,87,196,0.16), transparent 40%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* BRANDING & LOGO */
+        .logo-shield { width: 55px; height: 60px; background: var(--deep-blue); clip-path: polygon(50% 0%, 100% 15%, 100% 85%, 50% 100%, 0% 85%, 0% 15%); display: flex; align-items: center; justify-content: center; position: relative; border: 1px solid rgba(255,255,255,0.28); }
+        .logo-shield::after { content: ""; display: none; }
+        .logo-shield svg { width: 26px; height: 26px; color: var(--gold); }
+        .brand-title { font-size: clamp(1.5rem, 5vw, 2.5rem); font-weight: 900; text-transform: uppercase; font-family: 'Roboto', sans-serif; letter-spacing: -1px; }
+        .pro-box { font-size: 12px; background: var(--gold); color: #000; padding: 2px 8px; border-radius: 6px; margin-left: 10px; vertical-align: middle; }
+
+        /* TOP CTRLS */
+        .top-ctrl-bar { position: absolute; top: 20px; right: 20px; display: flex; align-items: center; gap: 12px; z-index: 260; }
+        .ctrl-btn { background: rgba(33, 40, 77, 0.58); backdrop-filter: blur(18px); border: 1px solid rgba(255,255,255,0.16); padding: 12px; border-radius: 15px; transition: 0.3s; cursor: pointer; box-shadow: 0 10px 26px rgba(10,16,40,0.24); }
+
+        /* BANNER */
+        /* NAVIGATION */
+        .tool-nav-row { display: none; }
+        .menu-wrap { position: relative; display: flex; flex-direction: column; align-items: flex-end; }
+        .menu-panel { position: relative; width: auto; min-width: 0; padding: 0; background: transparent; backdrop-filter: none; border: 0; border-radius: 0; box-shadow: none; display: inline-flex; align-items: center; justify-content: flex-end; gap: 8px; }
+        .menu-panel-dropdown { position: absolute; top: calc(100% + 10px); right: 0; width: min(860px, calc(100vw - 48px)); padding: 16px; background: rgba(21, 28, 58, 0.86); backdrop-filter: blur(26px); border: 1px solid rgba(255,255,255,0.12); border-radius: 22px; box-shadow: 0 22px 60px rgba(9, 14, 38, 0.34); }
+        .menu-panel-dropdown.hidden-tool { display: none !important; }
+        .menu-drop-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px 0; }
+        .menu-drop-col { padding: 8px 20px; }
+        .menu-drop-col + .menu-drop-col { border-left: 1px solid rgba(255,255,255,0.08); }
+        .menu-drop-link { width: 100%; min-height: 78px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 4px; padding: 10px 12px; border-radius: 14px; font-size: 13px; font-weight: 900; text-transform: none; color: #f8fbff; background: rgba(255,255,255,0.01) !important; border: 1px solid transparent !important; cursor: pointer; transition: 0.2s; text-align: left; }
+        .menu-drop-link + .menu-drop-link { margin-top: 6px; }
+        .menu-drop-link:hover { color: #ffffff; background: rgba(255,255,255,0.08) !important; border-color: rgba(255,255,255,0.12) !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); }
+        .menu-drop-link-active { color: #ffffff !important; background: rgba(255,255,255,0.1) !important; border-color: rgba(255,255,255,0.14) !important; }
+        .menu-drop-link svg { width: 16px; height: 16px; }
+        .menu-drop-head { display: flex; align-items: center; gap: 8px; }
+        .menu-drop-title { font-size: 15px; font-weight: 900; line-height: 1.1; }
+        .menu-drop-desc { font-size: 11px; line-height: 1.35; color: rgba(241,245,249,0.82); font-weight: 700; text-transform: none; }
+        .menu-drop-link span,
+        .menu-link span {
+            display: block;
+            min-width: 0;
+            max-width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .menu-notch { position: absolute; top: calc(100% + 2px); right: 152px; width: 16px; height: 16px; background: rgba(21, 28, 58, 0.9); border-left: 1px solid rgba(255,255,255,0.12); border-top: 1px solid rgba(255,255,255,0.12); transform: rotate(45deg); border-top-left-radius: 5px; transition: opacity 0.2s ease; }
+        .menu-link { min-width: 0; height: 24px; display: inline-flex; flex-direction: row; align-items: center; justify-content: center; gap: 8px; padding: 0 6px; border-radius: 0; font-size: 12px; font-weight: 900; text-transform: none; color: #eef2ff; background: transparent !important; border: 0 !important; cursor: pointer; transition: 0.25s; text-align: center; box-shadow: none !important; }
+        .menu-link svg { width: 18px; height: 18px; }
+        .menu-link:hover { color: #ffffff; transform: translateY(-1px); background: transparent !important; }
+        .menu-link-active { color: #ffffff !important; background: transparent !important; border-color: transparent !important; }
+        .menu-link-active svg { color: #ffffff; }
+        .menu-link-menu { color: #f8fbff; }
+        .light-mode .menu-panel,
+        .light-mode .menu-panel-dropdown {
+            background: rgba(255,255,255,0.94);
+            border-color: rgba(37,99,235,0.18);
+            box-shadow: 0 14px 30px rgba(15,23,42,0.08);
+        }
+        .light-mode .menu-notch {
+            background: rgba(255,255,255,0.94);
+            border-left-color: rgba(37,99,235,0.18);
+            border-top-color: rgba(37,99,235,0.18);
+        }
+        .light-mode .menu-link,
+        .light-mode .menu-drop-link {
+            color: #475569;
+        }
+        .light-mode .menu-link:hover,
+        .light-mode .menu-drop-link:hover {
+            color: #0f172a;
+            background: rgba(37,99,235,0.08) !important;
+        }
+        .light-mode .menu-link-active,
+        .light-mode .menu-drop-link-active {
+            color: #2563eb !important;
+            background: rgba(37,99,235,0.12) !important;
+        }
+        .light-mode .menu-link-menu {
+            color: #2563eb;
+        }
+        #excelEditorHost .x-spreadsheet {
+            background: transparent;
+            font-family: var(--excel-font-family);
+            font-size: var(--excel-font-size);
+        }
+        #excelEditorHost .x-spreadsheet-toolbar,
+        #excelEditorHost .x-spreadsheet-sheet,
+        #excelEditorHost .x-spreadsheet-bottombar {
+            background: linear-gradient(180deg, rgba(30,41,87,0.92), rgba(36,48,95,0.88));
+            border-color: rgba(255,255,255,0.08);
+        }
+        #excelEditorHost .x-spreadsheet-toolbar .x-spreadsheet-toolbar-btn,
+        #excelEditorHost .x-spreadsheet-bottombar .x-spreadsheet-bottombar-btn {
+            color: #eaf2ff;
+        }
+        #excelEditorHost .x-spreadsheet-toolbar {
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        #excelEditorHost .x-spreadsheet-toolbar .x-spreadsheet-toolbar-btn:hover,
+        #excelEditorHost .x-spreadsheet-bottombar .x-spreadsheet-bottombar-btn:hover {
+            background: rgba(255,255,255,0.08);
+        }
+        #excelEditorHost .x-spreadsheet-editor {
+            background: rgba(17,24,39,0.96);
+            color: #e2e8f0;
+        }
+        #excelEditorHost .x-spreadsheet-editor textarea {
+            font-family: var(--excel-font-family) !important;
+            font-size: var(--excel-font-size) !important;
+        }
+        #excelEditorHost .x-spreadsheet-selector {
+            border-color: rgba(59,130,246,0.75);
+        }
+        #excelEditorHost .x-spreadsheet-table {
+            background: rgba(248,250,252,0.98);
+        }
+        #excelEditorHost .x-spreadsheet-sheet table {
+            color: #17253f;
+        }
+        #excelEditorHost .x-spreadsheet-cell {
+            color: #17253f;
+            font-family: var(--excel-font-family);
+            font-size: var(--excel-font-size);
+        }
+        #excelEditorHost .x-spreadsheet-sheet .x-spreadsheet-row-header,
+        #excelEditorHost .x-spreadsheet-sheet .x-spreadsheet-col-header {
+            background: rgba(226,232,240,0.98);
+            color: #334155;
+        }
+        #excelEditorHost .x-spreadsheet-formula,
+        #excelEditorHost .x-spreadsheet-dropdown-content,
+        #excelEditorHost .x-spreadsheet-contextmenu {
+            background: rgba(248,250,252,0.98);
+            color: #17253f;
+            border-color: rgba(148,163,184,0.28);
+            box-shadow: 0 18px 38px rgba(15,23,42,0.12);
+        }
+        #excelEditorHost .x-spreadsheet-formula input,
+        #excelEditorHost .x-spreadsheet-formula textarea {
+            font-family: var(--excel-font-family) !important;
+            font-size: var(--excel-font-size) !important;
+            color: #17253f;
+        }
+        #excelEditorHost .x-spreadsheet-item {
+            color: #17253f;
+        }
+        #excelEditorHost .x-spreadsheet-item:hover,
+        #excelEditorHost .x-spreadsheet-item.active {
+            background: rgba(96,165,250,0.12);
+        }
+        #excelEditorHost .x-spreadsheet-bottombar {
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        #excelEditorHost .x-spreadsheet-bottombar .x-spreadsheet-bottombar-btn.active {
+            background: rgba(96,165,250,0.18);
+            color: #f8fbff;
+        }
+        .light-mode #excelEditorHost .x-spreadsheet-toolbar,
+        .light-mode #excelEditorHost .x-spreadsheet-sheet,
+        .light-mode #excelEditorHost .x-spreadsheet-bottombar {
+            background: rgba(255,255,255,0.96);
+            border-color: rgba(15,23,42,0.08);
+        }
+        .light-mode #excelEditorHost .x-spreadsheet-editor {
+            background: #ffffff;
+            color: #0f172a;
+        }
+
+        /* DEV PROFILE HOVER */
+        .dev-card-wrapper { position: relative; padding-bottom: 20px; }
+        .dev-icon-container { width: 60px; height: 60px; border-radius: 50%; padding: 3px; background: linear-gradient(135deg, var(--gemini-start), var(--gemini-end)); cursor: pointer; z-index: 101; }
+        .dev-icon-container img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid #05070a; }
+        .dev-card-wrapper:hover #devCard { opacity: 1; visibility: visible; transform: translateY(0); }
+        #devCard { position: absolute; top: 100%; right: 0; width: 280px; opacity: 0; visibility: hidden; transform: translateY(-15px); transition: 0.4s; z-index: 200; padding: 30px; text-align: center; background: rgba(13, 17, 23, 0.95); backdrop-filter: blur(25px); border: 1px solid var(--glass-border); border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.7); }
+        .pro-avatar { width: 85px; height: 85px; border-radius: 50%; padding: 4px; background: linear-gradient(135deg, var(--gemini-start), var(--gemini-end)); margin: 0 auto 15px; box-shadow: 0 0 20px rgba(139,92,246,0.5); }
+        .pro-avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid #05070a; }
+
+        /* UI PANELS */
+        .glass-panel { background: var(--glass); backdrop-filter: blur(22px); border: 1px solid var(--glass-border); border-radius: 24px; box-shadow: var(--glass-shadow); }
+        input, select, button { background: rgba(33, 40, 77, 0.5) !important; color: #eef2ff !important; border: 1px solid rgba(255,255,255,0.14) !important; outline: none; box-shadow: inset 0 1px 0 rgba(255,255,255,0.04); }
+        select option { background: #161d43; color: #eef2ff; }
+        .light-mode .glass-panel {
+            background: rgba(255,255,255,0.9);
+            border-color: rgba(15,23,42,0.1);
+            box-shadow: 0 12px 28px rgba(15,23,42,0.06);
+        }
+        .light-mode input,
+        .light-mode select,
+        .light-mode button {
+            color: #0f172a !important;
+            border-color: rgba(15,23,42,0.12) !important;
+        }
+        .light-mode input,
+        .light-mode select {
+            background: rgba(255,255,255,0.96) !important;
+        }
+        .light-mode button {
+            background: rgba(248,250,252,0.96) !important;
+        }
+        .light-mode select option {
+            background: #ffffff;
+            color: #0f172a;
+        }
+
+        /* EMAIL STATUS */
+        .email-card.used { background: rgba(239, 68, 68, 0.1) !important; border-color: rgba(239, 68, 68, 0.3) !important; opacity: 0.7; }
+        .email-card.used span { color: #ef4444 !important; text-decoration: line-through; }
+
+        /* COPY ANIMATION */
+        .copy-wrapper { position: relative; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 12px; background: rgba(255,255,255,0.42); border: 1px solid rgba(255,255,255,0.38); overflow: hidden; }
+        .copy-circle { position: absolute; inset: 0; background: var(--success); transform: scale(0); opacity: 0; transition: 0.4s; border-radius: 12px; }
+        .copy-wrapper.copied .copy-circle { transform: scale(1); opacity: 1; }
+        .check-svg { position: absolute; opacity: 0; transform: scale(0.5); transition: 0.4s; color: white; z-index: 2; }
+        .copy-wrapper.copied .check-svg { opacity: 1; transform: scale(1); }
+        .light-mode .copy-wrapper {
+            background: rgba(15,23,42,0.06);
+        }
+        .pro-action-btn { position: relative; width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; border-radius: 14px; overflow: hidden; transition: transform 0.22s ease, box-shadow 0.22s ease; box-shadow: 0 10px 22px rgba(0,0,0,0.24); }
+        .pro-action-btn::before { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(59,130,246,0.28), rgba(255,255,255,0.04)); opacity: 0.95; transition: opacity 0.22s ease; }
+        .pro-action-btn svg { position: relative; z-index: 1; width: 20px; height: 20px; transition: transform 0.24s ease; }
+        .pro-action-btn:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 16px 30px rgba(0,0,0,0.3); }
+        .pro-action-btn:hover svg { transform: scale(1.08); }
+        .pro-action-btn:active { transform: scale(0.96); }
+        .pro-action-btn.red::before { background: linear-gradient(135deg, rgba(239,68,68,0.34), rgba(127,29,29,0.16)); }
+        .pro-action-btn.orange::before { background: linear-gradient(135deg, rgba(249,115,22,0.34), rgba(120,53,15,0.16)); }
+        .pro-action-btn.blue::before { background: linear-gradient(135deg, rgba(59,130,246,0.34), rgba(30,64,175,0.16)); }
+        .pro-action-btn.green::before { background: linear-gradient(135deg, rgba(34,197,94,0.34), rgba(20,83,45,0.16)); }
+        .code-display-box { flex: 1; min-width: 0; display: flex; align-items: center; justify-content: center; padding: 0 12px; border-radius: 12px; background: rgba(0,0,0,0.36); border: 1px solid rgba(255,255,255,0.05); }
+        .light-mode .code-display-box {
+            background: rgba(241,245,249,0.95);
+            border-color: rgba(15,23,42,0.08);
+        }
+        .inline-icon-btn { width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; background: transparent !important; border: 0 !important; padding: 0 !important; border-radius: 0; box-shadow: none !important; cursor: pointer; transition: transform 0.18s ease, opacity 0.18s ease; }
+        .inline-icon-btn svg { width: 16px; height: 16px; }
+        .inline-icon-btn:hover { transform: scale(1.08); opacity: 0.9; }
+        .inline-icon-btn:active { transform: scale(0.94); }
+        .inline-icon-btn.generate-pro {
+            width: 30px;
+            height: 30px;
+            border-radius: 999px;
+            background: rgba(34,197,94,0.12) !important;
+            border: 1px solid rgba(34,197,94,0.28) !important;
+            box-shadow: 0 0 0 0 rgba(34,197,94,0.28);
+            transition: transform 0.2s ease, box-shadow 0.25s ease, background 0.25s ease;
+        }
+        .inline-icon-btn.generate-pro svg {
+            width: 17px;
+            height: 17px;
+        }
+        .inline-icon-btn.generate-pro:hover {
+            transform: translateY(-1px) scale(1.08) rotate(-10deg);
+            box-shadow: 0 0 0 6px rgba(34,197,94,0.08);
+            background: rgba(34,197,94,0.18) !important;
+        }
+        .inline-icon-btn.generate-pro:active {
+            transform: scale(0.95);
+        }
+
+        .input-action-btn { width: 56px; height: 56px; display: inline-flex; align-items: center; justify-content: center; padding: 0; border-radius: 16px; font-size: 11px; font-weight: 900; text-transform: uppercase; transition: 0.3s; box-shadow: 0 10px 25px rgba(0,0,0,0.22); }
+        .input-action-btn svg { opacity: 0.95; }
+        .input-action-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(0,0,0,0.3); }
+        .input-action-btn:active { transform: scale(0.96); }
+        .hidden-tool { display: none !important; }
+        .main-tools.gmail-layout {
+            max-width: 90rem;
+            display: grid;
+            grid-template-columns: 1.2fr 0.95fr 1.15fr;
+            gap: 22px;
+            align-items: start;
+            margin-top: 44px;
+        }
+        .main-tools.single-tool-layout {
+            margin-top: 26px;
+            align-items: center;
+        }
+        .main-tools.single-tool-layout > section:not(.hidden-tool) {
+            width: min(100%, 38rem);
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .main-tools.single-tool-layout #tool-2fa,
+        .main-tools.single-tool-layout #tool-pass,
+        .main-tools.single-tool-layout #tool-email {
+            width: min(100%, 38rem);
+        }
+        .main-tools.single-tool-layout #tool-currency {
+            width: min(100%, 38rem);
+        }
+        .main-tools.single-tool-layout #tool-duplicate {
+            width: min(100%, 52rem);
+        }
+        .main-tools.single-tool-layout #tool-excel {
+            width: min(calc(100vw - 56px), 96rem);
+        }
+        .main-tools.single-tool-layout #tool-fake {
+            width: min(100%, 40rem);
+        }
+        .tool-section-title {
+            width: 100%;
+            margin: 0 0 10px;
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: #f8fbff;
+            text-align: left;
+        }
+        .light-mode .tool-section-title {
+            color: #17253f;
+        }
+        .excel-shell {
+            width: 100%;
+            max-width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        #tool-excel.excel-fullscreen {
+            position: fixed;
+            inset: 16px;
+            z-index: 600;
+            width: auto !important;
+            max-width: none !important;
+            margin: 0 !important;
+            border-radius: 22px;
+            background: linear-gradient(135deg, rgba(18,25,49,0.96), rgba(37,34,82,0.94));
+            box-shadow: 0 24px 70px rgba(2,6,23,0.42);
+        }
+        #tool-excel.excel-fullscreen .excel-shell {
+            height: calc(100vh - 64px);
+        }
+        .excel-topbar {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: linear-gradient(135deg, rgba(31,41,73,0.72), rgba(49,46,129,0.42));
+            box-shadow: 0 10px 24px rgba(15,23,42,0.16);
+        }
+        .excel-toolbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .excel-toolbar-actions::-webkit-scrollbar {
+            display: none;
+        }
+        .excel-action-btn {
+            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.08);
+            color: #f8fbff;
+            border-radius: 9px;
+            padding: 7px 11px;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        .excel-toolbar-prefs {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+        .excel-pref-select {
+            height: 34px;
+            min-width: 110px;
+            padding: 0 10px;
+            border-radius: 9px;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.08);
+            color: #f8fbff;
+            font-size: 10px;
+            font-weight: 700;
+        }
+        .excel-meta-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            font-size: 9px;
+            text-transform: uppercase;
+            color: #cbd5e1;
+        }
+        .light-mode .excel-topbar {
+            background: rgba(255,255,255,0.86);
+            border-color: rgba(59,130,246,0.12);
+        }
+        .light-mode .excel-action-btn {
+            background: rgba(59,130,246,0.08);
+            color: #17253f;
+            border-color: rgba(59,130,246,0.14);
+        }
+        .light-mode .excel-pref-select {
+            background: rgba(59,130,246,0.08);
+            color: #17253f;
+            border-color: rgba(59,130,246,0.14);
+        }
+        .main-tools.single-tool-layout .tool-section-title {
+            text-align: center;
+        }
+        .main-tools.gmail-layout #tool-2fa,
+        .main-tools.gmail-layout #tool-pass,
+        .main-tools.gmail-layout #tool-email {
+            width: 100%;
+            min-width: 0;
+            overflow: hidden;
+            margin-top: 0;
+            background: rgba(24, 31, 61, 0.34);
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 22px;
+            box-shadow: 0 14px 34px rgba(9, 14, 38, 0.22);
+            padding: 16px 18px 14px;
+        }
+        .main-tools.gmail-layout #tool-2fa {
+            position: relative;
+            z-index: 2;
+            overflow: visible;
+            isolation: isolate;
+        }
+        .main-tools.gmail-layout #tool-2fa,
+        .main-tools.gmail-layout #tool-2fa * {
+            pointer-events: auto !important;
+        }
+        .main-tools.gmail-layout #tool-pass,
+        .main-tools.gmail-layout #tool-email {
+            position: relative;
+        }
+        .main-tools.gmail-layout #tool-pass::before,
+        .main-tools.gmail-layout #tool-email::before { display: none; }
+        .main-tools.gmail-layout #tool-2fa > div,
+        .main-tools.gmail-layout #tool-pass > div,
+        .main-tools.gmail-layout #tool-email > div,
+        .main-tools.gmail-layout #tool-email #emailContainer,
+        .main-tools.gmail-layout #tool-pass #h-list-pass,
+        .main-tools.gmail-layout #tool-2fa #otpHistoryList {
+            max-width: 100% !important;
+        }
+        .main-tools.gmail-layout #tool-pass .w-full.max-w-\[17rem\],
+        .main-tools.gmail-layout #tool-email .w-full.max-w-\[24rem\],
+        .main-tools.gmail-layout #tool-2fa .w-full.max-w-\[34rem\] {
+            max-width: 100% !important;
+        }
+        .main-tools.gmail-layout #tool-email .flex.flex-col.gap-1,
+        .main-tools.gmail-layout #tool-email .flex.flex-col.gap-2 {
+            min-width: 0;
+        }
+        .main-tools.gmail-layout #tool-email {
+            align-items: center;
+        }
+        .main-tools.gmail-layout #tool-email .tool-section-title {
+            width: min(100%, 20rem);
+            text-align: center;
+        }
+        .main-tools.gmail-layout #tool-email > div,
+        .main-tools.gmail-layout #tool-email #emailContainer {
+            width: min(100%, 20rem) !important;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .main-tools.gmail-layout #tool-email #emailContainer {
+            margin-top: 8px;
+        }
+        .main-tools.gmail-layout #tool-pass #passOutput,
+        .main-tools.gmail-layout #tool-2fa #otpBox {
+            text-align: center;
+        }
+        .main-tools.gmail-layout #tool-fake {
+            grid-column: 1 / -1;
+        }
+        .main-tools.gmail-layout #tool-2fa #otpHistoryList,
+        .main-tools.gmail-layout #tool-pass .inline-history-list,
+        .main-tools.gmail-layout #tool-email #emailContainer {
+            max-width: 100%;
+        }
+        .main-tools.gmail-layout #tool-2fa #otpHistoryList,
+        .main-tools.gmail-layout #tool-pass #h-list-pass {
+            margin-top: 8px;
+            width: 100%;
+            max-width: 15.8rem;
+            align-self: center;
+        }
+        .main-tools.gmail-layout .inline-history-list {
+            align-items: stretch;
+        }
+        .main-tools.gmail-layout .inline-history-item {
+            width: 100%;
+        }
+        .recent-history {
+            background: transparent;
+        }
+        @media (max-width: 1100px) {
+            .main-tools.gmail-layout {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 12px;
+            }
+            .menu-link {
+                font-size: 10px;
+                padding: 0 4px;
+            }
+            .menu-drop-link {
+                font-size: 11px;
+                padding: 0 10px;
+            }
+            .main-tools.gmail-layout #tool-2fa,
+            .main-tools.gmail-layout #tool-pass,
+            .main-tools.gmail-layout #tool-email {
+                padding: 12px 12px 10px;
+            }
+        }
+        .inline-history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            overflow: hidden;
+            width: 100%;
+            align-items: center;
+        }
+        .inline-history-item {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 0 0 4px;
+            border-radius: 0;
+            background: transparent;
+            border: 0;
+            font-size: 9px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+            width: min(100%, 18rem);
+            overflow: hidden;
+        }
+        .inline-history-item span {
+            display: block;
+            flex: 1;
+            min-width: 0;
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: none;
+            letter-spacing: 0;
+        }
+        .inline-history-time {
+            font-size: 8px;
+            line-height: 1.2;
+            color: #8ea0c8;
+            text-transform: none;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 500;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .light-mode .inline-history-item {
+            background: transparent;
+            border-color: transparent;
+            color: #0f172a;
+        }
+        .light-mode .inline-history-time {
+            color: #64748b;
+        }
+        .inline-history-empty {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: #6b7280;
+        }
+        .duplicate-shell {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            max-width: 52rem;
+            margin: 0 auto;
+        }
+        .duplicate-top-card {
+            width: 100%;
+            padding: 16px;
+            border-radius: 18px;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(24, 31, 61, 0.34);
+            box-shadow: 0 16px 34px rgba(9, 14, 38, 0.16);
+            backdrop-filter: blur(18px);
+            position: relative;
+            z-index: 1;
+        }
+        .duplicate-horizontal {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            align-items: stretch;
+        }
+        .duplicate-box {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 16px 16px 14px;
+            border-radius: 18px;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(24, 31, 61, 0.34);
+            box-shadow: 0 16px 34px rgba(9, 14, 38, 0.14);
+            backdrop-filter: blur(18px);
+        }
+        .duplicate-box-output {
+            min-height: 17rem;
+        }
+        .duplicate-box-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            text-align: left;
+        }
+        .duplicate-head-right {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+        .duplicate-icon-badge {
+            width: 28px;
+            height: 28px;
+            border-radius: 9px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            box-shadow: 0 8px 18px rgba(15,23,42,0.14);
+            flex-shrink: 0;
+        }
+        .duplicate-icon-badge.green {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+        }
+        .duplicate-icon-badge.red {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+        .duplicate-box-title {
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #f8fbff;
+        }
+        .duplicate-pill-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .duplicate-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            min-height: 24px;
+            padding: 0 10px;
+            border-radius: 999px;
+            font-size: 10px;
+            font-weight: 800;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+        .duplicate-pill.blue {
+            color: #93c5fd;
+            background: rgba(59,130,246,0.16);
+            border-color: rgba(59,130,246,0.22);
+        }
+        .duplicate-pill.green {
+            color: #86efac;
+            background: rgba(34,197,94,0.14);
+            border-color: rgba(34,197,94,0.22);
+        }
+        .duplicate-pill.red {
+            color: #fca5a5;
+            background: rgba(239,68,68,0.12);
+            border-color: rgba(239,68,68,0.22);
+        }
+        .duplicate-copy-btn {
+            width: 100%;
+            height: 32px;
+            padding: 0 12px;
+            border-radius: 11px;
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #eef2ff;
+            background: rgba(255,255,255,0.05) !important;
+            border: 1px solid rgba(255,255,255,0.14) !important;
+        }
+        .duplicate-copy-btn:disabled {
+            opacity: 0.45;
+            cursor: default;
+        }
+        .duplicate-copy-btn.copied {
+            color: #dcfce7;
+            background: rgba(34,197,94,0.18) !important;
+            border-color: rgba(34,197,94,0.34) !important;
+        }
+        .duplicate-run-btn {
+            min-width: 108px;
+            height: 34px;
+            padding: 0 14px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #fff !important;
+            background: linear-gradient(135deg, #22c55e, #14b8a6) !important;
+            border: 0 !important;
+            box-shadow: 0 10px 24px rgba(34,197,94,0.28);
+        }
+        .duplicate-clear-btn {
+            min-width: 98px;
+            height: 34px;
+            padding: 0 14px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #ef4444 !important;
+            background: rgba(255,255,255,0.05) !important;
+            border: 1px solid rgba(252,165,165,0.42) !important;
+        }
+        .duplicate-textarea {
+            width: 100%;
+            min-height: 100%;
+            resize: none;
+            padding: 14px 15px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.11) !important;
+            background: rgba(10, 15, 36, 0.3) !important;
+            color: #f8fbff !important;
+            font-size: 13px;
+            line-height: 1.6;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            pointer-events: auto !important;
+            position: relative;
+            z-index: 2;
+            cursor: text;
+        }
+        .duplicate-textarea.result {
+            min-height: 100%;
+        }
+        .duplicate-textarea::placeholder {
+            color: rgba(226,232,240,0.58);
+        }
+        .duplicate-action-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .duplicate-export-btn {
+            height: 30px;
+            border-radius: 9px;
+            font-size: 10px;
+            font-weight: 800;
+            color: #93c5fd !important;
+            background: rgba(255,255,255,0.04) !important;
+            border: 1px solid rgba(255,255,255,0.12) !important;
+        }
+        .duplicate-main-actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .duplicate-single-action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        @media (max-width: 860px) {
+            .duplicate-horizontal {
+                grid-template-columns: 1fr;
+            }
+            .duplicate-box-output {
+                min-height: 12rem;
+            }
+        }
+        .pro-footer { margin-top: auto; padding: 34px 0 26px; width: 100%; text-align: center; border-top: 0; background: transparent; backdrop-filter: none; }
+        .pro-footer p {
+            color: transparent !important;
+            background: linear-gradient(90deg, #7dd3fc 0%, #60a5fa 22%, #a78bfa 44%, #f472b6 72%, #facc15 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-shadow: 0 0 18px rgba(125,211,252,0.24), 0 0 26px rgba(244,114,182,0.18);
+            filter: saturate(1.2) brightness(1.14);
+        }
+        .pro-footer a {
+            color: #f8fbff !important;
+            font-weight: 900;
+            background: transparent;
+            padding: 0;
+            text-shadow: 0 0 12px rgba(147,197,253,0.42), 0 0 22px rgba(196,132,252,0.22);
+        }
+        .footer-socials {
+            margin-top: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+        }
+        .footer-social-link {
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.16);
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 24px rgba(15,23,42,0.18);
+            transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+        }
+        .footer-social-link:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 14px 28px rgba(15,23,42,0.24);
+            border-color: rgba(255,255,255,0.28);
+        }
+        .footer-social-link svg {
+            width: 16px;
+            height: 16px;
+            display: block;
+        }
+        .footer-social-link.facebook {
+            color: #1877f2;
+            background: linear-gradient(135deg, rgba(24,119,242,0.16), rgba(96,165,250,0.12));
+        }
+        .footer-social-link.instagram {
+            color: #f472b6;
+            background: linear-gradient(135deg, rgba(245,96,64,0.16), rgba(217,70,239,0.14), rgba(251,191,36,0.12));
+        }
+        .light-mode .footer-social-link {
+            border-color: rgba(59,130,246,0.14);
+            background: rgba(255,255,255,0.72);
+            box-shadow: 0 10px 22px rgba(59,130,246,0.08);
+        }
+        .light-mode .text-white { color: #0f172a !important; }
+        .light-mode .text-white\/90,
+        .light-mode .text-white\/80,
+        .light-mode .text-white\/70,
+        .light-mode .text-white\/60 { color: #24324a !important; }
+        .light-mode .text-gray-500 { color: #64748b !important; }
+        .light-mode .text-gray-400 { color: #718198 !important; }
+        .light-mode .text-green-500 { color: #15803d !important; }
+        .light-mode .text-green-400 { color: #15803d !important; }
+        .light-mode .text-blue-500,
+        .light-mode .text-blue-400,
+        .light-mode .text-blue-300 { color: #2563eb !important; }
+        .light-mode .text-orange-400,
+        .light-mode .text-orange-500 { color: #ea580c !important; }
+        .light-mode .text-red-400 { color: #dc2626 !important; }
+        .light-mode .text-pink-400 { color: #db2777 !important; }
+        .light-mode .bg-black\/40 { background: rgba(226,232,240,0.75) !important; }
+        .light-mode .bg-white\/5 { background: rgba(255,255,255,0.56) !important; }
+        .light-mode .bg-white\/10 { background: rgba(255,255,255,0.66) !important; }
+        .light-mode .border-white\/5 { border-color: rgba(15,23,42,0.08) !important; }
+        .light-mode .border-white\/10 { border-color: rgba(15,23,42,0.1) !important; }
+        .light-mode .font-black.text-gray-500,
+        .light-mode .font-black.text-white\/80,
+        .light-mode .font-black.text-white\/90 { color: #3b4d68 !important; }
+        .light-mode .tracking-widest,
+        .light-mode .tracking-\[0\.16em\] { color: #41536f !important; }
+        .light-mode #mainContent p,
+        .light-mode #mainContent span,
+        .light-mode #mainContent div,
+        .light-mode #mainContent label { color: inherit; }
+        .light-mode header .text-gray-500,
+        .light-mode footer .text-gray-500,
+        .light-mode .pro-footer .text-gray-500 { color: #445671 !important; }
+        .light-mode #mainContent .glass-panel,
+        .light-mode #mainContent .email-card,
+        .light-mode #tool-pass > div:first-child,
+        .light-mode #tool-currency .rounded-\[14px\],
+        .light-mode #tool-2fa #otpCodePanel {
+            color: #17253f !important;
+        }
+        #mainContent label { font-size: 9px !important; }
+        #mainContent,
+        #mainContent * { min-width: 0; }
+        #mainContent input,
+        #mainContent select,
+        #mainContent .email-card,
+        #mainContent .copy-wrapper,
+        #mainContent .code-display-box {
+            border-radius: 12px !important;
+        }
+        #mainContent input,
+        #mainContent select {
+            font-size: 14px !important;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: clip;
+        }
+        #mainContent button { font-size: 10px !important; }
+        #mainContent #otpBox {
+            font-size: 0.68rem !important;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: clip;
+        }
+        #mainContent #otpSecretField {
+            display: block;
+            width: 100%;
+            min-width: 0;
+            font-size: 13px !important;
+            letter-spacing: 0 !important;
+            line-height: 1.1;
+            position: relative;
+            z-index: 50;
+            pointer-events: auto !important;
+            user-select: text;
+            -webkit-user-select: text;
+            cursor: text;
+            caret-color: #ffffff;
+            appearance: none;
+            -webkit-appearance: none;
+            touch-action: manipulation;
+        }
+        #mainContent textarea#otpSecretField {
+            height: 40px;
+            min-height: 40px;
+            max-height: 40px;
+            resize: none;
+            overflow: hidden;
+            white-space: nowrap;
+            padding-top: 11px;
+            padding-bottom: 11px;
+        }
+        #tool-2fa.browser-light {
+            background: linear-gradient(135deg, #1d2b63 0%, #312650 100%);
+            border: 1px solid rgba(59, 130, 246, 0.9);
+            border-radius: 28px;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+        }
+        #tool-2fa.browser-light #otpSecretField {
+            color: #f8fafc !important;
+            caret-color: #f8fafc;
+            background: rgba(21, 29, 66, 0.95) !important;
+            border-color: #ff5a4f !important;
+        }
+        #tool-2fa.browser-light #otpCodePanel {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.9);
+        }
+        #tool-2fa.browser-light #otpTitle,
+        #tool-2fa.browser-light #otpTimerWrap {
+            color: #f8fafc !important;
+        }
+        #tool-2fa.browser-light .copy-wrapper {
+            background: transparent;
+        }
+        #mainContent #passOutput {
+            font-size: 0.95rem !important;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        #mainContent #emailContainer span { font-size: 12px !important; }
+        #emailContainer .email-card span {
+            min-width: 0;
+            flex: 1;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+<body class="p-4">
+    <div class="top-ctrl-bar">
+        <div class="menu-wrap">
+            <aside id="mainNav" class="menu-panel">
+                <button onclick="switchTool('gmail')" id="btn-gmail" class="menu-link"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"><rect x="3" y="6" width="18" height="12" rx="2"></rect><path stroke-linecap="round" stroke-linejoin="round" d="M4 8l8 6 8-6"></path></svg><span>Gmail</span></button>
+                <button id="btn-menu" class="menu-link menu-link-menu" onclick="toggleMenu(event)" aria-label="Tools"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M14.7 6.3a1 1 0 010 1.4l-7 7a1 1 0 01-1.4-1.4l7-7a1 1 0 011.4 0zm-9.4 9.4l-2 4 4-2"></path><path stroke-linecap="round" stroke-linejoin="round" d="M16 4l4 4"></path></svg><span>Tools</span></button>
+            </aside>
+            <div id="menuNotch" class="menu-notch hidden-tool"></div>
+            <aside id="dropdownNav" class="menu-panel-dropdown hidden-tool">
+                <div class="menu-drop-grid">
+                    <div class="menu-drop-col">
+                        <button onclick="switchTool('2fa')" id="drop-2fa" class="menu-drop-link"><span class="menu-drop-head"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 4v5c0 4.25-2.38 7.91-7 9-4.62-1.09-7-4.75-7-9V7l7-4z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M9.5 12.5l1.7 1.7 3.3-3.7"></path></svg><span class="menu-drop-title">2FA</span></span><span class="menu-drop-desc">Online authenticator code tool</span></button>
+                        <button onclick="switchTool('pass')" id="drop-pass" class="menu-drop-link"><span class="menu-drop-head"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"><circle cx="8.5" cy="14.5" r="3.5"></circle><path stroke-linecap="round" stroke-linejoin="round" d="M12 14.5h8"></path><path stroke-linecap="round" stroke-linejoin="round" d="M17 14.5v2.5"></path><path stroke-linecap="round" stroke-linejoin="round" d="M20 14.5v2.5"></path></svg><span class="menu-drop-title">Password</span></span><span class="menu-drop-desc">Secure password generation</span></button>
+                    </div>
+                    <div class="menu-drop-col">
+                        <button onclick="switchTool('email')" id="drop-email" class="menu-drop-link"><span class="menu-drop-head"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"><rect x="3" y="6" width="18" height="12" rx="2"></rect><path stroke-linecap="round" stroke-linejoin="round" d="M4 8l8 6 8-6"></path></svg><span class="menu-drop-title">Email</span></span><span class="menu-drop-desc">Generate email name sets</span></button>
+                        <button onclick="switchTool('fake')" id="drop-fake" class="menu-drop-link"><span class="menu-drop-head"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 4.5h7l3 3V19a1.5 1.5 0 01-1.5 1.5h-8A1.5 1.5 0 016 19V6a1.5 1.5 0 011.5-1.5z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M14 4.5V8h3"></path><path stroke-linecap="round" stroke-linejoin="round" d="M8.5 11h6.5M8.5 14h6.5M8.5 17H13"></path></svg><span class="menu-drop-title">Fake Details</span></span><span class="menu-drop-desc">Synthetic profile generator</span></button>
+                    </div>
+                    <div class="menu-drop-col">
+                        <button onclick="switchTool('currency')" id="drop-currency" class="menu-drop-link"><span class="menu-drop-head"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18"></path><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 7.5c0-1.9-2-3.5-4.5-3.5S7.5 5.6 7.5 7.5 9.5 11 12 11s4.5 1.6 4.5 3.5S14.5 18 12 18s-4.5-1.6-4.5-3.5"></path></svg><span class="menu-drop-title">Currency Converter</span></span><span class="menu-drop-desc">Global rate conversion</span></button>
+                        <button onclick="switchTool('excel')" id="drop-excel" class="menu-drop-link"><span class="menu-drop-head"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 5h16v14H4z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M9 5v14"></path><path stroke-linecap="round" stroke-linejoin="round" d="M4 10h16"></path></svg><span class="menu-drop-title">Excel</span></span><span class="menu-drop-desc">Edit spreadsheet online</span></button>
+                        <button onclick="switchTool('duplicate')" id="drop-duplicate" class="menu-drop-link"><span class="menu-drop-head"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h10"></path><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h10"></path><path stroke-linecap="round" stroke-linejoin="round" d="M8 17h6"></path><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h.01M4 12h.01M4 17h.01"></path></svg><span class="menu-drop-title">Duplicate Checker</span></span><span class="menu-drop-desc">Check first-column email duplicates</span></button>
+                    </div>
+                </div>
+            </aside>
+        </div>
+        <button onclick="toggleTheme()" class="ctrl-btn"><svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0z"/></svg></button>
+        <button onclick="toggleSound()" class="ctrl-btn"><svg id="sOn" class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M6.343 17.657l-.707.707a2 2 0 01-2.828 0 2 2 0 010-2.828l.707-.707m2.828-9.9l-.707-.707a2 2 0 00-2.828 0 2 2 0 000 2.828l.707.707m2.828 9.9a5 5 0 010-7.072" /></svg></button>
+        
+        <div class="dev-card-wrapper">
+            <div class="dev-icon-container"><img src="https://i.postimg.cc/BnRkPcSg/Whats-App-Image-2026-03-26-at-10-40-48-AM.jpg" alt="Bidhan"></div>
+            <div id="devCard">
+                <div class="pro-avatar"><img src="https://i.postimg.cc/BnRkPcSg/Whats-App-Image-2026-03-26-at-10-40-48-AM.jpg"></div>
+                <h4 class="text-white font-black uppercase tracking-wider">Bidhan</h4>
+                <p class="text-[10px] text-blue-400 font-bold uppercase mt-1">Lead Developer</p>
+                <div class="mt-6 pt-6 border-t border-white/5"><a href="https://github.com/bidhanbd" target="_blank" style="display:block; background:rgba(255,255,255,0.05); padding:12px; border-radius:12px; font-size:10px; font-weight:900; color:white; text-transform:uppercase; border:1px solid var(--glass-border);">GitHub Profile</a></div>
+            </div>
+        </div>
+    </div>
+
+    <header class="mt-1 cursor-pointer w-full px-4" onclick="showHome()">
+        <div class="w-full flex items-start justify-start pr-[190px]"><div class="flex flex-col items-start gap-2 min-w-[520px] max-w-[940px]"><div class="flex items-center gap-4"><div class="logo-shield"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 11V7a4 4 0 118 0v4"></path><path stroke-linecap="round" stroke-linejoin="round" d="M6 11h12v9H6z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2"></path></svg></div><h1 class="brand-title">Multi-Tool<span class="pro-box">PRO</span></h1></div>
+        <div class="text-[9px] font-black text-gray-500 tracking-[0.16em] uppercase text-left ml-[70px]">Your All-in-One Digital Toolkit.</div></div></div>
+    </header>
+
+    <main id="mainContent" class="main-tools max-w-[64rem] w-full flex flex-col gap-1.5 mb-12 px-4 -mt-1">
+        <section id="tool-2fa" class="glass-panel browser-light p-4 pt-3 flex flex-col items-center gap-1.5 hidden-tool relative">
+            <h3 class="tool-section-title">2FA</h3>
+            <div class="w-full max-w-[34rem] flex items-center gap-2">
+                <textarea id="otpSecretField" placeholder="ENTER 2FA SECRET" autocomplete="off" autocapitalize="off" spellcheck="false" tabindex="0" class="flex-1 px-4 rounded-[12px] border border-red-400/70 bg-[#141b37]/90 !border-red-400/70 text-left text-white font-mono"></textarea>
+                <button type="button" onclick="clear2FA()" class="inline-icon-btn shrink-0" style="width:22px;height:22px;background:transparent;" title="Clear 2FA"><svg fill="none" stroke="currentColor" class="text-red-400" viewBox="0 0 24 24" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12"></path><path stroke-linecap="round" stroke-linejoin="round" d="M9 7V5h6v2"></path><path stroke-linecap="round" stroke-linejoin="round" d="M9 10v6M15 10v6"></path><path stroke-linecap="round" stroke-linejoin="round" d="M8 7l.6 11a1 1 0 001 .95h4.8a1 1 0 001-.95L16 7"></path></svg></button>
+            </div>
+            <div class="w-full max-w-[34rem] flex items-start justify-start">
+                <p id="otpError" class="min-h-[1rem] flex-1 text-left text-[0.68rem] text-red-400">Enter a valid 2FA secret</p>
+            </div>
+            <div id="otpCodeWrap" class="w-full max-w-[34rem] flex flex-col items-center gap-1.5 pt-2 hidden-tool">
+                <p id="otpTitle" class="text-[0.84rem] font-black text-white/90">The current 2FA verification code is</p>
+            <div class="flex items-center gap-2.5">
+                    <div id="otpCodePanel" class="w-[9rem] h-[3.25rem] rounded-[14px] border border-white/70 bg-white/[0.04] flex items-center justify-center px-2">
+                        <div id="otpBox" onclick="copy2faFromPanel()" class="w-full whitespace-nowrap text-center font-black text-white leading-none cursor-pointer">------</div>
+                    </div>
+                    <button id="otpCopyBtn" type="button" onclick="copyAction(document.getElementById('otpBox').innerText, 'otp', this)" class="copy-wrapper inline-icon-btn shrink-0" style="width:24px;height:24px;background:transparent;" title="Copy 2FA Code"><div class="copy-circle"></div><svg class="copy-svg text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.4"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg><svg class="check-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></button>
+                </div>
+                <p id="otpTimerWrap" class="shrink-0 text-[0.68rem] text-white/80">(<span id="timerText">30</span> seconds)</p>
+            </div>
+            <div class="hidden"><div id="timerBar"></div></div>
+            <div id="otpHistoryList" class="inline-history-list w-full max-w-[17rem] p-1 text-gray-500 text-center hidden-tool"></div>
+        </section>
+
+        <section id="tool-pass" class="glass-panel p-3 pt-2 flex flex-col items-center gap-2 hidden-tool relative">
+            <h3 class="tool-section-title">Password Generator</h3>
+            <div class="w-full max-w-[17rem] flex items-center gap-2 bg-black/40 p-2 rounded-[14px] border border-white/5"><div id="passOutput" onclick="copyPassFromPanel()" class="flex-1 min-w-0 text-[0.85rem] font-mono font-bold text-green-500 break-all text-center cursor-pointer">Ready...</div><div id="passCopyBtn" onclick="copyAction(document.getElementById('passOutput').innerText, 'pass', this)" class="copy-wrapper inline-icon-btn" style="width:24px;height:24px;background:transparent;" title="Copy Password"><div class="copy-circle"></div><svg class="copy-svg text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg><svg class="check-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div></div>
+            <div class="w-full max-w-[17rem] flex items-center justify-center gap-3"><button type="button" onclick="genPass(true)" class="inline-icon-btn generate-pro" title="Generate Password" style="width:34px;height:34px;"><svg fill="none" stroke="currentColor" class="text-green-400" viewBox="0 0 24 24" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v6h6"></path><path stroke-linecap="round" stroke-linejoin="round" d="M20 20v-6h-6"></path><path stroke-linecap="round" stroke-linejoin="round" d="M20 10A8 8 0 007 6l-3 4"></path><path stroke-linecap="round" stroke-linejoin="round" d="M4 14a8 8 0 0013 4l3-4"></path></svg></button><input type="number" id="length" min="8" max="50" value="12" class="h-7 w-[3.3rem] px-1.5 rounded-md text-[10px] text-center font-mono"></div><input type="checkbox" id="upper" checked class="hidden" aria-hidden="true"><input type="checkbox" id="num" checked class="hidden" aria-hidden="true"><input type="checkbox" id="sym" checked class="hidden" aria-hidden="true"><div id="h-list-pass" class="inline-history-list w-full max-w-[17rem] p-1 text-gray-500 text-center hidden-tool"></div>
+        </section>
+
+        <section id="tool-email" class="glass-panel p-2.5 pt-2 flex flex-col items-start gap-1.5 hidden-tool">
+            <h3 class="tool-section-title">Email Generator</h3>
+            <div class="w-full max-w-[24rem] flex flex-nowrap items-end justify-start gap-3 overflow-hidden">
+                <div class="flex flex-col gap-1">
+                    <label class="text-[7px] font-black uppercase text-gray-500">Quantity</label>
+                    <input type="number" id="eqty" value="10" min="1" max="100" class="h-8 w-[3.5rem] px-2 rounded-lg text-[11px] text-center">
+                </div>
+                <div class="flex flex-col gap-1">
+                    <label class="text-[7px] font-black uppercase text-gray-500">Country</label>
+                    <select id="ecountry" class="h-8 w-[7.5rem] px-3 rounded-lg text-[11px]">
+                        <option value="bd">Bangladesh</option><option value="india">India</option><option value="usa">USA</option><option value="uk">United Kingdom</option><option value="can">Canada</option><option value="aus">Australia</option><option value="pak">Pakistan</option><option value="uae">UAE</option><option value="saudi">Saudi Arabia</option><option value="malaysia">Malaysia</option><option value="singapore">Singapore</option><option value="nepal">Nepal</option><option value="srilanka">Sri Lanka</option><option value="germany">Germany</option>
+                    </select>
+                </div>
+                <div class="flex flex-col gap-1">
+                    <label class="text-[7px] font-black uppercase text-gray-500">Domain</label>
+                    <select id="edomain" class="h-8 w-[8rem] px-3 rounded-lg text-[11px]">
+                        <option value="gmail.com">gmail.com</option><option value="yahoo.com">yahoo.com</option><option value="outlook.com" selected>outlook.com</option><option value="hotmail.com">hotmail.com</option><option value="icloud.com">icloud.com</option><option value="me.com">me.com</option><option value="mac.com">mac.com</option><option value="live.com">live.com</option><option value="msn.com">msn.com</option><option value="aol.com">aol.com</option><option value="proton.me">proton.me</option><option value="protonmail.com">protonmail.com</option><option value="zoho.com">zoho.com</option><option value="zohomail.com">zohomail.com</option><option value="yandex.com">yandex.com</option><option value="yandex.ru">yandex.ru</option><option value="gmx.com">gmx.com</option><option value="gmx.us">gmx.us</option><option value="mail.com">mail.com</option><option value="email.com">email.com</option><option value="fastmail.com">fastmail.com</option><option value="hey.com">hey.com</option><option value="random">Random Mix</option>
+                    </select>
+                </div>
+            </div>
+            <div class="w-full max-w-[24rem] flex justify-center pl-0">
+                <button onclick="generateEmails()" class="px-2.5 py-1 bg-orange-600 hover:bg-orange-500 text-white rounded-lg font-black uppercase text-[7px] active:scale-95 transition">Generate</button>
+            </div>
+            <div id="emailContainer" class="w-full max-w-[24rem] flex flex-col gap-1 mt-0.5"></div>
+        </section>
+        <section id="tool-duplicate" class="glass-panel p-3.5 pt-5 flex flex-col items-center gap-3 hidden-tool">
+            <h3 class="tool-section-title mt-1 mb-0.5">Duplicate Checker</h3>
+            <div class="duplicate-shell">
+                <div class="duplicate-top-card" onclick="focusDuplicateInput()">
+                    <textarea id="duplicateInput" tabindex="0" autocomplete="off" autocapitalize="off" spellcheck="false" class="duplicate-textarea" style="min-height:120px;" placeholder="Enter gmail accounts for check"></textarea>
+                    <div class="mt-3 flex items-center justify-start">
+                        <span id="duplicateInputCount" class="duplicate-pill blue">Emails: 0</span>
+                    </div>
+                    <div class="duplicate-single-action mt-3">
+                        <button type="button" class="duplicate-clear-btn" onclick="clearDuplicateChecker()">Clear Input</button>
+                    </div>
+                </div>
+                <div class="duplicate-horizontal">
+                    <div class="duplicate-box duplicate-box-output">
+                        <div class="duplicate-box-head">
+                            <p class="duplicate-box-title">Unique List</p>
+                            <div class="duplicate-head-right">
+                                <span id="duplicateUniqueCount" class="duplicate-pill green">Unique: 0</span>
+                                <div class="duplicate-icon-badge green">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-7.071 7.071a1 1 0 01-1.414 0L3.293 8.85a1 1 0 011.414-1.414l4.222 4.221 6.364-6.364a1 1 0 011.414 0z"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                        <textarea id="duplicateUnique" class="duplicate-textarea result" readonly placeholder=""></textarea>
+                        <button type="button" id="duplicateUniqueCopyBtn" class="duplicate-copy-btn" onclick="copyDuplicateUnique()" disabled>Copy All Unique Emails</button>
+                        <div class="duplicate-action-row">
+                            <button type="button" class="duplicate-export-btn" onclick="downloadUniqueTxt()" disabled id="duplicateUniqueTxtBtn">TXT</button>
+                            <button type="button" class="duplicate-export-btn" onclick="downloadUniqueExcel()" disabled id="duplicateUniqueExcelBtn">Excel</button>
+                        </div>
+                    </div>
+                    <div class="duplicate-box duplicate-box-output">
+                        <div class="duplicate-box-head">
+                            <p class="duplicate-box-title">Duplicate List</p>
+                            <div class="duplicate-head-right">
+                                <span id="duplicateMatchCount" class="duplicate-pill red">Duplicate: 0</span>
+                                <div class="duplicate-icon-badge red">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M6.707 4.293a1 1 0 00-1.414 1.414L8.586 9l-3.293 3.293a1 1 0 101.414 1.414L10 10.414l3.293 3.293a1 1 0 001.414-1.414L11.414 9l3.293-3.293a1 1 0 00-1.414-1.414L10 7.586 6.707 4.293z"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                        <textarea id="duplicateResult" class="duplicate-textarea result" readonly placeholder=""></textarea>
+                        <button type="button" id="duplicateCopyBtn" class="duplicate-copy-btn" onclick="copyDuplicateResult()" disabled>Copy All Duplicate Emails</button>
+                        <div class="duplicate-action-row">
+                            <button type="button" class="duplicate-export-btn" onclick="downloadDuplicateTxt()" disabled id="duplicateTxtBtn">TXT</button>
+                            <button type="button" class="duplicate-export-btn" onclick="downloadDuplicateExcel()" disabled id="duplicateExcelBtn">Excel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="tool-currency" class="glass-panel p-3 flex flex-col items-center gap-2 hidden-tool">
+            <div class="w-full max-w-[42rem] flex items-start gap-3">
+                <div class="flex-1 min-w-0 flex flex-col gap-3">
+                    <p id="currencyMeta" class="text-[9px] text-gray-500 text-left">Binance P2P live rate</p>
+                    <div class="relative">
+                        <button type="button" onclick="swapCurrencies()" class="inline-icon-btn generate-pro absolute right-2.5 top-1/2 -translate-y-1/2 z-10" title="Swap Currency" style="width:26px;height:26px;"><svg fill="none" stroke="currentColor" class="text-blue-400" viewBox="0 0 24 24" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h10"></path><path stroke-linecap="round" stroke-linejoin="round" d="M13 4l4 3-4 3"></path><path stroke-linecap="round" stroke-linejoin="round" d="M17 17H7"></path><path stroke-linecap="round" stroke-linejoin="round" d="M11 14l-4 3 4 3"></path></svg></button>
+                        <div class="rounded-[14px] border border-blue-300/70 overflow-hidden bg-white/[0.04] shadow-[0_10px_24px_rgba(0,0,0,0.22)]">
+                            <div class="flex items-center min-h-[56px]">
+                                <input type="number" id="currencyAmount" value="1" min="0" step="any" class="w-[33%] h-[56px] px-4 bg-transparent !border-0 text-[0.98rem] font-medium text-left font-mono">
+                                <div class="h-7 w-px bg-white/10"></div>
+                                <div class="flex-1 relative">
+                                    <input type="text" id="currencyFrom" list="currencyOptionsFrom" placeholder="USDT" class="w-full h-[56px] px-4 pr-9 bg-transparent !border-0 text-[0.92rem]" oninput="handleCurrencyInput('from')" onchange="handleCurrencyInput('from')">
+                                    <datalist id="currencyOptionsFrom"></datalist>
+                                    <span class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 text-[10px]">▼</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rounded-[14px] border border-white/10 overflow-hidden bg-white/[0.025] shadow-[0_10px_24px_rgba(0,0,0,0.16)]">
+                        <div class="flex items-center min-h-[56px]">
+                            <input type="text" id="currencyOutputAmount" value="0.00" readonly class="w-[33%] h-[56px] px-4 bg-transparent !border-0 text-[0.98rem] font-medium text-left font-mono">
+                            <div class="h-7 w-px bg-white/10"></div>
+                            <div class="flex-1 relative">
+                                <input type="text" id="currencyTo" list="currencyOptionsTo" placeholder="BDT" class="w-full h-[56px] px-4 pr-9 bg-transparent !border-0 text-[0.92rem]" oninput="handleCurrencyInput('to')" onchange="handleCurrencyInput('to')">
+                                <datalist id="currencyOptionsTo"></datalist>
+                                <span class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 text-[10px]">▼</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p id="currencyResult" class="text-[9px] text-gray-500 text-left">1.00 USDT = 0.00 BDT</p>
+                </div>
+                <div class="w-[12rem] shrink-0 rounded-[14px] border border-emerald-400/20 bg-emerald-500/[0.04] p-3 shadow-[0_10px_24px_rgba(0,0,0,0.16)]">
+                    <div class="flex items-center justify-between gap-2">
+                        <div>
+                            <p class="text-[9px] uppercase font-black text-emerald-300">Custom Rate</p>
+                            <p class="text-[9px] text-gray-500">1 USDT = BDT</p>
+                        </div>
+                        <label class="flex items-center gap-1.5 text-[9px] text-gray-400 uppercase">
+                            <input type="checkbox" id="useCustomBdtRate" onchange="convertCurrency()">
+                            Use
+                        </label>
+                    </div>
+                    <div class="mt-2 flex flex-col gap-2">
+                        <input type="number" id="customBdtRate" value="126" min="0" step="0.01" class="w-full h-9 px-3 rounded-xl text-[11px] text-center font-mono" oninput="convertCurrency(true)">
+                        <div class="text-[9px] text-gray-500 leading-4">Set your Binance P2P BDT rate here.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="tool-excel" class="glass-panel p-3 flex flex-col items-center gap-3 hidden-tool">
+            <h3 class="tool-section-title">Excel Editor</h3>
+            <div class="excel-shell">
+                <div class="excel-topbar">
+                    <div class="excel-toolbar-actions">
+                        <button type="button" onclick="createNewWorkbook()" class="excel-action-btn">New</button>
+                        <button type="button" onclick="document.getElementById('excelFileInput').click()" class="excel-action-btn">Open File</button>
+                        <button type="button" onclick="saveExcelWorkspace()" class="excel-action-btn">Save</button>
+                        <button type="button" onclick="restoreExcelWorkspace()" class="excel-action-btn">Restore</button>
+                        <button type="button" onclick="downloadWorkbook('xlsx')" class="excel-action-btn">Download XLSX</button>
+                        <button type="button" onclick="downloadWorkbook('csv')" class="excel-action-btn">Download CSV</button>
+                        <button type="button" onclick="addExcelSheet()" class="excel-action-btn">Add Sheet</button>
+                        <input id="excelFileInput" type="file" accept=".xlsx,.xls,.csv" class="hidden">
+                    </div>
+                    <div class="excel-toolbar-prefs">
+                        <select id="excelFontFamily" class="excel-pref-select" onchange="applyExcelFontFamily(this.value)">
+                            <option value="'Segoe UI', sans-serif">Segoe UI</option>
+                            <option value="Arial, sans-serif">Arial</option>
+                            <option value="Calibri, sans-serif">Calibri</option>
+                            <option value="Roboto, sans-serif">Roboto</option>
+                            <option value="Inter, sans-serif">Inter</option>
+                            <option value="'Times New Roman', serif">Times New Roman</option>
+                            <option value="Georgia, serif">Georgia</option>
+                            <option value="'Courier New', monospace">Courier New</option>
+                            <option value="Verdana, sans-serif">Verdana</option>
+                            <option value="Tahoma, sans-serif">Tahoma</option>
+                            <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
+                            <option value="Garamond, serif">Garamond</option>
+                        </select>
+                        <select id="excelFontSize" class="excel-pref-select" onchange="applyExcelFontSize(this.value)">
+                            <option value="10px">10</option>
+                            <option value="11px">11</option>
+                            <option value="12px">12</option>
+                            <option value="13px" selected>13</option>
+                            <option value="14px">14</option>
+                            <option value="16px">16</option>
+                            <option value="18px">18</option>
+                            <option value="20px">20</option>
+                            <option value="24px">24</option>
+                        </select>
+                        <button type="button" onclick="toggleExcelFullscreen()" class="excel-action-btn">Fullscreen</button>
+                    </div>
+                </div>
+                <div class="excel-meta-bar">
+                    <p id="excelStatus">Ready for Excel file upload and editing</p>
+                    <p id="excelSheetMeta">Sheet1</p>
+                </div>
+                <div class="w-full h-[calc(100vh-16rem)] min-h-[44rem] rounded-[16px] overflow-hidden border border-white/10 bg-black/30">
+                    <div id="excelEditorHost" class="w-full h-full"></div>
+                </div>
+            </div>
+        </section>
+        <section id="tool-fake" class="glass-panel p-7 flex flex-col items-center gap-6 hidden-tool">
+            <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="flex flex-col gap-2"><label class="text-[9px] font-black uppercase text-gray-500">Region</label><select id="fregion" class="p-4 rounded-xl"><option value="global">Global Mix</option><option value="bd">Bangladesh</option><option value="india">India</option><option value="usa">USA</option><option value="uk">United Kingdom</option><option value="can">Canada</option><option value="aus">Australia</option><option value="pak">Pakistan</option><option value="uae">UAE</option><option value="saudi">Saudi Arabia</option><option value="malaysia">Malaysia</option><option value="singapore">Singapore</option><option value="nepal">Nepal</option><option value="srilanka">Sri Lanka</option><option value="germany">Germany</option></select></div>
+                <div class="flex flex-col gap-2"><label class="text-[9px] font-black uppercase text-gray-500">Gender</label><select id="fgender" class="p-4 rounded-xl"><option value="male">Male</option><option value="female">Female</option></select></div>
+            </div>
+            <button onclick="generateFakeDetails()" class="w-full max-w-sm py-5 bg-pink-600 hover:bg-pink-500 text-white rounded-2xl font-black uppercase text-xs active:scale-95 transition">Generate Fake Details</button>
+            <div id="fakeDetailsCard" class="w-full glass-panel p-7 flex flex-col gap-4">
+                <div class="flex items-center justify-between gap-4 border-b border-white/5 pb-4">
+                    <div>
+                        <p class="text-[9px] font-black uppercase text-pink-400">Synthetic Details</p>
+                        <h3 id="fakeName" class="text-2xl font-black text-white">Nova Mercer</h3>
+                        <p id="fakeRole" class="text-[11px] uppercase font-black text-gray-500">male</p>
+                    </div>
+                    <button onclick="copyFakeBundle(this)" class="input-action-btn bg-pink-600 hover:bg-pink-500 text-white"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg></button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-[11px] font-black uppercase">
+                    <div class="glass-panel p-5 flex items-center justify-between gap-4"><div><p class="text-gray-500">Street</p><p id="fakeStreet" class="text-white normal-case text-sm">42 Fiction Row</p></div><div onclick="copyAction(document.getElementById('fakeStreet').innerText, 'fake', this)" class="copy-wrapper"><div class="copy-circle"></div><svg class="copy-svg w-5 h-5 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg><svg class="check-svg w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div></div>
+                    <div class="glass-panel p-5 flex items-center justify-between gap-4"><div><p class="text-gray-500">City/Town</p><p id="fakeCity" class="text-white normal-case text-sm">Sample City</p></div><div onclick="copyAction(document.getElementById('fakeCity').innerText, 'fake', this)" class="copy-wrapper"><div class="copy-circle"></div><svg class="copy-svg w-5 h-5 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg><svg class="check-svg w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div></div>
+                    <div class="glass-panel p-5 flex items-center justify-between gap-4"><div><p class="text-gray-500">State/Province/Region</p><p id="fakeState" class="text-white normal-case text-sm">Demo State</p></div><div onclick="copyAction(document.getElementById('fakeState').innerText, 'fake', this)" class="copy-wrapper"><div class="copy-circle"></div><svg class="copy-svg w-5 h-5 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg><svg class="check-svg w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div></div>
+                    <div class="glass-panel p-5 flex items-center justify-between gap-4"><div><p class="text-gray-500">Zip/Postal Code</p><p id="fakeZip" class="text-white font-mono normal-case text-sm">1000</p></div><div onclick="copyAction(document.getElementById('fakeZip').innerText, 'fake', this)" class="copy-wrapper"><div class="copy-circle"></div><svg class="copy-svg w-5 h-5 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg><svg class="check-svg w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div></div>
+                    <div class="glass-panel p-5 flex items-center justify-between gap-4"><div><p class="text-gray-500">Phone Number</p><p id="fakePhone" class="text-white font-mono normal-case text-sm">+999 555 010 4242</p></div><div onclick="copyAction(document.getElementById('fakePhone').innerText, 'fake', this)" class="copy-wrapper"><div class="copy-circle"></div><svg class="copy-svg w-5 h-5 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg><svg class="check-svg w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div></div>
+                    <div class="glass-panel p-5 flex items-center justify-between gap-4"><div><p class="text-gray-500">Country</p><p id="fakeCountry" class="text-white normal-case text-sm">United States</p></div><div onclick="copyAction(document.getElementById('fakeCountry').innerText, 'fake', this)" class="copy-wrapper"><div class="copy-circle"></div><svg class="copy-svg w-5 h-5 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg><svg class="check-svg w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div></div>
+                    <div class="glass-panel p-5 flex items-center justify-between gap-4"><div><p class="text-gray-500">Latitude</p><p id="fakeLat" class="text-white font-mono normal-case text-sm">32.273345</p></div><div onclick="copyAction(document.getElementById('fakeLat').innerText, 'fake', this)" class="copy-wrapper"><div class="copy-circle"></div><svg class="copy-svg w-5 h-5 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg><svg class="check-svg w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div></div>
+                    <div class="glass-panel p-5 flex items-center justify-between gap-4"><div><p class="text-gray-500">Longitude</p><p id="fakeLon" class="text-white font-mono normal-case text-sm">-90.150204</p></div><div onclick="copyAction(document.getElementById('fakeLon').innerText, 'fake', this)" class="copy-wrapper"><div class="copy-circle"></div><svg class="copy-svg w-5 h-5 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg><svg class="check-svg w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div></div>
+                </div>
+                <p class="text-[10px] font-black uppercase text-gray-500">Generated for mockups, demos, and testing flows only.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="pro-footer w-full">
+        <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Designed & Developed by <a href="https://github.com/bidhanbd" target="_blank" style="color:#3b82f6; text-decoration:none;">BIDHAN</a></p>
+        <div class="footer-socials">
+            <a class="footer-social-link facebook" href="https://www.facebook.com/Bidhan.Nilphamari" target="_blank" rel="noopener noreferrer" title="Facebook">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M13.5 21v-7h2.4l.4-3h-2.8V9.1c0-.9.3-1.6 1.7-1.6H16V4.9c-.3 0-1.1-.1-2.1-.1-2 0-3.4 1.2-3.4 3.6V11H8v3h2.4v7h3.1z"></path>
+                </svg>
+            </a>
+            <a class="footer-social-link instagram" href="https://www.instagram.com/bidhan.nilphamari" target="_blank" rel="noopener noreferrer" title="Instagram">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <rect x="4.2" y="4.2" width="15.6" height="15.6" rx="4.6" stroke="currentColor" stroke-width="2"></rect>
+                    <circle cx="12" cy="12" r="3.6" stroke="currentColor" stroke-width="2"></circle>
+                    <circle cx="17.1" cy="6.9" r="1.1" fill="currentColor"></circle>
+                </svg>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        const { authenticator } = otplib;
+        let isS = localStorage.getItem('bidhan_s') !== 'off', h2fa = JSON.parse(localStorage.getItem('bidhan_2fa_v25') || '[]'), hPass = JSON.parse(localStorage.getItem('bidhan_pass_v25') || '[]');
+        function normalizeHistoryEntry(entry) {
+            if (!entry) return null;
+            if (typeof entry === 'string') return { value: entry, ts: Date.now() };
+            if (typeof entry === 'object' && typeof entry.value === 'string') return { value: entry.value, ts: Number(entry.ts) || Date.now() };
+            return null;
+        }
+        h2fa = h2fa.map(normalizeHistoryEntry).filter((entry) => entry && typeof entry.value === 'string' && entry.value.trim().length > 6).slice(0, 5);
+        hPass = hPass.map(normalizeHistoryEntry).filter(Boolean).slice(0, 5);
+        const ding = new Audio('https://www.fesliyanstudios.com/play-mp3/387');
+        ding.preload = 'auto';
+        function playDing() {
+            if (!isS) return;
+            try {
+                ding.pause();
+                ding.currentTime = 0;
+                const playPromise = ding.play();
+                if (playPromise && typeof playPromise.catch === 'function') playPromise.catch(() => {});
+            } catch (e) {}
+        }
+        async function writeClipboardText(txt) {
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(txt);
+                return true;
+            }
+            const area = document.createElement('textarea');
+            area.value = txt;
+            area.setAttribute('readonly', '');
+            area.style.position = 'fixed';
+            area.style.opacity = '0';
+            area.style.pointerEvents = 'none';
+            document.body.appendChild(area);
+            area.focus();
+            area.select();
+            const ok = document.execCommand('copy');
+            document.body.removeChild(area);
+            if (!ok) throw new Error('copy-failed');
+            return true;
+        }
+        function fit2faFields() {
+            const secretInput = document.getElementById('otpSecretField');
+            const otpBox = document.getElementById('otpBox');
+            if (secretInput) {
+                const secretText = secretInput.value || secretInput.placeholder || '';
+                const secretLength = secretText.length;
+                let secretSize = 13;
+                if (secretLength > 20) secretSize = 12.5;
+                if (secretLength > 28) secretSize = 12;
+                if (secretLength > 36) secretSize = 11.5;
+                if (secretLength > 44) secretSize = 11;
+                secretInput.style.setProperty('font-size', `${secretSize}px`, 'important');
+                secretInput.style.setProperty('letter-spacing', '0px', 'important');
+            }
+            if (otpBox) {
+                const otpLength = (otpBox.innerText || '').replace(/\s/g, '').length;
+                let otpSize = 17;
+                if (otpLength > 6) otpSize = 15;
+                if (otpLength > 7) otpSize = 13;
+                otpBox.style.fontSize = `${otpSize}px`;
+                otpBox.style.letterSpacing = '0px';
+            }
+        }
+
+        let currentPrimaryNav = null;
+        let menuHoverTimer = null;
+        function saveCurrentView(view) {
+            localStorage.setItem('bidhan_active_tool_v1', view);
+        }
+        function getCurrentView() {
+            return localStorage.getItem('bidhan_active_tool_v1') || 'home';
+        }
+        function hideAllTools() {
+            document.getElementById('tool-2fa').classList.add('hidden-tool');
+            document.getElementById('tool-pass').classList.add('hidden-tool');
+            document.getElementById('tool-email').classList.add('hidden-tool');
+            document.getElementById('tool-duplicate').classList.add('hidden-tool');
+            document.getElementById('tool-currency').classList.add('hidden-tool');
+            document.getElementById('tool-excel').classList.add('hidden-tool');
+            document.getElementById('tool-fake').classList.add('hidden-tool');
+            document.getElementById('mainContent').classList.remove('gmail-layout');
+            document.getElementById('mainContent').classList.remove('single-tool-layout');
+        }
+        function toggleMenu(event) {
+            if (event) event.stopPropagation();
+            const menu = document.getElementById('dropdownNav');
+            const notch = document.getElementById('menuNotch');
+            const willOpen = menu.classList.contains('hidden-tool');
+            menu.classList.toggle('hidden-tool', !willOpen);
+            notch.classList.toggle('hidden-tool', !willOpen);
+            if (willOpen) {
+                hideAllTools();
+                currentPrimaryNav = null;
+                setActiveMenu('btn-menu', false);
+                updateDropdownNotch();
+            } else {
+                closeMenu();
+            }
+        }
+        function closeMenu() {
+            document.getElementById('dropdownNav').classList.add('hidden-tool');
+            document.getElementById('menuNotch').classList.add('hidden-tool');
+        }
+        function openMenuHover() {
+            clearTimeout(menuHoverTimer);
+            document.getElementById('dropdownNav').classList.remove('hidden-tool');
+            document.getElementById('menuNotch').classList.remove('hidden-tool');
+            setActiveMenu('btn-menu', false);
+            updateDropdownNotch();
+        }
+        function closeMenuHoverSoon() {
+            clearTimeout(menuHoverTimer);
+            menuHoverTimer = setTimeout(() => {
+                if (getCurrentView() !== 'home') {
+                    closeMenu();
+                    if (currentPrimaryNav) setActiveMenu(currentPrimaryNav, false);
+                } else {
+                    closeMenu();
+                    ['btn-menu', 'btn-gmail', 'btn-fake'].forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) el.classList.remove('menu-link-active');
+                    });
+                }
+            }, 140);
+        }
+        function updateDropdownNotch() {
+            const notch = document.getElementById('menuNotch');
+            const menuBtn = document.getElementById('btn-menu');
+            const wrap = document.querySelector('.menu-wrap');
+            if (!notch || !menuBtn || !wrap) return;
+            const menuRect = menuBtn.getBoundingClientRect();
+            const wrapRect = wrap.getBoundingClientRect();
+            notch.style.left = `${menuRect.left - wrapRect.left + (menuRect.width / 2) - 9}px`;
+        }
+        function updateMenuNotch(targetId) {
+            const activeEl = document.getElementById(targetId);
+            const wrap = document.querySelector('.menu-wrap');
+            if (!activeEl || !wrap) return;
+        }
+        function setActiveMenu(target, storePrimary = true) {
+            ['btn-menu', 'btn-gmail', 'btn-fake'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.remove('menu-link-active');
+            });
+            ['drop-excel', 'drop-currency', 'drop-2fa', 'drop-pass', 'drop-email', 'drop-fake', 'drop-duplicate'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.remove('menu-drop-link-active');
+            });
+            const activeEl = document.getElementById(target);
+            if (activeEl) activeEl.classList.add('menu-link-active');
+            if (storePrimary && target !== 'btn-menu') currentPrimaryNav = target;
+            const dropEl = document.getElementById(target.replace('btn-', 'drop-'));
+            if (dropEl) dropEl.classList.add('menu-drop-link-active');
+            updateMenuNotch(target);
+        }
+        function showHome() { hideAllTools(); currentPrimaryNav = null; ['btn-menu', 'btn-gmail', 'btn-fake'].forEach(id => { const el = document.getElementById(id); if (el) el.classList.remove('menu-link-active'); }); ['drop-excel', 'drop-currency', 'drop-2fa', 'drop-pass', 'drop-email', 'drop-fake', 'drop-duplicate'].forEach(id => { const el = document.getElementById(id); if (el) el.classList.remove('menu-drop-link-active'); }); closeMenu(); saveCurrentView('home'); }
+        function switchTool(t) {
+            const showGmail = t === 'gmail';
+            document.getElementById('mainContent').classList.toggle('gmail-layout', showGmail);
+            document.getElementById('mainContent').classList.toggle('single-tool-layout', !showGmail);
+            document.getElementById('tool-2fa').classList.toggle('hidden-tool', !(showGmail || t === '2fa'));
+            document.getElementById('tool-pass').classList.toggle('hidden-tool', !(showGmail || t === 'pass'));
+            document.getElementById('tool-email').classList.toggle('hidden-tool', !(showGmail || t === 'email'));
+            document.getElementById('tool-duplicate').classList.toggle('hidden-tool', t !== 'duplicate');
+            document.getElementById('tool-currency').classList.toggle('hidden-tool', t !== 'currency');
+            document.getElementById('tool-excel').classList.toggle('hidden-tool', t !== 'excel');
+            document.getElementById('tool-fake').classList.toggle('hidden-tool', t !== 'fake');
+            setActiveMenu(document.getElementById(`btn-${t}`) ? `btn-${t}` : `drop-${t}`);
+            closeMenu();
+            saveCurrentView(t);
+            if (showGmail || t === '2fa') {
+                setTimeout(() => {
+                    const secretInput = document.getElementById('otpSecretField');
+                    if (secretInput) {
+                        secretInput.focus();
+                        const len = secretInput.value.length;
+                        if (typeof secretInput.setSelectionRange === 'function') {
+                            secretInput.setSelectionRange(len, len);
+                        }
+                    }
+                }, 30);
+            }
+            if (t === 'duplicate') {
+                setTimeout(() => {
+                    focusDuplicateInput();
+                }, 30);
+            }
+        }
+        
+        function genPass(play) { if(play) playDing(); const len = parseInt(document.getElementById('length').value), l="abcdefghijklmnopqrstuvwxyz", u="ABCDEFGHIJKLMNOPQRSTUVWXYZ", n="0123456789", s="!@#$%^&*()_"; let c = l, m = []; if(document.getElementById('upper').checked) { c+=u; m.push(u[Math.floor(Math.random()*u.length)]); } if(document.getElementById('num').checked) { c+=n; m.push(n[Math.floor(Math.random()*n.length)]); } if(document.getElementById('sym').checked) { c+=s; m.push(s[Math.floor(Math.random()*s.length)]); } let p = m.join(''); for(let i=p.length; i<len; i++) p += c.charAt(Math.floor(Math.random()*c.length)); document.getElementById('passOutput').innerText = p.split('').sort(()=>0.5-Math.random()).join(''); }
+                const emailDomains = ['gmail.com','yahoo.com','outlook.com','hotmail.com','icloud.com','me.com','mac.com','live.com','msn.com','aol.com','proton.me','protonmail.com','zoho.com','zohomail.com','yandex.com','yandex.ru','gmx.com','gmx.us','mail.com','email.com','fastmail.com','hey.com'];
+        const emailNameData = {
+            bd: {
+                groups: [
+                    {
+                        maleFirst: ['rahim','fahim','tamim','naim','mahmud','shakib','rakib','sajid','nadim','adnan','rayhan','navid','ashiq','sabbir','siyam','asif','mahin','fardin','rahat','rifat','imran','nayeem','labib','rafi','farhan','tahmid'],
+                        femaleFirst: ['sadia','nusrat','maria','tabassum','farzana','tanjina','mim','jannat','samira','sumaiya','mehjabin','lamia','nafisa','tasnia','ishrat','arshi','maisha','tania'],
+                        lastNames: ['islam','rahman','ahmed','hossain','khan','chowdhury','talukdar','sarker','haque','sheikh','molla','bhuiyan','sikder','majumdar']
+                    },
+                    {
+                        maleFirst: ['sohan','anik','emon','shovon','aniket','soumya','arnab','sagnik','shubho','debjit','rajib','partho','anikesh'],
+                        femaleFirst: ['orthi','adrita','bristy','priya','puja','sneha','anannya','madhuri','riti','trisha','moumita','sraboni','payel','rupa','mou','madhumita','sanchita','shreya','pujita','ritu','shila'],
+                        lastNames: ['roy','das','saha','dutta','biswas','chakraborty','ghosh','mazumder','debnath','sutradhar','bhowmik','nath','barua','karmakar','pal','shikdar','mondal']
+                    }
+                ]
+            },
+            india: {
+                groups: [
+                    {
+                        maleFirst: ['aarav','vihaan','arjun','vivaan','aditya','krishna','rohan','rahul','om','ishaan','dev','anish','sourav','ritwik','manav','amit','raj','vikas','sanjay','abhishek','aniket','shivam','harsh','mohit','yash'],
+                        femaleFirst: ['ananya','navya','diya','riya','kiara','saanvi','aadhya','meera','kavya','priya','ishita','tanvi','pooja','neha','shruti','kriti','madhuri','sonam','payal','isha','rani','komal','simran','preeti','anushka','vidhi','naina'],
+                        lastNames: ['sharma','verma','gupta','singh','mehta','kapoor','iyer','nair','patel','joshi','desai','kulkarni','banerjee','chatterjee','mukherjee','das','thakur','malhotra','pandey','tiwari','tripathi','reddy','rao','pillai','menon','bhatt','purohit','sarkar','dey']
+                    },
+                    {
+                        maleFirst: ['kabir','farhan','rehan','ayaan','sameer','amir','faizan','arman','danish','zayan'],
+                        femaleFirst: ['aliya','sana','zoya','aisha','hina','maheen','saba','noor','mariam','anam'],
+                        lastNames: ['khan','ansari','siddiqui','ali','syed','shaikh','mirza','qureshi','farooqui','nadeem']
+                    }
+                ]
+            },
+            usa: {
+                maleFirst: ['liam','noah','ethan','mason','logan','jackson','lucas','elijah','henry','owen','carter','wyatt','james','asher','levi'],
+                femaleFirst: ['olivia','emma','amelia','ava','sophia','mia','isabella','charlotte','harper','evelyn','ella','scarlett','abigail','grace','nora'],
+                lastNames: ['smith','johnson','williams','brown','jones','garcia','miller','davis','wilson','moore','taylor','anderson','thomas','martin','lee','clark']
+            },
+            uk: {
+                maleFirst: ['oliver','george','arthur','leo','theo','freddie','jack','charlie','harry','archie','oscar','alfie'],
+                femaleFirst: ['olivia','amelia','isla','ava','ivy','freya','lily','mia','rosie','grace','evie','ella'],
+                lastNames: ['smith','jones','taylor','brown','williams','wilson','johnson','davies','patel','wright','walker','roberts','hall','green']
+            },
+            can: {
+                maleFirst: ['noah','liam','william','benjamin','theodore','jack','levi','hudson','emmett','nathan','logan','caleb'],
+                femaleFirst: ['charlotte','olivia','emma','amelia','sophia','mia','ava','chloe','ella','aria','hannah','zoe'],
+                lastNames: ['smith','brown','martin','roy','wilson','macdonald','gagnon','lee','thompson','clark','white','young','scott','campbell']
+            },
+            aus: {
+                maleFirst: ['oliver','noah','jack','henry','leo','charlie','theodore','lucas','thomas','archie','hudson','jude'],
+                femaleFirst: ['charlotte','olivia','amelia','isla','mia','ava','matilda','harper','grace','willow','ruby','lucy'],
+                lastNames: ['smith','jones','williams','brown','wilson','taylor','nguyen','martin','thompson','white','walker','harris','evans','hall']
+            },
+            pak: {
+                maleFirst: ['hamza','ali','ahsan','umer','bilal','saad','hassan','usman','talha','faisal','daniyal','zayan','arslan','junaid'],
+                femaleFirst: ['aiman','hooriya','iman','fatima','zoya','ayesha','maheen','sania','hira','laiba','noor','minal','saba','mahnoor'],
+                lastNames: ['khan','ahmed','raza','malik','sheikh','awan','mirza','baig','siddiqui','abbasi','chaudhry','butt','yousafzai','iqbal']
+            },
+            uae: {
+                maleFirst: ['omar','saeed','zayed','khalid','hamdan','rashid','abdullah','faisal','mohammed','tareq','salem','mansoor'],
+                femaleFirst: ['mariam','fatima','noora','alya','hessa','maitha','salma','amna','latifa','shaikha','noura','dana'],
+                lastNames: ['alnahyan','almansoori','almarri','alqasimi','alzaabi','alsuwaidi','alketbi','alameri','alshamsi','alhashmi','alnuaimi']
+            },
+            saudi: {
+                maleFirst: ['fahad','saud','turki','waleed','abdullah','salman','bandar','nawaf','majid','yasser','faisal','mohannad'],
+                femaleFirst: ['reem','lama','joud','noura','dalal','rania','hana','deema','jawahir','rand','amal','sara'],
+                lastNames: ['alotaibi','alharbi','alghamdi','alqahtani','alshehri','aldosari','almutairi','alshammari','alenezi','alzahrani','alqahtan']
+            },
+            malaysia: {
+                maleFirst: ['amir','hakim','danish','hafiz','irfan','akmal','syafiq','haikal','fitri','arman','izzat','faiz'],
+                femaleFirst: ['aisyah','siti','nurin','alya','farah','husna','sarah','nabila','sofea','amelia','balqis','iman'],
+                lastNames: ['rahman','hamid','aziz','ismail','hassan','yahya','fauzi','jalil','karim','nordin','rashid','latif']
+            },
+            singapore: {
+                maleFirst: ['ethan','joshua','ryan','darren','kai','edan','daniel','jeremy','marcus','adrian','aaron','nathan'],
+                femaleFirst: ['grace','chloe','hannah','joanne','megan','sherlyn','celine','rachel','nadia','alyssa','jasmine','vanessa'],
+                lastNames: ['tan','lim','lee','ng','koh','goh','teo','ong','chia','toh','low','neo','seah']
+            },
+            nepal: {
+                maleFirst: ['sabin','sagar','bikash','anish','roshan','aayush','prabin','sudeep','rabin','niraj','sanjog','suman'],
+                femaleFirst: ['priya','samjhana','sneha','asmita','sabina','anusha','riti','sarita','nisha','sushma','samina','kripa'],
+                lastNames: ['sharma','thapa','adhikari','karki','pun','ghimire','basnet','lama','maharjan','shrestha','gurung','rai','kc']
+            },
+            srilanka: {
+                maleFirst: ['kasun','nimal','dilan','charith','supun','lakshan','sandun','tharindu','amal','raveen','dinuka','ashen'],
+                femaleFirst: ['dinushi','ishara','maleesha','piumi','dilani','kavindi','amaya','nethmi','sewmini','udari','tharushi','sashini'],
+                lastNames: ['perera','fernando','silva','jayasinghe','gunawardena','senanayake','weerasinghe','karunaratne','wijesinghe','bandara','ranasinghe']
+            },
+            germany: {
+                maleFirst: ['lukas','felix','jonas','paul','ben','noah','leon','emil','finn','max','anton','nico'],
+                femaleFirst: ['emma','mia','hannah','sophia','emilia','lina','clara','lea','paula','lotte','anna','lara'],
+                lastNames: ['mueller','schmidt','schneider','fischer','weber','meyer','wagner','becker','hoffmann','schulz','koch','bauer']
+            }
+        };
+        function setEmailQty(value) { document.getElementById('eqty').value = value; }
+        function pickNonRepeating(list, lastValue) {
+            const pool = list.filter(item => item !== lastValue);
+            const source = pool.length ? pool : list;
+            return source[Math.floor(Math.random() * source.length)];
+        }
+        function slugifyEmailPart(value) {
+            return value.toLowerCase().replace(/[^a-z0-9]+/g, '.').replace(/\.+/g, '.').replace(/^\.|\.$/g, '');
+        }
+        function generateUniqueSerial(usedLocals, minimumLength) {
+            let serial = '';
+            let attempts = 0;
+            const safeLength = Math.max(2, Math.min(6, minimumLength));
+            const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+            do {
+                serial = '';
+                for (let i = 0; i < safeLength; i += 1) {
+                    serial += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                attempts += 1;
+            } while (usedLocals.has(serial) && attempts < 40);
+            usedLocals.add(serial);
+            return serial;
+        }
+        function buildEmailPool(countryKey, qty, domainSelection) {
+            const countryData = emailNameData[countryKey] || emailNameData.bd;
+            const results = [];
+            const usedEmails = new Set();
+            const usedLocals = new Set();
+            let lastFirst = '';
+            let lastLast = '';
+            let attempts = 0;
+            while (results.length < qty && attempts < qty * 80) {
+                attempts += 1;
+                const profile = countryData.groups ? countryData.groups[Math.floor(Math.random() * countryData.groups.length)] : countryData;
+                const firstSource = Math.random() < 0.5 ? profile.maleFirst : profile.femaleFirst;
+                const first = pickNonRepeating(firstSource, lastFirst);
+                const last = pickNonRepeating(profile.lastNames, lastLast);
+                const baseLocal = `${slugifyEmailPart(first)}.${slugifyEmailPart(last)}`;
+                const randomLength = Math.floor(Math.random() * 5) + 2;
+                const serial = generateUniqueSerial(usedLocals, randomLength);
+                const domain = domainSelection === 'random' ? emailDomains[Math.floor(Math.random() * emailDomains.length)] : domainSelection;
+                const email = `${baseLocal}${serial}@${domain}`;
+                if (usedEmails.has(email) || first === lastFirst || last === lastLast) continue;
+                usedEmails.add(email);
+                lastFirst = first;
+                lastLast = last;
+                results.push(email);
+            }
+            return results;
+        }
+        function generateEmails() {
+            const qty = Math.min(100, Math.max(1, parseInt(document.getElementById('eqty').value || '10', 10)));
+            const country = document.getElementById('ecountry').value;
+            const domSel = document.getElementById('edomain').value;
+            const container = document.getElementById('emailContainer');
+            container.innerHTML = '';
+            document.getElementById('eqty').value = qty;
+            const emails = buildEmailPool(country, qty, domSel);
+            emails.forEach(email => {
+                const div = document.createElement('div');
+                div.innerHTML = `<div class="email-card bg-white/5 px-3 py-2 rounded-xl flex justify-between items-center border border-white/5"><span class="text-green-400 font-mono text-[11px]">${email}</span><div onclick="copyAction('${email}', 'email', this)" class="copy-wrapper" style="width:26px;height:26px;background:transparent;"><div class="copy-circle"></div><svg class="copy-svg w-4 h-4 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg><svg class="check-svg w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div></div>`;
+                container.appendChild(div);
+            });
+        }
+        let excelEditor = null;
+        let excelWorkbookName = 'workbook.xlsx';
+        const excelStorageKey = 'bidhan_excel_workspace_v1';
+        const excelUiPrefsKey = 'bidhan_excel_ui_prefs_v1';
+        function applyExcelFontFamily(fontValue, silent = false) {
+            document.documentElement.style.setProperty('--excel-font-family', fontValue);
+            if (!silent) saveExcelUiPrefs();
+        }
+        function applyExcelFontSize(sizeValue, silent = false) {
+            document.documentElement.style.setProperty('--excel-font-size', sizeValue);
+            if (!silent) saveExcelUiPrefs();
+        }
+        function saveExcelUiPrefs() {
+            const payload = {
+                fontFamily: document.getElementById('excelFontFamily')?.value || "'Segoe UI', sans-serif",
+                fontSize: document.getElementById('excelFontSize')?.value || '13px'
+            };
+            localStorage.setItem(excelUiPrefsKey, JSON.stringify(payload));
+        }
+        function restoreExcelUiPrefs() {
+            const raw = localStorage.getItem(excelUiPrefsKey);
+            if (!raw) return;
+            try {
+                const parsed = JSON.parse(raw);
+                const fontEl = document.getElementById('excelFontFamily');
+                const sizeEl = document.getElementById('excelFontSize');
+                if (fontEl && parsed.fontFamily) {
+                    fontEl.value = parsed.fontFamily;
+                    applyExcelFontFamily(parsed.fontFamily, true);
+                }
+                if (sizeEl && parsed.fontSize) {
+                    sizeEl.value = parsed.fontSize;
+                    applyExcelFontSize(parsed.fontSize, true);
+                }
+            } catch (e) {}
+        }
+        function toggleExcelFullscreen() {
+            const excelSection = document.getElementById('tool-excel');
+            if (!excelSection) return;
+            excelSection.classList.toggle('excel-fullscreen');
+            setTimeout(() => {
+                window.dispatchEvent(new Event('resize'));
+            }, 80);
+        }
+        function createEmptySheetData(name = 'Sheet1') {
+            return {
+                name,
+                rows: {
+                    0: { cells: { 0: { text: '' } } }
+                }
+            };
+        }
+        function aoaToSheetData(aoa, name) {
+            const rows = {};
+            const safeAoa = (aoa && aoa.length ? aoa : [['']]);
+            safeAoa.forEach((row, ri) => {
+                const cells = {};
+                (row || []).forEach((cell, ci) => {
+                    cells[ci] = { text: cell == null ? '' : String(cell) };
+                });
+                rows[ri] = { cells };
+            });
+            return { name, rows };
+        }
+        function sheetDataToAoa(sheetData) {
+            const rowsObj = sheetData?.rows || {};
+            const rowIndexes = Object.keys(rowsObj).map(Number);
+            const maxRow = rowIndexes.length ? Math.max(...rowIndexes) : 0;
+            const aoa = [];
+            for (let ri = 0; ri <= maxRow; ri += 1) {
+                const row = rowsObj[ri];
+                const cells = row?.cells || {};
+                const cellIndexes = Object.keys(cells).map(Number);
+                const maxCol = cellIndexes.length ? Math.max(...cellIndexes) : 0;
+                const line = [];
+                for (let ci = 0; ci <= maxCol; ci += 1) {
+                    line[ci] = cells[ci]?.text ?? '';
+                }
+                aoa.push(line);
+            }
+            return aoa;
+        }
+        function updateExcelMeta() {
+            const meta = document.getElementById('excelSheetMeta');
+            if (!meta || !excelEditor || typeof excelEditor.getData !== 'function') return;
+            const data = excelEditor.getData() || [];
+            meta.innerText = data.map(sheet => sheet.name).join(' | ') || 'Sheet1';
+        }
+        function setExcelStatus(text) {
+            const status = document.getElementById('excelStatus');
+            if (status) status.innerText = text;
+        }
+        function createNewWorkbook() {
+            if (!excelEditor) return;
+            excelWorkbookName = 'workbook.xlsx';
+            excelEditor.loadData([createEmptySheetData('Sheet1')]);
+            setExcelStatus('New workbook ready');
+            updateExcelMeta();
+            saveExcelWorkspace(true);
+        }
+        function addExcelSheet() {
+            if (!excelEditor) return;
+            const existing = excelEditor.getData() || [];
+            const nextName = `Sheet${existing.length + 1}`;
+            excelEditor.loadData([...existing, createEmptySheetData(nextName)]);
+            setExcelStatus(`${nextName} added`);
+            updateExcelMeta();
+            saveExcelWorkspace(true);
+        }
+        function saveExcelWorkspace(silent = false) {
+            if (!excelEditor || typeof excelEditor.getData !== 'function') return;
+            const payload = {
+                name: excelWorkbookName,
+                sheets: excelEditor.getData() || []
+            };
+            localStorage.setItem(excelStorageKey, JSON.stringify(payload));
+            if (!silent) setExcelStatus('Workbook saved locally');
+        }
+        function restoreExcelWorkspace() {
+            if (!excelEditor) return;
+            const raw = localStorage.getItem(excelStorageKey);
+            if (!raw) {
+                setExcelStatus('No saved workbook found');
+                return;
+            }
+            try {
+                const parsed = JSON.parse(raw);
+                excelWorkbookName = parsed?.name || 'workbook.xlsx';
+                excelEditor.loadData(parsed?.sheets?.length ? parsed.sheets : [createEmptySheetData('Sheet1')]);
+                updateExcelMeta();
+                setExcelStatus('Saved workbook restored');
+            } catch (e) {
+                setExcelStatus('Saved workbook restore failed');
+            }
+        }
+        function buildWorkbookFromEditor() {
+            const wb = XLSX.utils.book_new();
+            const sheets = excelEditor?.getData?.() || [createEmptySheetData('Sheet1')];
+            sheets.forEach((sheet, idx) => {
+                const name = (sheet.name || `Sheet${idx + 1}`).slice(0, 31);
+                const ws = XLSX.utils.aoa_to_sheet(sheetDataToAoa(sheet));
+                XLSX.utils.book_append_sheet(wb, ws, name);
+            });
+            return wb;
+        }
+        function downloadWorkbook(type) {
+            if (!window.XLSX || !excelEditor) return;
+            const wb = buildWorkbookFromEditor();
+            if (type === 'csv') {
+                const firstSheetName = wb.SheetNames[0];
+                const csv = XLSX.utils.sheet_to_csv(wb.Sheets[firstSheetName]);
+                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = excelWorkbookName.replace(/\.[^.]+$/, '') + '.csv';
+                link.click();
+                URL.revokeObjectURL(link.href);
+                setExcelStatus('CSV downloaded');
+                return;
+            }
+            XLSX.writeFile(wb, excelWorkbookName.replace(/\.[^.]+$/, '') + '.xlsx');
+            setExcelStatus('XLSX downloaded');
+        }
+        function loadWorkbookFromFile(file) {
+            const reader = new FileReader();
+            reader.onload = event => {
+                try {
+                    const data = event.target.result;
+                    const wb = file.name.toLowerCase().endsWith('.csv')
+                        ? XLSX.read(data, { type: 'string' })
+                        : XLSX.read(data, { type: 'array' });
+                    const sheets = wb.SheetNames.map(name => {
+                        const aoa = XLSX.utils.sheet_to_json(wb.Sheets[name], { header: 1, blankrows: true });
+                        return aoaToSheetData(aoa, name);
+                    });
+                    excelEditor.loadData(sheets.length ? sheets : [createEmptySheetData('Sheet1')]);
+                    excelWorkbookName = file.name || 'workbook.xlsx';
+                    setExcelStatus(`${excelWorkbookName} loaded`);
+                    updateExcelMeta();
+                    saveExcelWorkspace(true);
+                } catch (e) {
+                    setExcelStatus('File load failed');
+                }
+            };
+            if (file.name.toLowerCase().endsWith('.csv')) reader.readAsText(file);
+            else reader.readAsArrayBuffer(file);
+        }
+        function initExcelEditor() {
+            if (!window.x_spreadsheet || !window.XLSX) {
+                setExcelStatus('Excel editor library failed to load');
+                return;
+            }
+            restoreExcelUiPrefs();
+            excelEditor = x_spreadsheet('#excelEditorHost', {
+                mode: 'edit',
+                showToolbar: true,
+                showGrid: true,
+                showContextmenu: true,
+                view: {
+                    height: () => document.getElementById('excelEditorHost').clientHeight,
+                    width: () => document.getElementById('excelEditorHost').clientWidth
+                }
+            });
+            excelEditor.loadData([createEmptySheetData('Sheet1')]);
+            excelEditor.change(() => {
+                updateExcelMeta();
+                setExcelStatus('Editing workbook');
+                saveExcelWorkspace(true);
+            });
+            const fileInput = document.getElementById('excelFileInput');
+            fileInput.addEventListener('change', event => {
+                const file = event.target.files && event.target.files[0];
+                if (file) loadWorkbookFromFile(file);
+                event.target.value = '';
+            });
+            restoreExcelWorkspace();
+            updateExcelMeta();
+        }
+        const currencyPriority = ['USDT', 'BDT', 'INR', 'PKR'];
+        const currencyDisplay = typeof Intl.DisplayNames === 'function' ? new Intl.DisplayNames(['en'], { type: 'currency' }) : null;
+        const fallbackCurrencies = ['USD','EUR','GBP','JPY','AUD','CAD','CHF','CNY','HKD','SGD','NZD','SEK','NOK','DKK','RUB','UAH','PLN','CZK','HUF','RON','BGN','HRK','RSD','TRY','AED','SAR','QAR','KWD','BHD','OMR','JOD','ILS','EGP','ZAR','NGN','KES','GHS','MAD','TND','DZD','ETB','UGX','TZS','XOF','XAF','BWP','MUR','LKR','NPR','BTN','MMK','THB','VND','KHR','LAK','MYR','IDR','PHP','KRW','TWD','MOP','BND','MVR','MXN','BRL','ARS','CLP','COP','PEN','UYU','BOB','PYG','CRC','GTQ','HNL','NIO','PAB','DOP','JMD','TTD','BBD','BSD','BZD','FJD','PGK','WST','TOP','SBD','ISK','ALL','MKD','MDL','GEL','AMD','AZN','KZT','UZS','KGS','TJS','MNT','AFN','IRR','IQD','LBP','SYP','YER','BDT','INR','PKR'];
+        let currencyCatalog = [];
+        let currencyPollTimer = null;
+        function getCurrencyName(code) {
+            if (code === 'USDT') return 'Tether USD';
+            try {
+                return currencyDisplay ? currencyDisplay.of(code) || code : code;
+            } catch (e) {
+                return code;
+            }
+        }
+        function buildCurrencyCatalog() {
+            const supported = typeof Intl.supportedValuesOf === 'function' ? Intl.supportedValuesOf('currency').map(code => code.toUpperCase()) : fallbackCurrencies;
+            const unique = Array.from(new Set([...currencyPriority, ...supported]));
+            const rest = unique.filter(code => !currencyPriority.includes(code)).sort((a, b) => a.localeCompare(b));
+            currencyCatalog = [...currencyPriority, ...rest].map(code => ({ code, label: `${code} - ${getCurrencyName(code)}` }));
+        }
+        function renderCurrencyOptions() {
+            const fromCode = parseCurrencyValue('from');
+            const toCode = parseCurrencyValue('to');
+            const fromList = document.getElementById('currencyOptionsFrom');
+            const toList = document.getElementById('currencyOptionsTo');
+            fromList.innerHTML = currencyCatalog
+                .filter(item => item.code !== toCode)
+                .map(item => `<option value="${item.code}"></option><option value="${item.label}"></option>`)
+                .join('');
+            toList.innerHTML = currencyCatalog
+                .filter(item => item.code !== fromCode)
+                .map(item => `<option value="${item.code}"></option><option value="${item.label}"></option>`)
+                .join('');
+        }
+        function stopCurrencyPolling() {
+            if (currencyPollTimer) {
+                clearInterval(currencyPollTimer);
+                currencyPollTimer = null;
+            }
+        }
+        function startCurrencyPolling() {
+            stopCurrencyPolling();
+            currencyPollTimer = setInterval(() => {
+                convertCurrency(true);
+            }, 8000);
+        }
+        async function fetchWithTimeout(url, options = {}, timeoutMs = 1400) {
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), timeoutMs);
+            try {
+                return await fetch(url, { ...options, signal: controller.signal });
+            } finally {
+                clearTimeout(timer);
+            }
+        }
+        async function fetchBinanceP2PPrice(fiat, tradeType) {
+            const response = await fetchWithTimeout('https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    page: 1,
+                    rows: 5,
+                    payTypes: [],
+                    countries: [],
+                    publisherType: null,
+                    asset: 'USDT',
+                    fiat,
+                    tradeType
+                })
+            }, 1400);
+            if (!response.ok) throw new Error(`p2p-miss:${fiat}:${tradeType}`);
+            const data = await response.json();
+            const ads = Array.isArray(data?.data) ? data.data : [];
+            const prices = ads.map(item => parseFloat(item?.adv?.price)).filter(value => Number.isFinite(value) && value > 0);
+            if (!prices.length) throw new Error(`p2p-empty:${fiat}:${tradeType}`);
+            const avg = prices.slice(0, 3).reduce((sum, value) => sum + value, 0) / Math.min(prices.length, 3);
+            return avg;
+        }
+        async function fetchBinanceP2PMidPrice(fiat) {
+            const [buyPrice, sellPrice] = await Promise.all([
+                fetchBinanceP2PPrice(fiat, 'BUY'),
+                fetchBinanceP2PPrice(fiat, 'SELL')
+            ]);
+            return (buyPrice + sellPrice) / 2;
+        }
+        async function fetchInternationalRate(from, to) {
+            const base = from === 'USDT' ? 'USD' : from;
+            const quote = to === 'USDT' ? 'USD' : to;
+            if (base === quote) return 1;
+            const response = await fetchWithTimeout(`https://api.frankfurter.app/latest?from=${encodeURIComponent(base)}&to=${encodeURIComponent(quote)}`, {}, 1800);
+            if (!response.ok) throw new Error(`fx-miss:${base}:${quote}`);
+            const data = await response.json();
+            const rate = data?.rates?.[quote];
+            if (!Number.isFinite(rate)) throw new Error(`fx-bad:${base}:${quote}`);
+            return rate;
+        }
+        async function getPreferredBdtRate() {
+            const customBdtRate = getCustomBdtRate();
+            if (customBdtRate) {
+                return { rate: customBdtRate, note: 'Custom BDT rate applied' };
+            }
+            try {
+                const p2pRate = await fetchBinanceP2PMidPrice('BDT');
+                return { rate: p2pRate, note: 'Binance P2P live: BDT/USDT' };
+            } catch (e) {
+                const fxRate = await fetchInternationalRate('USD', 'BDT');
+                return { rate: fxRate, note: 'Worldwide FX fallback: USD/BDT' };
+            }
+        }
+        function renderCurrencyOutput(amount, from, to, rate, note) {
+            const resultEl = document.getElementById('currencyResult');
+            const metaEl = document.getElementById('currencyMeta');
+            const outputEl = document.getElementById('currencyOutputAmount');
+            const converted = amount * rate;
+            if (outputEl) outputEl.value = converted.toFixed(4);
+            resultEl.innerText = `${amount.toFixed(2)} ${from} = ${converted.toFixed(4)} ${to}`;
+            metaEl.innerText = note;
+        }
+        function parseCurrencyValue(mode) {
+            const input = document.getElementById(mode === 'from' ? 'currencyFrom' : 'currencyTo');
+            const raw = (input.value || '').trim().toUpperCase();
+            if (!raw) return mode === 'from' ? 'USDT' : 'BDT';
+            const code = raw.split(' - ')[0].trim();
+            return code === 'USD' ? 'USDT' : code;
+        }
+        function syncCurrencyField(mode) {
+            const input = document.getElementById(mode === 'from' ? 'currencyFrom' : 'currencyTo');
+            const code = parseCurrencyValue(mode);
+            const item = currencyCatalog.find(entry => entry.code === code);
+            if (item) input.value = item.code;
+        }
+        function handleCurrencyInput(mode) {
+            const currentCode = parseCurrencyValue(mode);
+            const otherMode = mode === 'from' ? 'to' : 'from';
+            const otherCode = parseCurrencyValue(otherMode);
+            const input = document.getElementById(mode === 'from' ? 'currencyFrom' : 'currencyTo');
+            const valid = currencyCatalog.some(entry => entry.code === currentCode);
+            if (!valid) {
+                renderCurrencyOptions();
+                return;
+            }
+            if (currentCode === otherCode) {
+                const fallback = currencyCatalog.find(entry => entry.code !== currentCode);
+                if (fallback) {
+                    const otherInput = document.getElementById(otherMode === 'from' ? 'currencyFrom' : 'currencyTo');
+                    otherInput.value = fallback.code;
+                }
+            }
+            syncCurrencyField(mode);
+            syncCurrencyField(otherMode);
+            renderCurrencyOptions();
+            convertCurrency(true);
+        }
+        function getCustomBdtRate() {
+            const enabled = document.getElementById('useCustomBdtRate')?.checked;
+            const rate = parseFloat(document.getElementById('customBdtRate')?.value || '0');
+            if (!enabled || !Number.isFinite(rate) || rate <= 0) return null;
+            return rate;
+        }
+        async function convertCurrency(silent = false) {
+            const amount = parseFloat(document.getElementById('currencyAmount').value || '1');
+            const from = parseCurrencyValue('from');
+            const to = parseCurrencyValue('to');
+            const resultEl = document.getElementById('currencyResult');
+            const metaEl = document.getElementById('currencyMeta');
+            const outputEl = document.getElementById('currencyOutputAmount');
+            if (!amount || amount <= 0) {
+                resultEl.innerText = 'Enter a valid amount';
+                metaEl.innerText = 'Use a number greater than zero.';
+                if (outputEl) outputEl.value = '0.00';
+                return;
+            }
+            if (from === to) {
+                renderCurrencyOutput(amount, from, to, 1, 'Same asset selected.');
+                return;
+            }
+            if (!silent) {
+                resultEl.innerText = 'Loading Binance P2P rate...';
+                metaEl.innerText = 'Checking Binance P2P market...';
+            }
+            try {
+                let rate;
+                let note;
+                if (from === 'USDT' && to === 'BDT') {
+                    const bdtSource = await getPreferredBdtRate();
+                    rate = bdtSource.rate;
+                    note = bdtSource.note;
+                } else if (from === 'BDT' && to === 'USDT') {
+                    const bdtSource = await getPreferredBdtRate();
+                    rate = 1 / bdtSource.rate;
+                    note = bdtSource.note;
+                } else if (from === 'BDT') {
+                    const [bdtSource, usdToTarget] = await Promise.all([
+                        getPreferredBdtRate(),
+                        fetchInternationalRate('USD', to)
+                    ]);
+                    rate = (1 / bdtSource.rate) * usdToTarget;
+                    note = `${bdtSource.note} + international FX`;
+                } else if (to === 'BDT') {
+                    const [sourceToUsd, bdtSource] = await Promise.all([
+                        fetchInternationalRate(from, 'USD'),
+                        getPreferredBdtRate()
+                    ]);
+                    rate = sourceToUsd * bdtSource.rate;
+                    note = `International FX + ${bdtSource.note}`;
+                } else {
+                    rate = await fetchInternationalRate(from, to);
+                    note = 'International live FX rate';
+                }
+                if (!Number.isFinite(rate) || rate <= 0) throw new Error('bad-p2p-rate');
+                renderCurrencyOutput(amount, from, to, rate, note);
+                startCurrencyPolling();
+            } catch (e) {
+                stopCurrencyPolling();
+                resultEl.innerText = 'Currency rate unavailable';
+                metaEl.innerText = 'P2P and worldwide FX both failed right now.';
+                if (outputEl) outputEl.value = '0.00';
+            }
+        }
+        function swapCurrencies() {
+            const from = document.getElementById('currencyFrom');
+            const to = document.getElementById('currencyTo');
+            const fromValue = from.value;
+            from.value = to.value;
+            to.value = fromValue;
+            renderCurrencyOptions();
+            convertCurrency();
+        }
+        function initCurrencies() {
+            buildCurrencyCatalog();
+            document.getElementById('currencyFrom').value = 'USDT';
+            document.getElementById('currencyTo').value = 'BDT';
+            renderCurrencyOptions();
+            document.getElementById('currencyAmount').addEventListener('input', () => convertCurrency(true));
+            convertCurrency();
+        }
+        const fakeAddressData = {
+            global: { country: 'Global Mix', states: ['Central Region','Metro Region','North Region','South Region'], cities: ['Sample City','Demo Point','Fiction Bay','Mock Harbor'], streets: ['Fiction Row','Demo Avenue','Sample Lane','Prototype Street'], zips: ['1000','2100','3300','4400'], lat: [12, 48], lon: [-96, 104] },
+            bd: { country: 'Bangladesh', states: ['Dhaka','Chattogram','Sylhet','Khulna'], cities: ['Dhaka Demo','Chattogram Bay','Sylhet Point','Khulna Park'], streets: ['Lake View Road','Model Town Lane','Metro Link','Garden Street'], zips: ['1207','4000','3100','9000'], lat: [20.7, 26.6], lon: [88.0, 92.7] },
+            india: { country: 'India', states: ['Maharashtra','Delhi','West Bengal','Karnataka'], cities: ['Mumbai Heights','Delhi Vista','Kolkata Park','Bengaluru Point'], streets: ['Lotus Avenue','Station Road','Palm Street','Silver Lane'], zips: ['400001','110001','700001','560001'], lat: [8.0, 34.0], lon: [68.0, 97.0] },
+            usa: { country: 'United States', states: ['California','Texas','Florida','Mississippi'], cities: ['Sunset Ridge','Delta View','Pine Harbor','Canyon Point'], streets: ['Westline Drive','Harbor Street','Juniper Court','Summit Avenue'], zips: ['90210','73301','33101','39208'], lat: [25.0, 48.8], lon: [-124.5, -66.9] },
+            uk: { country: 'United Kingdom', states: ['England','Scotland','Wales','Northern Ireland'], cities: ['Riverford','Oakbridge','Silver Heath','Northfield'], streets: ['Bridge Street','Maple Court','Kingfisher Lane','Station Rise'], zips: ['SW1A 1AA','EH1 1YZ','CF10 1AA','BT1 5GS'], lat: [50.0, 58.7], lon: [-8.2, 1.8] },
+            can: { country: 'Canada', states: ['Ontario','Quebec','British Columbia','Alberta'], cities: ['Aurora Bay','Maple Point','North Creek','Lakeside'], streets: ['Cedar Avenue','Harbor Line','Willow Road','Forest Court'], zips: ['M5H 2N2','H2Y 1C6','V6B 1A1','T5J 0N3'], lat: [42.0, 62.0], lon: [-140.0, -52.0] },
+            aus: { country: 'Australia', states: ['New South Wales','Victoria','Queensland','Western Australia'], cities: ['Coral View','Harbor Glen','Sunridge','Blue Coast'], streets: ['Banksia Street','Ocean Road','Eucalypt Lane','Sunset Drive'], zips: ['2000','3000','4000','6000'], lat: [-43.7, -10.0], lon: [113.0, 153.6] },
+            pak: { country: 'Pakistan', states: ['Punjab','Sindh','Khyber Pakhtunkhwa','Balochistan'], cities: ['Karachi Heights','Lahore View','Islamabad Park','Multan Point'], streets: ['Garden Road','Canal Street','Model Avenue','City Walk'], zips: ['54000','74200','44000','60000'], lat: [23.5, 37.1], lon: [60.8, 77.8] },
+            uae: { country: 'United Arab Emirates', states: ['Dubai','Abu Dhabi','Sharjah','Ajman'], cities: ['Dubai Vista','Abu Dhabi Point','Sharjah Gate','Marina Bay'], streets: ['Palm Crescent','Skyline Drive','Harbor Walk','Oasis Avenue'], zips: ['00000','11111','22222','33333'], lat: [22.6, 26.1], lon: [51.5, 56.5] },
+            saudi: { country: 'Saudi Arabia', states: ['Riyadh','Makkah','Eastern Province','Madinah'], cities: ['Riyadh Gate','Jeddah Bay','Dammam View','Medina Park'], streets: ['Desert Road','Pearl Avenue','Central Walk','Palm Street'], zips: ['11564','21577','31411','42311'], lat: [16.0, 32.2], lon: [34.5, 55.7] },
+            malaysia: { country: 'Malaysia', states: ['Kuala Lumpur','Selangor','Penang','Johor'], cities: ['Kuala Vista','Penang Bay','Johor Point','Metro Garden'], streets: ['Lagoon Drive','Cedar Walk','Palm Avenue','Market Street'], zips: ['50000','40000','10000','80000'], lat: [1.0, 7.4], lon: [99.6, 119.3] },
+            singapore: { country: 'Singapore', states: ['Central Region','North East','North West','East Region'], cities: ['Marina View','Harbor Point','City Garden','Bayfront'], streets: ['Orchid Street','Civic Lane','Skyline Walk','River Road'], zips: ['018956','038983','048623','049145'], lat: [1.2, 1.5], lon: [103.6, 104.1] },
+            nepal: { country: 'Nepal', states: ['Bagmati','Gandaki','Lumbini','Koshi'], cities: ['Kathmandu Heights','Pokhara Bay','Lalitpur Point','Hillside'], streets: ['Temple Road','Valley Lane','Summit Street','Garden Walk'], zips: ['44600','33700','44700','00977'], lat: [26.3, 30.5], lon: [80.0, 88.2] },
+            srilanka: { country: 'Sri Lanka', states: ['Western Province','Central Province','Southern Province','Northern Province'], cities: ['Colombo Bay','Kandy Point','Galle View','Lagoon Park'], streets: ['Palm Road','Harbor Lane','Temple Street','Coast Avenue'], zips: ['00100','20000','80000','40000'], lat: [5.9, 9.9], lon: [79.5, 81.9] },
+            germany: { country: 'Germany', states: ['Berlin','Bavaria','Hamburg','Hesse'], cities: ['Berlin Park','Munich Point','Hamburg View','River Markt'], streets: ['Linden Street','Stone Way','Central Platz','Forest Road'], zips: ['10115','80331','20095','60311'], lat: [47.2, 55.1], lon: [5.8, 15.1] }
+        };
+        function pickFrom(list) { return list[Math.floor(Math.random() * list.length)]; }
+        function randomCoord(min, max) { return (Math.random() * (max - min) + min).toFixed(6); }
+        function generateFakeDetails() {
+            const region = document.getElementById('fregion').value;
+            const gender = document.getElementById('fgender').value;
+            const countryData = region === 'global' ? pickFrom([emailNameData.bd, emailNameData.india, emailNameData.usa, emailNameData.uk, emailNameData.can, emailNameData.aus, emailNameData.pak, emailNameData.uae, emailNameData.saudi, emailNameData.malaysia, emailNameData.singapore, emailNameData.nepal, emailNameData.srilanka, emailNameData.germany]) : (emailNameData[region] || emailNameData.usa);
+            const profileData = countryData.groups ? pickFrom(countryData.groups) : countryData;
+            const firstSource = gender === 'female' ? profileData.femaleFirst : profileData.maleFirst;
+            const first = pickFrom(firstSource);
+            const last = pickFrom(profileData.lastNames);
+            const addressPool = region === 'global' ? fakeAddressData.global : (fakeAddressData[region] || fakeAddressData.global);
+            const city = pickFrom(addressPool.cities);
+            const street = `${Math.floor(Math.random() * 900) + 100} ${pickFrom(addressPool.streets)}`;
+            const state = pickFrom(addressPool.states);
+            const zip = pickFrom(addressPool.zips);
+            const country = addressPool.country;
+            const latitude = randomCoord(addressPool.lat[0], addressPool.lat[1]);
+            const longitude = randomCoord(addressPool.lon[0], addressPool.lon[1]);
+            const serial = Math.floor(Math.random() * 9000) + 1000;
+            const name = `${first.charAt(0).toUpperCase()}${first.slice(1)} ${last.charAt(0).toUpperCase()}${last.slice(1)}`;
+            const phone = `+999 ${Math.floor(Math.random() * 900 + 100)} ${Math.floor(Math.random() * 900 + 100)} ${Math.floor(Math.random() * 9000 + 1000)}`;
+            document.getElementById('fakeName').innerText = name;
+            document.getElementById('fakeRole').innerText = gender;
+            document.getElementById('fakeStreet').innerText = street;
+            document.getElementById('fakeCity').innerText = city;
+            document.getElementById('fakeState').innerText = state;
+            document.getElementById('fakeZip').innerText = zip;
+            document.getElementById('fakePhone').innerText = phone;
+            document.getElementById('fakeCountry').innerText = country;
+            document.getElementById('fakeLat').innerText = latitude;
+            document.getElementById('fakeLon').innerText = longitude;
+        }
+        async function copyFakeBundle(btn) {
+            const bundle = [
+                `Name: ${document.getElementById('fakeName').innerText}`,
+                `Gender: ${document.getElementById('fakeRole').innerText}`,
+                `Street: ${document.getElementById('fakeStreet').innerText}`,
+                `City/Town: ${document.getElementById('fakeCity').innerText}`,
+                `State/Province/Region: ${document.getElementById('fakeState').innerText}`,
+                `Zip/Postal Code: ${document.getElementById('fakeZip').innerText}`,
+                `Phone Number: ${document.getElementById('fakePhone').innerText}`,
+                `Country: ${document.getElementById('fakeCountry').innerText}`,
+                `Latitude: ${document.getElementById('fakeLat').innerText}`,
+                `Longitude: ${document.getElementById('fakeLon').innerText}`
+            ].join('\n');
+            await copyAction(bundle, 'fake', btn);
+        }
+        function savePassEntry(value) {
+            if (!value) return;
+            hPass = hPass.filter(item => item.value !== value);
+            hPass.unshift({ value, ts: Date.now() });
+            hPass = hPass.slice(0, 5);
+            localStorage.setItem('bidhan_pass_v25', JSON.stringify(hPass));
+            renderPassHistory();
+        }
+        function save2faKeyAfterCopy() {
+            const key = (document.getElementById('otpSecretField')?.value || '').trim();
+            if (!key || key.length < 5) return;
+            h2fa = h2fa.filter(item => item.value !== key);
+            h2fa.unshift({ value: key, ts: Date.now() });
+            h2fa = h2fa.slice(0, 5);
+            localStorage.setItem('bidhan_2fa_v25', JSON.stringify(h2fa));
+            render2fa();
+        }
+        function timeAgoLabel(ts) {
+            const diffMs = Math.max(0, Date.now() - (Number(ts) || Date.now()));
+            const secs = Math.floor(diffMs / 1000);
+            if (secs < 60) return `${Math.max(1, secs)} sec ago`;
+            const mins = Math.floor(diffMs / 60000);
+            if (mins === 1) return '1 min ago';
+            if (mins < 60) return `${mins} min ago`;
+            const hours = Math.floor(mins / 60);
+            if (hours === 1) return '1 hour ago';
+            if (hours < 24) return `${hours} hours ago`;
+            const days = Math.floor(hours / 24);
+            if (days === 1) return '1 day ago';
+            return `${days} days ago`;
+        }
+        function renderHistoryList(items, title = 'Copy History') {
+            if (!items.length) return '';
+            return `<p class="text-[10px] font-bold tracking-[0.02em] uppercase mb-1">${title}</p>` + items.slice(0, 5).map((item) => `<div class="inline-history-item"><span title="${item.value.replace(/"/g, '&quot;')}">${item.value}</span><small class="inline-history-time">${timeAgoLabel(item.ts)}</small></div>`).join('');
+        }
+        async function copyAction(txt, type, btn) {
+            if (!txt || txt === "------" || txt === "Ready..." ) return;
+            try {
+                await writeClipboardText(txt);
+                playDing();
+                if (btn && btn.classList) btn.classList.add('copied');
+                if (type === 'email') {
+                    const card = btn && typeof btn.closest === 'function' ? btn.closest('.email-card') : null;
+                    if (card) card.classList.add('used');
+                }
+                setTimeout(() => {
+                    if (btn && btn.classList) btn.classList.remove('copied');
+                }, 1500);
+                if (type === 'pass') {
+                    savePassEntry(txt);
+                    genPass(false);
+                }
+                if (type === 'otp') save2faKeyAfterCopy();
+            } catch (e) {
+                console.error('Copy failed:', e);
+            }
+        }
+        function render2fa() {
+            const el = document.getElementById('otpHistoryList');
+            if (!el) return;
+            const html = renderHistoryList(h2fa, 'Copy History');
+            el.innerHTML = html;
+            el.classList.toggle('hidden-tool', !h2fa.length);
+        }
+        function renderPassHistory() {
+            const el = document.getElementById('h-list-pass');
+            if (!el) return;
+            const html = renderHistoryList(hPass, 'Copy History');
+            el.innerHTML = html;
+            el.classList.toggle('hidden-tool', !hPass.length);
+        }
+        function extractDuplicateFirstColumn(line) {
+            const raw = String(line || '').replace(/\r/g, '').trim();
+            if (!raw) return '';
+            let firstColumn = raw;
+            if (firstColumn.includes('\t')) firstColumn = firstColumn.split('\t')[0];
+            else if (firstColumn.includes(',')) firstColumn = firstColumn.split(',')[0];
+            firstColumn = firstColumn.trim();
+            const emailMatch = firstColumn.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i);
+            if (emailMatch) return emailMatch[0].trim();
+            return firstColumn.split(/\s+/)[0].trim();
+        }
+        function processDuplicateChecker() {
+            const inputEl = document.getElementById('duplicateInput');
+            const resultEl = document.getElementById('duplicateResult');
+            const uniqueEl = document.getElementById('duplicateUnique');
+            const copyBtn = document.getElementById('duplicateCopyBtn');
+            const uniqueCopyBtn = document.getElementById('duplicateUniqueCopyBtn');
+            const txtBtn = document.getElementById('duplicateTxtBtn');
+            const excelBtn = document.getElementById('duplicateExcelBtn');
+            const uniqueTxtBtn = document.getElementById('duplicateUniqueTxtBtn');
+            const uniqueExcelBtn = document.getElementById('duplicateUniqueExcelBtn');
+            const totalEl = document.getElementById('duplicateInputCount');
+            const dupCountEl = document.getElementById('duplicateMatchCount');
+            const uniqueCountEl = document.getElementById('duplicateUniqueCount');
+            if (!inputEl || !resultEl || !uniqueEl) return;
+            const lines = String(inputEl.value || '').split(/\n/);
+            const order = [];
+            const counts = new Map();
+            const lineGroups = new Map();
+            let totalItems = 0;
+            lines.forEach((line) => {
+                const email = extractDuplicateFirstColumn(line);
+                if (!email) return;
+                const originalLine = String(line || '').replace(/\r/g, '').trim();
+                const cleanEmail = email.trim();
+                if (!cleanEmail) return;
+                totalItems += 1;
+                const key = cleanEmail.toLowerCase();
+                if (!counts.has(key)) {
+                    counts.set(key, 0);
+                    lineGroups.set(key, []);
+                    order.push(key);
+                }
+                counts.set(key, counts.get(key) + 1);
+                lineGroups.get(key).push(originalLine);
+            });
+            const duplicateLines = [];
+            const uniqueLines = [];
+            order.forEach((key) => {
+                const rows = lineGroups.get(key) || [];
+                if (rows[0]) {
+                    uniqueLines.push(rows[0]);
+                }
+                if (rows.length > 1) {
+                    rows.slice(1).forEach((row) => duplicateLines.push(row));
+                }
+            });
+            resultEl.value = duplicateLines.join('\n');
+            uniqueEl.value = uniqueLines.join('\n');
+            copyBtn.disabled = duplicateLines.length === 0;
+            uniqueCopyBtn.disabled = uniqueLines.length === 0;
+            if (txtBtn) txtBtn.disabled = duplicateLines.length === 0;
+            if (excelBtn) excelBtn.disabled = duplicateLines.length === 0;
+            if (uniqueTxtBtn) uniqueTxtBtn.disabled = uniqueLines.length === 0;
+            if (uniqueExcelBtn) uniqueExcelBtn.disabled = uniqueLines.length === 0;
+            if (totalEl) totalEl.textContent = `Emails: ${totalItems}`;
+            if (dupCountEl) dupCountEl.textContent = `Duplicate: ${duplicateLines.length}`;
+            if (uniqueCountEl) uniqueCountEl.textContent = `Unique: ${uniqueLines.length}`;
+        }
+        function copyDuplicateResult() {
+            const el = document.getElementById('duplicateResult');
+            const btn = document.getElementById('duplicateCopyBtn');
+            if (!el || !el.value.trim()) return;
+            copyAction(el.value, 'duplicate', btn);
+        }
+        function copyDuplicateUnique() {
+            const el = document.getElementById('duplicateUnique');
+            const btn = document.getElementById('duplicateUniqueCopyBtn');
+            if (!el || !el.value.trim()) return;
+            copyAction(el.value, 'duplicate-unique', btn);
+        }
+        function copyPassFromPanel() {
+            const txt = document.getElementById('passOutput')?.innerText || '';
+            const btn = document.getElementById('passCopyBtn');
+            if (!txt || txt === 'Ready...') return;
+            copyAction(txt, 'pass', btn);
+        }
+        function copy2faFromPanel() {
+            const txt = document.getElementById('otpBox')?.innerText || '';
+            const btn = document.getElementById('otpCopyBtn');
+            if (!txt || txt === '------') return;
+            copyAction(txt, 'otp', btn);
+        }
+        function focusDuplicateInput() {
+            const inputEl = document.getElementById('duplicateInput');
+            if (!inputEl) return;
+            inputEl.focus();
+            const len = inputEl.value.length;
+            if (typeof inputEl.setSelectionRange === 'function') {
+                inputEl.setSelectionRange(len, len);
+            }
+        }
+        function clearDuplicateChecker() {
+            const inputEl = document.getElementById('duplicateInput');
+            if (inputEl) inputEl.value = '';
+            processDuplicateChecker();
+            focusDuplicateInput();
+        }
+        function downloadDuplicateBlob(filename, content, mime) {
+            if (!content) return;
+            const blob = new Blob([content], { type: mime });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+        }
+        function downloadDuplicateTxt() {
+            const value = document.getElementById('duplicateResult')?.value.trim();
+            if (!value) return;
+            const count = value.split('\n').filter(Boolean).length;
+            downloadDuplicateBlob(`${count}pcs duplicate.txt`, value, 'text/plain;charset=utf-8');
+        }
+        function downloadUniqueTxt() {
+            const value = document.getElementById('duplicateUnique')?.value.trim();
+            if (!value) return;
+            const count = value.split('\n').filter(Boolean).length;
+            downloadDuplicateBlob(`${count}pcs unique.txt`, value, 'text/plain;charset=utf-8');
+        }
+        function exportDuplicateExcel(lines, filename) {
+            if (!Array.isArray(lines) || !lines.length || !window.XLSX) return;
+            const matrix = lines.map((line) => String(line).split('\t'));
+            const ws = XLSX.utils.aoa_to_sheet(matrix);
+            const colCount = Math.max(...matrix.map((row) => row.length), 1);
+            ws['!cols'] = Array.from({ length: colCount }, (_, index) => {
+                const maxLen = Math.max(...matrix.map((row) => String(row[index] || '').length), 4);
+                return { wch: maxLen + 3 };
+            });
+            const footerRowIndex = matrix.length + 5;
+            const footerCell = XLSX.utils.encode_cell({ r: footerRowIndex, c: 0 });
+            ws[footerCell] = { t: 's', v: 'duplicate checked from Multi-Tool Pro' };
+            const currentRange = XLSX.utils.decode_range(ws['!ref']);
+            currentRange.e.r = Math.max(currentRange.e.r, footerRowIndex);
+            ws['!ref'] = XLSX.utils.encode_range(currentRange);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+            XLSX.writeFile(wb, filename);
+        }
+        function downloadDuplicateExcel() {
+            const value = document.getElementById('duplicateResult')?.value.trim();
+            if (!value) return;
+            const lines = value.split('\n').filter(Boolean);
+            exportDuplicateExcel(lines, `${lines.length}pcs duplicate.xlsx`);
+        }
+        function downloadUniqueExcel() {
+            const value = document.getElementById('duplicateUnique')?.value.trim();
+            if (!value) return;
+            const lines = value.split('\n').filter(Boolean);
+            exportDuplicateExcel(lines, `${lines.length}pcs unique.xlsx`);
+        }
+        function initDuplicateChecker() {
+            const inputEl = document.getElementById('duplicateInput');
+            if (!inputEl || inputEl.dataset.bound === '1') return;
+            inputEl.dataset.bound = '1';
+            inputEl.addEventListener('input', processDuplicateChecker);
+            inputEl.addEventListener('keydown', (event) => {
+                event.stopPropagation();
+            });
+            inputEl.addEventListener('pointerdown', (event) => event.stopPropagation());
+            inputEl.addEventListener('mousedown', (event) => event.stopPropagation());
+            inputEl.addEventListener('click', () => focusDuplicateInput());
+            inputEl.addEventListener('paste', (event) => {
+                const pasted = event.clipboardData?.getData('text');
+                if (typeof pasted === 'string') {
+                    event.preventDefault();
+                    const start = inputEl.selectionStart ?? inputEl.value.length;
+                    const end = inputEl.selectionEnd ?? inputEl.value.length;
+                    inputEl.value = `${inputEl.value.slice(0, start)}${pasted}${inputEl.value.slice(end)}`;
+                    const nextPos = start + pasted.length;
+                    if (typeof inputEl.setSelectionRange === 'function') {
+                        inputEl.setSelectionRange(nextPos, nextPos);
+                    }
+                    processDuplicateChecker();
+                    return;
+                }
+                setTimeout(processDuplicateChecker, 0);
+            });
+            processDuplicateChecker();
+        }
+        function toggleTheme() { document.body.classList.toggle('light-mode'); }
+        function toggleSound() { isS = !isS; localStorage.setItem('bidhan_s', isS ? 'on' : 'off'); document.getElementById('sOn').style.color = isS ? '#3b82f6' : '#6b7280'; }
+        function paste2FA() { const field = document.getElementById('otpSecretField'); if (field) field.focus(); }
+        function clear2FA() { document.getElementById('otpSecretField').value = ''; update2FA(); }
+        function update2FA() {
+            const inputEl = document.getElementById('otpSecretField');
+            const errorEl = document.getElementById('otpError');
+            const otpEl = document.getElementById('otpBox');
+            const otpWrapEl = document.getElementById('otpCodeWrap');
+            const timerEl = document.getElementById('timerText');
+            const timerBarEl = document.getElementById('timerBar');
+            const k = inputEl.value.trim().replace(/\s/g, '');
+            const r = authenticator.timeRemaining();
+            if (timerEl) timerEl.innerText = r;
+            if (timerBarEl) timerBarEl.style.width = (r / 30) * 100 + "%";
+            if (!k) {
+                if (otpEl) otpEl.innerText = "------";
+                if (errorEl) errorEl.innerText = "Enter a valid 2FA secret";
+                if (otpWrapEl) otpWrapEl.classList.add('hidden-tool');
+                fit2faFields();
+                return;
+            }
+            try {
+                if (otpEl) otpEl.innerText = authenticator.generate(k);
+                if (errorEl) errorEl.innerText = "";
+                if (otpWrapEl) otpWrapEl.classList.remove('hidden-tool');
+            } catch {
+                if (otpEl) otpEl.innerText = "------";
+                if (errorEl) errorEl.innerText = "The key characters are illegal, please check the key";
+                if (otpWrapEl) otpWrapEl.classList.add('hidden-tool');
+            }
+            fit2faFields();
+        }
+        const secretInputEl = document.getElementById('otpSecretField');
+        if (secretInputEl) {
+            secretInputEl.addEventListener('input', update2FA);
+            secretInputEl.addEventListener('keydown', (event) => {
+                event.stopPropagation();
+            });
+            secretInputEl.addEventListener('pointerdown', (event) => event.stopPropagation());
+            secretInputEl.addEventListener('mousedown', (event) => event.stopPropagation());
+            secretInputEl.addEventListener('click', () => secretInputEl.focus());
+            secretInputEl.addEventListener('paste', (event) => {
+                const pasted = event.clipboardData?.getData('text');
+                if (typeof pasted === 'string') {
+                    event.preventDefault();
+                    secretInputEl.value = pasted.trim();
+                    update2FA();
+                }
+            });
+        }
+        const toolsBtnEl = document.getElementById('btn-menu');
+        const toolsMenuEl = document.getElementById('dropdownNav');
+        if (toolsBtnEl && toolsMenuEl) {
+            toolsBtnEl.addEventListener('mouseenter', openMenuHover);
+            toolsBtnEl.addEventListener('mouseleave', closeMenuHoverSoon);
+            toolsMenuEl.addEventListener('mouseenter', () => clearTimeout(menuHoverTimer));
+            toolsMenuEl.addEventListener('mouseleave', closeMenuHoverSoon);
+        }
+        setInterval(update2FA, 1000);
+        window.onload = () => {
+            render2fa();
+            renderPassHistory();
+            update2FA();
+            fit2faFields();
+            genPass(false);
+            generateFakeDetails();
+            initCurrencies();
+            initDuplicateChecker();
+            initExcelEditor();
+            showHome();
+        };
+        window.addEventListener('resize', () => {
+            updateDropdownNotch();
+        });
+        document.addEventListener('click', (event) => {
+            const wrap = document.querySelector('.menu-wrap');
+            if (wrap && !wrap.contains(event.target)) closeMenu();
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
