@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://multitoolpro.github.io/sitemap.xml
