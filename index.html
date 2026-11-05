@@ -256,6 +256,24 @@
         }
 
         .hidden-tool { display: none !important; }
+        /* Step 3 - Mobile Fix for MultitoolPro */
+@media (max-width: 640px){
+  .brand-title{
+    font-size: 24px !important;
+    gap: 0px !important;
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
+  }
+  .brand-title .brand-text{
+    font-size: 24px !important;
+  }
+  .brand-title .pro-badge{
+    font-size: 10px !important;
+    padding: 4px 7px !important;
+    margin-left: 4px !important;
+    flex-shrink: 0 !important;
+  }
+}
     </style>
 </head>
 <body class="flex flex-col items-center">
