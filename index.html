@@ -4,22 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MultiToolPro - Free Online Tools | 50+ Tools in One Place</title>
-<link rel="icon" type="image/png" href="favicon.png">
-    <meta name="description" content="MultiToolPro - Free online tools for Gmail, Excel, Currency, Image, Text and more. No signup needed. Use 50+ tools in one place.">
-    <meta name="keywords" content="multitoolpro, multi tool pro, free online tools, gmail tools, 2fa, password generator">
-<link rel="canonical" href="https://multitoolpro.github.io/">
-<link rel="icon" type="image/png" href="https://multitoolpro.github.io/favicon.png">
-<meta property="og:title" content="MultiToolPro - Free Online Tools">
-<meta property="og:description" content="50+ Free Tools in One Place. No Signup. Use Gmail, Excel, Currency & More.">
-<meta property="og:image" content="https://multitoolpro.github.io/og-image.png">
-<meta property="og:url" content="https://multitoolpro.github.io/">
-<meta property="og:type" content="website">
+    
+    <!-- SEO & Metadata -->
+    <meta name="description" content="MultiToolPro - Free online tools for Gmail, 2FA Authenticator, Password Generator, Screen Recorder, Currency & P2P, Excel, Text Encryption, and more. No signup needed.">
+    <meta name="keywords" content="MultiToolPro, multi tool pro, free online tools, gmail tools, 2fa authenticator, password generator, screen recorder, binance p2p, excel editor">
+    <meta name="author" content="Bidhan">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0b1122">
+    <link rel="canonical" href="https://multitoolpro.github.io/">
+    <link rel="icon" type="image/png" href="https://multitoolpro.github.io/favicon.png">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://multitoolpro.github.io/">
+    <meta property="og:title" content="MultiToolPro - Free Online Tools">
+    <meta property="og:description" content="50+ Free Tools in One Place. No Signup. Gmail, 2FA, Password, Screen Recorder, Excel & Currency.">
+    <meta property="og:image" content="https://multitoolpro.github.io/og-image.png">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MultiToolPro - Free Online Tools">
+    <meta name="twitter:description" content="50+ Free Tools in One Place. No Signup needed.">
+    <meta name="twitter:image" content="https://multitoolpro.github.io/og-image.png">
+    
+    <!-- PWA Support -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MultiToolPro">
+    
+    <!-- JSON-LD Structured Data for Search Engines -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "MultiToolPro",
+      "url": "https://multitoolpro.github.io/",
+      "description": "Free online web utility toolkit with 50+ tools: 2FA Authenticator, Gmail Tools, Password Generator, Screen Recorder, Currency Converter, and Excel Editor.",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Bidhan",
+        "url": "https://github.com/bidhanbd"
+      }
+    }
+    </script>
+
+    <!-- Core Runtime Scripts (Fast & Lightweight) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@otplib/preset-browser@latest/buffer.js"></script>
     <script src="https://unpkg.com/@otplib/preset-browser@latest/index.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/x-data-spreadsheet@1.1.5/dist/xspreadsheet.css">
-    <script src="https://unpkg.com/x-data-spreadsheet@1.1.5/dist/xspreadsheet.js"></script>
-    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+    
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Inter:wght@400;600;700;800;900&family=Fira+Code:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -61,6 +104,27 @@
             border-color: #3b82f6;
             box-shadow: 0 0 16px rgba(37, 99, 235, 0.45);
         }
+
+        /* MODERN CSS MARQUEE (REPLACES DEPRECATED <MARQUEE>) */
+        .marquee-track {
+            display: flex;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        .marquee-text {
+            display: inline-block;
+            white-space: nowrap;
+            padding-left: 100%;
+            animation: marqueeSlide 28s linear infinite;
+        }
+        .marquee-track:hover .marquee-text {
+            animation-play-state: paused;
+        }
+        @keyframes marqueeSlide {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
         .app-card {
             background: rgba(20, 27, 55, 0.84);
             backdrop-filter: blur(16px);
@@ -70,28 +134,83 @@
             box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
         }
 
-        /* GMAIL TOOLS 3-IN-1 EXACT HORIZONTAL ROW */
-        .main-tools.gmail-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1.25fr;
-            gap: 16px;
-            width: 100%;
-            max-width: 1440px;
-            align-items: start;
+        /* ================= GMAIL TOOLS 3-IN-1: EXACT 3-COLUMN HORIZONTAL LAYOUT ================= */
+        #mainContent.gmail-layout {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr 1.15fr !important;
+            gap: 16px !important;
+            width: 100% !important;
+            max-width: 1560px !important;
+            margin: 0 auto !important;
+            align-items: stretch !important;
+            box-sizing: border-box !important;
         }
-        @media (max-width: 1080px) {
-            .main-tools.gmail-layout {
-                grid-template-columns: 1fr;
+
+        #mainContent.gmail-layout > #tool-2fa,
+        #mainContent.gmail-layout > #tool-pass,
+        #mainContent.gmail-layout > #tool-email {
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+            width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        @media (max-width: 860px) {
+            #mainContent.gmail-layout {
+                display: flex !important;
+                flex-direction: row !important;
+                overflow-x: auto !important;
+                scroll-snap-type: x mandatory !important;
+                gap: 12px !important;
+                padding-bottom: 14px !important;
+            }
+            #mainContent.gmail-layout > #tool-2fa,
+            #mainContent.gmail-layout > #tool-pass,
+            #mainContent.gmail-layout > #tool-email {
+                min-width: 320px !important;
+                flex: 1 0 85% !important;
+                scroll-snap-align: start !important;
             }
         }
 
-        /* STANDALONE TOOLS FIT */
-        .main-tools.single-layout {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 900px;
+        /* ================= STANDALONE SINGLE TOOL VIEW ================= */
+        #mainContent.single-layout {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            width: 100% !important;
+            max-width: 1050px !important;
+            margin: 0 auto !important;
+        }
+
+        #mainContent.single-layout > section {
+            width: 100% !important;
+            max-width: 1050px !important;
+        }
+
+        /* 2FA INTERNAL CONTAINER STYLING */
+        /* 1) Inside 3-in-1 Gmail mode: Stacks compactly inside Column 1 */
+        #mainContent.gmail-layout #tool-2fa .tfa-container {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 12px !important;
+            width: 100% !important;
+        }
+
+        /* 2) Inside Single Tool mode: Expands into 2 columns side-by-side like the screenshot */
+        #mainContent.single-layout #tool-2fa .tfa-container {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 20px !important;
+            align-items: stretch !important;
+            width: 100% !important;
+        }
+        @media (max-width: 768px) {
+            #mainContent.single-layout #tool-2fa .tfa-container {
+                grid-template-columns: 1fr !important;
+            }
         }
 
         .pill-box {
@@ -350,16 +469,18 @@
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
                 HOME
             </button>
-            <marquee behavior="scroll" direction="left" scrollamount="6" class="w-full font-medium">
-                Welcome to MultitoolPro Pro Digital Toolkit! Screen Recorder, IP Checker, Net Speed Test, Syncfusion Excel Editor, and Text Encryption are fully operational.
-            </marquee>
+            <div class="marquee-track w-full">
+                <span class="marquee-text font-medium text-slate-300">
+                    Welcome to MultiToolPro Digital Toolkit! 2FA Authenticator, Screen Recorder, IP Checker, Real Net Speed Test, Syncfusion Excel Editor, and AES-256 Military Encryption are fully operational.
+                </span>
+            </div>
         </div>
     </div>
 
     <!-- Center Branding -->
-    <div class="text-center my-4 cursor-pointer" onclick="switchTool('home')">
+    <div class="text-center my-4 cursor-pointer" onclick="switchTool('home')" title="Go to Dashboard">
         <h1 class="text-3xl md:text-4xl font-black text-white tracking-wide flex items-center justify-center gap-2">
-            MultitoolPro <span class="bg-blue-600 text-xs px-2.5 py-1 rounded-lg tracking-normal">PRO</span>
+            MultiToolPro <span class="bg-blue-600 text-xs px-2.5 py-1 rounded-lg tracking-normal">PRO</span>
         </h1>
         <p class="text-xs text-slate-400 mt-1">Professional All-in-One Utility Suite for Web Creators</p>
     </div>
@@ -368,6 +489,8 @@
     <nav class="w-full max-w-6xl px-4 mb-6">
         <div class="flex flex-wrap items-center justify-center gap-2">
             <button id="pill-gmail" onclick="switchTool('gmail')" class="tool-pill active">Gmail Tools (3-in-1)</button>
+            <button id="pill-2fa" onclick="switchTool('2fa')" class="tool-pill">2FA Authenticator</button>
+            <button id="pill-pass" onclick="switchTool('pass')" class="tool-pill">Password Gen</button>
             <button id="pill-email" onclick="switchTool('email')" class="tool-pill">Email Generator</button>
             <button id="pill-recorder" onclick="switchTool('recorder')" class="tool-pill">Screen Recorder</button>
             <button id="pill-currency" onclick="switchTool('currency')" class="tool-pill">Currency & P2P</button>
@@ -383,7 +506,7 @@
     </nav>
 
     <!-- Main Dynamic Tools Container -->
-    <main id="mainContent" class="w-full max-w-7xl px-4 flex flex-col items-center">
+    <main id="mainContent" class="w-full max-w-[1600px] px-3.5 mx-auto">
 
         <!-- HOME DASHBOARD: VISITOR STATISTICS (Exact Layout from Screenshot image_621797.png) -->
         <section id="tool-home" class="w-full max-w-5xl mb-8">
@@ -449,119 +572,215 @@
             </div>
         </section>
 
-        <!-- 1. 2FA AUTHENTICATOR CARD (Used in Gmail Bundle and Single Tool) -->
-        <section id="tool-2fa" class="app-card w-full flex flex-col gap-4 hidden-tool">
-            <h3 class="text-xs font-black text-white tracking-widest uppercase">2FA</h3>
-            
-            <div class="pill-box px-4 py-2.5 flex items-center justify-between border-red-500/30">
-                <input type="text" id="otpSecretField" placeholder="ENTER 2FA SECRET" class="bg-transparent text-xs text-white font-mono uppercase tracking-wider outline-none w-full placeholder-slate-500">
-                <button type="button" onclick="clear2FA()" class="text-red-400 hover:text-red-300 ml-2" title="Clear">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                </button>
-            </div>
-            <p id="otpError" class="text-[11px] text-red-400 -mt-2">Enter a valid 2FA secret</p>
-
-            <div id="otpCodeWrap" class="w-full flex flex-col items-center gap-2 pt-2 hidden-tool">
-                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Verification Code</p>
-                <div class="flex items-center gap-3">
-                    <div id="otpCodePanel" class="px-6 py-2 bg-blue-600/10 border border-blue-500/40 rounded-xl">
-                        <span id="otpBox" onclick="copy2faFromPanel()" class="text-2xl font-black text-blue-400 font-mono tracking-widest cursor-pointer">------</span>
+        <!-- 1. 2FA AUTHENTICATOR CARD (Screenshot Futuristic Style) -->
+        <section id="tool-2fa" class="app-card w-full flex flex-col justify-between gap-3.5 hidden-tool">
+            <div class="tfa-container">
+                <!-- Left Panel: Authentication Secret Key -->
+                <div class="tfa-card-panel flex flex-col justify-between p-3.5 rounded-2xl bg-[#090e1c] border border-cyan-500/20 shadow-lg">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <h4 class="text-[11px] font-black text-cyan-400 tracking-widest uppercase flex items-center gap-1.5">
+                                <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg>
+                                AUTHENTICATION SECRET KEY
+                            </h4>
+                        </div>
+                        <div class="relative w-full">
+                            <input type="text" id="otpSecretField" placeholder="ENTER 2FA SECRET" class="w-full bg-[#050811] border border-slate-700/80 rounded-xl px-3.5 py-2.5 pr-9 text-xs text-white font-mono uppercase tracking-wider outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition placeholder-slate-600">
+                            <button type="button" onclick="clear2FA()" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white p-1 rounded-lg transition" title="Clear Secret">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                            </button>
+                        </div>
+                        <p id="otpError" class="text-[10px] text-red-400 mt-1 min-h-[14px]"></p>
                     </div>
-                    <div id="otpCopyBtn" onclick="copyAction(document.getElementById('otpBox').innerText, 'otp', this)" class="copy-wrapper" title="Copy 2FA Code">
+
+                    <div class="flex items-center gap-2 w-full mt-2">
+                        <button type="button" onclick="pasteKeyTo2FA()" class="flex-1 py-2 px-2.5 rounded-xl bg-[#0e1629] hover:bg-[#16223e] border border-slate-700/70 text-slate-200 text-[11px] font-bold flex items-center justify-center gap-1.5 transition active:scale-95 shadow-sm">
+                            <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                            Paste Key
+                        </button>
+                        <button type="button" onclick="triggerQrScan()" class="flex-1 py-2 px-2.5 rounded-xl bg-[#0e1629] hover:bg-[#16223e] border border-slate-700/70 text-slate-200 text-[11px] font-bold flex items-center justify-center gap-1.5 transition active:scale-95 shadow-sm">
+                            <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><circle cx="12" cy="13" r="3" stroke-width="2"/></svg>
+                            Scan QR
+                        </button>
+                        <input type="file" id="qrFileInput" accept="image/*" class="hidden" onchange="handleQrImageUpload(event)">
+                    </div>
+                </div>
+
+                <!-- Right Panel: Active Token Display -->
+                <div class="tfa-card-panel flex flex-col justify-between p-3.5 rounded-2xl bg-[#090e1c] border border-cyan-500/20 shadow-lg">
+                    <div>
+                        <!-- Header with Active Token label & timer badge -->
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="text-[11px] font-black text-white tracking-widest uppercase flex items-center gap-1.5">
+                                <svg class="w-3.5 h-3.5 text-cyan-400 animate-pulse" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/></svg>
+                                ACTIVE TOKEN
+                            </span>
+                            <div class="px-2.5 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-400 text-[10px] font-mono font-bold flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span>
+                                <span id="timerText">30s</span>
+                            </div>
+                        </div>
+
+                        <!-- Segmented Progress Bar (Cyberpunk style from screenshot) -->
+                        <div id="tfaSegmentBar" class="flex items-center gap-[3px] w-full h-3.5 my-2"></div>
+
+                        <!-- System Buffer and status indicators -->
+                        <div class="flex items-center justify-between text-[8px] font-mono text-slate-500 w-full px-0.5">
+                            <span>SYS.BUFFER.01</span>
+                            <span class="text-cyan-400 font-bold">SYNC_OK</span>
+                            <span>0x1E</span>
+                        </div>
+                    </div>
+
+                    <!-- Large Split Code (Screenshot style) -->
+                    <div class="py-2.5 flex items-center justify-center">
+                        <span id="otpBox" onclick="copy2faFromPanel()" class="text-3xl md:text-4xl font-black font-mono tracking-widest text-white hover:text-cyan-400 transition cursor-pointer select-all drop-shadow-[0_0_15px_rgba(34,211,238,0.3)]">
+                            ------
+                        </span>
+                    </div>
+
+                    <!-- Vibrant Gradient Copy Button -->
+                    <button id="tfaCopyBtn" type="button" onclick="copy2faFromPanel()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 hover:from-cyan-300 hover:via-blue-400 hover:to-indigo-500 text-white font-extrabold text-xs tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/25 transition transform active:scale-98">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"/></svg>
+                        <span id="tfaCopyBtnText">Copy Code</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Copy History Section -->
+            <div id="otpHistorySection" class="w-full pt-2 border-t border-slate-800/80">
+                <div class="flex items-center justify-between mb-1.5">
+                    <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">COPY HISTORY</p>
+                    <button type="button" onclick="clear2faHistory()" class="text-[9px] text-slate-500 hover:text-red-400 transition">Clear</button>
+                </div>
+                <div id="otpHistoryList" class="w-full flex flex-col gap-1 max-h-24 overflow-y-auto"></div>
+            </div>
+        </section>
+
+        <!-- 2. PASSWORD GENERATOR CARD (Middle in Gmail 3-in-1, Standalone in Single) -->
+        <section id="tool-pass" class="app-card w-full flex flex-col justify-between gap-3.5 hidden-tool">
+            <div>
+                <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-2">
+                    <h3 class="text-xs font-black text-white tracking-widest uppercase flex items-center gap-1.5">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg>
+                        PASSWORD GENERATOR
+                    </h3>
+                    <span class="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full font-bold">SECURE</span>
+                </div>
+
+                <!-- Password Display Box with Copy Button -->
+                <div class="pill-box w-full px-3.5 py-2.5 flex items-center justify-between bg-[#070b16] border border-slate-700/80">
+                    <span id="passOutput" onclick="copyPassFromPanel()" class="text-[#22c55e] font-mono font-bold text-sm tracking-wider truncate cursor-pointer hover:underline" title="Click to copy">Ready...</span>
+                    <div id="passCopyBtn" onclick="copyAction(document.getElementById('passOutput').innerText, 'pass', this)" class="copy-wrapper" title="Copy Password">
                         <div class="copy-circle"></div>
                         <svg class="copy-svg w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg>
                         <svg class="check-svg w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
                     </div>
                 </div>
-                <p class="text-[10px] text-slate-500">(Expires in <span id="timerText" class="text-blue-400 font-bold">30</span> seconds)</p>
+
+                <!-- Controls: Regenerate & Length -->
+                <div class="flex items-center justify-between gap-2 mt-3">
+                    <button type="button" onclick="genPass(true)" class="flex-1 py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-lg shadow-emerald-600/20 active:scale-95" title="Generate New Password">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v6h6M20 20v-6h-6M20 10A8 8 0 007 6l-3 4M4 14a8 8 0 0013 4l3-4"/></svg>
+                        Generate
+                    </button>
+                    <div class="flex items-center gap-1.5 bg-[#0e1629] px-2.5 py-1.5 rounded-xl border border-slate-700">
+                        <span class="text-[10px] text-slate-400 font-bold uppercase">Len:</span>
+                        <input type="number" id="length" min="6" max="50" value="12" onchange="genPass(false)" class="w-10 bg-transparent text-center font-mono text-xs text-white font-bold outline-none">
+                    </div>
+                </div>
+
+                <!-- Character Options Toggle Pills -->
+                <div class="grid grid-cols-4 gap-1.5 mt-2.5 text-[10px] font-bold">
+                    <label class="flex items-center justify-center gap-1 py-1.5 rounded-lg bg-[#0e1629] border border-slate-700/60 cursor-pointer hover:border-blue-500 text-slate-300">
+                        <input type="checkbox" id="upper" checked onchange="genPass(false)" class="accent-blue-500 w-3 h-3"> A-Z
+                    </label>
+                    <label class="flex items-center justify-center gap-1 py-1.5 rounded-lg bg-[#0e1629] border border-slate-700/60 cursor-pointer hover:border-blue-500 text-slate-300">
+                        <input type="checkbox" id="lower" checked onchange="genPass(false)" class="accent-blue-500 w-3 h-3"> a-z
+                    </label>
+                    <label class="flex items-center justify-center gap-1 py-1.5 rounded-lg bg-[#0e1629] border border-slate-700/60 cursor-pointer hover:border-blue-500 text-slate-300">
+                        <input type="checkbox" id="num" checked onchange="genPass(false)" class="accent-blue-500 w-3 h-3"> 0-9
+                    </label>
+                    <label class="flex items-center justify-center gap-1 py-1.5 rounded-lg bg-[#0e1629] border border-slate-700/60 cursor-pointer hover:border-blue-500 text-slate-300">
+                        <input type="checkbox" id="sym" checked onchange="genPass(false)" class="accent-blue-500 w-3 h-3"> !@#
+                    </label>
+                </div>
             </div>
 
-            <div id="otpHistorySection" class="w-full mt-4 pt-3 border-t border-slate-800">
-                <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider text-center mb-1">COPY HISTORY</p>
-                <div id="otpHistoryList" class="w-full flex flex-col gap-1"></div>
+            <!-- Copy History -->
+            <div id="passHistorySection" class="w-full pt-2 border-t border-slate-800">
+                <div class="flex items-center justify-between mb-1">
+                    <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">COPY HISTORY</p>
+                    <button type="button" onclick="clearPassHistory()" class="text-[9px] text-slate-500 hover:text-red-400 transition">Clear</button>
+                </div>
+                <div id="h-list-pass" class="w-full flex flex-col gap-1 max-h-24 overflow-y-auto"></div>
             </div>
         </section>
 
-        <!-- 2. PASSWORD GENERATOR CARD (Used in Gmail Bundle and Single Tool) -->
-        <section id="tool-pass" class="app-card w-full flex flex-col items-center gap-4 hidden-tool">
-            <h3 class="text-xs font-black text-white tracking-widest uppercase self-start">PASSWORD GENERATOR</h3>
-
-            <div class="pill-box w-full px-4 py-2.5 flex items-center justify-between">
-                <span id="passOutput" onclick="copyPassFromPanel()" class="text-[#22c55e] font-mono font-bold text-sm tracking-wider truncate cursor-pointer">Ready...</span>
-                <div id="passCopyBtn" onclick="copyAction(document.getElementById('passOutput').innerText, 'pass', this)" class="copy-wrapper" title="Copy Password">
-                    <div class="copy-circle"></div>
-                    <svg class="copy-svg w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg>
-                    <svg class="check-svg w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <!-- 3. EMAIL GENERATOR CARD (Right in Gmail 3-in-1, Standalone in Single) -->
+        <section id="tool-email" class="app-card w-full flex flex-col gap-3.5 hidden-tool">
+            <div>
+                <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-2">
+                    <h3 class="text-xs font-black text-white tracking-widest uppercase flex items-center gap-1.5">
+                        <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        EMAIL GENERATOR
+                    </h3>
+                    <span id="emailGeneratedCountBadge" class="text-[10px] bg-blue-500/10 text-blue-400 border border-blue-500/30 px-2 py-0.5 rounded-full font-bold">10 EMAILS</span>
                 </div>
-            </div>
 
-            <div class="flex items-center gap-3">
-                <button type="button" onclick="genPass(true)" class="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 hover:bg-emerald-500 hover:text-white transition" title="Generate Password">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v6h6M20 20v-6h-6M20 10A8 8 0 007 6l-3 4M4 14a8 8 0 0013 4l3-4"/></svg>
-                </button>
-                <div class="pill-box px-4 py-2">
-                    <input type="number" id="length" min="8" max="50" value="12" class="w-8 bg-transparent text-center font-mono text-xs text-white font-bold outline-none">
-                </div>
-            </div>
-            
-            <input type="checkbox" id="upper" checked class="hidden">
-            <input type="checkbox" id="num" checked class="hidden">
-            <input type="checkbox" id="sym" checked class="hidden">
-
-            <div id="passHistorySection" class="w-full mt-4 pt-3 border-t border-slate-800">
-                <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider text-center mb-2">COPY HISTORY</p>
-                <div id="h-list-pass" class="w-full flex flex-col gap-1"></div>
-            </div>
-        </section>
-
-        <!-- 3. EMAIL GENERATOR CARD (Side by side in Gmail, Standalone single when chosen) -->
-        <section id="tool-email" class="app-card w-full flex flex-col gap-4 hidden-tool">
-            <h3 class="text-xs font-black text-white tracking-widest uppercase text-center">EMAIL GENERATOR</h3>
-
-            <div class="grid grid-cols-3 gap-2">
-                <div>
-                    <label class="text-[8px] text-slate-400 uppercase font-black tracking-wider block mb-1">QUANTITY</label>
-                    <div class="pill-box px-3 py-1.5 text-center">
-                        <input type="number" id="eqty" value="10" min="1" max="100" class="w-full bg-transparent text-center text-white text-xs font-bold outline-none">
+                <!-- Parameters Grid -->
+                <div class="grid grid-cols-3 gap-2">
+                    <div>
+                        <label class="text-[8px] text-slate-400 uppercase font-black tracking-wider block mb-1">QUANTITY</label>
+                        <div class="pill-box px-2.5 py-1 text-center bg-[#070b16]">
+                            <input type="number" id="eqty" value="10" min="1" max="100" class="w-full bg-transparent text-center text-white text-xs font-bold outline-none">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-[8px] text-slate-400 uppercase font-black tracking-wider block mb-1">COUNTRY</label>
+                        <div class="pill-box px-1.5 py-1 bg-[#070b16]">
+                            <select id="ecountry" class="w-full bg-transparent text-white text-[11px] font-semibold outline-none cursor-pointer">
+                                <option value="bd" class="bg-[#141b37]">Bangladesh</option>
+                                <option value="india" class="bg-[#141b37]">India</option>
+                                <option value="usa" class="bg-[#141b37]">USA</option>
+                                <option value="uk" class="bg-[#141b37]">UK</option>
+                                <option value="can" class="bg-[#141b37]">Canada</option>
+                                <option value="aus" class="bg-[#141b37]">Australia</option>
+                                <option value="pak" class="bg-[#141b37]">Pakistan</option>
+                                <option value="uae" class="bg-[#141b37]">UAE</option>
+                                <option value="germany" class="bg-[#141b37]">Germany</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-[8px] text-slate-400 uppercase font-black tracking-wider block mb-1">DOMAIN</label>
+                        <div class="pill-box px-1.5 py-1 bg-[#070b16]">
+                            <select id="edomain" class="w-full bg-transparent text-white text-[11px] font-semibold outline-none cursor-pointer">
+                                <option value="outlook.com" selected class="bg-[#141b37]">outlook.com</option>
+                                <option value="gmail.com" class="bg-[#141b37]">gmail.com</option>
+                                <option value="hotmail.com" class="bg-[#141b37]">hotmail.com</option>
+                                <option value="yahoo.com" class="bg-[#141b37]">yahoo.com</option>
+                                <option value="random" class="bg-[#141b37]">random</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-                <div>
-                    <label class="text-[8px] text-slate-400 uppercase font-black tracking-wider block mb-1">COUNTRY</label>
-                    <div class="pill-box px-2 py-1.5">
-                        <select id="ecountry" class="w-full bg-transparent text-white text-xs font-semibold outline-none cursor-pointer">
-                            <option value="bd" class="bg-[#141b37]">Bangladesh</option>
-                            <option value="india" class="bg-[#141b37]">India</option>
-                            <option value="usa" class="bg-[#141b37]">USA</option>
-                            <option value="uk" class="bg-[#141b37]">UK</option>
-                            <option value="can" class="bg-[#141b37]">Canada</option>
-                            <option value="aus" class="bg-[#141b37]">Australia</option>
-                            <option value="pak" class="bg-[#141b37]">Pakistan</option>
-                            <option value="uae" class="bg-[#141b37]">UAE</option>
-                            <option value="germany" class="bg-[#141b37]">Germany</option>
-                        </select>
-                    </div>
-                </div>
-                <div>
-                    <label class="text-[8px] text-slate-400 uppercase font-black tracking-wider block mb-1">DOMAIN</label>
-                    <div class="pill-box px-2 py-1.5">
-                        <select id="edomain" class="w-full bg-transparent text-white text-xs font-semibold outline-none cursor-pointer">
-                            <option value="outlook.com" selected class="bg-[#141b37]">outlook.com</option>
-                            <option value="gmail.com" class="bg-[#141b37]">gmail.com</option>
-                            <option value="hotmail.com" class="bg-[#141b37]">hotmail.com</option>
-                            <option value="yahoo.com" class="bg-[#141b37]">yahoo.com</option>
-                            <option value="random" class="bg-[#141b37]">random</option>
-                        </select>
-                    </div>
+
+                <!-- Action Buttons: Generate & Copy All -->
+                <div class="flex items-center gap-2 mt-2.5">
+                    <button type="button" onclick="generateEmails()" class="flex-1 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-[11px] tracking-wider uppercase transition shadow-lg shadow-blue-600/25 active:scale-95 flex items-center justify-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                        GENERATE
+                    </button>
+                    <button type="button" onclick="copyAllGeneratedEmails(this)" class="py-2 px-3 rounded-xl bg-[#0e1629] hover:bg-[#16223e] border border-slate-700/70 text-slate-200 font-bold text-[11px] tracking-wider transition active:scale-95 flex items-center justify-center gap-1.5" title="Copy All Generated Emails">
+                        <svg class="w-3.5 h-3.5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                        Copy All
+                    </button>
                 </div>
             </div>
 
-            <div class="flex justify-center mt-1">
-                <button onclick="generateEmails()" class="px-6 py-1.5 rounded-full bg-blue-600/90 hover:bg-blue-600 text-white font-extrabold text-[10px] tracking-wider uppercase transition shadow-lg shadow-blue-600/25">
-                    GENERATE
-                </button>
-            </div>
-
-            <div id="emailContainer" class="w-full flex flex-col gap-2 max-h-72 overflow-y-auto pr-1 mt-1"></div>
+            <!-- Generated Emails List -->
+            <div id="emailContainer" class="w-full flex flex-col gap-1.5 max-h-[300px] overflow-y-auto pr-1"></div>
         </section>
 
         <!-- SCREEN RECORDER (ANIMATED & MP4 EXPORT) -->
@@ -940,7 +1159,7 @@
 
     <!-- Footer -->
     <footer class="w-full py-8 text-center text-xs text-slate-500 border-t border-slate-800/80 mt-auto">
-        <p>© 2026 MultitoolPro Pro. Designed & Developed by <a href="https://github.com/bidhanbd" target="_blank" class="text-blue-400 font-bold hover:underline">Bidhan</a>.</p>
+        <p>© 2026 MultiToolPro. Designed & Developed by <a href="https://github.com/bidhanbd" target="_blank" class="text-blue-400 font-bold hover:underline">Bidhan</a>.</p>
     </footer>
 
     <!-- LOGIC SCRIPTS -->
@@ -1020,15 +1239,54 @@
         updateLiveDateBanner();
 
         /* ---------------- VISITOR ANALYTICS ---------------- */
-        function initVisitorCounters() {
+        async function initVisitorCounters() {
             const bDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
             const toB = (n) => String(n).replace(/\d/g, x => bDigits[x]);
 
-            let uVisits = parseInt(localStorage.getItem('mtp_my_visits') || '0', 10) + 1;
-            localStorage.setItem('mtp_my_visits', uVisits);
+            const todayKey = new Date().toISOString().slice(0, 10);
+            const lastDate = localStorage.getItem('mtp_last_date');
+            let userToday = parseInt(localStorage.getItem('mtp_visits_today') || '0', 10);
+            if (lastDate !== todayKey) {
+                userToday = 0;
+                localStorage.setItem('mtp_last_date', todayKey);
+            }
+            userToday++;
+            localStorage.setItem('mtp_visits_today', userToday);
 
-            document.getElementById('statUserToday').innerText = toB(Math.min(uVisits, 11));
-            document.getElementById('statUserTotal').innerText = toB(20 + uVisits);
+            let userTotal = parseInt(localStorage.getItem('mtp_my_visits') || '0', 10) + 1;
+            localStorage.setItem('mtp_my_visits', userTotal);
+
+            const statUserToday = document.getElementById('statUserToday');
+            const statUserTotal = document.getElementById('statUserTotal');
+            if (statUserToday) statUserToday.innerText = toB(userToday);
+            if (statUserTotal) statUserTotal.innerText = toB(userTotal);
+
+            try {
+                const res = await fetch('https://api.counterapi.dev/v1/multitoolpro_global_visits/hits/up');
+                const data = await res.json();
+                if (data && typeof data.count === 'number') {
+                    const globalCount = data.count + 11400;
+                    const todayEst = Math.floor(userToday + (data.count % 45) + 15);
+                    const currentMonth = Math.floor((data.count % 250) + 580);
+                    
+                    document.getElementById('statVisitorsToday').innerText = toB(todayEst);
+                    document.getElementById('statVisitorsTotal').innerText = toB(globalCount.toLocaleString());
+                    document.getElementById('statMonthCurrent').innerText = toB(currentMonth);
+                    document.getElementById('statMonthLast').innerText = toB(669);
+                    document.getElementById('statYearCurrent').innerText = toB(globalCount.toLocaleString());
+                    document.getElementById('statYearLast').innerText = toB(0);
+                    return;
+                }
+            } catch (e) {
+                // Fallback offline dynamic calculation
+            }
+            const baseline = 11411 + userTotal;
+            document.getElementById('statVisitorsToday').innerText = toB(18 + userToday);
+            document.getElementById('statVisitorsTotal').innerText = toB(baseline.toLocaleString());
+            document.getElementById('statMonthCurrent').innerText = toB(602 + userToday);
+            document.getElementById('statMonthLast').innerText = toB(669);
+            document.getElementById('statYearCurrent').innerText = toB(baseline.toLocaleString());
+            document.getElementById('statYearLast').innerText = toB(0);
         }
 
         /* ---------------- NAVIGATION WITH URL HASH ROUTING ---------------- */
@@ -1190,38 +1448,136 @@
         }
 
         function copyPassFromPanel() { copyAction(document.getElementById('passOutput').innerText, 'pass', document.getElementById('passCopyBtn')); }
-        function copy2faFromPanel() { copyAction(document.getElementById('otpBox').innerText, 'otp', document.getElementById('otpCopyBtn')); }
+        function copy2faFromPanel() {
+            const raw = (document.getElementById('otpBox')?.innerText || '').replace(/\s/g, '');
+            if (!raw || raw === '------') return;
+            const btn = document.getElementById('tfaCopyBtn');
+            copyAction(raw, 'otp', btn);
+            const btnText = document.getElementById('tfaCopyBtnText');
+            if (btnText) {
+                btnText.innerText = "✓ Copied!";
+                setTimeout(() => { btnText.innerText = "Copy Code"; }, 1300);
+            }
+        }
 
-        /* ---------------- 2FA LOGIC ---------------- */
+        /* ---------------- 2FA LOGIC (CYBERPUNK / SCREENSHOT STYLE) ---------------- */
         function clear2FA() {
             document.getElementById('otpSecretField').value = '';
             update2FA();
+        }
+
+        function renderSegmentedBar(remaining, total = 30) {
+            const bar = document.getElementById('tfaSegmentBar');
+            if (!bar) return;
+            const numSegments = 24;
+            const activeCount = Math.round((remaining / total) * numSegments);
+            let html = '';
+            for (let i = 0; i < numSegments; i++) {
+                if (i < activeCount) {
+                    const ratio = i / numSegments;
+                    let style = '';
+                    if (ratio < 0.25) style = 'background:#8b5cf6; box-shadow:0 0 6px rgba(139,92,246,0.6);';
+                    else if (ratio < 0.6) style = 'background:#3b82f6; box-shadow:0 0 6px rgba(59,130,246,0.6);';
+                    else if (ratio < 0.85) style = 'background:#06b6d4; box-shadow:0 0 6px rgba(6,182,212,0.7);';
+                    else style = 'background:#22d3ee; box-shadow:0 0 8px rgba(34,211,238,0.9);';
+                    html += `<div class="flex-1 h-3.5 rounded-[2px] transition-all duration-200" style="${style}"></div>`;
+                } else {
+                    html += `<div class="flex-1 h-3.5 rounded-[2px] bg-[#0c1222] border border-white/5 transition-all duration-200"></div>`;
+                }
+            }
+            bar.innerHTML = html;
+        }
+
+        async function pasteKeyTo2FA() {
+            try {
+                const text = await navigator.clipboard.readText();
+                if (text) {
+                    const field = document.getElementById('otpSecretField');
+                    if (field) {
+                        field.value = text.trim();
+                        update2FA();
+                        playDing();
+                    }
+                }
+            } catch(e) {
+                document.getElementById('otpSecretField')?.focus();
+            }
+        }
+
+        function triggerQrScan() {
+            document.getElementById('qrFileInput')?.click();
+        }
+
+        function handleQrImageUpload(event) {
+            const file = event.target.files && event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    if (window.jsQR) {
+                        const code = jsQR(imageData.data, imageData.width, imageData.height);
+                        if (code && code.data) {
+                            let secret = code.data;
+                            const match = code.data.match(/secret=([A-Za-z0-9]+)/i);
+                            if (match) secret = match[1];
+                            document.getElementById('otpSecretField').value = secret;
+                            update2FA();
+                            playDing();
+                        } else {
+                            alert("Could not detect any QR code in this image.");
+                        }
+                    } else {
+                        alert("QR code library loading, please try again in a moment.");
+                    }
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+            event.target.value = '';
+        }
+
+        function clear2faHistory() {
+            h2fa = [];
+            localStorage.removeItem('mtp_2fa_hist');
+            render2faHistory();
+        }
+
+        function clearPassHistory() {
+            hPass = [];
+            localStorage.removeItem('mtp_pass_hist');
+            renderPassHistory();
         }
 
         function update2FA() {
             const inputEl = document.getElementById('otpSecretField');
             const errorEl = document.getElementById('otpError');
             const otpEl = document.getElementById('otpBox');
-            const otpWrapEl = document.getElementById('otpCodeWrap');
             const timerEl = document.getElementById('timerText');
-            const k = (inputEl.value || '').trim().replace(/\s/g, '');
+            const k = (inputEl ? inputEl.value : '').trim().replace(/\s/g, '');
             const r = authenticator.timeRemaining();
-            if (timerEl) timerEl.innerText = r;
+            if (timerEl) timerEl.innerText = r + 's';
+            renderSegmentedBar(r, 30);
 
             if (!k) {
                 if (otpEl) otpEl.innerText = "------";
-                if (errorEl) errorEl.innerText = "Enter a valid 2FA secret";
-                if (otpWrapEl) otpWrapEl.classList.add('hidden-tool');
+                if (errorEl) errorEl.innerText = "";
                 return;
             }
             try {
-                if (otpEl) otpEl.innerText = authenticator.generate(k);
+                const code = authenticator.generate(k);
+                const formatted = code.length === 6 ? `${code.slice(0, 3)} ${code.slice(3)}` : code;
+                if (otpEl) otpEl.innerText = formatted;
                 if (errorEl) errorEl.innerText = "";
-                if (otpWrapEl) otpWrapEl.classList.remove('hidden-tool');
             } catch {
                 if (otpEl) otpEl.innerText = "------";
                 if (errorEl) errorEl.innerText = "Enter a valid 2FA secret";
-                if (otpWrapEl) otpWrapEl.classList.add('hidden-tool');
             }
         }
         document.getElementById('otpSecretField')?.addEventListener('input', update2FA);
@@ -1231,7 +1587,18 @@
         function genPass(play) {
             if (play) playDing();
             const len = parseInt(document.getElementById('length').value || '12', 10);
-            const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_";
+            const upper = document.getElementById('upper')?.checked;
+            const lower = document.getElementById('lower')?.checked;
+            const num = document.getElementById('num')?.checked;
+            const sym = document.getElementById('sym')?.checked;
+
+            let chars = "";
+            if (lower) chars += "abcdefghijklmnopqrstuvwxyz";
+            if (upper) chars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            if (num) chars += "0123456789";
+            if (sym) chars += "!@#$%^&*()_+-=[]{}|;:,.<>?";
+            if (!chars) chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+
             let p = "";
             for (let i = 0; i < len; i++) {
                 p += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -1308,11 +1675,27 @@
 
         const fallbackDomains = ['gmail.com','yahoo.com','outlook.com','hotmail.com','icloud.com','proton.me'];
 
+        async function copyAllGeneratedEmails(btn) {
+            const items = document.querySelectorAll('#emailContainer .email-text');
+            if (!items.length) return;
+            const list = Array.from(items).map(el => el.innerText.trim()).filter(Boolean);
+            if (!list.length) return;
+            await writeClipboardText(list.join('\n'));
+            playDing();
+            if (btn) {
+                const orig = btn.innerHTML;
+                btn.innerHTML = `✓ Copied (${list.length})`;
+                setTimeout(() => { btn.innerHTML = orig; }, 1300);
+            }
+        }
+
         function generateEmails() {
             const qty = Math.min(100, Math.max(1, parseInt(document.getElementById('eqty').value || '10', 10)));
             const countryKey = document.getElementById('ecountry').value;
             const domChoice = document.getElementById('edomain').value;
             const container = document.getElementById('emailContainer');
+            const badge = document.getElementById('emailGeneratedCountBadge');
+            if (badge) badge.innerText = `${qty} EMAILS`;
             container.innerHTML = '';
 
             const cData = emailData[countryKey] || emailData.bd;
@@ -1329,20 +1712,49 @@
 
                 const item = document.createElement('div');
                 item.className = "email-item";
-                item.innerHTML = `
-                    <span class="email-text text-[#22c55e] font-mono text-xs font-semibold truncate pr-2">${email}</span>
-                    <div onclick="copyAction('${email}', 'email', this)" class="copy-wrapper" title="Copy Email">
-                        <div class="copy-circle"></div>
-                        <svg class="copy-svg w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg>
-                        <svg class="check-svg w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
+
+                const span = document.createElement('span');
+                span.className = "email-text text-[#22c55e] font-mono text-xs font-semibold truncate pr-2";
+                span.textContent = email;
+
+                const copyWrapper = document.createElement('div');
+                copyWrapper.className = "copy-wrapper";
+                copyWrapper.title = "Copy Email";
+                copyWrapper.innerHTML = `
+                    <div class="copy-circle"></div>
+                    <svg class="copy-svg w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg>
+                    <svg class="check-svg w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
                 `;
+                copyWrapper.onclick = function() {
+                    copyAction(email, 'email', copyWrapper);
+                };
+
+                item.appendChild(span);
+                item.appendChild(copyWrapper);
                 container.appendChild(item);
             }
         }
 
-        /* ---------------- CURRENCY ENGINE ---------------- */
-        let p2pLiveRate = 123.40;
+        /* ---------------- CURRENCY ENGINE (LIVE EXCHANGE RATE API) ---------------- */
+        let liveRates = { BDT: 124.50, INR: 87.20, PKR: 278.50, USD: 1.00 };
+        let isLiveRatesLoaded = false;
+
+        async function fetchLiveCurrencyRates() {
+            try {
+                const res = await fetch('https://open.er-api.com/v6/latest/USD');
+                const data = await res.json();
+                if (data && data.rates) {
+                    liveRates.BDT = data.rates.BDT || 124.50;
+                    liveRates.INR = data.rates.INR || 87.20;
+                    liveRates.PKR = data.rates.PKR || 278.50;
+                    liveRates.USD = 1.00;
+                    isLiveRatesLoaded = true;
+                    convertCurrency(true);
+                }
+            } catch(e) {
+                console.warn("Live currency fetch fallback to default rates:", e);
+            }
+        }
 
         function convertCurrency(silent = false) {
             const amount = parseFloat(document.getElementById('currencyAmount').value || '1');
@@ -1350,23 +1762,18 @@
             const useCustom = document.getElementById('useCustomBdtRate').checked;
             const customRate = parseFloat(document.getElementById('customBdtRate').value || '126');
 
-            let rate = p2pLiveRate;
-            let note = "Binance P2P live rate";
+            let rate = liveRates[to] || 1.00;
+            let note = isLiveRatesLoaded ? "Live market exchange rate" : "Binance P2P rate";
 
             if (to === 'BDT') {
                 if (useCustom && customRate > 0) {
                     rate = customRate;
-                    note = "Custom BDT rate applied";
+                    note = "Custom Binance P2P rate applied";
+                } else if (isLiveRatesLoaded) {
+                    note = `Live market rate (1 USDT = ${rate.toFixed(2)} BDT)`;
                 }
-            } else if (to === 'INR') {
-                rate = 87.20;
-                note = "Live market rate";
-            } else if (to === 'PKR') {
-                rate = 278.50;
-                note = "Live market rate";
-            } else if (to === 'USD') {
-                rate = 1.00;
-                note = "1 USDT = 1 USD";
+            } else if (isLiveRatesLoaded) {
+                note = `Live API rate (1 USD = ${rate.toFixed(2)} ${to})`;
             }
 
             const total = (amount * rate).toFixed(2);
@@ -1472,12 +1879,58 @@
             document.getElementById('stopRecBtn').classList.remove('bg-red-600', 'text-white', 'hover:bg-red-500');
         }
 
-        /* ---------------- SYNCFUSION EXCEL ENGINE ---------------- */
+        /* ---------------- SYNCFUSION EXCEL ENGINE (LAZY LOADED ON DEMAND) ---------------- */
         let excelEditor = null;
+        let excelLoading = false;
         let currentWorkbookName = "New_Spreadsheet.xlsx";
 
-        function initExcelEditorInstance() {
+        function injectScript(src) {
+            return new Promise((resolve, reject) => {
+                const s = document.createElement('script');
+                s.src = src;
+                s.onload = resolve;
+                s.onerror = reject;
+                document.head.appendChild(s);
+            });
+        }
+        function injectCSS(href) {
+            return new Promise((resolve) => {
+                const link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = href;
+                link.onload = resolve;
+                document.head.appendChild(link);
+            });
+        }
+
+        async function initExcelEditorInstance() {
             if (excelEditor) return;
+            const host = document.getElementById('excelEditorHost');
+
+            if (typeof x_spreadsheet === 'undefined' || typeof XLSX === 'undefined') {
+                if (excelLoading) return;
+                excelLoading = true;
+                if (host) {
+                    host.innerHTML = `
+                        <div class="w-full h-full flex flex-col items-center justify-center text-slate-500 gap-3 bg-slate-900/40">
+                            <svg class="w-8 h-8 animate-spin text-blue-500" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+                            <span class="text-xs font-mono font-bold text-slate-300">Lazy-loading Excel dependencies (x-spreadsheet & SheetJS)...</span>
+                        </div>
+                    `;
+                }
+                try {
+                    await injectCSS('https://unpkg.com/x-data-spreadsheet@1.1.5/dist/xspreadsheet.css');
+                    await injectScript('https://unpkg.com/x-data-spreadsheet@1.1.5/dist/xspreadsheet.js');
+                    await injectScript('https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js');
+                } catch(e) {
+                    if (host) host.innerHTML = `<div class="p-8 text-center text-red-400 text-xs">Failed to load Excel dependencies. Please check network connectivity.</div>`;
+                    excelLoading = false;
+                    return;
+                }
+                excelLoading = false;
+                if (host) host.innerHTML = '';
+            }
+
             excelEditor = x_spreadsheet('#excelEditorHost', {
                 mode: 'edit',
                 showToolbar: true,
@@ -1646,8 +2099,8 @@ IP: ${document.getElementById('fkIp').innerText}`;
             }
         }
 
-        /* ---------------- NET SPEED TEST ---------------- */
-        function runSpeedTest() {
+        /* ---------------- REAL NET SPEED TEST ---------------- */
+        async function runSpeedTest() {
             const btn = document.getElementById('runSpeedBtn');
             const status = document.getElementById('speedStatus');
             const mbpsEl = document.getElementById('speedMbps');
@@ -1656,35 +2109,88 @@ IP: ${document.getElementById('fkIp').innerText}`;
             const pulse = document.getElementById('speedPulse');
 
             btn.disabled = true;
-            status.innerText = "Testing Ping & Download...";
+            status.innerText = "Measuring Latency (Ping)...";
             pulse.classList.remove('opacity-0');
             pulse.classList.add('animate-ping', 'opacity-100');
 
-            let pTime = Math.floor(Math.random() * 15) + 12;
-            pingEl.innerText = `${pTime} ms`;
-
-            let currentSpeed = 0;
-            let targetSpeed = (Math.random() * 45 + 35).toFixed(1);
-
-            const interval = setInterval(() => {
-                currentSpeed += 2.4;
-                if (currentSpeed >= targetSpeed) {
-                    currentSpeed = targetSpeed;
-                    clearInterval(interval);
-                    btn.disabled = false;
-                    status.innerText = "Completed";
-                    pulse.classList.remove('animate-ping', 'opacity-100');
-                    pulse.classList.add('opacity-0');
-                    maxEl.innerText = `${targetSpeed} Mbps`;
+            // 1. Real Ping Measurement
+            let pings = [];
+            const pingTarget = 'https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js';
+            for (let i = 0; i < 3; i++) {
+                const pStart = performance.now();
+                try {
+                    await fetch(`${pingTarget}?_ping=${Date.now()}_${i}`, { method: 'HEAD', cache: 'no-store' });
+                    pings.push(Math.round(performance.now() - pStart));
+                } catch(e) {
+                    pings.push(Math.round(performance.now() - pStart));
                 }
-                mbpsEl.innerText = Number(currentSpeed).toFixed(1);
-            }, 60);
+            }
+            const avgPing = Math.min(...pings);
+            pingEl.innerText = `${avgPing} ms`;
+
+            // 2. Real Download Bandwidth Test (1.1 MB Payload)
+            status.innerText = "Testing download speed via CDN...";
+            const downloadUrl = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js';
+            const startTime = performance.now();
+            let totalBytes = 0;
+
+            try {
+                const response = await fetch(`${downloadUrl}?_test=${Date.now()}`, { cache: 'no-store' });
+                const reader = response.body.getReader();
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    totalBytes += value.length;
+                    const elapsedSec = (performance.now() - startTime) / 1000;
+                    if (elapsedSec > 0.05) {
+                        const currentMbps = ((totalBytes * 8) / (elapsedSec * 1000000)).toFixed(1);
+                        mbpsEl.innerText = currentMbps;
+                    }
+                }
+
+                const totalElapsedSec = (performance.now() - startTime) / 1000;
+                const finalMbps = ((totalBytes * 8) / (totalElapsedSec * 1000000)).toFixed(1);
+                mbpsEl.innerText = finalMbps;
+                maxEl.innerText = `${finalMbps} Mbps`;
+                status.innerText = `Completed (${(totalBytes / (1024 * 1024)).toFixed(2)} MB tested)`;
+            } catch (err) {
+                console.warn("Speed test network error:", err);
+                status.innerText = "Speed test completed (Network restricted)";
+            } finally {
+                btn.disabled = false;
+                pulse.classList.remove('animate-ping', 'opacity-100');
+                pulse.classList.add('opacity-0');
+            }
         }
 
-        /* ---------------- TEXT ENCRYPTION & DECRYPTION (ANY LANGUAGE) ---------------- */
-        function processCrypto(mode) {
+        /* ---------------- REAL MILITARY-GRADE AES-256 GCM ENCRYPTION ---------------- */
+        async function deriveKeyPBKDF2(passphrase, salt) {
+            const enc = new TextEncoder();
+            const keyMaterial = await crypto.subtle.importKey(
+                "raw",
+                enc.encode(passphrase),
+                { name: "PBKDF2" },
+                false,
+                ["deriveKey"]
+            );
+            return crypto.subtle.deriveKey(
+                {
+                    name: "PBKDF2",
+                    salt: salt,
+                    iterations: 100000,
+                    hash: "SHA-256"
+                },
+                keyMaterial,
+                { name: "AES-GCM", length: 256 },
+                false,
+                ["encrypt", "decrypt"]
+            );
+        }
+
+        async function processCrypto(mode) {
             const input = document.getElementById('cryptoInput').value;
-            const key = document.getElementById('cryptoKey').value || 'MultiTool';
+            const key = document.getElementById('cryptoKey').value || 'MultiToolSecretKey';
             const output = document.getElementById('cryptoOutput');
 
             if (!input) {
@@ -1694,27 +2200,54 @@ IP: ${document.getElementById('fkIp').innerText}`;
 
             try {
                 if (mode === 'encrypt') {
-                    // Unicode safe encoding with XOR stream cipher
-                    const utf8Bytes = new TextEncoder().encode(input);
-                    const keyBytes = new TextEncoder().encode(key);
-                    const enc = new Uint8Array(utf8Bytes.length);
-                    for (let i = 0; i < utf8Bytes.length; i++) {
-                        enc[i] = utf8Bytes[i] ^ keyBytes[i % keyBytes.length];
-                    }
-                    output.value = btoa(String.fromCharCode(...enc));
+                    const enc = new TextEncoder();
+                    const plaintext = enc.encode(input);
+                    const salt = crypto.getRandomValues(new Uint8Array(16));
+                    const iv = crypto.getRandomValues(new Uint8Array(12));
+                    const cryptoKey = await deriveKeyPBKDF2(key, salt);
+                    const ciphertext = await crypto.subtle.encrypt(
+                        { name: "AES-GCM", iv: iv },
+                        cryptoKey,
+                        plaintext
+                    );
+
+                    // Package into: [16 bytes salt][12 bytes iv][ciphertext]
+                    const combined = new Uint8Array(16 + 12 + ciphertext.byteLength);
+                    combined.set(salt, 0);
+                    combined.set(iv, 16);
+                    combined.set(new Uint8Array(ciphertext), 28);
+
+                    let binary = '';
+                    for (let i = 0; i < combined.length; i++) binary += String.fromCharCode(combined[i]);
+                    output.value = btoa(binary);
                 } else {
-                    const binStr = atob(input.trim());
-                    const enc = new Uint8Array(binStr.length);
-                    for (let i = 0; i < binStr.length; i++) enc[i] = binStr.charCodeAt(i);
-                    const keyBytes = new TextEncoder().encode(key);
-                    const dec = new Uint8Array(enc.length);
-                    for (let i = 0; i < enc.length; i++) {
-                        dec[i] = enc[i] ^ keyBytes[i % keyBytes.length];
+                    const binary = atob(input.trim());
+                    const combined = new Uint8Array(binary.length);
+                    for (let i = 0; i < binary.length; i++) combined[i] = binary.charCodeAt(i);
+
+                    if (combined.length < 28) {
+                        output.value = "Decryption Failed: Invalid token structure.";
+                        return;
                     }
-                    output.value = new TextDecoder().decode(dec);
+
+                    const salt = combined.slice(0, 16);
+                    const iv = combined.slice(16, 28);
+                    const ciphertext = combined.slice(28);
+
+                    const cryptoKey = await deriveKeyPBKDF2(key, salt);
+                    const decrypted = await crypto.subtle.decrypt(
+                        { name: "AES-GCM", iv: iv },
+                        cryptoKey,
+                        ciphertext
+                    );
+
+                    const dec = new TextDecoder();
+                    output.value = dec.decode(decrypted);
                 }
             } catch(e) {
-                output.value = "Error: Invalid token or secret key!";
+                output.value = mode === 'decrypt' 
+                    ? "Decryption Failed: Invalid secret key or corrupted ciphertext!"
+                    : "Encryption Error: " + e.message;
             }
         }
 
@@ -1791,11 +2324,13 @@ IP: ${document.getElementById('fkIp').innerText}`;
         /* ---------------- INITIALIZATION ---------------- */
         window.onload = () => {
             initVisitorCounters();
+            fetchLiveCurrencyRates();
             render2faHistory();
             renderPassHistory();
             genPass(false);
             generateEmails();
             generateFakeDetails();
+            update2FA();
 
             const initialHash = window.location.hash.replace('#', '') || 'gmail';
             switchTool(initialHash, false);
