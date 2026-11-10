@@ -407,12 +407,12 @@
                 <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/></svg>
                 All Tools
             </h2>
-            <button onclick="toggleSidebar()" class="p-1 rounded-lg text-gray-400 hover:text-white hover:bg-slate-800">
+            <button onclick="toggleSidebar()" aria-label="Close all tools menu" class="p-1 rounded-lg text-gray-400 hover:text-white hover:bg-slate-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
         </div>
         <div class="relative">
-            <input type="text" id="toolSearch" oninput="filterDrawerTools()" placeholder="Search tools..." class="w-full bg-[#1e293b] text-white text-xs px-3 py-2.5 rounded-xl border border-slate-700 outline-none focus:border-blue-500">
+            <input type="text" id="toolSearch" oninput="filterDrawerTools()" placeholder="Search tools..." aria-label="Search tools" class="w-full bg-[#1e293b] text-white text-xs px-3 py-2.5 rounded-xl border border-slate-700 outline-none focus:border-blue-500">
         </div>
         <div id="drawerList" class="flex-1 overflow-y-auto flex flex-col gap-1 pr-1 text-xs font-semibold">
             <button onclick="switchTool('home')" class="drawer-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white text-left">🏠 Home Dashboard</button>
@@ -433,8 +433,8 @@
     </aside>
 
     <!-- Top Navigation Bar -->
-    <header class="w-full max-w-7xl flex items-center justify-between px-4 pt-4 pb-2">
-        <button onclick="toggleSidebar()" class="w-10 h-10 rounded-xl bg-[#1e293b] border border-slate-700 flex items-center justify-center text-white hover:bg-blue-600 transition shadow-lg">
+    <header class="w-full max-w-7xl flex items-center justify-between px-4 pt-4 pb-2" role="banner">
+        <button onclick="toggleSidebar()" aria-label="Open all tools menu" class="w-10 h-10 rounded-xl bg-[#1e293b] border border-slate-700 flex items-center justify-center text-white hover:bg-blue-600 transition shadow-lg">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
 
