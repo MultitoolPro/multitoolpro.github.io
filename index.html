@@ -65,6 +65,21 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Inter:wght@400;600;700;800;900&family=Fira+Code:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
+        @font-face {
+  font-family: 'MultiToolProFont';
+  src: url('/fonts/multitoolprofont.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MultiToolProFont';
+  src: url('/fonts/multitoolprofont-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
         :root {
             --bg-dark: #0b1122;
             --card-dark: #141b37;
@@ -77,7 +92,7 @@
         body {
             background-color: var(--bg-dark);
             color: #e2e8f0;
-            font-family: 'Inter', 'Hind Siliguri', sans-serif;
+            font-family: 'MultiToolProFont', 'Hind Siliguri', sans-serif;
             min-height: 100vh;
             background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
             background-size: 24px 24px;
