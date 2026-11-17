@@ -58,8 +58,8 @@
 
     <!-- Core Runtime Scripts (Fast & Lightweight) -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/@otplib/preset-browser@latest/buffer.js"></script>
-    <script src="https://unpkg.com/@otplib/preset-browser@latest/index.js"></script>
+    <script src="https://unpkg.com/@otplib/preset-browser@12.0.1/buffer.js"></script>
+    <script src="https://unpkg.com/@otplib/preset-browser@12.0.1/index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
     
     <!-- Google Fonts -->
@@ -393,7 +393,56 @@
     flex-shrink: 0 !important;
   }
 }
-    </style>
+    
+/* ===== PREMIUM LAYER ===== */
+body::before,body::after{content:"";position:fixed;z-index:-1;width:55vmax;height:55vmax;border-radius:50%;filter:blur(110px);opacity:.28;pointer-events:none;animation:orb 22s ease-in-out infinite alternate}
+body::before{top:-20vmax;left:-15vmax;background:#2563eb}
+body::after{bottom:-25vmax;right:-15vmax;background:#7c3aed;animation-delay:-9s}
+@keyframes orb{to{transform:translate(8vmax,6vmax) scale(1.15)}}
+@keyframes toolIn{from{opacity:0;transform:translateY(22px) scale(.98)}to{opacity:1;transform:none}}
+#mainContent>section:not(.hidden-tool){animation:toolIn .55s cubic-bezier(.2,.8,.2,1) both}
+#mainContent>section:nth-child(2){animation-delay:.08s}#mainContent>section:nth-child(3){animation-delay:.16s}
+.app-card{position:relative;transition:transform .3s,box-shadow .3s,border-color .3s}
+.app-card:hover{transform:translateY(-3px);border-color:rgba(96,165,250,.35);box-shadow:0 22px 55px rgba(37,99,235,.18)}
+.glow-card::before{content:"";position:absolute;inset:-1px;border-radius:25px;padding:1px;background:linear-gradient(135deg,#22d3ee,#8b5cf6,#ec4899,#22d3ee);background-size:300% 300%;animation:borderFlow 6s linear infinite;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+@keyframes borderFlow{to{background-position:300% 0}}
+h1{background:linear-gradient(90deg,#fff,#93c5fd,#c4b5fd,#fff);background-size:250% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shine 6s linear infinite}
+h1 span{-webkit-text-fill-color:#fff}
+@keyframes shine{to{background-position:250% center}}
+.tool-pill{backdrop-filter:blur(8px)}
+.tool-pill.active{animation:pillPulse 2.4s ease-in-out infinite}
+@keyframes pillPulse{50%{box-shadow:0 0 26px rgba(37,99,235,.75)}}
+.btn-premium{background:linear-gradient(135deg,#2563eb,#7c3aed,#06b6d4);background-size:200% 200%;transition:transform .2s,box-shadow .3s,background-position .6s;box-shadow:0 10px 28px rgba(37,99,235,.35)}
+.btn-premium:hover{background-position:100% 50%;transform:translateY(-2px);box-shadow:0 14px 34px rgba(124,58,237,.5)}
+.btn-premium:active{transform:scale(.97)}.btn-premium:disabled{opacity:.7;cursor:wait}
+.btn-premium.running{animation:pulseGlow 1.2s infinite}
+.stat-l{font-size:10px;text-transform:uppercase;font-weight:800;color:#94a3b8;letter-spacing:.08em}
+.stat-v{font-family:'Fira Code',monospace;font-weight:800;font-size:15px;margin-top:4px}
+.gauge-wrap{position:relative;width:100%;max-width:340px}
+.gauge-bg,.gauge-arc{fill:none;stroke-width:14;stroke-linecap:round}
+.gauge-bg{stroke:rgba(255,255,255,.07)}
+.gauge-arc{stroke:url(#gg);stroke-dasharray:251.3;stroke-dashoffset:251.3;transition:stroke-dashoffset .35s ease-out;filter:drop-shadow(0 0 8px rgba(59,130,246,.7))}
+.gauge-needle{transform-origin:100px 100px;transform:rotate(-90deg);transition:transform .35s ease-out}
+.gauge-needle line{stroke:#fff;stroke-width:2.5;stroke-linecap:round}.gauge-needle circle{fill:#22d3ee}
+.gauge-readout{position:absolute;left:0;right:0;bottom:2px;text-align:center}
+.gauge-readout span{display:block;font:900 34px 'Fira Code',monospace;color:#fff;text-shadow:0 0 18px rgba(34,211,238,.5)}
+.gauge-readout small{font-size:11px;font-weight:800;letter-spacing:.2em;color:#22d3ee;text-transform:uppercase}
+.radar{position:relative;width:150px;height:150px;border-radius:50%;border:1px solid rgba(34,211,238,.4);background:radial-gradient(circle,rgba(34,211,238,.12),transparent 70%);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.radar span{position:absolute;border:1px solid rgba(34,211,238,.25);border-radius:50%}
+.radar span:nth-child(1){inset:15%}.radar span:nth-child(2){inset:32%}.radar span:nth-child(3){inset:46%}
+.radar-sweep{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,rgba(34,211,238,.55),transparent 30%);animation:spin 2.4s linear infinite;opacity:.35}
+.radar.scanning .radar-sweep{opacity:1;animation-duration:1s}
+@keyframes spin{to{transform:rotate(360deg)}}
+.radar-flag{position:relative;font-size:46px;z-index:2;filter:drop-shadow(0 4px 10px rgba(0,0,0,.5))}
+.info-tile{background:rgba(11,17,34,.75);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:10px 12px;transition:.25s;animation:toolIn .5s both}
+.info-tile:hover{border-color:rgba(34,211,238,.5);transform:translateY(-2px)}
+.info-tile small{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:#64748b;font-weight:800;margin-bottom:3px}
+.info-tile b{color:#fff;font-weight:700;word-break:break-word}
+.pill-box:hover{border-color:rgba(255,255,255,.2)}
+.email-item{animation:toolIn .35s both}.email-item:hover{border-color:rgba(59,130,246,.4);transform:translateX(3px)}
+::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-thumb{background:#334155;border-radius:9px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
 </head>
 <body class="flex flex-col items-center">
 
@@ -995,54 +1044,50 @@
         </section>
 
         <!-- IP CHECKER TOOL -->
-        <section id="tool-ip" class="app-card w-full max-w-2xl flex flex-col items-center gap-4 hidden-tool mb-6">
+        <section id="tool-ip" class="app-card w-full max-w-2xl flex flex-col items-center gap-4 hidden-tool mb-6 glow-card">
             <div class="w-full flex items-center justify-between border-b border-slate-800 pb-3">
                 <h3 class="text-base font-extrabold text-white uppercase tracking-wider">IP Address Checker</h3>
-                <button onclick="fetchClientIpInfo()" class="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition">Check Again ↻</button>
+                <button onclick="fetchClientIpInfo()" class="btn-premium px-3.5 py-1.5 text-white rounded-xl text-xs font-bold">Scan Again ↻</button>
             </div>
-
-            <div class="w-full flex flex-col items-center p-6 bg-[#0b1120] border border-slate-800 rounded-2xl">
-                <span class="text-xs text-slate-400 uppercase font-bold tracking-wider">Your Public IP Address</span>
-                <h2 id="clientIpDisplay" class="text-3xl font-black text-blue-400 font-mono mt-2 mb-4">Scanning...</h2>
-
-                <div class="w-full grid grid-cols-2 gap-3 text-xs border-t border-slate-800 pt-4">
-                    <p>City: <span id="ipCity" class="text-white font-semibold">Detecting...</span></p>
-                    <p>Region: <span id="ipRegion" class="text-white font-semibold">Detecting...</span></p>
-                    <p>Country: <span id="ipCountry" class="text-white font-semibold">Detecting...</span></p>
-                    <p>ISP: <span id="ipIsp" class="text-white font-semibold">Detecting...</span></p>
-                    <p>Timezone: <span id="ipTimezone" class="text-white font-semibold">Detecting...</span></p>
-                    <p>Latitude/Longitude: <span id="ipCoords" class="text-white font-mono">Detecting...</span></p>
-                </div>
+            <div id="ipRadar" class="radar"><span></span><span></span><span></span><div class="radar-sweep"></div><div id="ipFlag" class="radar-flag">🌐</div></div>
+            <div class="flex items-center gap-2">
+                <h2 id="clientIpDisplay" class="text-3xl font-black text-cyan-300 font-mono">Scanning...</h2>
+                <div onclick="copyAction(document.getElementById('clientIpDisplay').innerText,'ip',this)" class="copy-wrapper" title="Copy IP"><div class="copy-circle"></div>
+                    <svg class="copy-svg w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"/></svg>
+                    <svg class="check-svg w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            </div>
+            <div class="w-full grid grid-cols-2 md:grid-cols-3 gap-3 text-xs">
+                <div class="info-tile"><small>City</small><b id="ipCity">Detecting...</b></div>
+                <div class="info-tile"><small>Region</small><b id="ipRegion">Detecting...</b></div>
+                <div class="info-tile"><small>Country</small><b id="ipCountry">Detecting...</b></div>
+                <div class="info-tile"><small>ISP</small><b id="ipIsp">Detecting...</b></div>
+                <div class="info-tile"><small>Timezone</small><b id="ipTimezone">Detecting...</b></div>
+                <div class="info-tile"><small>Lat / Long</small><b id="ipCoords" class="font-mono">Detecting...</b></div>
             </div>
         </section>
 
         <!-- NET SPEED TEST TOOL -->
-        <section id="tool-speedtest" class="app-card w-full max-w-xl flex flex-col items-center gap-4 hidden-tool mb-6">
+        <section id="tool-speedtest" class="app-card w-full max-w-xl flex flex-col items-center gap-4 hidden-tool mb-6 glow-card">
             <div class="w-full flex items-center justify-between border-b border-slate-800 pb-3">
                 <h3 class="text-base font-extrabold text-white uppercase tracking-wider">Network Speed Test</h3>
-                <span id="speedStatus" class="text-xs text-slate-400 font-semibold">Ready</span>
+                <span id="speedStatus" class="text-xs text-cyan-300 font-semibold">Ready</span>
             </div>
-
-            <div class="w-48 h-48 rounded-full border-4 border-blue-500/20 flex flex-col items-center justify-center p-4 my-2 relative">
-                <span id="speedMbps" class="text-4xl font-black text-white font-mono tracking-tight">0.0</span>
-                <span class="text-xs text-blue-400 font-bold uppercase tracking-widest mt-1">Mbps</span>
-                <div id="speedPulse" class="absolute inset-0 rounded-full border-4 border-blue-500 opacity-0 transition"></div>
+            <div class="gauge-wrap">
+                <svg viewBox="0 0 200 120" class="w-full">
+                    <defs><linearGradient id="gg" x1="0" x2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset=".5" stop-color="#3b82f6"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs>
+                    <path d="M20 100 A80 80 0 0 1 180 100" class="gauge-bg"/>
+                    <path id="gaugeArc" d="M20 100 A80 80 0 0 1 180 100" class="gauge-arc"/>
+                    <g id="gaugeNeedle" class="gauge-needle"><line x1="100" y1="100" x2="100" y2="34"/><circle cx="100" cy="100" r="6"/></g>
+                </svg>
+                <div class="gauge-readout"><span id="speedMbps">0.0</span><small>Mbps</small></div>
             </div>
-
-            <div class="w-full grid grid-cols-2 gap-3 text-center text-xs">
-                <div class="pill-box p-3">
-                    <p class="text-slate-400 text-[10px] uppercase font-bold">Latency (Ping)</p>
-                    <h4 id="speedPing" class="text-base font-black text-emerald-400 font-mono mt-1">-- ms</h4>
-                </div>
-                <div class="pill-box p-3">
-                    <p class="text-slate-400 text-[10px] uppercase font-bold">Download Estimated</p>
-                    <h4 id="speedMax" class="text-base font-black text-blue-400 font-mono mt-1">-- Mbps</h4>
-                </div>
+            <div class="w-full grid grid-cols-2 md:grid-cols-4 gap-3 text-center text-xs">
+                <div class="pill-box p-3"><p class="stat-l">Ping</p><h4 id="speedPing" class="stat-v text-emerald-400">--</h4></div>
+                <div class="pill-box p-3"><p class="stat-l">Jitter</p><h4 id="speedJitter" class="stat-v text-amber-400">--</h4></div>
+                <div class="pill-box p-3"><p class="stat-l">Download</p><h4 id="speedMax" class="stat-v text-blue-400">--</h4></div>
+                <div class="pill-box p-3"><p class="stat-l">Upload</p><h4 id="speedUp" class="stat-v text-fuchsia-400">--</h4></div>
             </div>
-
-            <button id="runSpeedBtn" onclick="runSpeedTest()" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-xs rounded-xl uppercase tracking-wider transition shadow-lg shadow-blue-600/30">
-                Start Speed Test
-            </button>
+            <button id="runSpeedBtn" onclick="runSpeedTest()" class="btn-premium w-full py-3 text-white font-extrabold text-xs rounded-xl uppercase tracking-wider">Start Speed Test</button>
         </section>
 
         <!-- TEXT ENCRYPTION & DECRYPTION (ANY LANGUAGE SUPPORT) -->
@@ -1352,7 +1397,8 @@
             switchTool(h, false);
         });
 
-        /* ---------------- PREMIUM COPY ENGINE ---------------- */
+        const esc=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+/* ---------------- PREMIUM COPY ENGINE ---------------- */
         const ding = new Audio('https://www.fesliyanstudios.com/play-mp3/387');
         function playDing() {
             if (!isS) return;
@@ -1400,7 +1446,7 @@
             }
             el.innerHTML = h2fa.map(item => `
                 <div class="inline-history-item">
-                    <span class="truncate pr-2 font-mono text-blue-400 font-bold">${item.value}</span>
+                    <span class="truncate pr-2 font-mono text-blue-400 font-bold">${esc(item.value)}</span>
                     <span class="inline-history-time">${timeAgo(item.ts)}</span>
                 </div>
             `).join('');
@@ -1415,7 +1461,7 @@
             }
             el.innerHTML = hPass.map(item => `
                 <div class="inline-history-item">
-                    <span class="truncate pr-2 font-mono text-green-400 font-bold">${item.value}</span>
+                    <span class="truncate pr-2 font-mono text-green-400 font-bold">${esc(item.value)}</span>
                     <span class="inline-history-time">${timeAgo(item.ts)}</span>
                 </div>
             `).join('');
@@ -1560,7 +1606,7 @@
             const errorEl = document.getElementById('otpError');
             const otpEl = document.getElementById('otpBox');
             const timerEl = document.getElementById('timerText');
-            const k = (inputEl ? inputEl.value : '').trim().replace(/\s/g, '');
+            const k = (inputEl ? inputEl.value : '').trim().replace(/\s/g, '').toUpperCase();
             const r = authenticator.timeRemaining();
             if (timerEl) timerEl.innerText = r + 's';
             renderSegmentedBar(r, 30);
@@ -1601,7 +1647,7 @@
 
             let p = "";
             for (let i = 0; i < len; i++) {
-                p += chars.charAt(Math.floor(Math.random() * chars.length));
+                p += chars.charAt(crypto.getRandomValues(new Uint32Array(1))[0] % chars.length);
             }
             document.getElementById('passOutput').innerText = p;
         }
@@ -1820,7 +1866,7 @@
                 };
 
                 mediaRecorder.onstop = () => {
-                    const blob = new Blob(recordedChunks, { type: 'video/mp4' });
+                    const blob = new Blob(recordedChunks, { type: mediaRecorder.mimeType.split(';')[0] });
                     const url = URL.createObjectURL(blob);
                     preview.srcObject = null;
                     preview.src = url;
@@ -1829,7 +1875,7 @@
 
                     const downloadBtn = document.getElementById('downloadRecBtn');
                     downloadBtn.href = url;
-                    downloadBtn.download = `Screen-Record-${Date.now()}.mp4`;
+                    downloadBtn.download = `Screen-Record-${Date.now()}.${mediaRecorder.mimeType.includes('mp4')?'mp4':'webm'}`;
                     downloadBtn.classList.remove('hidden');
                     downloadBtn.classList.add('flex');
                 };
@@ -1974,7 +2020,7 @@
             if (!file) return;
 
             const reader = new FileReader();
-            reader.onload = (event) => {
+            reader.onload = async (event) => { await initExcelEditorInstance();
                 try {
                     const data = event.target.result;
                     const wb = file.name.endsWith('.csv') 
@@ -1992,7 +2038,6 @@
                         return { name, rows };
                     });
 
-                    initExcelEditorInstance();
                     excelEditor.loadData(sheets);
                     currentWorkbookName = file.name;
                     document.getElementById('excelWorkbookTitle').innerText = currentWorkbookName;
@@ -2041,7 +2086,7 @@
             const birthYear = Math.floor(Math.random() * 25) + 1980;
             const birthMonth = String(Math.floor(Math.random() * 12) + 1).padStart(2, '0');
             const birthDay = String(Math.floor(Math.random() * 28) + 1).padStart(2, '0');
-            const age = 2026 - birthYear;
+            const age = new Date().getFullYear() - birthYear;
 
             document.getElementById('fkName').innerText = name;
             document.getElementById('fkGender').innerText = gender;
@@ -2053,7 +2098,7 @@
             document.getElementById('fkCity').innerText = data.cities[Math.floor(Math.random()*data.cities.length)];
             document.getElementById('fkState').innerText = data.states[Math.floor(Math.random()*data.states.length)];
             document.getElementById('fkZip').innerText = Math.floor(Math.random()*89999+10000);
-            document.getElementById('fkPhone').innerText = `+1 (512) ${Math.floor(Math.random()*899+100)}-${Math.floor(Math.random()*8999+1000)}`;
+            document.getElementById('fkPhone').innerText = ({usa:'+1 (512)',bd:'+880 17',india:'+91 98',uk:'+44 77',can:'+1 (416)'}[reg]||'+1 (512)')+` ${Math.floor(Math.random()*899+100)}-${Math.floor(Math.random()*8999+1000)}`;
 
             document.getElementById('fkCompany').innerText = data.companies[Math.floor(Math.random()*data.companies.length)];
             document.getElementById('fkRole').innerText = data.roles[Math.floor(Math.random()*data.roles.length)];
@@ -2079,89 +2124,97 @@ IP: ${document.getElementById('fkIp').innerText}`;
             alert("Full Fake Profile Copied!");
         }
 
-        /* ---------------- IP CHECKER TOOL ---------------- */
+        /* ---------------- IP CHECKER (animated, real data only) ---------------- */
         async function fetchClientIpInfo() {
+            const set = (id, v) => { const e = document.getElementById(id); if (e) e.innerText = v || '—'; };
+            const radar = document.getElementById('ipRadar');
+            radar?.classList.add('scanning');
+            ['ipCity','ipRegion','ipCountry','ipIsp','ipTimezone','ipCoords'].forEach(i => set(i, 'Detecting...'));
+            set('clientIpDisplay', 'Scanning...');
             try {
-                const res = await fetch('https://ipapi.co/json/');
-                const data = await res.json();
-                document.getElementById('clientIpDisplay').innerText = data.ip || '103.114.152.4';
-                document.getElementById('ipCity').innerText = data.city || 'Dhaka';
-                document.getElementById('ipRegion').innerText = data.region || 'Dhaka Division';
-                document.getElementById('ipCountry').innerText = data.country_name || 'Bangladesh';
-                document.getElementById('ipIsp').innerText = data.org || 'Broadband Network';
-                document.getElementById('ipTimezone').innerText = data.timezone || 'Asia/Dhaka';
-                document.getElementById('ipCoords').innerText = `${data.latitude || 23.8103}, ${data.longitude || 90.4125}`;
-            } catch(e) {
-                document.getElementById('clientIpDisplay').innerText = '103.114.152.12';
-                document.getElementById('ipCity').innerText = 'Dhaka';
-                document.getElementById('ipCountry').innerText = 'Bangladesh';
-                document.getElementById('ipIsp').innerText = 'National Optical Fiber';
-            }
+                let d;
+                try {
+                    const x = await (await fetch('https://ipwho.is/')).json();
+                    if (!x.success) throw 0;
+                    d = { ip: x.ip, city: x.city, region: x.region, country: x.country, cc: x.country_code, isp: x.connection?.isp || x.connection?.org, tz: x.timezone?.id, lat: x.latitude, lon: x.longitude };
+                } catch {
+                    const x = await (await fetch('https://ipapi.co/json/')).json();
+                    if (x.error) throw 0;
+                    d = { ip: x.ip, city: x.city, region: x.region, country: x.country_name, cc: x.country_code, isp: x.org, tz: x.timezone, lat: x.latitude, lon: x.longitude };
+                }
+                set('clientIpDisplay', d.ip); set('ipCity', d.city); set('ipRegion', d.region); set('ipCountry', d.country);
+                set('ipIsp', d.isp); set('ipTimezone', d.tz); set('ipCoords', d.lat != null ? `${d.lat}, ${d.lon}` : '—');
+                const f = document.getElementById('ipFlag');
+                if (f) f.innerText = d.cc && d.cc.length === 2 ? String.fromCodePoint(...[...d.cc.toUpperCase()].map(c => 127397 + c.charCodeAt())) : '🌐';
+            } catch {
+                set('clientIpDisplay', 'Unavailable');
+                ['ipCity','ipRegion','ipCountry','ipIsp','ipTimezone','ipCoords'].forEach(i => set(i, 'N/A'));
+            } finally { radar?.classList.remove('scanning'); }
         }
 
-        /* ---------------- REAL NET SPEED TEST ---------------- */
+        /* ---------------- SPEED TEST (ping, jitter, download, upload) ---------------- */
+        function setGauge(v) {
+            const pct = Math.min(1, Math.log10(1 + v) / Math.log10(1001));
+            document.getElementById('speedMbps').innerText = v.toFixed(1);
+            document.getElementById('gaugeArc').style.strokeDashoffset = 251.3 * (1 - pct);
+            document.getElementById('gaugeNeedle').style.transform = `rotate(${-90 + 180 * pct}deg)`;
+        }
         async function runSpeedTest() {
-            const btn = document.getElementById('runSpeedBtn');
-            const status = document.getElementById('speedStatus');
-            const mbpsEl = document.getElementById('speedMbps');
-            const pingEl = document.getElementById('speedPing');
-            const maxEl = document.getElementById('speedMax');
-            const pulse = document.getElementById('speedPulse');
-
-            btn.disabled = true;
-            status.innerText = "Measuring Latency (Ping)...";
-            pulse.classList.remove('opacity-0');
-            pulse.classList.add('animate-ping', 'opacity-100');
-
-            // 1. Real Ping Measurement
-            let pings = [];
-            const pingTarget = 'https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js';
-            for (let i = 0; i < 3; i++) {
-                const pStart = performance.now();
-                try {
-                    await fetch(`${pingTarget}?_ping=${Date.now()}_${i}`, { method: 'HEAD', cache: 'no-store' });
-                    pings.push(Math.round(performance.now() - pStart));
-                } catch(e) {
-                    pings.push(Math.round(performance.now() - pStart));
-                }
-            }
-            const avgPing = Math.min(...pings);
-            pingEl.innerText = `${avgPing} ms`;
-
-            // 2. Real Download Bandwidth Test (1.1 MB Payload)
-            status.innerText = "Testing download speed via CDN...";
-            const downloadUrl = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js';
-            const startTime = performance.now();
-            let totalBytes = 0;
-
+            const B = 'https://speed.cloudflare.com/';
+            const $ = id => document.getElementById(id);
+            const btn = $('runSpeedBtn'), st = $('speedStatus');
+            btn.disabled = true; btn.classList.add('running');
+            ['speedPing','speedJitter','speedMax','speedUp'].forEach(i => $(i).innerText = '--');
+            setGauge(0);
             try {
-                const response = await fetch(`${downloadUrl}?_test=${Date.now()}`, { cache: 'no-store' });
-                const reader = response.body.getReader();
-
-                while (true) {
-                    const { done, value } = await reader.read();
-                    if (done) break;
-                    totalBytes += value.length;
-                    const elapsedSec = (performance.now() - startTime) / 1000;
-                    if (elapsedSec > 0.05) {
-                        const currentMbps = ((totalBytes * 8) / (elapsedSec * 1000000)).toFixed(1);
-                        mbpsEl.innerText = currentMbps;
-                    }
+                st.innerText = 'Measuring ping…';
+                const p = [];
+                for (let i = 0; i < 6; i++) {
+                    const t = performance.now();
+                    await fetch(`${B}__down?bytes=0&r=${Math.random()}`, { cache: 'no-store' });
+                    p.push(performance.now() - t);
                 }
+                const jit = p.slice(1).reduce((a, x, i) => a + Math.abs(x - p[i]), 0) / (p.length - 1);
+                $('speedPing').innerText = `${Math.round(Math.min(...p))} ms`;
+                $('speedJitter').innerText = `${jit.toFixed(1)} ms`;
 
-                const totalElapsedSec = (performance.now() - startTime) / 1000;
-                const finalMbps = ((totalBytes * 8) / (totalElapsedSec * 1000000)).toFixed(1);
-                mbpsEl.innerText = finalMbps;
-                maxEl.innerText = `${finalMbps} Mbps`;
-                status.innerText = `Completed (${(totalBytes / (1024 * 1024)).toFixed(2)} MB tested)`;
-            } catch (err) {
-                console.warn("Speed test network error:", err);
-                status.innerText = "Speed test completed (Network restricted)";
-            } finally {
-                btn.disabled = false;
-                pulse.classList.remove('animate-ping', 'opacity-100');
-                pulse.classList.add('opacity-0');
-            }
+                st.innerText = 'Testing download…';
+                let bytes = 0, t0 = performance.now(), end = t0 + 6000;
+                const dlWorker = async () => {
+                    while (performance.now() < end) {
+                        const r = await fetch(`${B}__down?bytes=25000000&r=${Math.random()}`, { cache: 'no-store' });
+                        const rd = r.body.getReader();
+                        while (true) {
+                            const { done, value } = await rd.read();
+                            if (done) break;
+                            bytes += value.length;
+                            const el = (performance.now() - t0) / 1000;
+                            if (el > 0.3) setGauge(bytes * 8 / el / 1e6);
+                            if (performance.now() > end) { rd.cancel(); return; }
+                        }
+                    }
+                };
+                await Promise.allSettled([dlWorker(), dlWorker(), dlWorker(), dlWorker()]);
+                const dl = bytes * 8 / ((performance.now() - t0) / 1000) / 1e6;
+                setGauge(dl); $('speedMax').innerText = `${dl.toFixed(1)} Mbps`;
+
+                st.innerText = 'Testing upload…';
+                const blob = new Blob([new Uint8Array(1e6)]);
+                let ub = 0; t0 = performance.now(); end = t0 + 4000;
+                const upWorker = async () => {
+                    while (performance.now() < end) {
+                        await fetch(B + '__up', { method: 'POST', body: blob });
+                        ub += 1e6;
+                        setGauge(ub * 8 / ((performance.now() - t0) / 1000) / 1e6);
+                    }
+                };
+                await Promise.allSettled([upWorker(), upWorker(), upWorker()]);
+                const up = ub * 8 / ((performance.now() - t0) / 1000) / 1e6;
+                setGauge(up); $('speedUp').innerText = `${up.toFixed(1)} Mbps`;
+                st.innerText = 'Completed ✓';
+            } catch (e) {
+                st.innerText = 'Test failed — check your connection or ad-blocker';
+            } finally { btn.disabled = false; btn.classList.remove('running'); }
         }
 
         /* ---------------- REAL MILITARY-GRADE AES-256 GCM ENCRYPTION ---------------- */
