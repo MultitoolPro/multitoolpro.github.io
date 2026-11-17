@@ -1509,6 +1509,7 @@ h1 span{-webkit-text-fill-color:#fff}
         function clear2FA() {
             document.getElementById('otpSecretField').value = '';
             update2FA();
+            document.getElementById('otpSecretField').focus();
         }
 
         function renderSegmentedBar(remaining, total = 30) {
