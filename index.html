@@ -65,21 +65,6 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Inter:wght@400;600;700;800;900&family=Fira+Code:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
-        @font-face {
-  font-family: 'MultiToolProFont';
-  src: url('/fonts/multitoolprofont.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'MultiToolProFont';
-  src: url('/fonts/multitoolprofont-bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
         :root {
             --bg-dark: #0b1122;
             --card-dark: #141b37;
@@ -92,7 +77,7 @@
         body {
             background-color: var(--bg-dark);
             color: #e2e8f0;
-            font-family: 'MultiToolProFont', 'Hind Siliguri', sans-serif;
+            font-family: 'Inter', 'Hind Siliguri', sans-serif;
             min-height: 100vh;
             background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
             background-size: 24px 24px;
@@ -456,6 +441,16 @@ h1 span{-webkit-text-fill-color:#fff}
 .pill-box:hover{border-color:rgba(255,255,255,.2)}
 .email-item{animation:toolIn .35s both}.email-item:hover{border-color:rgba(59,130,246,.4);transform:translateX(3px)}
 ::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-thumb{background:#334155;border-radius:9px}
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,30px);background:rgba(15,23,42,.95);border:1px solid rgba(34,211,238,.4);color:#e2e8f0;padding:9px 18px;border-radius:999px;font-size:12px;font-weight:700;opacity:0;pointer-events:none;transition:.3s;z-index:300;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.hist-row{cursor:pointer;transition:.2s}.hist-row:hover{background:rgba(255,255,255,.06)}
+.fk-hero{display:flex;align-items:center;gap:16px;padding:16px;border-radius:18px;background:linear-gradient(135deg,rgba(37,99,235,.18),rgba(124,58,237,.14));border:1px solid rgba(255,255,255,.08)}
+.fk-avatar{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:900 22px Inter,sans-serif;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.4);animation:toolIn .5s both}
+.fk-card{animation:toolIn .5s both;transition:.25s}.fk-card:hover{border-color:var(--c);transform:translateY(-2px)}
+.fk-row{display:flex;justify-content:space-between;gap:10px;padding:5px 8px;border-radius:9px;cursor:pointer;transition:.2s}
+.fk-row:hover{background:rgba(255,255,255,.07)}.fk-row.flash{background:rgba(34,197,94,.3)}
+.fk-row small{color:#64748b;font-weight:700;white-space:nowrap}.fk-row b{color:#e2e8f0;font-family:'Fira Code',monospace;font-weight:600;text-align:right;word-break:break-all}
+#swapBtn.spin{animation:swapSpin .5s}@keyframes swapSpin{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -600,37 +595,37 @@ h1 span{-webkit-text-fill-color:#fff}
                     <!-- 3. আজকের ভিজিটর -->
                     <div class="p-4 rounded-2xl flex flex-col items-center justify-center text-center shadow-md" style="background-color: #4a3828; border: 1px solid rgba(255,255,255,0.06);">
                         <p class="text-xs font-bold text-amber-200 mb-2">আজকের ভিজিটর</p>
-                        <h4 id="statVisitorsToday" class="text-3xl font-black text-amber-400">১৮</h4>
+                        <h4 id="statVisitorsToday" class="text-3xl font-black text-amber-400">…</h4>
                     </div>
 
                     <!-- 4. মোট ভিজিটর (সকল) -->
                     <div class="p-4 rounded-2xl flex flex-col items-center justify-center text-center shadow-md" style="background-color: #4c1d28; border: 1px solid rgba(255,255,255,0.06);">
                         <p class="text-xs font-bold text-rose-200 mb-2">মোট ভিজিটর (সকল)</p>
-                        <h4 id="statVisitorsTotal" class="text-3xl font-black text-rose-300">১১,৪১১</h4>
+                        <h4 id="statVisitorsTotal" class="text-3xl font-black text-rose-300">…</h4>
                     </div>
 
                     <!-- 5. এ মাসের ভিজিটর -->
                     <div class="p-4 rounded-2xl flex flex-col items-center justify-center text-center shadow-md" style="background-color: #17384a; border: 1px solid rgba(255,255,255,0.06);">
                         <p class="text-xs font-bold text-cyan-200 mb-2">এ মাসের ভিজিটর</p>
-                        <h4 id="statMonthCurrent" class="text-3xl font-black text-cyan-300">৬০২</h4>
+                        <h4 id="statMonthCurrent" class="text-3xl font-black text-cyan-300">…</h4>
                     </div>
 
                     <!-- 6. গত মাসের ভিজিটর -->
                     <div class="p-4 rounded-2xl flex flex-col items-center justify-center text-center shadow-md" style="background-color: #472138; border: 1px solid rgba(255,255,255,0.06);">
                         <p class="text-xs font-bold text-pink-200 mb-2">গত মাসের ভিজিটর</p>
-                        <h4 id="statMonthLast" class="text-3xl font-black text-pink-300">৬৬৯</h4>
+                        <h4 id="statMonthLast" class="text-3xl font-black text-pink-300">…</h4>
                     </div>
 
                     <!-- 7. এ বছরের ভিজিটর -->
                     <div class="p-4 rounded-2xl flex flex-col items-center justify-center text-center shadow-md" style="background-color: #273d27; border: 1px solid rgba(255,255,255,0.06);">
                         <p class="text-xs font-bold text-lime-200 mb-2">এ বছরের ভিজিটর</p>
-                        <h4 id="statYearCurrent" class="text-3xl font-black text-lime-400">৬,৫৮১</h4>
+                        <h4 id="statYearCurrent" class="text-3xl font-black text-lime-400">…</h4>
                     </div>
 
                     <!-- 8. গত বছরের ভিজিটর -->
                     <div class="p-4 rounded-2xl flex flex-col items-center justify-center text-center shadow-md" style="background-color: #4d3525; border: 1px solid rgba(255,255,255,0.06);">
                         <p class="text-xs font-bold text-orange-200 mb-2">গত বছরের ভিজিটর</p>
-                        <h4 id="statYearLast" class="text-3xl font-black text-orange-300">০</h4>
+                        <h4 id="statYearLast" class="text-3xl font-black text-orange-300">…</h4>
                     </div>
                 </div>
             </div>
@@ -651,10 +646,22 @@ h1 span{-webkit-text-fill-color:#fff}
                         <div class="relative w-full">
                             <input type="text" id="otpSecretField" placeholder="ENTER 2FA SECRET" class="w-full bg-[#050811] border border-slate-700/80 rounded-xl px-3.5 py-2.5 pr-9 text-xs text-white font-mono uppercase tracking-wider outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition placeholder-slate-600">
                             <button type="button" onclick="clear2FA()" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white p-1 rounded-lg transition" title="Clear Secret">
-                               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                             </button>
                         </div>
                         <p id="otpError" class="text-[10px] text-red-400 mt-1 min-h-[14px]"></p>
+                    </div>
+
+                    <div class="flex items-center gap-2 w-full mt-2">
+                        <button type="button" onclick="pasteKeyTo2FA()" class="flex-1 py-2 px-2.5 rounded-xl bg-[#0e1629] hover:bg-[#16223e] border border-slate-700/70 text-slate-200 text-[11px] font-bold flex items-center justify-center gap-1.5 transition active:scale-95 shadow-sm">
+                            <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                            Paste Key
+                        </button>
+                        <button type="button" onclick="triggerQrScan()" class="flex-1 py-2 px-2.5 rounded-xl bg-[#0e1629] hover:bg-[#16223e] border border-slate-700/70 text-slate-200 text-[11px] font-bold flex items-center justify-center gap-1.5 transition active:scale-95 shadow-sm">
+                            <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><circle cx="12" cy="13" r="3" stroke-width="2"/></svg>
+                            Scan QR
+                        </button>
+                        <input type="file" id="qrFileInput" accept="image/*" class="hidden" onchange="handleQrImageUpload(event)">
                     </div>
                 </div>
 
@@ -663,10 +670,7 @@ h1 span{-webkit-text-fill-color:#fff}
                     <div>
                         <!-- Header with Active Token label & timer badge -->
                         <div class="flex items-center justify-between mb-1.5">
-                            <span class="text-[11px] font-black text-white tracking-widest uppercase flex items-center gap-1.5">
-                                <svg class="w-3.5 h-3.5 text-cyan-400 animate-pulse" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/></svg>
-                                ACTIVE TOKEN
-                            </span>
+                            <span></span>
                             <div class="px-2.5 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-400 text-[10px] font-mono font-bold flex items-center gap-1">
                                 <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span>
                                 <span id="timerText">30s</span>
@@ -676,7 +680,6 @@ h1 span{-webkit-text-fill-color:#fff}
                         <!-- Segmented Progress Bar (Cyberpunk style from screenshot) -->
                         <div id="tfaSegmentBar" class="flex items-center gap-[3px] w-full h-3.5 my-2"></div>
 
-                        <!-- System Buffer and status indicators -->
                         
                     </div>
 
@@ -829,6 +832,10 @@ h1 span{-webkit-text-fill-color:#fff}
 
             <!-- Generated Emails List -->
             <div id="emailContainer" class="w-full flex flex-col gap-1.5 max-h-[300px] overflow-y-auto pr-1"></div>
+            <div class="w-full pt-2 border-t border-slate-800">
+                <div class="flex items-center justify-between mb-1"><p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">COPY HISTORY (LAST 5)</p><button type="button" onclick="clearHistory('email')" class="text-[9px] text-slate-500 hover:text-red-400 transition">Clear</button></div>
+                <div id="h-list-email" class="w-full flex flex-col gap-1"></div>
+            </div>
         </section>
 
         <!-- SCREEN RECORDER (ANIMATED & MP4 EXPORT) -->
@@ -874,61 +881,35 @@ h1 span{-webkit-text-fill-color:#fff}
         </section>
 
         <!-- CURRENCY & BINANCE P2P RATE TOOL -->
-        <section id="tool-currency" class="app-card w-full max-w-3xl flex flex-col gap-4 hidden-tool mb-6">
+        <section id="tool-currency" class="app-card w-full max-w-3xl flex flex-col gap-4 hidden-tool mb-6 glow-card">
             <div class="w-full flex items-center justify-between border-b border-slate-800 pb-3">
-                <h3 class="text-base font-extrabold text-white uppercase tracking-wider">Currency & Binance P2P Rate</h3>
-                <span class="text-xs bg-emerald-600/20 text-emerald-400 px-3 py-0.5 rounded-full font-bold">LIVE RATE</span>
+                <div><h3 class="text-base font-extrabold text-white uppercase tracking-wider">Currency & P2P Rate</h3><p id="currencyMeta" class="text-[11px] text-slate-500">Loading rates…</p></div>
+                <button type="button" onclick="fetchLiveCurrencyRates(true)" class="btn-premium px-3.5 py-1.5 text-white rounded-xl text-xs font-bold">Refresh ↻</button>
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
-                <div class="md:col-span-2 flex flex-col gap-3 justify-center">
-                    <div class="pill-box px-4 py-2 flex items-center justify-between border-slate-700/80">
-                        <input type="number" id="currencyAmount" value="1" min="0" step="any" class="w-24 bg-transparent text-white font-mono text-base font-bold outline-none" oninput="convertCurrency(true)">
-                        <div class="flex items-center gap-3">
-                            <span class="text-white font-black text-sm tracking-wider">USDT</span>
-                            <button type="button" onclick="swapCurrencies()" class="w-8 h-8 rounded-full bg-blue-600/20 border border-blue-500/40 flex items-center justify-center text-blue-400 hover:bg-blue-600 hover:text-white transition" title="Swap">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/></svg>
-                            </button>
-                        </div>
+                <div class="md:col-span-2 flex flex-col gap-2 justify-center">
+                    <div class="pill-box px-4 py-2.5 flex items-center justify-between">
+                        <input type="number" id="currencyAmount" value="1" min="0" step="any" class="w-32 bg-transparent text-white font-mono text-lg font-bold outline-none" oninput="convertCurrency()">
+                        <select id="currencyFrom" onchange="convertCurrency()" class="bg-transparent text-white font-black text-sm tracking-wider outline-none cursor-pointer"><option value="USDT" selected class="bg-[#141b37]">USDT</option><option value="USD" class="bg-[#141b37]">USD</option><option value="BDT" class="bg-[#141b37]">BDT</option><option value="INR" class="bg-[#141b37]">INR</option><option value="PKR" class="bg-[#141b37]">PKR</option><option value="EUR" class="bg-[#141b37]">EUR</option><option value="GBP" class="bg-[#141b37]">GBP</option><option value="AED" class="bg-[#141b37]">AED</option><option value="SAR" class="bg-[#141b37]">SAR</option><option value="MYR" class="bg-[#141b37]">MYR</option></select>
                     </div>
-
-                    <div class="pill-box px-4 py-3 flex items-center justify-between border-slate-700/80">
-                        <input type="text" id="currencyOutputAmount" value="0.00" readonly class="w-32 bg-transparent text-white font-mono text-base font-bold outline-none">
-                        <div class="flex items-center gap-2">
-                            <select id="currencyTo" class="bg-transparent text-white font-black text-sm tracking-wider outline-none cursor-pointer" onchange="convertCurrency(true)">
-                                <option value="BDT" class="bg-[#141b37]">BDT</option>
-                                <option value="INR" class="bg-[#141b37]">INR</option>
-                                <option value="PKR" class="bg-[#141b37]">PKR</option>
-                                <option value="USD" class="bg-[#141b37]">USD</option>
-                            </select>
-                            <span class="text-slate-500 text-xs pointer-events-none">▼</span>
-                        </div>
+                    <div class="flex justify-center -my-3 z-10"><button type="button" id="swapBtn" onclick="swapCurrencies()" class="w-9 h-9 rounded-full bg-blue-600 border-2 border-[#0b1122] flex items-center justify-center text-white hover:bg-blue-500 transition" title="Swap">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/></svg></button></div>
+                    <div class="pill-box px-4 py-2.5 flex items-center justify-between">
+                        <input type="text" id="currencyOutputAmount" value="0.00" readonly class="w-40 bg-transparent text-emerald-300 font-mono text-lg font-bold outline-none">
+                        <select id="currencyTo" onchange="convertCurrency()" class="bg-transparent text-white font-black text-sm tracking-wider outline-none cursor-pointer"><option value="USDT" class="bg-[#141b37]">USDT</option><option value="USD" class="bg-[#141b37]">USD</option><option value="BDT" selected class="bg-[#141b37]">BDT</option><option value="INR" class="bg-[#141b37]">INR</option><option value="PKR" class="bg-[#141b37]">PKR</option><option value="EUR" class="bg-[#141b37]">EUR</option><option value="GBP" class="bg-[#141b37]">GBP</option><option value="AED" class="bg-[#141b37]">AED</option><option value="SAR" class="bg-[#141b37]">SAR</option><option value="MYR" class="bg-[#141b37]">MYR</option></select>
                     </div>
-
-                    <p id="currencyResult" class="text-xs text-blue-400 font-bold text-left pl-1">1.00 USDT = 0.00 BDT</p>
-                    <p id="currencyMeta" class="text-[11px] text-slate-500 text-left pl-1">Binance P2P live rate</p>
+                    <p id="currencyResult" class="text-xs text-blue-400 font-bold pl-1 mt-1">—</p>
                 </div>
-
                 <div class="pill-box p-4 flex flex-col justify-between border-emerald-500/30 bg-emerald-950/10">
-                    <div>
-                        <div class="flex items-center justify-between">
-                            <span class="text-[10px] font-black tracking-wider text-emerald-400 uppercase">CUSTOM RATE</span>
-                            <label class="flex items-center gap-1.5 text-[10px] text-slate-300 font-bold cursor-pointer">
-                                <input type="checkbox" id="useCustomBdtRate" onchange="convertCurrency(true)" class="accent-emerald-500"> USE
-                            </label>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mt-0.5">1 USDT = BDT</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] font-black tracking-wider text-emerald-400 uppercase">P2P / Custom BDT</span>
+                        <label class="flex items-center gap-1.5 text-[10px] text-slate-300 font-bold cursor-pointer"><input type="checkbox" id="useCustomBdtRate" onchange="convertCurrency()" class="accent-emerald-500"> USE</label>
                     </div>
-
-                    <div class="my-3">
-                        <div class="pill-box px-3 py-2 border-slate-700 text-center">
-                            <input type="number" id="customBdtRate" value="126" step="0.01" class="w-full bg-transparent text-center font-mono text-lg font-bold text-white outline-none" oninput="convertCurrency(true)">
-                        </div>
-                    </div>
-
-                    <p class="text-[10px] text-slate-500 leading-tight">Set your Binance P2P BDT rate here.</p>
+                    <div class="pill-box px-3 py-2 my-3 text-center"><input type="number" id="customBdtRate" value="126" step="0.01" class="w-full bg-transparent text-center font-mono text-lg font-bold text-white outline-none" oninput="convertCurrency()"></div>
+                    <p class="text-[10px] text-slate-500 leading-tight">1 USDT = ? BDT. Binance P2P blocks browser requests, so enter your own P2P price here.</p>
                 </div>
             </div>
+            <div id="currencyChips" class="flex flex-wrap gap-2"></div>
         </section>
 
         <!-- ONLINE EXCEL EDITOR (SYNCFUSION EXACT UI + FULL XLSX PRESERVATION) -->
@@ -970,76 +951,25 @@ h1 span{-webkit-text-fill-color:#fff}
             </div>
         </section>
 
-        <!-- FAKE PROFILE (FAKEXY A-Z STYLE) -->
-        <section id="tool-fake" class="app-card w-full max-w-4xl flex flex-col gap-5 hidden-tool mb-6">
+        <!-- FAKE PROFILE -->
+        <section id="tool-fake" class="app-card w-full max-w-4xl flex flex-col gap-5 hidden-tool mb-6 glow-card">
             <div class="w-full flex items-center justify-between border-b border-slate-800 pb-3">
-                <div>
-                    <h3 class="text-base font-extrabold text-white uppercase tracking-wider">Fake Profile Generator (A-Z)</h3>
-                    <p class="text-xs text-slate-400">Complete synthetic identity like FakeXY for QA & mockups</p>
-                </div>
-                <button onclick="generateFakeDetails()" class="px-5 py-2 bg-pink-600 hover:bg-pink-500 text-white font-bold text-xs rounded-xl transition shadow-lg shadow-pink-600/30">
-                    Generate New Profile ↻
-                </button>
+                <div><h3 class="text-base font-extrabold text-white uppercase tracking-wider">Fake Profile Generator</h3>
+                <p class="text-xs text-slate-400">Realistic test identities for QA & mockups · click any field to copy</p></div>
+                <button onclick="generateFakeDetails()" class="btn-premium px-5 py-2 text-white font-bold text-xs rounded-xl">Generate ↻</button>
             </div>
-
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <div>
-                    <label class="text-[10px] text-slate-400 uppercase font-black">Region</label>
-                    <select id="fakeRegion" class="w-full h-9 bg-[#0b1120] border border-slate-700 rounded-xl px-2 text-white text-xs mt-1" onchange="generateFakeDetails()">
-                        <option value="usa">USA</option>
-                        <option value="bd">Bangladesh</option>
-                        <option value="india">India</option>
-                        <option value="uk">UK</option>
-                        <option value="can">Canada</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="text-[10px] text-slate-400 uppercase font-black">Gender</label>
-                    <select id="fakeGender" class="w-full h-9 bg-[#0b1120] border border-slate-700 rounded-xl px-2 text-white text-xs mt-1" onchange="generateFakeDetails()">
-                        <option value="random">Random Mix</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                    </select>
-                </div>
-                <div class="col-span-2 flex items-end">
-                    <button onclick="copyFullFakeBundle()" class="w-full h-9 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl border border-slate-700 transition">
-                        Copy Full Fake Profile Info
-                    </button>
-                </div>
+                <div><label class="text-[10px] text-slate-400 uppercase font-black">Region</label>
+                <select id="fakeRegion" class="w-full h-9 bg-[#0b1120] border border-slate-700 rounded-xl px-2 text-white text-xs mt-1" onchange="generateFakeDetails()">
+                    <option value="usa">USA</option><option value="bd">Bangladesh</option><option value="india">India</option><option value="uk">UK</option><option value="can">Canada</option></select></div>
+                <div><label class="text-[10px] text-slate-400 uppercase font-black">Gender</label>
+                <select id="fakeGender" class="w-full h-9 bg-[#0b1120] border border-slate-700 rounded-xl px-2 text-white text-xs mt-1" onchange="generateFakeDetails()">
+                    <option value="random">Random Mix</option><option value="male">Male</option><option value="female">Female</option></select></div>
+                <div class="flex items-end"><button onclick="copyFullFakeBundle()" class="w-full h-9 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl border border-slate-700 transition">Copy All</button></div>
+                <div class="flex items-end"><button onclick="copyFakeJSON()" class="w-full h-9 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl border border-slate-700 transition">Copy JSON</button></div>
             </div>
-
-            <!-- Profile Info Cards (A-Z) -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-                <!-- Card 1: Personal -->
-                <div class="pill-box p-4 flex flex-col gap-2">
-                    <span class="text-[10px] font-black text-pink-400 uppercase border-b border-slate-800 pb-1">1. Personal Details</span>
-                    <p>Name: <span id="fkName" class="text-white font-bold font-mono">Johnathon Davis</span></p>
-                    <p>Gender: <span id="fkGender" class="text-slate-300 capitalize">Male</span></p>
-                    <p>Birthday: <span id="fkDob" class="text-slate-300 font-mono">1994-08-14</span></p>
-                    <p>Age: <span id="fkAge" class="text-slate-300 font-mono">32</span></p>
-                    <p>SSN / National ID: <span id="fkSsn" class="text-slate-300 font-mono">982-12-8842</span></p>
-                </div>
-
-                <!-- Card 2: Address & Phone -->
-                <div class="pill-box p-4 flex flex-col gap-2">
-                    <span class="text-[10px] font-black text-blue-400 uppercase border-b border-slate-800 pb-1">2. Address & Contact</span>
-                    <p>Street: <span id="fkStreet" class="text-white font-mono">482 Willow Creek Rd</span></p>
-                    <p>City: <span id="fkCity" class="text-slate-300">Austin</span></p>
-                    <p>State: <span id="fkState" class="text-slate-300">Texas</span></p>
-                    <p>Zip Code: <span id="fkZip" class="text-slate-300 font-mono">78701</span></p>
-                    <p>Phone: <span id="fkPhone" class="text-emerald-400 font-mono">+1 (512) 840-2918</span></p>
-                </div>
-
-                <!-- Card 3: Finance & Employment -->
-                <div class="pill-box p-4 flex flex-col gap-2">
-                    <span class="text-[10px] font-black text-emerald-400 uppercase border-b border-slate-800 pb-1">3. Finance & Career</span>
-                    <p>Company: <span id="fkCompany" class="text-white font-bold">Apex Dynamics LLC</span></p>
-                    <p>Job Title: <span id="fkRole" class="text-slate-300">Software Engineer</span></p>
-                    <p>Credit Card: <span id="fkCard" class="text-amber-400 font-mono">4532 •••• •••• 9281</span></p>
-                    <p>Expires: <span id="fkExp" class="text-slate-300 font-mono">09/29</span> | CVV: <span id="fkCvv" class="text-slate-300 font-mono">714</span></p>
-                    <p>IP Address: <span id="fkIp" class="text-purple-400 font-mono">172.56.21.94</span></p>
-                </div>
-            </div>
+            <div class="fk-hero"><div id="fkAvatar" class="fk-avatar">?</div><div><h2 id="fkName" class="text-xl font-black text-white">—</h2><p id="fkSub" class="text-xs text-slate-400 mt-0.5">—</p></div></div>
+            <div id="fkCards" class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs"></div>
         </section>
 
         <!-- IP CHECKER TOOL -->
@@ -1201,17 +1131,1804 @@ h1 span{-webkit-text-fill-color:#fff}
 
     </main>
 
+    <div id="toast" class="toast"></div>
     <!-- Footer -->
     <footer class="w-full py-8 text-center text-xs text-slate-500 border-t border-slate-800/80 mt-auto">
         <p>© 2026 MultiToolPro. Designed & Developed by <a href="https://github.com/bidhanbd" target="_blank" class="text-blue-400 font-bold hover:underline">Bidhan</a>.</p>
     </footer>
 
+    <script>
+/* Bijoy<->Unicode engine: adapted from bijoy-unicode-converter (MIT) */
+(function(){
+function Insert(field, text) {
+  if (document.selection) {
+    field.focus();
+    sel = document.selection.createRange();
+    sel.text = text;
+    sel.collapse(true);
+    sel.select();
+  } else if (field.selectionStart || field.selectionStart == "0") {
+    var startPos = field.selectionStart;
+    var endPos = field.selectionEnd;
+    var scrollTop = field.scrollTop;
+    startPos = startPos == -1 ? field.value.length : startPos;
+    field.value =
+      field.value.substring(0, startPos) +
+      text +
+      field.value.substring(endPos, field.value.length);
+    field.focus();
+    field.selectionStart = startPos + text.length;
+    field.selectionEnd = startPos + text.length;
+    field.scrollTop = scrollTop;
+  } else {
+    var scrollTop = field.scrollTop;
+    field.value += value;
+    field.focus();
+    field.scrollTop = scrollTop;
+  }
+}
+function RemoveNInsert(field, value, len) {
+  if (document.selection) {
+    field.focus();
+    sel = document.selection.createRange();
+    if (field.value.length >= len) {
+      sel.moveStart("character", -1 * len);
+    }
+    sel.text = value;
+    sel.collapse(true);
+    sel.select();
+  } else if (field.selectionStart || field.selectionStart == 0) {
+    field.focus();
+    var startPos = field.selectionStart - len;
+    var endPos = field.selectionEnd;
+    var scrollTop = field.scrollTop;
+    startPos = startPos == -1 ? field.value.length : startPos;
+    field.value =
+      field.value.substring(0, startPos) +
+      value +
+      field.value.substring(endPos, field.value.length);
+    field.focus();
+    field.selectionStart = startPos + value.length;
+    field.selectionEnd = startPos + value.length;
+    field.scrollTop = scrollTop;
+  } else {
+    var scrollTop = field.scrollTop;
+    field.value += value;
+    field.focus();
+    field.scrollTop = scrollTop;
+  }
+}
+function capsDetect(e) {
+  if (!e) e = window.event;
+  if (!e) return false;
+  var theKey = e.which
+    ? e.which
+    : e.keyCode
+    ? e.keyCode
+    : e.charCode
+    ? e.charCode
+    : 0;
+  var theShift = e.shiftKey || (e.modifiers && e.modifiers & 4);
+  return (
+    (theKey > 64 && theKey < 91 && !theShift) ||
+    (theKey > 96 && theKey < 123 && theShift)
+  );
+}
+function HideDIV(id) {
+  if (document.getElementById) {
+    document.getElementById(id).style.display = "none";
+  } else {
+    if (document.layers) {
+      document.id.display = "none";
+    } else {
+      document.all.id.style.display = "none";
+    }
+  }
+}
+function ShowDIV(id) {
+  if (document.getElementById) {
+    document.getElementById(id).style.display = "block";
+  } else {
+    if (document.layers) {
+      document.id.display = "block";
+    } else {
+      document.all.id.style.display = "block";
+    }
+  }
+}
+function IsBanglaDigit(CUni) {
+  if (
+    CUni == "০" ||
+    CUni == "১" ||
+    CUni == "২" ||
+    CUni == "৩" ||
+    CUni == "৪" ||
+    CUni == "৫" ||
+    CUni == "৬" ||
+    CUni == "৭" ||
+    CUni == "৮" ||
+    CUni == "৯"
+  )
+    return true;
+  return false;
+}
+function IsBanglaPreKar(CUni) {
+  if (CUni == "ি" || CUni == "ৈ" || CUni == "ে") return true;
+  return false;
+}
+function IsBanglaPostKar(CUni) {
+  if (
+    CUni == "া" ||
+    CUni == "ো" ||
+    CUni == "ৌ" ||
+    CUni == "ৗ" ||
+    CUni == "ু" ||
+    CUni == "ূ" ||
+    CUni == "ী" ||
+    CUni == "ৃ"
+  )
+    return true;
+  return false;
+}
+function IsBanglaKar(CUni) {
+  if (IsBanglaPreKar(CUni) || IsBanglaPostKar(CUni)) return true;
+  return false;
+}
+function IsBanglaBanjonborno(CUni) {
+  if (
+    CUni == "ক" ||
+    CUni == "খ" ||
+    CUni == "গ" ||
+    CUni == "ঘ" ||
+    CUni == "ঙ" ||
+    CUni == "চ" ||
+    CUni == "ছ" ||
+    CUni == "জ" ||
+    CUni == "ঝ" ||
+    CUni == "ঞ" ||
+    CUni == "ট" ||
+    CUni == "ঠ" ||
+    CUni == "ড" ||
+    CUni == "ঢ" ||
+    CUni == "ণ" ||
+    CUni == "ত" ||
+    CUni == "থ" ||
+    CUni == "দ" ||
+    CUni == "ধ" ||
+    CUni == "ন" ||
+    CUni == "প" ||
+    CUni == "ফ" ||
+    CUni == "ব" ||
+    CUni == "ভ" ||
+    CUni == "ম" ||
+    CUni == "শ" ||
+    CUni == "ষ" ||
+    CUni == "স" ||
+    CUni == "হ" ||
+    CUni == "য" ||
+    CUni == "র" ||
+    CUni == "ল" ||
+    CUni == "য়" ||
+    CUni == "ং" ||
+    CUni == "ঃ" ||
+    CUni == "ঁ" ||
+    CUni == "ৎ"
+  )
+    return true;
+  return false;
+}
+function IsBanglaSoroborno(CUni) {
+  if (
+    CUni == "অ" ||
+    CUni == "আ" ||
+    CUni == "ই" ||
+    CUni == "ঈ" ||
+    CUni == "উ" ||
+    CUni == "ঊ" ||
+    CUni == "ঋ" ||
+    CUni == "ঌ" ||
+    CUni == "এ" ||
+    CUni == "ঐ" ||
+    CUni == "ও" ||
+    CUni == "ঔ"
+  )
+    return true;
+  return false;
+}
+function IsBanglaNukta(CUni) {
+  if (CUni == "ং" || CUni == "ঃ" || CUni == "ঁ") return true;
+  return false;
+}
+function IsBanglaFola(CUni) {
+  if (CUni == "্য" || CUni == "্র") return true;
+  return false;
+}
+function IsBanglaHalant(CUni) {
+  if (CUni == "্") return true;
+  return false;
+}
+function IsSpace(C) {
+  if (C == " " || C == "\t" || C == "\n" || C == "\r") return true;
+  return false;
+}
+function MapKarToSorborno(CUni) {
+  var CSorborno = CUni;
+  if (CUni == "া") CSorborno = "আ";
+  else if (CUni == "ি") CSorborno = "ই";
+  else if (CUni == "ী") CSorborno = "ঈ";
+  else if (CUni == "ু") CSorborno = "উ";
+  else if (CUni == "ূ") CSorborno = "ঊ";
+  else if (CUni == "ৃ") CSorborno = "ঋ";
+  else if (CUni == "ে") CSorborno = "এ";
+  else if (CUni == "ৈ") CSorborno = "ঐ";
+  else if (CUni == "ো") CSorborno = "ও";
+  else if (CUni == "ো") CSorborno = "ও";
+  else if (CUni == "ৌ") CSorborno = "ঔ";
+  else if (CUni == "ৌ") CSorborno = "ঔ";
+  return CSorborno;
+}
+function MapSorbornoToKar(CUni) {
+  var CKar = CUni;
+  if (CUni == "আ") CKar = "া";
+  else if (CUni == "ই") CKar = "ি";
+  else if (CUni == "ঈ") CKar = "ী";
+  else if (CUni == "উ") CKar = "ু";
+  else if (CUni == "ঊ") CKar = "ূ";
+  else if (CUni == "ঋ") CKar = "ৃ";
+  else if (CUni == "এ") CKar = "ে";
+  else if (CUni == "ঐ") CKar = "ৈ";
+  else if (CUni == "ও") CKar = "ো";
+  else if (CUni == "ঔ") CKar = "ৌ";
+  return CKar;
+}
+
+
+var uni2bijoy_string_conversion_map = {
+  "।": "|",
+  "‘": "Ô",
+  "’": "Õ",
+  "“": "Ò",
+  "”": "Ó",
+  "্র্য": "ª¨",
+  র‌্য: "i¨",
+  ক্ক: "°",
+  ক্ট: "±",
+  ক্ত: "³",
+  ক্ব: "K¡",
+  স্ক্র: "¯Œ",
+  ক্র: "µ",
+  ক্ল: "K¬",
+  ক্ষ: "¶",
+  ক্স: "·",
+  গু: "¸",
+  গ্ধ: "»",
+  গ্ন: "Mœ",
+  গ্ম: "M¥",
+  গ্ল: "M­",
+  গ্রু: "Mªy",
+  ঙ্ক: "¼",
+  ঙ্ক্ষ: "•¶",
+  ঙ্খ: "•L",
+  ঙ্গ: "½",
+  ঙ্ঘ: "•N",
+  চ্চ: "”P",
+  চ্ছ: "”Q",
+  চ্ছ্ব: "”Q¡",
+  চ্ঞ: "”T",
+  জ্জ্ব: "¾¡",
+  জ্জ: "¾",
+  জ্ঝ: "À",
+  জ্ঞ: "Á",
+  জ্ব: "R¡",
+  ঞ্চ: "Â",
+  ঞ্ছ: "Ã",
+  ঞ্জ: "Ä",
+  ঞ্ঝ: "Å",
+  ট্ট: "Æ",
+  ট্ব: "U¡",
+  ট্ম: "U¥",
+  ড্ড: "Ç",
+  ণ্ট: "È",
+  ণ্ঠ: "É",
+  ন্স: "Ý",
+  ণ্ড: "Ê",
+  ন্তু: "š‘",
+  ণ্ব: "Y^",
+  ত্ত: "Ë",
+  ত্ত্ব: "Ë¡",
+  ত্থ: "Ì",
+  ত্ন: "Zœ",
+  ত্ম: "Z¥",
+  ন্ত্ব: "š—¡",
+  ত্ব: "Z¡",
+  থ্ব: "_¡",
+  দ্গ: "˜M",
+  দ্ঘ: "˜N",
+  দ্দ: "Ï",
+  দ্ধ: "×",
+  দ্ব: "˜¡",
+  দ্ব: "Ø",
+  দ্ভ: "™¢",
+  দ্ম: "Ù",
+  দ্রু: "`ª“",
+  ধ্ব: "aŸ",
+  ধ্ম: "a¥",
+  ন্ট: "›U",
+  ন্ঠ: "Ú",
+  ন্ড: "Û",
+  ন্ত্র: "š¿",
+  ন্ত: "š—",
+  স্ত্র: "¯¿",
+  ত্র: "Î",
+  ন্থ: "š’",
+  ন্দ: "›`",
+  ন্দ্ব: "›Ø",
+  ন্ধ: "Ü",
+  ন্ন: "bœ",
+  ন্ব: "š^",
+  ন্ম: "b¥",
+  প্ট: "Þ",
+  প্ত: "ß",
+  প্ন: "cœ",
+  প্প: "à",
+  প্ল: "c­",
+  প্স: "á",
+  ফ্ল: "d¬",
+  ব্জ: "â",
+  ব্দ: "ã",
+  ব্ধ: "ä",
+  ব্ব: "eŸ",
+  ব্ল: "e­",
+  ভ্র: "å",
+  ম্ন: "gœ",
+  ম্প: "¤ú",
+  ম্ফ: "ç",
+  ম্ব: "¤^",
+  ম্ভ: "¤¢",
+  ম্ভ্র: "¤£",
+  ম্ম: "¤§",
+  ম্ল: "¤­",
+  রু: "i“",
+  রূ: "iƒ",
+  ল্ক: "é",
+  ল্গ: "ê",
+  ল্প: "í",
+  ল্ট: "ë",
+  ল্ড: "ì",
+  ল্ফ: "î",
+  ল্ব: "j¦",
+  ল্ম: "j¥",
+  ল্ল: "jø",
+  শু: "ï",
+  শ্চ: "ð",
+  শ্ন: "kœ",
+  শ্ব: "k¦",
+  শ্ম: "k¥",
+  শ্ল: "kø",
+  ষ্ক: "®‹",
+  ষ্ক্র: "®Œ",
+  ষ্ট: "ó",
+  ষ্ঠ: "ô",
+  ষ্ণ: "ò",
+  ষ্প: "®ú",
+  ষ্ফ: "õ",
+  ষ্ম: "®§",
+  স্ক: "¯‹",
+  স্ট: "÷",
+  স্খ: "ö",
+  স্ত: "¯—",
+  স্তু: "¯‘",
+  স্থ: "¯’",
+  স্ন: "mœ",
+  স্প: "¯ú",
+  স্ফ: "ù",
+  স্ব: "¯^",
+  স্ম: "¯§",
+  স্ল: "¯­",
+  হু: "û",
+  হ্ণ: "nè",
+  হ্ন: "ý",
+  হ্ম: "þ",
+  হ্ল: "n¬",
+  হৃ: "ü",
+  র্: "©",
+  "্র": "«",
+  "্য": "¨",
+  "্": "&",
+  আ: "Av",
+  অ: "A",
+  ই: "B",
+  ঈ: "C",
+  উ: "D",
+  ঊ: "E",
+  ঋ: "F",
+  এ: "G",
+  ঐ: "H",
+  ও: "I",
+  ঔ: "J",
+  ক: "K",
+  খ: "L",
+  গ: "M",
+  ঘ: "N",
+  ঙ: "O",
+  চ: "P",
+  ছ: "Q",
+  জ: "R",
+  ঝ: "S",
+  ঞ: "T",
+  ট: "U",
+  ঠ: "V",
+  ড: "W",
+  ঢ: "X",
+  ণ: "Y",
+  ত: "Z",
+  থ: "_",
+  দ: "`",
+  ধ: "a",
+  ন: "b",
+  প: "c",
+  ফ: "d",
+  ব: "e",
+  ভ: "f",
+  ম: "g",
+  য: "h",
+  র: "i",
+  ল: "j",
+  শ: "k",
+  ষ: "l",
+  স: "m",
+  হ: "n",
+  ড়: "o",
+  ঢ়: "p",
+  য়: "q",
+  ৎ: "r",
+  "০": "0",
+  "১": "1",
+  "২": "2",
+  "৩": "3",
+  "৪": "4",
+  "৫": "5",
+  "৬": "6",
+  "৭": "7",
+  "৮": "8",
+  "৯": "9",
+  "া": "v",
+  "ি": "w",
+  "ী": "x",
+  "ু": "y",
+  "ূ": "~",
+  "ৃ": "…",
+  "ে": "‡",
+  "ৈ": "‰",
+  "ৗ": "Š",
+  "ং": "s",
+  "ঃ": "t",
+  "ঁ": "u",
+};
+var uni2somewherein_string_conversion_map = {
+  "।": "|",
+  "‘": "Ô",
+  "’": "Õ",
+  "“": "Ò",
+  "”": "Ó",
+  "্র্য": "ª¨",
+  র‌্য: "i¨",
+  ক্ক: "°",
+  ক্ট: "±",
+  ক্ত: "³",
+  ক্ব: "K¡",
+  স্ক্র: "¯Œ",
+  ক্র: "µ",
+  ক্ল: "K¬",
+  ক্ষ: "¶",
+  ক্স: "·",
+  গু: "¸",
+  গ্ধ: "»",
+  গ্ন: "Mœ",
+  গ্ম: "M¥",
+  গ্ল: "M­",
+  গ্রু: "Mªy",
+  ঙ্ক: "¼",
+  ঙ্ক্ষ: "•¶",
+  ঙ্খ: "•L",
+  ঙ্গ: "½",
+  ঙ্ঘ: "•N",
+  চ্চ: "”P",
+  চ্ছ: "”Q",
+  চ্ছ্ব: "”Q¡",
+  চ্ঞ: "”T",
+  জ্জ্ব: "¾¡",
+  জ্জ: "¾",
+  জ্ঝ: "À",
+  জ্ঞ: "Á",
+  জ্ব: "R¡",
+  ঞ্চ: "Â",
+  ঞ্ছ: "Ã",
+  ঞ্জ: "Ä",
+  ঞ্ঝ: "Å",
+  ট্ট: "Æ",
+  ট্ব: "U¡",
+  ট্ম: "U¥",
+  ড্ড: "Ç",
+  ণ্ট: "È",
+  ণ্ঠ: "É",
+  ন্স: "Ý",
+  ণ্ড: "Ê",
+  ন্তু: "š‘",
+  ণ্ব: "Y^",
+  ত্ত: "Ë",
+  ত্ত্ব: "Ë¡",
+  ত্থ: "Ì",
+  ত্ম: "Z¥",
+  ত্ন: "Zœ",
+  ন্ত্ব: "š—¡",
+  ত্ব: "Z¡",
+  থ্ব: "_¡",
+  দ্গ: "˜M",
+  দ্ঘ: "˜N",
+  দ্দ: "Ï",
+  দ্ধ: "×",
+  দ্ব: "˜¡",
+  দ্ব: "Ø",
+  দ্ভ: "™¢",
+  দ্ম: "Ù",
+  দ্রু: "`ª“",
+  ধ্ব: "aŸ",
+  ধ্ম: "a¥",
+  ন্ট: "›U",
+  ন্ড: "Û",
+  ন্ত্র: "š¿",
+  ন্ত: "š—",
+  স্ত্র: "¯¿",
+  ত্র: "Î",
+  ন্থ: "š’",
+  ন্দ: "›`",
+  ন্দ্ব: "›Ø",
+  ন্ধ: "Ü",
+  ন্ন: "bœ",
+  ন্ব: "š^",
+  ন্ম: "b¥",
+  প্ট: "Þ",
+  প্ত: "ß",
+  প্ন: "cœ",
+  প্প: "à",
+  প্ল: "c­",
+  প্স: "á",
+  ফ্ল: "d¬",
+  ব্জ: "â",
+  ব্দ: "ã",
+  ব্ধ: "ä",
+  ব্ব: "eŸ",
+  ব্ল: "e­",
+  ভ্র: "å",
+  ম্ন: "gœ",
+  ম্প: "¤ú",
+  ম্ফ: "ç",
+  ম্ব: "¤^",
+  ম্ভ: "¤¢",
+  ম্ভ্র: "¤£",
+  ম্ম: "¤§",
+  ম্ল: "¤­",
+  রু: "i“",
+  রূ: "iƒ",
+  ল্ক: "é",
+  ল্গ: "ê",
+  ল্ট: "ë",
+  ল্ড: "ì",
+  ল্প: "í",
+  ল্ফ: "î",
+  ল্ব: "j¦",
+  ল্ম: "j¥",
+  ল্ল: "j­",
+  শু: "ï",
+  শ্চ: "ð",
+  শ্ন: "kœ",
+  শ্ব: "k¦",
+  শ্ম: "k¥",
+  শ্ল: "k­",
+  ষ্ক: "®‹",
+  ষ্ক্র: "®Œ",
+  ষ্ট: "ó",
+  ষ্ঠ: "ô",
+  ষ্ণ: "ò",
+  ষ্প: "®ú",
+  ষ্ফ: "õ",
+  ষ্ম: "®§",
+  স্ক: "¯‹",
+  স্ট: "÷",
+  স্খ: "ö",
+  স্ত: "¯—",
+  স্তু: "¯‘",
+  স্থ: "¯’",
+  স্ন: "mœ",
+  স্প: "¯ú",
+  স্ফ: "ù",
+  স্ব: "¯^",
+  স্ম: "¯§",
+  স্ল: "¯­",
+  হ্ণ: "nè",
+  হ্ন: "ý",
+  হ্ম: "þ",
+  হু: "û",
+  হ্ল: "n¬",
+  হৃ: "ü",
+  র্: "©",
+  "্র": "Ö",
+  "্য": "¨",
+  "্": "&",
+  আ: "Av",
+  অ: "A",
+  ই: "B",
+  ঈ: "C",
+  উ: "D",
+  ঊ: "E",
+  ঋ: "F",
+  এ: "G",
+  ঐ: "H",
+  ও: "I",
+  ঔ: "J",
+  ক: "K",
+  খ: "L",
+  গ: "M",
+  ঘ: "N",
+  ঙ: "O",
+  চ: "P",
+  ছ: "Q",
+  জ: "R",
+  ঝ: "S",
+  ঞ: "T",
+  ট: "U",
+  ঠ: "V",
+  ড: "W",
+  ঢ: "X",
+  ণ: "Y",
+  ত: "Z",
+  থ: "_",
+  দ: "`",
+  ধ: "a",
+  ন: "b",
+  প: "c",
+  ফ: "d",
+  ব: "e",
+  ভ: "f",
+  ম: "g",
+  য: "h",
+  র: "i",
+  ল: "j",
+  শ: "k",
+  ষ: "l",
+  স: "m",
+  হ: "n",
+  ড়: "o",
+  ঢ়: "p",
+  য়: "q",
+  ৎ: "r",
+  "০": "0",
+  "১": "1",
+  "২": "2",
+  "৩": "3",
+  "৪": "4",
+  "৫": "5",
+  "৬": "6",
+  "৭": "7",
+  "৮": "8",
+  "৯": "9",
+  "া": "v",
+  "ি": "w",
+  "ী": "x",
+  "ু": "y",
+  "ূ": "~",
+  "ৃ": "„",
+  "ে": "‡",
+  "ৈ": "‰",
+  "ৗ": "Š",
+  "ং": "s",
+  "ঃ": "t",
+  "ঁ": "u",
+};
+var uni2boisakhi_string_conversion_map = {
+  "্র্য": "Ûø",
+  র‌্য: "kø",
+  ক্ক: "~",
+  ক্ট: "ƒ",
+  ক্ত: "£ß",
+  ক্ব: "Kò",
+  স্ক্র: "Ç",
+  ক্র: "¢ß",
+  ক্ষ্ম: "qô",
+  ক্ষ: "q",
+  ক্স: "…",
+  ক্ল: "Kõ",
+  গু: "†",
+  গ্গ: "‡",
+  গ্ধ: "ˆ",
+  গ্ন: "Mí",
+  গ্ম: "Mô",
+  গ্ল: "Mö",
+  ঙ্ক: "‰",
+  ঙ্ক্ষ: "áq",
+  ঙ্খ: "áL",
+  ঙ্গ: "Š",
+  ঙ্ঘ: "áN",
+  চ্চ: "âP",
+  চ্ছ: "âQ",
+  চ্ছ্ব: "âQò",
+  জ্জ্ব: "Œò",
+  জ্জ: "Œ",
+  জ্ঞ: "š",
+  জ্ব: "Rò",
+  ঞ্চ: "é",
+  "˜": "ঞ্ছ",
+  ঞ্জ: "™",
+  ঞ্ঝ: "ã",
+  ট্ট: "›",
+  ট্ব: "Uò",
+  ট্ম: "Uô",
+  ড্ড: "œ",
+  ণ্ঠ: "Ÿ",
+  ন্ঠ: "ª",
+  ন্স: "Ý",
+  ণ্ড: "¡",
+  ন্তু: "š‘",
+  ন্তু: "ìç",
+  ণ্ব: "Yð",
+  ত্ত্ব: "£ò",
+  ত্থ: "¤",
+  ত্ন: "Zí",
+  ত্ম: "£ô",
+  ত্ম: "Zô",
+  ত্ত: "£",
+  ন্ত্ব: "ìòæ",
+  ত্ব: "Zò",
+  থ্ব: "aò",
+  দ্দ: "¥",
+  দ্ধ: "¦",
+  দ্ব: "§",
+  দ্ভ: "¨",
+  দ্ম: "bô",
+  ধ্ব: "cµ",
+  ন্ট: "ëU",
+  ন্ট: "åU",
+  ন্ড: "«",
+  ন্ত্র: "ìè",
+  ন্ত: "ìæ",
+  স্ত্র: "þè",
+  ত্র: "¢",
+  ন্দ: "ëb",
+  ন্দ্ব: "ë§",
+  ন্ধ: "¬",
+  ন্ধ: "ëc",
+  ন্ন: "Ò",
+  ন্ন: "dí",
+  ন্ব: "ìñ",
+  ন্থ: "ìÿ",
+  ন্ম: "dô",
+  ন্স: "ëo",
+  প্ট: "ïU",
+  প্ত: "®",
+  প্ন: "eí",
+  প্প: "¯",
+  প্ল: "eö",
+  ফ্ল: "d¬",
+  ব্জ: "±",
+  ব্দ: "²",
+  ব্ধ: "³",
+  ব্ব: "gµ",
+  ব্ল: "gö",
+  ম্ভ্র: "»",
+  ভ্র: "¸",
+  ম্ন: "ií",
+  ম্প: "óe",
+  ম্ফ: "óf",
+  ম্ব: "¹",
+  ম্ভ: "º",
+  ম্ম: "ói",
+  ম্ল: "óö",
+  ল্ক: "¿",
+  ল্গ: "ùM",
+  ল্ট: "ùU",
+  ল্ড: "À",
+  ল্প: "ùe",
+  ল্ফ: "ùf",
+  ল্ব: "lð",
+  ল্ম: "lô",
+  ল্ল: "Á",
+  শু: "Â",
+  শ্চ: "úP",
+  শ্ন: "mí",
+  শ্ব: "mð",
+  শ্ম: "mô",
+  শ্ল: "mö",
+  ষ্ক: "ûK",
+  ষ্ক্র: "û¢ß",
+  ষ্ট: "Ä",
+  ষ্ঠ: "Å",
+  ষ্প: "ûe",
+  ষ্ফ: "üf",
+  ষ্ম: "ûô",
+  স্ক: "Æ",
+  স্খ: "ýL",
+  স্ট: "ýU",
+  স্থ: "þÿ",
+  স্ত: "þæ",
+  স্তু: "þç",
+  স্ন: "þí",
+  স্প: "þe",
+  স্ফ: "ýf",
+  স্ব: "È",
+  স্ব: "þñ",
+  স্ম: "þô",
+  হু: "É",
+  হ্ণ: "pî",
+  হ্ন: "pß",
+  হ্ম: "Ê",
+  হ্ল: "n¬",
+  হ্ল: "põ",
+  হৃ: "pÕ",
+  ব: "ò",
+  র্: "ê",
+  "্র": "Þ",
+  "্য": "ø",
+  "্": "z",
+  আ: "Aw",
+  অ: "A",
+  ই: "B",
+  ঈ: "C",
+  উ: "D",
+  ঊ: "E",
+  ঋ: "F",
+  এ: "G",
+  ঐ: "H",
+  ও: "I",
+  ঔ: "J",
+  ক: "K",
+  খ: "L",
+  গ: "M",
+  ঘ: "N",
+  ঙ: "O",
+  চ: "P",
+  ছ: "Q",
+  জ: "R",
+  ঝ: "S",
+  ঞ: "T",
+  ট: "U",
+  ঠ: "V",
+  ড: "W",
+  ঢ: "X",
+  ণ: "Y",
+  ত: "Z",
+  থ: "¤",
+  দ: "b",
+  ধ: "c",
+  ন: "d",
+  প: "e",
+  ফ: "f",
+  ব: "g",
+  ভ: "h",
+  ম: "i",
+  য: "j",
+  র: "k",
+  ল: "l",
+  শ: "m",
+  ষ: "n",
+  স: "o",
+  হ: "p",
+  ড়: "r",
+  ঢ়: "s",
+  য়: "t",
+  থ: "a",
+  ৎ: "u",
+  "ং": "v",
+  "ঁ": "^",
+  "০": "0",
+  "১": "1",
+  "২": "2",
+  "৩": "3",
+  "৪": "4",
+  "৫": "5",
+  "৬": "6",
+  "৭": "7",
+  "৮": "8",
+  "৯": "9",
+  "া": "w",
+  "ি": "x",
+  "ী": "y",
+  "ু": "×",
+  "ূ": "Ô",
+  "ৃ": "Ú",
+  "ে": "Ë",
+  "ৈ": "Ð",
+  "ৗ": "#",
+  "।": "„",
+};
+function ReArrangeUnicodeText(str) {
+  var barrier = 0;
+  for (var i = 0; i < str.length; i++) {
+    if (i < str.length && IsBanglaPreKar(str.charAt(i))) {
+      var j = 1;
+      while (IsBanglaBanjonborno(str.charAt(i - j))) {
+        if (i - j < 0) break;
+        if (i - j <= barrier) break;
+        if (IsBanglaHalant(str.charAt(i - j - 1))) j += 2;
+        else break;
+      }
+      var temp = str.substring(0, i - j);
+      temp += str.charAt(i);
+      temp += str.substring(i - j, i);
+      temp += str.substring(i + 1, str.length);
+      str = temp;
+      barrier = i + 1;
+      continue;
+    }
+    if (
+      i < str.length - 1 &&
+      IsBanglaHalant(str.charAt(i)) &&
+      str.charAt(i - 1) == "র" &&
+      !IsBanglaHalant(str.charAt(i - 2))
+    ) {
+      var j = 1;
+      var found_pre_kar = 0;
+      while (true) {
+        if (
+          IsBanglaBanjonborno(str.charAt(i + j)) &&
+          IsBanglaHalant(str.charAt(i + j + 1))
+        )
+          j += 2;
+        else if (
+          IsBanglaBanjonborno(str.charAt(i + j)) &&
+          IsBanglaPreKar(str.charAt(i + j + 1))
+        ) {
+          found_pre_kar = 1;
+          break;
+        } else break;
+      }
+      var temp = str.substring(0, i - 1);
+      temp += str.substring(i + j + 1, i + j + found_pre_kar + 1);
+      temp += str.substring(i + 1, i + j + 1);
+      temp += str.charAt(i - 1);
+      temp += str.charAt(i);
+      temp += str.substring(i + j + found_pre_kar + 1, str.length);
+      str = temp;
+      i += j + found_pre_kar;
+      barrier = i + 1;
+      continue;
+    }
+  }
+  return str;
+}
+function ConvertToASCII(ConvertTo, line) {
+  var conversion_map = uni2bijoy_string_conversion_map;
+  if (ConvertTo == "bijoy") conversion_map = uni2bijoy_string_conversion_map;
+  else if (ConvertTo == "somewherein")
+    conversion_map = uni2somewherein_string_conversion_map;
+  else if (ConvertTo == "boisakhi")
+    conversion_map = uni2boisakhi_string_conversion_map;
+  var myRegExp;
+  myRegExp = new RegExp("ো", "g");
+  line = line.replace(myRegExp, "ো");
+  myRegExp = new RegExp("ৌ", "g");
+  line = line.replace(myRegExp, "ৌ");
+  line = ReArrangeUnicodeText(line);
+  for (var unic in conversion_map) {
+    myRegExp = new RegExp(unic, "g");
+    line = line.replace(myRegExp, conversion_map[unic]);
+  }
+  return line;
+}
+
+
+var bijoy_string_conversion_map = {
+  "i¨": "র‌্য",
+  "ª¨": "্র্য",
+  "°": "ক্ক",
+  "±": "ক্ট",
+  "³": "ক্ত",
+  "K¡": "ক্ব",
+  "¯Œ": "স্ক্র",
+  µ: "ক্র",
+  "K¬": "ক্ল",
+  "¶": "ক্ষ",
+  ÿ: "ক্ষ",
+  "·": "ক্স",
+  "¸": "গু",
+  "»": "গ্ধ",
+  Mœ: "গ্ন",
+  "M¥": "গ্ম",
+  "M­": "গ্ল",
+  "¼": "ঙ্ক",
+  "•¶": "ঙ্ক্ষ",
+  "•L": "ঙ্খ",
+  "½": "ঙ্গ",
+  "•N": "ঙ্ঘ",
+  "•": "ক্স",
+  "”P": "চ্চ",
+  "”Q": "চ্ছ",
+  "”Q¡": "চ্ছ্ব",
+  "”T": "চ্ঞ",
+  "¾¡": "জ্জ্ব",
+  "¾": "জ্জ",
+  À: "জ্ঝ",
+  Á: "জ্ঞ",
+  "R¡": "জ্ব",
+  Â: "ঞ্চ",
+  Ã: "ঞ্ছ",
+  Ä: "ঞ্জ",
+  Å: "ঞ্ঝ",
+  Æ: "ট্ট",
+  "U¡": "ট্ব",
+  "U¥": "ট্ম",
+  Ç: "ড্ড",
+  È: "ণ্ট",
+  É: "ণ্ঠ",
+  Ý: "ন্স",
+  Ê: "ণ্ড",
+  "š‘": "ন্তু",
+  "Y\\^": "ণ্ব",
+  Ë: "ত্ত",
+  "Ë¡": "ত্ত্ব",
+  Ì: "ত্থ",
+  "Z¥": "ত্ম",
+  "š—¡": "ন্ত্ব",
+  "Z¡": "ত্ব",
+  Î: "ত্র",
+  "_¡": "থ্ব",
+  "˜M": "দ্গ",
+  "˜N": "দ্ঘ",
+  Ï: "দ্দ",
+  "×": "দ্ধ",
+  "˜¡": "দ্ব",
+  Ø: "দ্ব",
+  "™¢": "দ্ভ",
+  Ù: "দ্ম",
+  "`ª“": "দ্রু",
+  aŸ: "ধ্ব",
+  "a¥": "ধ্ম",
+  "›U": "ন্ট",
+  Ú: "ন্ঠ",
+  Û: "ন্ড",
+  šÍ: "ন্ত",
+  "š—": "ন্ত",
+  "š¿": "ন্ত্র",
+  "š’": "ন্থ",
+  "›`": "ন্দ",
+  "›Ø": "ন্দ্ব",
+  Ü: "ন্ধ",
+  bœ: "ন্ন",
+  "š\\^": "ন্ব",
+  "b¥": "ন্ম",
+  Þ: "প্ট",
+  ß: "প্ত",
+  cœ: "প্ন",
+  à: "প্প",
+  cø: "প্ল",
+  "c­": "প্ল",
+  á: "প্স",
+  "d¬": "ফ্ল",
+  â: "ব্জ",
+  ã: "ব্দ",
+  ä: "ব্ধ",
+  eŸ: "ব্ব",
+  "e­": "ব্ল",
+  å: "ভ্র",
+  gœ: "ম্ন",
+  "¤ú": "ম্প",
+  ç: "ম্ফ",
+  "¤\\^": "ম্ব",
+  "¤¢": "ম্ভ",
+  "¤£": "ম্ভ্র",
+  "¤§": "ম্ম",
+  "¤­": "ম্ল",
+  "i“": "রু",
+  iæ: "রু",
+  iƒ: "রূ",
+  é: "ল্ক",
+  ê: "ল্গ",
+  ë: "ল্ট",
+  ì: "ল্ড",
+  í: "ল্প",
+  î: "ল্ফ",
+  "j¦": "ল্ব",
+  "j¥": "ল্ম",
+  jø: "ল্ল",
+  ï: "শু",
+  ð: "শ্চ",
+  kœ: "শ্ন",
+  kø: "শ্ল",
+  "k¦": "শ্ব",
+  "k¥": "শ্ম",
+  "k­": "শ্ল",
+  "®‹": "ষ্ক",
+  "®Œ": "ষ্ক্র",
+  ó: "ষ্ট",
+  ô: "ষ্ঠ",
+  ò: "ষ্ণ",
+  "®ú": "ষ্প",
+  õ: "ষ্ফ",
+  "®§": "ষ্ম",
+  "¯‹": "স্ক",
+  "÷": "স্ট",
+  ö: "স্খ",
+  "¯—": "স্ত",
+  "¯Í": "স্ত",
+  "¯‘": "স্তু",
+  "¯¿": "স্ত্র",
+  "¯’": "স্থ",
+  mœ: "স্ন",
+  "¯ú": "স্প",
+  ù: "স্ফ",
+  "¯\\^": "স্ব",
+  "¯§": "স্ম",
+  "¯­": "স্ল",
+  û: "হু",
+  nè: "হ্ণ",
+  ý: "হ্ন",
+  þ: "হ্ম",
+  "n¬": "হ্ল",
+  ü: "হৃ",
+  "©": "র্",
+  Av: "আ",
+  A: "অ",
+  B: "ই",
+  C: "ঈ",
+  D: "উ",
+  E: "ঊ",
+  F: "ঋ",
+  G: "এ",
+  H: "ঐ",
+  I: "ও",
+  J: "ঔ",
+  K: "ক",
+  L: "খ",
+  M: "গ",
+  N: "ঘ",
+  O: "ঙ",
+  P: "চ",
+  Q: "ছ",
+  R: "জ",
+  S: "ঝ",
+  T: "ঞ",
+  U: "ট",
+  V: "ঠ",
+  W: "ড",
+  X: "ঢ",
+  Y: "ণ",
+  Z: "ত",
+  _: "থ",
+  "`": "দ",
+  a: "ধ",
+  b: "ন",
+  c: "প",
+  d: "ফ",
+  e: "ব",
+  f: "ভ",
+  g: "ম",
+  h: "য",
+  i: "র",
+  j: "ল",
+  k: "শ",
+  l: "ষ",
+  m: "স",
+  n: "হ",
+  o: "ড়",
+  p: "ঢ়",
+  q: "য়",
+  r: "ৎ",
+  0: "০",
+  1: "১",
+  2: "২",
+  3: "৩",
+  4: "৪",
+  5: "৫",
+  6: "৬",
+  7: "৭",
+  8: "৮",
+  9: "৯",
+  v: "া",
+  w: "ি",
+  x: "ী",
+  y: "ু",
+  z: "ু",
+  "~": "ূ",
+  "„": "ৃ",
+  "‡": "ে",
+  "†": "ে",
+  "‰": "ৈ",
+  "\\ˆ": "ৈ",
+  Š: "ৗ",
+  Ô: "‘",
+  Õ: "’",
+  "\\|": "।",
+  Ò: "“",
+  Ó: "”",
+  s: "ং",
+  t: "ঃ",
+  u: "ঁ",
+  ª: "্র",
+  Ö: "্র",
+  "«": "্র",
+  "¨": "্য",
+  "\\&": "্",
+  "…": "ৃ",
+};
+var somewherein_string_conversion_map = {
+  "ª¨": "্র্য",
+  "i¨": "র‌্য",
+  "°": "ক্ক",
+  "±": "ক্ট",
+  "³": "ক্ত",
+  "K¡": "ক্ব",
+  "¯Œ": "স্ক্র",
+  µ: "ক্র",
+  "K¬": "ক্ল",
+  "¶": "ক্ষ",
+  "·": "ক্স",
+  "¸": "গু",
+  "»": "গ্ধ",
+  Mœ: "গ্ন",
+  "M¥": "গ্ম",
+  "M­": "গ্ল",
+  "¼": "ঙ্ক",
+  "•¶": "ঙ্ক্ষ",
+  "•L": "ঙ্খ",
+  "½": "ঙ্গ",
+  "•N": "ঙ্ঘ",
+  "•": "ক্স",
+  "”P": "চ্চ",
+  "”Q": "চ্ছ",
+  "”Q¡": "চ্ছ্ব",
+  "”T": "চ্ঞ",
+  "¾¡": "জ্জ্ব",
+  "¾": "জ্জ",
+  À: "জ্ঝ",
+  Á: "জ্ঞ",
+  "R¡": "জ্ব",
+  Â: "ঞ্চ",
+  Ã: "ঞ্ছ",
+  Ä: "ঞ্জ",
+  Å: "ঞ্ঝ",
+  Æ: "ট্ট",
+  "U¡": "ট্ব",
+  "U¥": "ট্ম",
+  Ç: "ড্ড",
+  È: "ণ্ট",
+  É: "ণ্ঠ",
+  Ý: "ন্স",
+  Ê: "ণ্ড",
+  "š‘": "ন্তু",
+  "Y\\^": "ণ্ব",
+  Ë: "ত্ত",
+  "Ë¡": "ত্ত্ব",
+  Ì: "ত্থ",
+  "Z¥": "ত্ম",
+  "š—¡": "ন্ত্ব",
+  "Z¡": "ত্ব",
+  Î: "ত্র",
+  "_¡": "থ্ব",
+  "˜M": "দ্গ",
+  "˜N": "দ্ঘ",
+  Ï: "দ্দ",
+  "×": "দ্ধ",
+  "˜¡": "দ্ব",
+  Ø: "দ্ব",
+  "™¢": "দ্ভ",
+  Ù: "দ্ম",
+  "`ª“": "দ্রু",
+  aŸ: "ধ্ব",
+  "a¥": "ধ্ম",
+  "›U": "ন্ট",
+  Û: "ন্ড",
+  šÍ: "ন্ত",
+  "š—": "ন্ত",
+  "š¿": "ন্ত্র",
+  "š’": "ন্থ",
+  "›`": "ন্দ",
+  "›Ø": "ন্দ্ব",
+  Ü: "ন্ধ",
+  bœ: "ন্ন",
+  "š\\^": "ন্ব",
+  "b¥": "ন্ম",
+  Þ: "প্ট",
+  ß: "প্ত",
+  cœ: "প্ন",
+  à: "প্প",
+  cø: "প্ল",
+  "c­": "প্ল",
+  á: "প্স",
+  "d¬": "ফ্ল",
+  â: "ব্জ",
+  ã: "ব্দ",
+  ä: "ব্ধ",
+  eŸ: "ব্ব",
+  "e­": "ব্ল",
+  å: "ভ্র",
+  gœ: "ম্ন",
+  "¤ú": "ম্প",
+  ç: "ম্ফ",
+  "¤\\^": "ম্ব",
+  "¤¢": "ম্ভ",
+  "¤£": "ম্ভ্র",
+  "¤§": "ম্ম",
+  "¤­": "ম্ল",
+  "i“": "রু",
+  iæ: "রু",
+  iƒ: "রূ",
+  é: "ল্ক",
+  ê: "ল্গ",
+  ë: "ল্ট",
+  ì: "ল্ড",
+  í: "ল্প",
+  î: "ল্ফ",
+  "j¦": "ল্ব",
+  "j¥": "ল্ম",
+  "j­": "ল্ল",
+  ï: "শু",
+  ð: "শ্চ",
+  kœ: "শ্ন",
+  "k¦": "শ্ব",
+  "k¥": "শ্ম",
+  "k­": "শ্ল",
+  "®‹": "ষ্ক",
+  "®Œ": "ষ্ক্র",
+  ó: "ষ্ট",
+  ô: "ষ্ঠ",
+  ò: "ষ্ণ",
+  "®ú": "ষ্প",
+  õ: "ষ্ফ",
+  "®§": "ষ্ম",
+  "¯‹": "স্ক",
+  "÷": "স্ট",
+  ö: "স্খ",
+  "¯—": "স্ত",
+  "¯‘": "স্তু",
+  "¯¿": "স্ত্র",
+  "¯’": "স্থ",
+  mœ: "স্ন",
+  "¯ú": "স্প",
+  ù: "স্ফ",
+  "¯\\^": "স্ব",
+  "¯§": "স্ম",
+  "¯­": "স্ল",
+  nè: "হ্ণ",
+  ý: "হ্ন",
+  þ: "হ্ম",
+  û: "হু",
+  "n¬": "হ্ল",
+  ü: "হৃ",
+  "©": "র্",
+  Av: "আ",
+  A: "অ",
+  B: "ই",
+  C: "ঈ",
+  D: "উ",
+  E: "ঊ",
+  F: "ঋ",
+  G: "এ",
+  H: "ঐ",
+  I: "ও",
+  J: "ঔ",
+  K: "ক",
+  L: "খ",
+  M: "গ",
+  N: "ঘ",
+  O: "ঙ",
+  P: "চ",
+  Q: "ছ",
+  R: "জ",
+  S: "ঝ",
+  T: "ঞ",
+  U: "ট",
+  V: "ঠ",
+  W: "ড",
+  X: "ঢ",
+  Y: "ণ",
+  Z: "ত",
+  _: "থ",
+  "`": "দ",
+  a: "ধ",
+  b: "ন",
+  c: "প",
+  d: "ফ",
+  e: "ব",
+  f: "ভ",
+  g: "ম",
+  h: "য",
+  i: "র",
+  j: "ল",
+  k: "শ",
+  l: "ষ",
+  m: "স",
+  n: "হ",
+  o: "ড়",
+  p: "ঢ়",
+  q: "য়",
+  r: "ৎ",
+  0: "০",
+  1: "১",
+  2: "২",
+  3: "৩",
+  4: "৪",
+  5: "৫",
+  6: "৬",
+  7: "৭",
+  8: "৮",
+  9: "৯",
+  v: "া",
+  w: "ি",
+  x: "ী",
+  y: "ু",
+  z: "ু",
+  "~": "ূ",
+  "„": "ৃ",
+  "‡": "ে",
+  "†": "ে",
+  "‰": "ৈ",
+  "\\ˆ": "ৈ",
+  Š: "ৗ",
+  s: "ং",
+  t: "ঃ",
+  u: "ঁ",
+  ª: "্র",
+  Ö: "্র",
+  "«": "্র",
+  "¨": "্য",
+  "…": "ৃ",
+  Ô: "‘",
+  Õ: "’",
+  "\\|": "।",
+  "\\&": "্",
+  Ò: "“",
+  Ó: "”",
+};
+var boisakhi_string_conversion_map = {
+  Ûø: "্র্য",
+  kø: "র‌্য",
+  "~": "ক্ক",
+  ƒ: "ক্ট",
+  "£ß": "ক্ত",
+  Kò: "ক্ব",
+  Ç: "স্ক্র",
+  "¢ß": "ক্র",
+  qô: "ক্ষ্ম",
+  q: "ক্ষ",
+  "…": "ক্স",
+  "•": "ক্স",
+  Kõ: "ক্ল",
+  "†": "গু",
+  "‡": "গ্গ",
+  ˆ: "গ্ধ",
+  Mí: "গ্ন",
+  Mô: "গ্ম",
+  Mö: "গ্ল",
+  "‰": "ঙ্ক",
+  áq: "ঙ্ক্ষ",
+  áL: "ঙ্খ",
+  Š: "ঙ্গ",
+  áN: "ঙ্ঘ",
+  âP: "চ্চ",
+  âQ: "চ্ছ",
+  âQò: "চ্ছ্ব",
+  Œò: "জ্জ্ব",
+  Œ: "জ্জ",
+  š: "জ্ঞ",
+  Rò: "জ্ব",
+  é: "ঞ্চ",
+  "˜": "ঞ্ছ",
+  "™": "ঞ্জ",
+  ã: "ঞ্ঝ",
+  "›": "ট্ট",
+  Uò: "ট্ব",
+  Uô: "ট্ম",
+  œ: "ড্ড",
+  Ÿ: "ণ্ঠ",
+  Ý: "ন্স",
+  "¡": "ণ্ড",
+  "š‘": "ন্তু",
+  ìç: "ন্তু",
+  ìÿ: "ন্থ",
+  Yð: "ণ্ব",
+  ª: "ন্ঠ",
+  "£ò": "ত্ত্ব",
+  "¤": "ত্থ",
+  Zí: "ত্ন",
+  "£ô": "ত্ম",
+  Zô: "ত্ম",
+  "£": "ত্ত",
+  Zò: "ত্ব",
+  "¢": "ত্র",
+  aò: "থ্ব",
+  "¥": "দ্দ",
+  "¦": "দ্ধ",
+  "§": "দ্ব",
+  "¨": "দ্ভ",
+  bô: "দ্ম",
+  cµ: "ধ্ব",
+  ëU: "ন্ট",
+  åU: "ন্ট",
+  "«": "ন্ড",
+  ìæ: "ন্ত",
+  ìòæ: "ন্ত্ব",
+  ìè: "ন্ত্র",
+  ëb: "ন্দ",
+  "ë§": "ন্দ্ব",
+  "¬": "ন্ধ",
+  ëc: "ন্ধ",
+  Ò: "ন্ন",
+  dí: "ন্ন",
+  ìñ: "ন্ব",
+  dô: "ন্ম",
+  ëo: "ন্স",
+  ïU: "প্ট",
+  "®": "প্ত",
+  eí: "প্ন",
+  "¯": "প্প",
+  eö: "প্ল",
+  "d¬": "ফ্ল",
+  fõ: "ফ্ল",
+  "±": "ব্জ",
+  "²": "ব্দ",
+  "³": "ব্ধ",
+  gµ: "ব্ব",
+  gö: "ব্ল",
+  gõ: "ব্ল",
+  "»": "ম্ভ্র",
+  "ó¸": "ম্ভ্র",
+  "¸": "ভ্র",
+  ií: "ম্ন",
+  óe: "ম্প",
+  óf: "ম্ফ",
+  "¹": "ম্ব",
+  º: "ম্ভ",
+  ói: "ম্ম",
+  óö: "ম্ল",
+  "¿": "ল্ক",
+  ùM: "ল্গ",
+  ùU: "ল্ট",
+  À: "ল্ড",
+  ùe: "ল্প",
+  ùf: "ল্ফ",
+  lð: "ল্ব",
+  lô: "ল্ম",
+  Á: "ল্ল",
+  lö: "ল্ল",
+  lõ: "ল্ল",
+  Â: "শু",
+  úP: "শ্চ",
+  mí: "শ্ন",
+  mð: "শ্ব",
+  mô: "শ্ম",
+  mö: "শ্ল",
+  ûK: "ষ্ক",
+  "û¢ß": "ষ্ক্র",
+  Ä: "ষ্ট",
+  Å: "ষ্ঠ",
+  ûe: "ষ্প",
+  üf: "ষ্ফ",
+  ûô: "ষ্ম",
+  Æ: "স্ক",
+  ýL: "স্খ",
+  ýU: "স্ট",
+  þU: "স্ট",
+  þÿ: "স্খ",
+  þæ: "স্ত",
+  þç: "স্তু",
+  þè: "স্ত্র",
+  þí: "স্ন",
+  oí: "স্ন",
+  þe: "স্প",
+  ýf: "স্ফ",
+  È: "স্ব",
+  þñ: "স্ব",
+  þô: "স্ম",
+  É: "হু",
+  pî: "হ্ণ",
+  pß: "হ্ন",
+  Ê: "হ্ম",
+  "n¬": "হ্ল",
+  põ: "হ্ল",
+  pÕ: "হৃ",
+  ò: "ব",
+  Aw: "আ",
+  A: "অ",
+  B: "ই",
+  C: "ঈ",
+  D: "উ",
+  E: "ঊ",
+  F: "ঋ",
+  G: "এ",
+  H: "ঐ",
+  I: "ও",
+  J: "ঔ",
+  K: "ক",
+  L: "খ",
+  M: "গ",
+  N: "ঘ",
+  O: "ঙ",
+  P: "চ",
+  Q: "ছ",
+  R: "জ",
+  S: "ঝ",
+  T: "ঞ",
+  U: "ট",
+  V: "ঠ",
+  W: "ড",
+  X: "ঢ",
+  Y: "ণ",
+  Z: "ত",
+  "¤": "থ",
+  b: "দ",
+  c: "ধ",
+  d: "ন",
+  e: "প",
+  f: "ফ",
+  g: "ব",
+  h: "ভ",
+  i: "ম",
+  j: "য",
+  k: "র",
+  l: "ল",
+  m: "শ",
+  n: "ষ",
+  o: "স",
+  p: "হ",
+  r: "ড়",
+  s: "ঢ়",
+  t: "য়",
+  a: "থ",
+  u: "ৎ",
+  0: "০",
+  1: "১",
+  2: "২",
+  3: "৩",
+  4: "৪",
+  5: "৫",
+  6: "৬",
+  7: "৭",
+  8: "৮",
+  9: "৯",
+  w: "া",
+  x: "ি",
+  y: "ী",
+  "×": "ু",
+  Ö: "ু",
+  Ø: "ু",
+  Ô: "ূ",
+  Õ: "ূ",
+  Ó: "ূ",
+  Ù: "ৃ",
+  Ú: "ৃ",
+  Ë: "ে",
+  Ì: "ে",
+  Ð: "ৈ",
+  Ñ: "ৈ",
+  "\\ˆ": "ৈ",
+  "#": "ৗ",
+  "„": "।",
+  z: "্",
+  v: "ং",
+  "\\^": "ঁ",
+  Þ: "্র",
+  Û: "্র",
+  ê: "র্",
+  ø: "্য",
+};
+function ReArrangeUnicodeConvertedText(str) {
+  for (var i = 0; i < str.length; i++) {
+    if (
+      i > 0 &&
+      str.charAt(i) == "\u09CD" &&
+      (IsBanglaKar(str.charAt(i - 1)) || IsBanglaNukta(str.charAt(i - 1))) &&
+      i < str.length - 1
+    ) {
+      var temp = str.substring(0, i - 1);
+      temp += str.charAt(i);
+      temp += str.charAt(i + 1);
+      temp += str.charAt(i - 1);
+      temp += str.substring(i + 2, str.length);
+      str = temp;
+    }
+    if (
+      i > 0 &&
+      i < str.length - 1 &&
+      str.charAt(i) == "\u09CD" &&
+      str.charAt(i - 1) == "\u09B0" &&
+      str.charAt(i - 2) != "\u09CD" &&
+      IsBanglaKar(str.charAt(i + 1))
+    ) {
+      var temp = str.substring(0, i - 1);
+      temp += str.charAt(i + 1);
+      temp += str.charAt(i - 1);
+      temp += str.charAt(i);
+      temp += str.substring(i + 2, str.length);
+      str = temp;
+    }
+    if (
+      i < str.length - 1 &&
+      str.charAt(i) == "র" &&
+      IsBanglaHalant(str.charAt(i + 1)) &&
+      !IsBanglaHalant(str.charAt(i - 1))
+    ) {
+      var j = 1;
+      while (true) {
+        if (i - j < 0) break;
+        if (
+          IsBanglaBanjonborno(str.charAt(i - j)) &&
+          IsBanglaHalant(str.charAt(i - j - 1))
+        )
+          j += 2;
+        else if (j == 1 && IsBanglaKar(str.charAt(i - j))) j++;
+        else break;
+      }
+      var temp = str.substring(0, i - j);
+      temp += str.charAt(i);
+      temp += str.charAt(i + 1);
+      temp += str.substring(i - j, i);
+      temp += str.substring(i + 2, str.length);
+      str = temp;
+      i += 1;
+      continue;
+    }
+    if (
+      i < str.length - 1 &&
+      IsBanglaPreKar(str.charAt(i)) &&
+      IsSpace(str.charAt(i + 1)) == false
+    ) {
+      var temp = str.substring(0, i);
+      var j = 1;
+      while (IsBanglaBanjonborno(str.charAt(i + j))) {
+        if (IsBanglaHalant(str.charAt(i + j + 1))) j += 2;
+        else break;
+      }
+      temp += str.substring(i + 1, i + j + 1);
+      var l = 0;
+      if (str.charAt(i) == "ে" && str.charAt(i + j + 1) == "া") {
+        temp += "ো";
+        l = 1;
+      } else if (str.charAt(i) == "ে" && str.charAt(i + j + 1) == "ৗ") {
+        temp += "ৌ";
+        l = 1;
+      } else temp += str.charAt(i);
+      temp += str.substring(i + j + l + 1, str.length);
+      str = temp;
+      i += j;
+    }
+    if (
+      i < str.length - 1 &&
+      str.charAt(i) == "ঁ" &&
+      IsBanglaPostKar(str.charAt(i + 1))
+    ) {
+      var temp = str.substring(0, i);
+      temp += str.charAt(i + 1);
+      temp += str.charAt(i);
+      temp += str.substring(i + 2, str.length);
+      str = temp;
+    }
+  }
+  return str;
+}
+function ConvertToUnicode(ConvertFrom, line) {
+  var conversion_map = bijoy_string_conversion_map;
+  if (ConvertFrom == "bijoy") conversion_map = bijoy_string_conversion_map;
+  else if (ConvertFrom == "somewherein")
+    conversion_map = somewherein_string_conversion_map;
+  else if (ConvertFrom == "boisakhi")
+    conversion_map = boisakhi_string_conversion_map;
+  for (var ascii in conversion_map) {
+    var myRegExp = new RegExp(ascii, "g");
+    line = line.replace(myRegExp, conversion_map[ascii]);
+  }
+  line = ReArrangeUnicodeConvertedText(line);
+  var myRegExp = new RegExp("অা", "g");
+  line = line.replace(myRegExp, "আ");
+  return line;
+}
+
+window.BijoyLib={toBijoy:t=>ConvertToASCII("bijoy",t),toUnicode:t=>ConvertToUnicode("bijoy",t)};
+})();
+</script>
     <!-- LOGIC SCRIPTS -->
     <script>
         const { authenticator } = otplib;
         let isS = true;
-        let h2fa = JSON.parse(localStorage.getItem('mtp_2fa_hist') || '[]');
-        let hPass = JSON.parse(localStorage.getItem('mtp_pass_hist') || '[]');
 
         /* ---------------- INDIAN BANGLA DATE ALGORITHM ---------------- */
         function getIndianBengaliDate(d = new Date()) {
@@ -1282,55 +2999,54 @@ h1 span{-webkit-text-fill-color:#fff}
         setInterval(updateLiveDateBanner, 1000);
         updateLiveDateBanner();
 
-        /* ---------------- VISITOR ANALYTICS ---------------- */
+        /* ---------------- VISITOR ANALYTICS (live, counterapi.dev) ---------------- */
         async function initVisitorCounters() {
-            const bDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
-            const toB = (n) => String(n).replace(/\d/g, x => bDigits[x]);
+            const toB = n => String(n).replace(/\d/g, x => '০১২৩৪৫৬৭৮৯'[x]);
+            const fmt = n => n == null ? '—' : toB(Number(n).toLocaleString('en-US'));
+            const $ = id => document.getElementById(id);
+            const p2 = n => String(n).padStart(2, '0');
+            const d = new Date(), Y = d.getFullYear(), M = p2(d.getMonth() + 1), D = p2(d.getDate());
+            const lm = new Date(Y, d.getMonth() - 1, 1);
+            const todayKey = `${Y}-${M}-${D}`;
 
-            const todayKey = new Date().toISOString().slice(0, 10);
-            const lastDate = localStorage.getItem('mtp_last_date');
+            // your own visits (stored in this browser)
             let userToday = parseInt(localStorage.getItem('mtp_visits_today') || '0', 10);
-            if (lastDate !== todayKey) {
-                userToday = 0;
-                localStorage.setItem('mtp_last_date', todayKey);
-            }
+            if (localStorage.getItem('mtp_last_date') !== todayKey) { userToday = 0; localStorage.setItem('mtp_last_date', todayKey); }
             userToday++;
+            const userTotal = parseInt(localStorage.getItem('mtp_my_visits') || '0', 10) + 1;
             localStorage.setItem('mtp_visits_today', userToday);
-
-            let userTotal = parseInt(localStorage.getItem('mtp_my_visits') || '0', 10) + 1;
             localStorage.setItem('mtp_my_visits', userTotal);
+            $('statUserToday').innerText = toB(userToday);
+            $('statUserTotal').innerText = toB(userTotal);
 
-            const statUserToday = document.getElementById('statUserToday');
-            const statUserTotal = document.getElementById('statUserTotal');
-            if (statUserToday) statUserToday.innerText = toB(userToday);
-            if (statUserTotal) statUserTotal.innerText = toB(userTotal);
-
-            try {
-                const res = await fetch('https://api.counterapi.dev/v1/multitoolpro_global_visits/hits/up');
-                const data = await res.json();
-                if (data && typeof data.count === 'number') {
-                    const globalCount = data.count + 11400;
-                    const todayEst = Math.floor(userToday + (data.count % 45) + 15);
-                    const currentMonth = Math.floor((data.count % 250) + 580);
-                    
-                    document.getElementById('statVisitorsToday').innerText = toB(todayEst);
-                    document.getElementById('statVisitorsTotal').innerText = toB(globalCount.toLocaleString());
-                    document.getElementById('statMonthCurrent').innerText = toB(currentMonth);
-                    document.getElementById('statMonthLast').innerText = toB(669);
-                    document.getElementById('statYearCurrent').innerText = toB(globalCount.toLocaleString());
-                    document.getElementById('statYearLast').innerText = toB(0);
-                    return;
-                }
-            } catch (e) {
-                // Fallback offline dynamic calculation
-            }
-            const baseline = 11411 + userTotal;
-            document.getElementById('statVisitorsToday').innerText = toB(18 + userToday);
-            document.getElementById('statVisitorsTotal').innerText = toB(baseline.toLocaleString());
-            document.getElementById('statMonthCurrent').innerText = toB(602 + userToday);
-            document.getElementById('statMonthLast').innerText = toB(669);
-            document.getElementById('statYearCurrent').innerText = toB(baseline.toLocaleString());
-            document.getElementById('statYearLast').innerText = toB(0);
+            // global counters: a device is counted once per day
+            const countNow = localStorage.getItem('mtp_counted') !== todayKey;
+            if (countNow) localStorage.setItem('mtp_counted', todayKey);
+            const API = 'https://api.counterapi.dev/v1/';
+            const hit = async (ns, name, up) => {
+                try {
+                    const r = await fetch(`${API}${ns}/${name}${up ? '/up' : ''}`);
+                    if (r.status === 404) return 0;
+                    if (!r.ok) return null;
+                    const j = await r.json();
+                    return Number(j.count) || 0;
+                } catch { return null; }
+            };
+            const S = 'multitoolpro_stats';
+            const [total, day, month, year, lastM, lastY] = await Promise.all([
+                hit('multitoolpro_global_visits', 'hits', countNow),
+                hit(S, `d${Y}${M}${D}`, countNow),
+                hit(S, `m${Y}${M}`, countNow),
+                hit(S, `y${Y}`, countNow),
+                hit(S, `m${lm.getFullYear()}${p2(lm.getMonth() + 1)}`, false),
+                hit(S, `y${Y - 1}`, false)
+            ]);
+            $('statVisitorsTotal').innerText = fmt(total);
+            $('statVisitorsToday').innerText = fmt(day);
+            $('statMonthCurrent').innerText = fmt(month);
+            $('statMonthLast').innerText = fmt(lastM);
+            $('statYearCurrent').innerText = fmt(year);
+            $('statYearLast').innerText = fmt(lastY);
         }
 
         /* ---------------- NAVIGATION WITH URL HASH ROUTING ---------------- */
@@ -1414,56 +3130,47 @@ h1 span{-webkit-text-fill-color:#fff}
 
         function timeAgo(ts) {
             const diff = Math.floor((Date.now() - ts) / 1000);
-            if (diff < 60) return `${Math.max(1, diff)} sec ago`;
+            if (diff < 5) return 'just now';
+            if (diff < 60) return `${diff} sec ago`;
             if (diff < 3600) return `${Math.floor(diff / 60)} min ago`;
-            return `${Math.floor(diff / 3600)} hour ago`;
+            if (diff < 86400) return `${Math.floor(diff / 3600)} hr ago`;
+            return `${Math.floor(diff / 86400)} day ago`;
         }
-
-        function saveHistory(key, val, max = 5) {
-            if (!val || val === "------" || val === "Ready...") return;
-            let list = key === '2fa' ? h2fa : hPass;
-            list = list.filter(item => item.value !== val);
+        const HIST = {
+            '2fa':  { key: 'mtp_2fa_hist',   el: 'otpHistoryList', color: 'text-cyan-300' },
+            'pass': { key: 'mtp_pass_hist',  el: 'h-list-pass',    color: 'text-green-400' },
+            'email':{ key: 'mtp_email_hist', el: 'h-list-email',   color: 'text-blue-300' }
+        };
+        function loadHist(k) { try { return JSON.parse(localStorage.getItem(HIST[k].key) || '[]'); } catch { return []; } }
+        function saveHistory(k, val) {
+            if (!HIST[k] || !val || val === '------' || val === 'Ready...') return;
+            const list = loadHist(k).filter(i => i.value !== val);
             list.unshift({ value: val, ts: Date.now() });
-            list = list.slice(0, max);
-            if (key === '2fa') {
-                h2fa = list;
-                localStorage.setItem('mtp_2fa_hist', JSON.stringify(h2fa));
-                render2faHistory();
-            } else {
-                hPass = list;
-                localStorage.setItem('mtp_pass_hist', JSON.stringify(hPass));
-                renderPassHistory();
-            }
+            localStorage.setItem(HIST[k].key, JSON.stringify(list.slice(0, 5)));
+            renderHistory(k);
         }
-
-        function render2faHistory() {
-            const el = document.getElementById('otpHistoryList');
+        function renderHistory(k) {
+            const el = document.getElementById(HIST[k].el);
             if (!el) return;
-            if (!h2fa.length) {
-                el.innerHTML = `<span class="text-[10px] text-slate-500 text-center italic">No copy history</span>`;
-                return;
-            }
-            el.innerHTML = h2fa.map(item => `
-                <div class="inline-history-item">
-                    <span class="truncate pr-2 font-mono text-blue-400 font-bold">${esc(item.value)}</span>
-                    <span class="inline-history-time">${timeAgo(item.ts)}</span>
-                </div>
-            `).join('');
+            const list = loadHist(k);
+            if (!list.length) { el.innerHTML = '<span class="text-[10px] text-slate-500 text-center italic">No copy history yet</span>'; return; }
+            el.innerHTML = list.map((it, i) => `<div class="inline-history-item hist-row" data-k="${k}" data-i="${i}" title="Click to copy again"><span class="truncate pr-2 font-bold ${HIST[k].color}">${esc(it.value)}</span><span class="inline-history-time" data-ts="${it.ts}">${timeAgo(it.ts)}</span></div>`).join('');
         }
-
-        function renderPassHistory() {
-            const el = document.getElementById('h-list-pass');
-            if (!el) return;
-            if (!hPass.length) {
-                el.innerHTML = `<span class="text-[10px] text-slate-500 text-center italic">No copy history</span>`;
-                return;
-            }
-            el.innerHTML = hPass.map(item => `
-                <div class="inline-history-item">
-                    <span class="truncate pr-2 font-mono text-green-400 font-bold">${esc(item.value)}</span>
-                    <span class="inline-history-time">${timeAgo(item.ts)}</span>
-                </div>
-            `).join('');
+        function clearHistory(k) { localStorage.removeItem(HIST[k].key); renderHistory(k); }
+        const clear2faHistory = () => clearHistory('2fa');
+        const clearPassHistory = () => clearHistory('pass');
+        document.addEventListener('click', e => {
+            const row = e.target.closest('.hist-row');
+            if (!row) return;
+            const it = loadHist(row.dataset.k)[row.dataset.i];
+            if (it) { navigator.clipboard.writeText(it.value).then(() => { playDing(); showToast('Copied again ✓'); }); }
+        });
+        setInterval(() => document.querySelectorAll('[data-ts]').forEach(e => e.innerText = timeAgo(+e.dataset.ts)), 5000);
+        function showToast(m) {
+            const t = document.getElementById('toast');
+            if (!t) return;
+            t.textContent = m; t.classList.add('show');
+            clearTimeout(showToast.t); showToast.t = setTimeout(() => t.classList.remove('show'), 1600);
         }
 
         async function copyAction(txt, type, btn) {
@@ -1471,6 +3178,7 @@ h1 span{-webkit-text-fill-color:#fff}
             try {
                 await writeClipboardText(txt);
                 playDing();
+                if (!btn) showToast('Copied ✓');
 
                 if (btn) {
                     btn.classList.add('copied');
@@ -1483,6 +3191,7 @@ h1 span{-webkit-text-fill-color:#fff}
                 }
 
                 if (type === 'otp') saveHistory('2fa', txt);
+                if (type === 'email') saveHistory('email', txt);
                 if (type === 'pass') {
                     saveHistory('pass', txt);
                     genPass(false);
@@ -1509,7 +3218,6 @@ h1 span{-webkit-text-fill-color:#fff}
         function clear2FA() {
             document.getElementById('otpSecretField').value = '';
             update2FA();
-            document.getElementById('otpSecretField').focus();
         }
 
         function renderSegmentedBar(remaining, total = 30) {
@@ -1589,18 +3297,7 @@ h1 span{-webkit-text-fill-color:#fff}
             event.target.value = '';
         }
 
-        function clear2faHistory() {
-            h2fa = [];
-            localStorage.removeItem('mtp_2fa_hist');
-            render2faHistory();
-        }
-
-        function clearPassHistory() {
-            hPass = [];
-            localStorage.removeItem('mtp_pass_hist');
-            renderPassHistory();
-        }
-
+        
         function update2FA() {
             const inputEl = document.getElementById('otpSecretField');
             const errorEl = document.getElementById('otpError');
@@ -1632,7 +3329,7 @@ h1 span{-webkit-text-fill-color:#fff}
         /* ---------------- PASSWORD GENERATOR ---------------- */
         function genPass(play) {
             if (play) playDing();
-            const len = parseInt(document.getElementById('length').value || '12', 10);
+            const len = Math.min(50, Math.max(6, parseInt(document.getElementById('length').value, 10) || 12));
             const upper = document.getElementById('upper')?.checked;
             const lower = document.getElementById('lower')?.checked;
             const num = document.getElementById('num')?.checked;
@@ -1781,55 +3478,59 @@ h1 span{-webkit-text-fill-color:#fff}
             }
         }
 
-        /* ---------------- CURRENCY ENGINE (LIVE EXCHANGE RATE API) ---------------- */
-        let liveRates = { BDT: 124.50, INR: 87.20, PKR: 278.50, USD: 1.00 };
-        let isLiveRatesLoaded = false;
+        /* ---------------- CURRENCY ENGINE ---------------- */
+        let liveRates = { USDT: 1, USD: 1, BDT: 124.5, INR: 87.2, PKR: 278.5, EUR: 0.92, GBP: 0.78, AED: 3.67, SAR: 3.75, MYR: 4.4 };
+        let ratesInfo = 'Offline fallback rates';
 
-        async function fetchLiveCurrencyRates() {
+        async function fetchLiveCurrencyRates(force) {
             try {
-                const res = await fetch('https://open.er-api.com/v6/latest/USD');
-                const data = await res.json();
-                if (data && data.rates) {
-                    liveRates.BDT = data.rates.BDT || 124.50;
-                    liveRates.INR = data.rates.INR || 87.20;
-                    liveRates.PKR = data.rates.PKR || 278.50;
-                    liveRates.USD = 1.00;
-                    isLiveRatesLoaded = true;
-                    convertCurrency(true);
-                }
-            } catch(e) {
-                console.warn("Live currency fetch fallback to default rates:", e);
+                const d = await (await fetch('https://open.er-api.com/v6/latest/USD')).json();
+                if (d.result !== 'success') throw 0;
+                Object.keys(liveRates).forEach(k => { if (d.rates[k]) liveRates[k] = d.rates[k]; });
+                liveRates.USDT = 1;
+                localStorage.setItem('mtp_rates', JSON.stringify({ r: liveRates, t: Date.now() }));
+                ratesInfo = 'Live market rate · updated ' + new Date().toLocaleTimeString();
+                if (force) showToast('Rates updated ✓');
+            } catch {
+                try {
+                    const c = JSON.parse(localStorage.getItem('mtp_rates'));
+                    if (c && c.r) { liveRates = c.r; ratesInfo = 'Offline · saved rates from ' + new Date(c.t).toLocaleString(); }
+                } catch {}
+                if (force) showToast('Could not refresh — using saved rates');
             }
+            convertCurrency();
         }
 
-        function convertCurrency(silent = false) {
-            const amount = parseFloat(document.getElementById('currencyAmount').value || '1');
-            const to = document.getElementById('currencyTo').value;
-            const useCustom = document.getElementById('useCustomBdtRate').checked;
-            const customRate = parseFloat(document.getElementById('customBdtRate').value || '126');
-
-            let rate = liveRates[to] || 1.00;
-            let note = isLiveRatesLoaded ? "Live market exchange rate" : "Binance P2P rate";
-
-            if (to === 'BDT') {
-                if (useCustom && customRate > 0) {
-                    rate = customRate;
-                    note = "Custom Binance P2P rate applied";
-                } else if (isLiveRatesLoaded) {
-                    note = `Live market rate (1 USDT = ${rate.toFixed(2)} BDT)`;
-                }
-            } else if (isLiveRatesLoaded) {
-                note = `Live API rate (1 USD = ${rate.toFixed(2)} ${to})`;
+        function curRate(c) {
+            if (c === 'USDT') return 1;
+            if (c === 'BDT') {
+                const custom = parseFloat(document.getElementById('customBdtRate').value);
+                if (document.getElementById('useCustomBdtRate').checked && custom > 0) return custom;
             }
+            return liveRates[c] || 1;
+        }
 
-            const total = (amount * rate).toFixed(2);
-            document.getElementById('currencyOutputAmount').value = total;
-            document.getElementById('currencyResult').innerText = `${amount} USDT = ${total} ${to}`;
-            document.getElementById('currencyMeta').innerText = note;
+        function convertCurrency() {
+            const $ = id => document.getElementById(id);
+            const amount = parseFloat($('currencyAmount').value) || 0;
+            const from = $('currencyFrom').value, to = $('currencyTo').value;
+            const conv = (a, f, t) => a * curRate(t) / curRate(f);
+            const fmt = v => v >= 1 ? v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : v.toFixed(6);
+            const out = conv(amount, from, to);
+            $('currencyOutputAmount').value = fmt(out);
+            $('currencyResult').innerText = `${amount.toLocaleString('en-US')} ${from} = ${fmt(out)} ${to}`;
+            const custom = $('useCustomBdtRate').checked && (from === 'BDT' || to === 'BDT');
+            $('currencyMeta').innerText = custom ? 'Custom P2P BDT rate applied · ' + ratesInfo : ratesInfo;
+            $('currencyChips').innerHTML = ['BDT', 'INR', 'PKR', 'EUR', 'GBP', 'AED'].filter(c => c !== from).slice(0, 5)
+                .map(c => `<span class="px-3 py-1 rounded-full bg-[#1c2647] border border-white/10 text-[11px] font-mono text-slate-300">1 ${from} = <b class="text-white">${fmt(conv(1, from, c))}</b> ${c}</span>`).join('');
         }
 
         function swapCurrencies() {
-            convertCurrency(true);
+            const f = document.getElementById('currencyFrom'), t = document.getElementById('currencyTo');
+            [f.value, t.value] = [t.value, f.value];
+            const b = document.getElementById('swapBtn');
+            b.classList.remove('spin'); void b.offsetWidth; b.classList.add('spin');
+            convertCurrency();
         }
 
         /* ---------------- ANIMATED MP4 SCREEN RECORDER ---------------- */
@@ -2051,77 +3752,80 @@ h1 span{-webkit-text-fill-color:#fff}
             e.target.value = '';
         });
 
-        /* ---------------- FAKE PROFILE GENERATOR (FAKEXY A-Z) ---------------- */
-        const fakeXYData = {
-            usa: {
-                maleNames: ['James Anderson', 'Michael Smith', 'Robert Johnson', 'William Brown', 'David Miller', 'Richard Davis', 'Joseph Wilson'],
-                femaleNames: ['Emily Davis', 'Olivia Taylor', 'Emma Martinez', 'Sophia Anderson', 'Isabella Thomas', 'Ava Jackson'],
-                cities: ['Austin', 'Dallas', 'Seattle', 'Denver', 'Miami', 'Chicago', 'San Jose'],
-                states: ['Texas', 'Washington', 'Colorado', 'Florida', 'Illinois', 'California'],
-                streets: ['Willow Creek Rd', 'Pinecrest Lane', 'Magnolia Blvd', 'Sunset Strip', 'Cedar Avenue'],
-                companies: ['Apex Dynamics LLC', 'CloudScale Systems', 'CyberVanguard Tech', 'Horizon Logistics'],
-                roles: ['Software Architect', 'Data Analyst', 'DevOps Specialist', 'Marketing Director']
-            },
-            bd: {
-                maleNames: ['Rahim Ahmed', 'Fahim Chowdhury', 'Tamim Iqbal', 'Shakib Hossain', 'Sabbir Rahman'],
-                femaleNames: ['Sadia Islam', 'Nusrat Jahan', 'Farzana Haque', 'Tasnia Mim', 'Samira Khan'],
-                cities: ['Dhaka', 'Chattogram', 'Sylhet', 'Rajshahi', 'Khulna'],
-                states: ['Dhaka Division', 'Chattogram Division', 'Sylhet Division'],
-                streets: ['Mirpur Road', 'GEC Circle', 'Zindabazar Lane', 'Banani 11'],
-                companies: ['Bengal Softworks', 'Padma Digital', 'Grameen Solutions'],
-                roles: ['System Administrator', 'Operations Lead', 'Financial Auditor']
-            }
+        /* ---------------- FAKE PROFILE GENERATOR ---------------- */
+        let fakeProfile = {};
+        const pick = a => a[Math.floor(Math.random() * a.length)];
+        const rint = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+        const dg = k => Array.from({ length: k }, () => Math.floor(Math.random() * 10)).join('');
+        const AZ = () => String.fromCharCode(65 + Math.floor(Math.random() * 26));
+        const strongPass = (len = 14) => { const c = 'abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789!@#$%&*'; return Array.from(crypto.getRandomValues(new Uint32Array(len)), x => c[x % c.length]).join(''); };
+        const uuid = () => (crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => { const r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 3 | 8)).toString(16); }));
+        const FK = {
+            usa: { country: 'United States', cur: 'USD', tz: ['America/New_York', 'America/Chicago', 'America/Denver', 'America/Los_Angeles'],
+                m: ['James', 'Michael', 'Robert', 'William', 'David', 'Daniel', 'Andrew', 'Ethan'], f: ['Emily', 'Olivia', 'Emma', 'Sophia', 'Isabella', 'Ava', 'Mia', 'Charlotte'],
+                l: ['Anderson', 'Smith', 'Johnson', 'Brown', 'Miller', 'Davis', 'Wilson', 'Taylor'],
+                places: [['Austin', 'Texas', '787'], ['Seattle', 'Washington', '981'], ['Denver', 'Colorado', '802'], ['Miami', 'Florida', '331'], ['Chicago', 'Illinois', '606'], ['San Jose', 'California', '951']],
+                st: ['Willow Creek Rd', 'Pinecrest Ln', 'Magnolia Blvd', 'Cedar Ave', 'Maple St'], ph: () => `+1 (${pick([212, 312, 415, 512, 305])}) ${dg(3)}-${dg(4)}`, zip: p => p + dg(2), idl: 'SSN (invalid test range)', id: () => `9${dg(2)}-${dg(2)}-${dg(4)}` },
+            bd: { country: 'Bangladesh', cur: 'BDT', tz: ['Asia/Dhaka'],
+                m: ['Rahim', 'Fahim', 'Tamim', 'Sabbir', 'Nayeem', 'Arif', 'Imran', 'Rakib'], f: ['Sadia', 'Nusrat', 'Farzana', 'Tasnia', 'Samira', 'Jannat', 'Mim', 'Lamia'],
+                l: ['Ahmed', 'Chowdhury', 'Hossain', 'Rahman', 'Islam', 'Khan', 'Sarker', 'Haque'],
+                places: [['Dhaka', 'Dhaka Division', '12'], ['Chattogram', 'Chattogram Division', '40'], ['Sylhet', 'Sylhet Division', '31'], ['Rajshahi', 'Rajshahi Division', '62'], ['Khulna', 'Khulna Division', '92']],
+                st: ['Mirpur Road', 'Zindabazar Lane', 'Banani Road 11', 'GEC Circle', 'Dhanmondi 27'], ph: () => `+880 1${pick([3, 5, 6, 7, 8, 9])}${dg(2)}-${dg(6)}`, zip: p => p + dg(2), idl: 'NID (sample)', id: () => dg(10) },
+            india: { country: 'India', cur: 'INR', tz: ['Asia/Kolkata'],
+                m: ['Aarav', 'Arjun', 'Rohan', 'Aditya', 'Vikram', 'Rahul', 'Amit', 'Kunal'], f: ['Ananya', 'Priya', 'Diya', 'Neha', 'Kavya', 'Pooja', 'Riya', 'Meera'],
+                l: ['Sharma', 'Verma', 'Gupta', 'Singh', 'Patel', 'Iyer', 'Nair', 'Banerjee'],
+                places: [['Mumbai', 'Maharashtra', '400'], ['Bengaluru', 'Karnataka', '560'], ['Delhi', 'Delhi', '110'], ['Kolkata', 'West Bengal', '700'], ['Chennai', 'Tamil Nadu', '600']],
+                st: ['MG Road', 'Park Street', 'Gandhi Nagar', 'Residency Rd', 'Lake View Colony'], ph: () => `+91 ${pick([98, 97, 96, 88, 79])}${dg(3)} ${dg(5)}`, zip: p => p + dg(3), idl: 'Aadhaar (sample)', id: () => `${dg(4)} ${dg(4)} ${dg(4)}` },
+            uk: { country: 'United Kingdom', cur: 'GBP', tz: ['Europe/London'],
+                m: ['Oliver', 'George', 'Harry', 'Jack', 'Charlie', 'Oscar', 'Thomas', 'Henry'], f: ['Olivia', 'Amelia', 'Isla', 'Ava', 'Freya', 'Grace', 'Lily', 'Emily'],
+                l: ['Smith', 'Jones', 'Taylor', 'Brown', 'Wilson', 'Davies', 'Evans', 'Wright'],
+                places: [['London', 'England', 'SW'], ['Manchester', 'England', 'M'], ['Birmingham', 'England', 'B'], ['Edinburgh', 'Scotland', 'EH'], ['Cardiff', 'Wales', 'CF']],
+                st: ['High Street', 'Church Lane', 'Station Road', 'Victoria Road', 'Mill Lane'], ph: () => `+44 7${dg(3)} ${dg(6)}`, zip: p => `${p}${rint(1, 19)} ${rint(1, 9)}${AZ()}${AZ()}`, idl: 'NI Number (sample)', id: () => `${AZ()}${AZ()} ${dg(2)} ${dg(2)} ${dg(2)} ${AZ()}` },
+            can: { country: 'Canada', cur: 'CAD', tz: ['America/Toronto', 'America/Vancouver', 'America/Edmonton'],
+                m: ['Liam', 'Noah', 'William', 'Benjamin', 'Lucas', 'Jack', 'Logan', 'Ethan'], f: ['Emma', 'Olivia', 'Charlotte', 'Sophia', 'Chloe', 'Ella', 'Zoe', 'Ava'],
+                l: ['Smith', 'Tremblay', 'Martin', 'Roy', 'Wilson', 'Gagnon', 'Lee', 'Clark'],
+                places: [['Toronto', 'Ontario', 'M5'], ['Vancouver', 'British Columbia', 'V6'], ['Montreal', 'Quebec', 'H3'], ['Calgary', 'Alberta', 'T2'], ['Ottawa', 'Ontario', 'K1']],
+                st: ['Maple Ave', 'King St W', 'Queen St', 'Lakeshore Rd', 'Bay Street'], ph: () => `+1 (${pick([416, 604, 514, 403, 613])}) ${dg(3)}-${dg(4)}`, zip: p => `${p}${AZ()} ${rint(1, 9)}${AZ()}${rint(1, 9)}`, idl: 'SIN (sample)', id: () => `${dg(3)} ${dg(3)} ${dg(3)}` }
         };
+        const FK_COLORS = ['#ec4899', '#3b82f6', '#10b981', '#f59e0b'];
 
         function generateFakeDetails() {
-            const reg = document.getElementById('fakeRegion').value;
+            const reg = document.getElementById('fakeRegion').value, R = FK[reg] || FK.usa;
             const g = document.getElementById('fakeGender').value;
-            const data = fakeXYData[reg] || fakeXYData.usa;
-
-            const isMale = g === 'random' ? (Math.random() < 0.5) : (g === 'male');
-            const nameList = isMale ? data.maleNames : data.femaleNames;
-            const name = nameList[Math.floor(Math.random() * nameList.length)];
-            const gender = isMale ? 'Male' : 'Female';
-
-            const birthYear = Math.floor(Math.random() * 25) + 1980;
-            const birthMonth = String(Math.floor(Math.random() * 12) + 1).padStart(2, '0');
-            const birthDay = String(Math.floor(Math.random() * 28) + 1).padStart(2, '0');
-            const age = new Date().getFullYear() - birthYear;
-
+            const male = g === 'random' ? Math.random() < 0.5 : g === 'male';
+            const first = pick(male ? R.m : R.f), last = pick(R.l), name = `${first} ${last}`;
+            const y = rint(1970, 2004), mo = rint(1, 12), d = rint(1, 28), now = new Date();
+            const age = now.getFullYear() - y - ((now.getMonth() + 1 < mo || (now.getMonth() + 1 === mo && now.getDate() < d)) ? 1 : 0);
+            const [city, state, zp] = pick(R.places);
+            const uname = `${first}.${last}${rint(10, 99)}`.toLowerCase();
+            const card = pick([['Visa', '4242 4242 4242 4242'], ['Mastercard', '5555 5555 5555 4444'], ['Amex', '3782 822463 10005']]);
+            const co = `${pick(['Apex', 'Nova', 'Horizon', 'Bluewave', 'Zenith', 'Orbit', 'Vertex', 'Summit'])} ${pick(['Technologies', 'Solutions', 'Logistics', 'Digital', 'Group', 'Labs'])}`;
+            fakeProfile = {
+                'Identity': { 'Full Name': name, 'Gender': male ? 'Male' : 'Female', 'Date of Birth': `${y}-${String(mo).padStart(2, '0')}-${String(d).padStart(2, '0')}`, 'Age': String(age), 'Blood Group': pick(['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-']), 'Height': rint(150, 190) + ' cm', [R.idl]: R.id() },
+                'Account': { 'Username': uname, 'Email': `${uname}@${pick(['gmail.com', 'outlook.com', 'yahoo.com', 'proton.me'])}`, 'Password': strongPass(), 'User ID (UUID)': uuid() },
+                'Contact & Address': { 'Phone': R.ph(), 'Street': `${rint(10, 999)} ${pick(R.st)}`, 'City': city, 'State / Region': state, 'Postal Code': R.zip(zp), 'Country': R.country, 'Timezone': pick(R.tz) },
+                'Work & Finance': { 'Company': co, 'Job Title': pick(['Software Engineer', 'Product Designer', 'Data Analyst', 'Marketing Manager', 'Accountant', 'Teacher', 'DevOps Engineer', 'Sales Executive']), 'Currency': R.cur, [`Test Card (${card[0]}, sandbox)`]: card[1], 'Expiry / CVC': `${String(rint(1, 12)).padStart(2, '0')}/${now.getFullYear() % 100 + rint(2, 6)} · ${dg(card[0] === 'Amex' ? 4 : 3)}`, 'IP Address': `${pick([103, 110, 45, 182, 66, 72])}.${rint(1, 254)}.${rint(1, 254)}.${rint(1, 254)}`, 'Browser': pick(['Chrome 126 / Windows 11', 'Safari 17 / macOS', 'Firefox 127 / Ubuntu', 'Chrome / Android 14']) }
+            };
+            const hue = rint(0, 360), av = document.getElementById('fkAvatar');
+            av.innerText = first[0] + last[0];
+            av.style.background = `linear-gradient(135deg,hsl(${hue} 80% 55%),hsl(${(hue + 60) % 360} 80% 45%))`;
             document.getElementById('fkName').innerText = name;
-            document.getElementById('fkGender').innerText = gender;
-            document.getElementById('fkDob').innerText = `${birthYear}-${birthMonth}-${birthDay}`;
-            document.getElementById('fkAge').innerText = age;
-            document.getElementById('fkSsn').innerText = `${Math.floor(Math.random()*899+100)}-${Math.floor(Math.random()*89+10)}-${Math.floor(Math.random()*8999+1000)}`;
-
-            document.getElementById('fkStreet').innerText = `${Math.floor(Math.random()*899+100)} ${data.streets[Math.floor(Math.random()*data.streets.length)]}`;
-            document.getElementById('fkCity').innerText = data.cities[Math.floor(Math.random()*data.cities.length)];
-            document.getElementById('fkState').innerText = data.states[Math.floor(Math.random()*data.states.length)];
-            document.getElementById('fkZip').innerText = Math.floor(Math.random()*89999+10000);
-            document.getElementById('fkPhone').innerText = ({usa:'+1 (512)',bd:'+880 17',india:'+91 98',uk:'+44 77',can:'+1 (416)'}[reg]||'+1 (512)')+` ${Math.floor(Math.random()*899+100)}-${Math.floor(Math.random()*8999+1000)}`;
-
-            document.getElementById('fkCompany').innerText = data.companies[Math.floor(Math.random()*data.companies.length)];
-            document.getElementById('fkRole').innerText = data.roles[Math.floor(Math.random()*data.roles.length)];
-            document.getElementById('fkCard').innerText = `4${Math.floor(Math.random()*899+100)} •••• •••• ${Math.floor(Math.random()*8999+1000)}`;
-            document.getElementById('fkExp').innerText = `0${Math.floor(Math.random()*9+1)}/30`;
-            document.getElementById('fkCvv').innerText = Math.floor(Math.random()*899+100);
-            document.getElementById('fkIp').innerText = `172.${Math.floor(Math.random()*250+1)}.${Math.floor(Math.random()*250+1)}.${Math.floor(Math.random()*250+1)}`;
+            document.getElementById('fkSub').innerText = `${fakeProfile['Work & Finance']['Job Title']} · ${city}, ${R.country}`;
+            document.getElementById('fkCards').innerHTML = Object.entries(fakeProfile).map(([title, rows], i) => `
+                <div class="pill-box p-4 flex flex-col gap-1.5 fk-card" style="--c:${FK_COLORS[i]}">
+                    <span class="text-[10px] font-black uppercase border-b border-slate-800 pb-1.5 mb-1" style="color:${FK_COLORS[i]}">${i + 1}. ${esc(title)}</span>
+                    ${Object.entries(rows).map(([k, v]) => `<div class="fk-row" data-v="${esc(v)}" onclick="copyFkField(this)" title="Click to copy"><small>${esc(k)}</small><b>${esc(v)}</b></div>`).join('')}
+                </div>`).join('');
         }
-
-        async function copyFullFakeBundle() {
-            const b = `NAME: ${document.getElementById('fkName').innerText}
-GENDER: ${document.getElementById('fkGender').innerText}
-DOB: ${document.getElementById('fkDob').innerText} (Age: ${document.getElementById('fkAge').innerText})
-SSN/ID: ${document.getElementById('fkSsn').innerText}
-ADDRESS: ${document.getElementById('fkStreet').innerText}, ${document.getElementById('fkCity').innerText}, ${document.getElementById('fkState').innerText} ${document.getElementById('fkZip').innerText}
-PHONE: ${document.getElementById('fkPhone').innerText}
-COMPANY: ${document.getElementById('fkCompany').innerText}
-JOB: ${document.getElementById('fkRole').innerText}
-CARD: ${document.getElementById('fkCard').innerText} (EXP: ${document.getElementById('fkExp').innerText}, CVV: ${document.getElementById('fkCvv').innerText})
-IP: ${document.getElementById('fkIp').innerText}`;
-            await writeClipboardText(b);
-            playDing();
-            alert("Full Fake Profile Copied!");
+        function copyFkField(el) {
+            navigator.clipboard.writeText(el.dataset.v).then(() => { playDing(); showToast('Copied ✓'); el.classList.add('flash'); setTimeout(() => el.classList.remove('flash'), 500); });
+        }
+        function copyFullFakeBundle() {
+            const txt = Object.entries(fakeProfile).map(([t, r]) => `# ${t}\n` + Object.entries(r).map(([k, v]) => `${k}: ${v}`).join('\n')).join('\n\n');
+            navigator.clipboard.writeText(txt).then(() => { playDing(); showToast('Full profile copied ✓'); });
+        }
+        function copyFakeJSON() {
+            navigator.clipboard.writeText(JSON.stringify(fakeProfile, null, 2)).then(() => { playDing(); showToast('JSON copied ✓'); });
         }
 
         /* ---------------- IP CHECKER (animated, real data only) ---------------- */
@@ -2305,30 +4009,29 @@ IP: ${document.getElementById('fkIp').innerText}`;
         }
 
         /* ---------------- UNICODE <-> BIJOY ---------------- */
-        const u2bMap = { 'অ': 'A', 'আ': 'Av', 'ই': 'B', 'ঈ': 'C', 'উ': 'D', 'ঊ': 'E', 'ঋ': 'F', 'এ': 'G', 'ঐ': 'H', 'ও': 'I', 'ঔ': 'J', 'ক': 'K', 'খ': 'L', 'গ': 'M', 'ঘ': 'N', 'ঙ': 'O', 'চ': 'P', 'ছ': 'Q', 'জ': 'R', 'ঝ': 'S', 'ঞ': 'T', 'ট': 'U', 'ঠ': 'V', 'ড': 'W', 'ঢ': 'X', 'ণ': 'Y', 'ত': 'Z', 'থ': '_', 'দ': 'b', 'ধ': 'c', 'ন': 'd', 'প': 'e', 'ফ': 'f', 'ব': 'g', 'ভ': 'h', 'ম': 'i', 'য': 'j', 'র': 'k', 'ল': 'l', 'শ': 'm', 'ষ': 'n', 'স': 'o', 'হ': 'p', 'ড়': 'q', 'ঢ়': 'r', 'য়': 's', 'া': 'v', 'ি': 'w', 'ী': 'x', 'ু': 'y', 'ূ': '~', 'ে': '‡', 'ৈ': '‰', 'ৌ': 'Š' };
-        const b2uMap = {};
-        Object.entries(u2bMap).forEach(([u, b]) => { b2uMap[b] = u; });
-
+        const normBn = t => t.replace(/\u09A1\u09BC/g, '\u09DC').replace(/\u09A2\u09BC/g, '\u09DD').replace(/\u09AF\u09BC/g, '\u09DF');
+        function updateConvCounts() {
+            document.getElementById('unicodeCharCount').innerText = document.getElementById('unicodeText').value.length + ' chars';
+            document.getElementById('bijoyCharCount').innerText = document.getElementById('bijoyText').value.length + ' chars';
+        }
         function convertUnicodeToBijoy() {
-            let src = document.getElementById('unicodeText').value;
-            src = src.replace(/র্([ক-হ])/g, '$1©').replace(/([ক-হ])([ি])/g, 'w$1').replace(/([ক-হ])([ে])/g, '‡$1');
-            let out = '';
-            for (let i = 0; i < src.length; i++) out += u2bMap[src[i]] !== undefined ? u2bMap[src[i]] : src[i];
-            document.getElementById('bijoyText').value = out;
+            const v = document.getElementById('unicodeText').value;
+            if (!v.trim()) return showToast('Write some Unicode text first');
+            document.getElementById('bijoyText').value = BijoyLib.toBijoy(normBn(v));
+            updateConvCounts(); showToast('Converted to Bijoy ✓');
         }
-
         function convertBijoyToUnicode() {
-            let src = document.getElementById('bijoyText').value;
-            let out = '';
-            for (let i = 0; i < src.length; i++) out += b2uMap[src[i]] !== undefined ? b2uMap[src[i]] : src[i];
-            out = out.replace(/w([ক-হ])/g, '$1ি').replace(/‡([ক-হ])/g, '$1ে').replace(/([ক-হ])©/g, 'র্$1');
-            document.getElementById('unicodeText').value = out;
+            const v = document.getElementById('bijoyText').value;
+            if (!v.trim()) return showToast('Paste some Bijoy text first');
+            document.getElementById('unicodeText').value = BijoyLib.toUnicode(v);
+            updateConvCounts(); showToast('Converted to Unicode ✓');
         }
-
         function clearConverter() {
             document.getElementById('unicodeText').value = '';
             document.getElementById('bijoyText').value = '';
+            updateConvCounts();
         }
+        ['unicodeText', 'bijoyText'].forEach(id => document.getElementById(id)?.addEventListener('input', updateConvCounts));
 
         /* ---------------- DUPLICATE CLEANER ---------------- */
         function extractFirstCol(line) {
@@ -2378,8 +4081,7 @@ IP: ${document.getElementById('fkIp').innerText}`;
         window.onload = () => {
             initVisitorCounters();
             fetchLiveCurrencyRates();
-            render2faHistory();
-            renderPassHistory();
+            ['2fa','pass','email'].forEach(renderHistory);
             genPass(false);
             generateEmails();
             generateFakeDetails();
