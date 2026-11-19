@@ -60,7 +60,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@otplib/preset-browser@12.0.1/buffer.js"></script>
     <script src="https://unpkg.com/@otplib/preset-browser@12.0.1/index.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Inter:wght@400;600;700;800;900&family=Fira+Code:wght@500;600;700&display=swap" rel="stylesheet">
@@ -451,6 +450,19 @@ h1 span{-webkit-text-fill-color:#fff}
 .fk-row:hover{background:rgba(255,255,255,.07)}.fk-row.flash{background:rgba(34,197,94,.3)}
 .fk-row small{color:#64748b;font-weight:700;white-space:nowrap}.fk-row b{color:#e2e8f0;font-family:'Fira Code',monospace;font-weight:600;text-align:right;word-break:break-all}
 #swapBtn.spin{animation:swapSpin .5s}@keyframes swapSpin{to{transform:rotate(360deg)}}
+.tfa-cd{display:flex;align-items:center;gap:10px;margin:6px 0 2px}
+.tfa-cd-time{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-width:62px;padding:3px 10px;border-radius:999px;background:rgba(8,145,178,.14);border:1px solid rgba(34,211,238,.35);color:#67e8f9;font:800 12px 'Fira Code',monospace;transition:color .4s,border-color .4s,background .4s}
+.rpb{position:relative;flex:1;height:8px;border-radius:999px;background:rgba(255,255,255,.08);box-shadow:inset 0 1px 3px rgba(0,0,0,.6)}
+.rpb-fill{position:absolute;inset:0;border-radius:999px;background:linear-gradient(90deg,#8b5cf6,#3b82f6,#22d3ee);clip-path:inset(0 0 0 0 round 999px);transition:clip-path 1s linear}
+.rpb-head{position:absolute;top:50%;left:100%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:#fff;box-shadow:0 0 10px 3px rgba(34,211,238,.9);transition:left 1s linear,box-shadow .4s}
+.tfa-cd.warn .rpb-fill{background:linear-gradient(90deg,#f59e0b,#fbbf24)}
+.tfa-cd.warn .rpb-head{box-shadow:0 0 10px 3px rgba(251,191,36,.9)}
+.tfa-cd.warn .tfa-cd-time{color:#fcd34d;border-color:rgba(251,191,36,.45);background:rgba(245,158,11,.14)}
+.tfa-cd.danger .rpb-fill{background:linear-gradient(90deg,#ef4444,#f97316)}
+.tfa-cd.danger .rpb-head{box-shadow:0 0 12px 4px rgba(239,68,68,.95);animation:tfaBlink .5s ease-in-out infinite alternate}
+.tfa-cd.danger .tfa-cd-time{color:#fca5a5;border-color:rgba(239,68,68,.55);background:rgba(239,68,68,.16)}
+@keyframes tfaBlink{to{transform:scale(.6)}}
+.tfa-cd.reset .rpb-fill,.tfa-cd.reset .rpb-head{transition:none}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -575,7 +587,7 @@ h1 span{-webkit-text-fill-color:#fff}
                         <h3 class="text-base font-extrabold text-white uppercase tracking-wider">ভিজিটর অ্যানালিটিক্স ও ড্যাশবোর্ড</h3>
                         <p class="text-xs text-slate-400">লাইভ ট্রাফিক ও প্ল্যাটফর্ম ভিজিট কাউন্টার</p>
                     </div>
-                    <span class="text-xs bg-emerald-600/20 text-emerald-400 px-3 py-1 rounded-full font-bold">LIVE STATS</span>
+                    <span id="statLiveBadge" class="text-xs bg-slate-600/20 text-slate-400 px-3 py-1 rounded-full font-bold">CONNECTING…</span>
                 </div>
 
                 <!-- 8 Distinct Colored Analytics Cards -->
@@ -652,33 +664,20 @@ h1 span{-webkit-text-fill-color:#fff}
                         <p id="otpError" class="text-[10px] text-red-400 mt-1 min-h-[14px]"></p>
                     </div>
 
-                    <div class="flex items-center gap-2 w-full mt-2">
-                        <button type="button" onclick="pasteKeyTo2FA()" class="flex-1 py-2 px-2.5 rounded-xl bg-[#0e1629] hover:bg-[#16223e] border border-slate-700/70 text-slate-200 text-[11px] font-bold flex items-center justify-center gap-1.5 transition active:scale-95 shadow-sm">
-                            <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-                            Paste Key
-                        </button>
-                        <button type="button" onclick="triggerQrScan()" class="flex-1 py-2 px-2.5 rounded-xl bg-[#0e1629] hover:bg-[#16223e] border border-slate-700/70 text-slate-200 text-[11px] font-bold flex items-center justify-center gap-1.5 transition active:scale-95 shadow-sm">
-                            <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><circle cx="12" cy="13" r="3" stroke-width="2"/></svg>
-                            Scan QR
-                        </button>
-                        <input type="file" id="qrFileInput" accept="image/*" class="hidden" onchange="handleQrImageUpload(event)">
-                    </div>
+                    
                 </div>
 
                 <!-- Right Panel: Active Token Display -->
                 <div class="tfa-card-panel flex flex-col justify-between p-3.5 rounded-2xl bg-[#090e1c] border border-cyan-500/20 shadow-lg">
                     <div>
-                        <!-- Header with Active Token label & timer badge -->
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span></span>
-                            <div class="px-2.5 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-400 text-[10px] font-mono font-bold flex items-center gap-1">
-                                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span>
-                                <span id="timerText">30s</span>
+                        <!-- Countdown: separate timer + bar (empties from right) -->
+                        <div class="tfa-cd">
+                            <div id="tfaBar" class="rpb" role="progressbar" aria-valuemin="0" aria-valuemax="30" aria-valuenow="30">
+                                <div id="tfaBarFill" class="rpb-fill"></div>
+                                <i id="tfaBarHead" class="rpb-head"></i>
                             </div>
+                            <div class="tfa-cd-time"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.4"><circle cx="12" cy="13" r="8"/><path stroke-linecap="round" d="M12 9v4l2.5 2M9 2h6"/></svg><b id="timerText">30s</b></div>
                         </div>
-
-                        <!-- Segmented Progress Bar (Cyberpunk style from screenshot) -->
-                        <div id="tfaSegmentBar" class="flex items-center gap-[3px] w-full h-3.5 my-2"></div>
 
                         
                     </div>
@@ -2999,54 +2998,84 @@ window.BijoyLib={toBijoy:t=>ConvertToASCII("bijoy",t),toUnicode:t=>ConvertToUnic
         setInterval(updateLiveDateBanner, 1000);
         updateLiveDateBanner();
 
-        /* ---------------- VISITOR ANALYTICS (live, counterapi.dev) ---------------- */
-        async function initVisitorCounters() {
-            const toB = n => String(n).replace(/\d/g, x => '০১২৩৪৫৬৭৮৯'[x]);
-            const fmt = n => n == null ? '—' : toB(Number(n).toLocaleString('en-US'));
-            const $ = id => document.getElementById(id);
-            const p2 = n => String(n).padStart(2, '0');
-            const d = new Date(), Y = d.getFullYear(), M = p2(d.getMonth() + 1), D = p2(d.getDate());
-            const lm = new Date(Y, d.getMonth() - 1, 1);
-            const todayKey = `${Y}-${M}-${D}`;
+        /* ---------------- VISITOR ANALYTICS (real server counters) ---------------- */
+        const VP = [
+            { url: (ns, k, up) => `https://api.counterapi.dev/v1/${ns}/${k}${up ? '/up' : ''}`, val: j => j.count },
+            { url: (ns, k, up) => `https://abacus.jasoncameron.dev/${up ? 'hit' : 'get'}/${ns}/${k}`, val: j => j.value }
+        ];
+        let vpIdx = -1;                       // ONE provider is used for all cards so numbers never get mixed
+        const vOk = {};
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+        const toB = n => String(n).replace(/\d/g, x => '০১২৩৪৫৬৭৮৯'[x]);
 
-            // your own visits (stored in this browser)
+        async function vreq(i, ns, k, up) {
+            for (let a = 0; a < 2; a++) {     // 2 tries (handles rate-limit / temporary errors)
+                try {
+                    const r = await fetch(VP[i].url(ns, k, up), { cache: 'no-store' });
+                    if (r.status === 404) return 0;            // counter does not exist yet = 0 visits
+                    if (r.ok) { const v = Number(VP[i].val(await r.json())); if (!isNaN(v)) return v; }
+                } catch {}
+                await sleep(500);
+            }
+            return null;
+        }
+        async function pickProvider() {
+            for (let i = 0; i < VP.length; i++) {
+                try {
+                    const r = await fetch(VP[i].url('multitoolpro_global_visits', 'hits', false), { cache: 'no-store' });
+                    if (r.ok || r.status === 404) { vpIdx = i; return true; }
+                } catch {}
+            }
+            vpIdx = -1; return false;
+        }
+        function vList() {
+            const p2 = n => String(n).padStart(2, '0'), d = new Date(), Y = d.getFullYear(), M = p2(d.getMonth() + 1), D = p2(d.getDate());
+            const lm = new Date(Y, d.getMonth() - 1, 1), S = 'multitoolpro_stats';
+            return [
+                { id: 'statVisitorsTotal', ns: 'multitoolpro_global_visits', k: 'hits', hit: true },
+                { id: 'statVisitorsToday', ns: S, k: `d${Y}${M}${D}`, hit: true },
+                { id: 'statMonthCurrent', ns: S, k: `m${Y}${M}`, hit: true },
+                { id: 'statYearCurrent', ns: S, k: `y${Y}`, hit: true },
+                { id: 'statMonthLast', ns: S, k: `m${lm.getFullYear()}${p2(lm.getMonth() + 1)}`, hit: false },
+                { id: 'statYearLast', ns: S, k: `y${Y - 1}`, hit: false }
+            ];
+        }
+        async function loadGlobalStats(countNow, only) {
+            const items = vList().filter(x => !only || only.includes(x.id));
+            if (vpIdx < 0) await pickProvider();
+            for (const x of items) {
+                const v = vpIdx < 0 ? null : await vreq(vpIdx, x.ns, x.k, countNow && x.hit);
+                vOk[x.id] = v !== null;
+                const el = document.getElementById(x.id);
+                if (v !== null) el.innerText = toB(v.toLocaleString('en-US'));
+                else if (el.textContent.trim() === '…') el.innerText = '—';
+            }
+            const ids = vList().map(x => x.id), good = ids.filter(i => vOk[i]).length;
+            if (good === 0) vpIdx = -1;       // re-detect provider next time
+            const b = document.getElementById('statLiveBadge');
+            if (b) {
+                b.innerText = good === ids.length ? 'LIVE STATS' : good ? 'PARTIAL' : 'OFFLINE';
+                b.className = 'text-xs px-3 py-1 rounded-full font-bold ' + (good === ids.length ? 'bg-emerald-600/20 text-emerald-400' : good ? 'bg-amber-600/20 text-amber-400' : 'bg-red-600/20 text-red-400');
+                b.title = ids.filter(i => !vOk[i]).length ? 'No answer from counter server for: ' + ids.filter(i => !vOk[i]).join(', ') : 'All counters are live';
+            }
+            return items.filter(x => !vOk[x.id]).map(x => x.id);
+        }
+        async function initVisitorCounters() {
+            const p2 = n => String(n).padStart(2, '0');
+            const d = new Date(), todayKey = `${d.getFullYear()}-${p2(d.getMonth() + 1)}-${p2(d.getDate())}`;
+            // YOUR visits (this browser): every time you open the site counts as one visit.
             let userToday = parseInt(localStorage.getItem('mtp_visits_today') || '0', 10);
             if (localStorage.getItem('mtp_last_date') !== todayKey) { userToday = 0; localStorage.setItem('mtp_last_date', todayKey); }
-            userToday++;
-            const userTotal = parseInt(localStorage.getItem('mtp_my_visits') || '0', 10) + 1;
+            let userTotal = parseInt(localStorage.getItem('mtp_my_visits') || '0', 10);
+            userToday++; userTotal++;
             localStorage.setItem('mtp_visits_today', userToday);
             localStorage.setItem('mtp_my_visits', userTotal);
-            $('statUserToday').innerText = toB(userToday);
-            $('statUserTotal').innerText = toB(userTotal);
-
-            // global counters: a device is counted once per day
-            const countNow = localStorage.getItem('mtp_counted') !== todayKey;
-            if (countNow) localStorage.setItem('mtp_counted', todayKey);
-            const API = 'https://api.counterapi.dev/v1/';
-            const hit = async (ns, name, up) => {
-                try {
-                    const r = await fetch(`${API}${ns}/${name}${up ? '/up' : ''}`);
-                    if (r.status === 404) return 0;
-                    if (!r.ok) return null;
-                    const j = await r.json();
-                    return Number(j.count) || 0;
-                } catch { return null; }
-            };
-            const S = 'multitoolpro_stats';
-            const [total, day, month, year, lastM, lastY] = await Promise.all([
-                hit('multitoolpro_global_visits', 'hits', countNow),
-                hit(S, `d${Y}${M}${D}`, countNow),
-                hit(S, `m${Y}${M}`, countNow),
-                hit(S, `y${Y}`, countNow),
-                hit(S, `m${lm.getFullYear()}${p2(lm.getMonth() + 1)}`, false),
-                hit(S, `y${Y - 1}`, false)
-            ]);
-            $('statVisitorsTotal').innerText = fmt(total);
-            $('statVisitorsToday').innerText = fmt(day);
-            $('statMonthCurrent').innerText = fmt(month);
-            $('statMonthLast').innerText = fmt(lastM);
-            $('statYearCurrent').innerText = fmt(year);
-            $('statYearLast').innerText = fmt(lastY);
+            document.getElementById('statUserToday').innerText = toB(userToday);
+            document.getElementById('statUserTotal').innerText = toB(userTotal);
+            // EVERYONE's visits: every entry = +1 on all counters; failed ones are retried, then refreshed every minute.
+            let failed = await loadGlobalStats(true);
+            for (let t = 0; t < 3 && failed.length; t++) { await sleep(4000); failed = await loadGlobalStats(true, failed); }
+            setInterval(() => loadGlobalStats(false), 60000);
         }
 
         /* ---------------- NAVIGATION WITH URL HASH ROUTING ---------------- */
@@ -3218,86 +3247,31 @@ window.BijoyLib={toBijoy:t=>ConvertToASCII("bijoy",t),toUnicode:t=>ConvertToUnic
         function clear2FA() {
             document.getElementById('otpSecretField').value = '';
             update2FA();
+            document.getElementById('otpSecretField').focus();
         }
 
+        let rpbPrev = 0;
         function renderSegmentedBar(remaining, total = 30) {
-            const bar = document.getElementById('tfaSegmentBar');
-            if (!bar) return;
-            const numSegments = 24;
-            const activeCount = Math.round((remaining / total) * numSegments);
-            let html = '';
-            for (let i = 0; i < numSegments; i++) {
-                if (i < activeCount) {
-                    const ratio = i / numSegments;
-                    let style = '';
-                    if (ratio < 0.25) style = 'background:#8b5cf6; box-shadow:0 0 6px rgba(139,92,246,0.6);';
-                    else if (ratio < 0.6) style = 'background:#3b82f6; box-shadow:0 0 6px rgba(59,130,246,0.6);';
-                    else if (ratio < 0.85) style = 'background:#06b6d4; box-shadow:0 0 6px rgba(6,182,212,0.7);';
-                    else style = 'background:#22d3ee; box-shadow:0 0 8px rgba(34,211,238,0.9);';
-                    html += `<div class="flex-1 h-3.5 rounded-[2px] transition-all duration-200" style="${style}"></div>`;
-                } else {
-                    html += `<div class="flex-1 h-3.5 rounded-[2px] bg-[#0c1222] border border-white/5 transition-all duration-200"></div>`;
-                }
-            }
-            bar.innerHTML = html;
-        }
-
-        async function pasteKeyTo2FA() {
-            try {
-                const text = await navigator.clipboard.readText();
-                if (text) {
-                    const field = document.getElementById('otpSecretField');
-                    if (field) {
-                        field.value = text.trim();
-                        update2FA();
-                        playDing();
-                    }
-                }
-            } catch(e) {
-                document.getElementById('otpSecretField')?.focus();
-            }
-        }
-
-        function triggerQrScan() {
-            document.getElementById('qrFileInput')?.click();
-        }
-
-        function handleQrImageUpload(event) {
-            const file = event.target.files && event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = new Image();
-                img.onload = function() {
-                    const canvas = document.createElement('canvas');
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0);
-                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                    if (window.jsQR) {
-                        const code = jsQR(imageData.data, imageData.width, imageData.height);
-                        if (code && code.data) {
-                            let secret = code.data;
-                            const match = code.data.match(/secret=([A-Za-z0-9]+)/i);
-                            if (match) secret = match[1];
-                            document.getElementById('otpSecretField').value = secret;
-                            update2FA();
-                            playDing();
-                        } else {
-                            alert("Could not detect any QR code in this image.");
-                        }
-                    } else {
-                        alert("QR code library loading, please try again in a moment.");
-                    }
-                };
-                img.src = e.target.result;
+            const bar = document.getElementById('tfaBar'), fill = document.getElementById('tfaBarFill'), head = document.getElementById('tfaBarHead');
+            if (!bar || !fill) return;
+            const box = bar.parentElement;
+            const set = pct => {   // bar keeps its gradient and empties from the RIGHT side
+                fill.style.clipPath = `inset(0 ${100 - pct}% 0 0 round 999px)`;
+                head.style.left = pct + '%';
             };
-            reader.readAsDataURL(file);
-            event.target.value = '';
+            if (!rpbPrev || remaining > rpbPrev) {   // new 30s window: refill instantly
+                box.classList.add('reset');
+                set(remaining / total * 100);
+                void fill.offsetWidth;
+                box.classList.remove('reset');
+            }
+            rpbPrev = remaining;
+            set(Math.max(remaining - 1, 0) / total * 100);   // glide to where it will be next second
+            box.classList.toggle('danger', remaining <= 5);
+            box.classList.toggle('warn', remaining > 5 && remaining <= 10);
+            bar.setAttribute('aria-valuenow', remaining);
         }
 
-        
         function update2FA() {
             const inputEl = document.getElementById('otpSecretField');
             const errorEl = document.getElementById('otpError');
@@ -3325,6 +3299,7 @@ window.BijoyLib={toBijoy:t=>ConvertToASCII("bijoy",t),toUnicode:t=>ConvertToUnic
         }
         document.getElementById('otpSecretField')?.addEventListener('input', update2FA);
         setInterval(update2FA, 1000);
+
 
         /* ---------------- PASSWORD GENERATOR ---------------- */
         function genPass(play) {
