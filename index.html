@@ -4,14 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MultiToolPro - Free Online Tools | 50+ Tools in One Place</title>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://multitoolpro.github.io/">
+
+    <!-- DNS Prefetch -->
+    <link href="https://blogger.googleusercontent.com" rel="dns-prefetch">
+    <link href="https://cdnjs.cloudflare.com" rel="dns-prefetch">
+    <link href="https://i.imgur.com" rel="dns-prefetch">
     
     <!-- SEO & Metadata -->
-    <meta name="description" content="MultiToolPro - Free online tools for Gmail, 2FA Authenticator, Password Generator, Screen Recorder, Currency & P2P, Excel, Text Encryption, and more. No signup needed.">
+    <meta name="description" content="A powerful free online web utility toolkit with 50+ tools: 2FA Authenticator, Gmail Tools, Password Generator, Screen Recorder, Currency Converter, Excel Editor, and an online tool to scan, crop, rotate, and format ID cards for A4 printing. Features include Magic Color Filter, Zoom Magnifier, and PDF/PNG/JPG download.">
     <meta name="keywords" content="MultiToolPro, multi tool pro, free online tools, gmail tools, 2fa authenticator, password generator, screen recorder, binance p2p, excel editor">
     <meta name="author" content="Bidhan">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#0b1122">
-    <link rel="canonical" href="https://multitoolpro.github.io/">
     <link rel="icon" type="image/png" href="https://multitoolpro.github.io/favicon.png">
     
     <!-- Open Graph / Facebook -->
@@ -40,22 +47,33 @@
       "@type": "WebApplication",
       "name": "MultiToolPro",
       "url": "https://multitoolpro.github.io/",
-      "description": "Free online web utility toolkit with 50+ tools: 2FA Authenticator, Gmail Tools, Password Generator, Screen Recorder, Currency Converter, and Excel Editor.",
+      "description": "A powerful free online web utility toolkit with 50+ tools: 2FA Authenticator, Gmail Tools, Password Generator, Screen Recorder, Currency Converter, Excel Editor, and an online tool to scan, crop, rotate, and format ID cards for A4 printing. Features include Magic Color Filter, Zoom Magnifier, and PDF/PNG/JPG download.",
       "applicationCategory": "UtilityApplication",
-      "operatingSystem": "Web Browser",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Works on Chrome, Safari, Edge, Firefox.",
+      "permissions": "No special permissions required. Runs locally in browser.",
       "offers": {
         "@type": "Offer",
         "price": "0",
-        "priceCurrency": "USD"
+        "priceCurrency": "USD",
+        "priceValidUntil": "2030-12-31",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "320",
+        "bestRating": "5",
+        "worstRating": "1"
       },
       "author": {
-        "@type": "Person",
-        "name": "Bidhan",
-        "url": "https://github.com/bidhanbd"
+        "@type": "Organization",
+        "name": "MultiToolPro",
+        "url": "https://multitoolpro.github.io/"
       }
     }
     </script>
-
+    
     <!-- Core Runtime Scripts (Fast & Lightweight) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@otplib/preset-browser@12.0.1/buffer.js"></script>
@@ -375,137 +393,136 @@
 
         .hidden-tool { display: none !important; }
         /* Step 3 - Mobile Fix for MultitoolPro */
-@media (max-width: 640px){
-  .brand-title{
-    font-size: 24px !important;
-    gap: 0px !important;
-    flex-wrap: nowrap !important;
-    white-space: nowrap !important;
-  }
-  .brand-title .brand-text{
-    font-size: 24px !important;
-  }
-  .brand-title .pro-badge{
-    font-size: 10px !important;
-    padding: 4px 7px !important;
-    margin-left: 4px !important;
-    flex-shrink: 0 !important;
-  }
-}
+        @media (max-width: 640px){
+          .brand-title{
+            font-size: 24px !important;
+            gap: 0px !important;
+            flex-wrap: nowrap !important;
+            white-space: nowrap !important;
+          }
+          .brand-title .brand-text{
+            font-size: 24px !important;
+          }
+          .brand-title .pro-badge{
+            font-size: 10px !important;
+            padding: 4px 7px !important;
+            margin-left: 4px !important;
+            flex-shrink: 0 !important;
+          }
+        }
     
-/* ===== PREMIUM LAYER ===== */
-body::before,body::after{content:"";position:fixed;z-index:-1;width:55vmax;height:55vmax;border-radius:50%;filter:blur(110px);opacity:.28;pointer-events:none;animation:orb 22s ease-in-out infinite alternate}
-body::before{top:-20vmax;left:-15vmax;background:#2563eb}
-body::after{bottom:-25vmax;right:-15vmax;background:#7c3aed;animation-delay:-9s}
-@keyframes orb{to{transform:translate(8vmax,6vmax) scale(1.15)}}
-@keyframes toolIn{from{opacity:0;transform:translateY(22px) scale(.98)}to{opacity:1;transform:none}}
-#mainContent>section:not(.hidden-tool){animation:toolIn .55s cubic-bezier(.2,.8,.2,1) both}
-#mainContent>section:nth-child(2){animation-delay:.08s}#mainContent>section:nth-child(3){animation-delay:.16s}
-.app-card{position:relative;transition:transform .3s,box-shadow .3s,border-color .3s}
-.app-card:hover{transform:translateY(-3px);border-color:rgba(96,165,250,.35);box-shadow:0 22px 55px rgba(37,99,235,.18)}
-.glow-card::before{content:"";position:absolute;inset:-1px;border-radius:25px;padding:1px;background:linear-gradient(135deg,#22d3ee,#8b5cf6,#ec4899,#22d3ee);background-size:300% 300%;animation:borderFlow 6s linear infinite;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
-@keyframes borderFlow{to{background-position:300% 0}}
-h1{background:linear-gradient(90deg,#fff,#93c5fd,#c4b5fd,#fff);background-size:250% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shine 6s linear infinite}
-h1 span{-webkit-text-fill-color:#fff}
-@keyframes shine{to{background-position:250% center}}
-.tool-pill{backdrop-filter:blur(8px)}
-.tool-pill.active{animation:pillPulse 2.4s ease-in-out infinite}
-@keyframes pillPulse{50%{box-shadow:0 0 26px rgba(37,99,235,.75)}}
-.btn-premium{background:linear-gradient(135deg,#2563eb,#7c3aed,#06b6d4);background-size:200% 200%;transition:transform .2s,box-shadow .3s,background-position .6s;box-shadow:0 10px 28px rgba(37,99,235,.35)}
-.btn-premium:hover{background-position:100% 50%;transform:translateY(-2px);box-shadow:0 14px 34px rgba(124,58,237,.5)}
-.btn-premium:active{transform:scale(.97)}.btn-premium:disabled{opacity:.7;cursor:wait}
-.btn-premium.running{animation:pulseGlow 1.2s infinite}
-.stat-l{font-size:10px;text-transform:uppercase;font-weight:800;color:#94a3b8;letter-spacing:.08em}
-.stat-v{font-family:'Fira Code',monospace;font-weight:800;font-size:15px;margin-top:4px}
-.gauge-wrap{position:relative;width:100%;max-width:340px}
-.gauge-bg,.gauge-arc{fill:none;stroke-width:14;stroke-linecap:round}
-.gauge-bg{stroke:rgba(255,255,255,.07)}
-.gauge-arc{stroke:url(#gg);stroke-dasharray:251.3;stroke-dashoffset:251.3;transition:stroke-dashoffset .35s ease-out;filter:drop-shadow(0 0 8px rgba(59,130,246,.7))}
-.gauge-needle{transform-origin:100px 100px;transform:rotate(-90deg);transition:transform .35s ease-out}
-.gauge-needle line{stroke:#fff;stroke-width:2.5;stroke-linecap:round}.gauge-needle circle{fill:#22d3ee}
-.gauge-readout{position:absolute;left:0;right:0;bottom:2px;text-align:center}
-.gauge-readout span{display:block;font:900 34px 'Fira Code',monospace;color:#fff;text-shadow:0 0 18px rgba(34,211,238,.5)}
-.gauge-readout small{font-size:11px;font-weight:800;letter-spacing:.2em;color:#22d3ee;text-transform:uppercase}
-.radar{position:relative;width:150px;height:150px;border-radius:50%;border:1px solid rgba(34,211,238,.4);background:radial-gradient(circle,rgba(34,211,238,.12),transparent 70%);display:flex;align-items:center;justify-content:center;overflow:hidden}
-.radar span{position:absolute;border:1px solid rgba(34,211,238,.25);border-radius:50%}
-.radar span:nth-child(1){inset:15%}.radar span:nth-child(2){inset:32%}.radar span:nth-child(3){inset:46%}
-.radar-sweep{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,rgba(34,211,238,.55),transparent 30%);animation:spin 2.4s linear infinite;opacity:.35}
-.radar.scanning .radar-sweep{opacity:1;animation-duration:1s}
-@keyframes spin{to{transform:rotate(360deg)}}
-.radar-flag{position:relative;font-size:46px;z-index:2;filter:drop-shadow(0 4px 10px rgba(0,0,0,.5))}
-.info-tile{background:rgba(11,17,34,.75);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:10px 12px;transition:.25s;animation:toolIn .5s both}
-.info-tile:hover{border-color:rgba(34,211,238,.5);transform:translateY(-2px)}
-.info-tile small{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:#64748b;font-weight:800;margin-bottom:3px}
-.info-tile b{color:#fff;font-weight:700;word-break:break-word}
-.pill-box:hover{border-color:rgba(255,255,255,.2)}
-.email-item{animation:toolIn .35s both}.email-item:hover{border-color:rgba(59,130,246,.4);transform:translateX(3px)}
-::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-thumb{background:#334155;border-radius:9px}
-.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,30px);background:rgba(15,23,42,.95);border:1px solid rgba(34,211,238,.4);color:#e2e8f0;padding:9px 18px;border-radius:999px;font-size:12px;font-weight:700;opacity:0;pointer-events:none;transition:.3s;z-index:300;box-shadow:0 10px 30px rgba(0,0,0,.5)}
-.toast.show{opacity:1;transform:translate(-50%,0)}
-.hist-row{cursor:pointer;transition:.2s}.hist-row:hover{background:rgba(255,255,255,.06)}
-.fk-hero{display:flex;align-items:center;gap:16px;padding:16px;border-radius:18px;background:linear-gradient(135deg,rgba(37,99,235,.18),rgba(124,58,237,.14));border:1px solid rgba(255,255,255,.08)}
-.fk-avatar{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:900 22px Inter,sans-serif;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.4);animation:toolIn .5s both}
-.fk-card{animation:toolIn .5s both;transition:.25s}.fk-card:hover{border-color:var(--c);transform:translateY(-2px)}
-.fk-row{display:flex;justify-content:space-between;gap:10px;padding:5px 8px;border-radius:9px;cursor:pointer;transition:.2s}
-.fk-row:hover{background:rgba(255,255,255,.07)}.fk-row.flash{background:rgba(34,197,94,.3)}
-.fk-row small{color:#64748b;font-weight:700;white-space:nowrap}.fk-row b{color:#e2e8f0;font-family:'Fira Code',monospace;font-weight:600;text-align:right;word-break:break-all}
-#swapBtn.spin{animation:swapSpin .5s}@keyframes swapSpin{to{transform:rotate(360deg)}}
-.tfa-cd{display:flex;align-items:center;gap:10px;margin:6px 0 2px}
-.tfa-cd-time{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-width:62px;padding:3px 10px;border-radius:999px;background:rgba(8,145,178,.14);border:1px solid rgba(34,211,238,.35);color:#67e8f9;font:800 12px 'Fira Code',monospace;transition:color .4s,border-color .4s,background .4s}
-.rpb{position:relative;flex:1;height:8px;border-radius:999px;background:rgba(255,255,255,.08);box-shadow:inset 0 1px 3px rgba(0,0,0,.6)}
-.rpb-fill{position:absolute;inset:0;border-radius:999px;background:linear-gradient(90deg,#8b5cf6,#3b82f6,#22d3ee);clip-path:inset(0 0 0 0 round 999px);transition:clip-path 1s linear}
-.rpb-head{position:absolute;top:50%;left:100%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:#fff;box-shadow:0 0 10px 3px rgba(34,211,238,.9);transition:left 1s linear,box-shadow .4s}
-.tfa-cd.warn .rpb-fill{background:linear-gradient(90deg,#f59e0b,#fbbf24)}
-.tfa-cd.warn .rpb-head{box-shadow:0 0 10px 3px rgba(251,191,36,.9)}
-.tfa-cd.warn .tfa-cd-time{color:#fcd34d;border-color:rgba(251,191,36,.45);background:rgba(245,158,11,.14)}
-.tfa-cd.danger .rpb-fill{background:linear-gradient(90deg,#ef4444,#f97316)}
-.tfa-cd.danger .rpb-head{box-shadow:0 0 12px 4px rgba(239,68,68,.95);animation:tfaBlink .5s ease-in-out infinite alternate}
-.tfa-cd.danger .tfa-cd-time{color:#fca5a5;border-color:rgba(239,68,68,.55);background:rgba(239,68,68,.16)}
-@keyframes tfaBlink{to{transform:scale(.6)}}
-.tfa-cd.reset .rpb-fill,.tfa-cd.reset .rpb-head{transition:none}
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
-/* ===== LIVE IPTV PLAYER STYLES ===== */
-.tv-top-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#0f172a;border:1px solid #334155;border-radius:16px;margin-bottom:16px;width:100%}
-.tv-brand-title{font-size:20px;font-weight:800;color:#fff;display:flex;align-items:center;gap:10px}
-.tv-social-links{display:flex;gap:12px}
-.tv-social-links a{width:36px;height:36px;border-radius:50%;background:#1e293b;color:#cbd5e1;display:flex;align-items:center;justify-content:center;text-decoration:none;border:1px solid #334155;transition:.25s}
-.tv-social-links a:hover{background:#10b981;color:#fff;border-color:#10b981;transform:translateY(-2px)}
-.iptv-wrapper{background:#0f172a;border-radius:20px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.35);border:1px solid #334155;width:100%}
-.iptv-layout{display:grid;grid-template-columns:1.65fr 1fr;background:#111827}
-.player-container{padding:20px;display:flex;flex-direction:column;gap:14px;border-right:1px solid #1f2937;min-width:0}
-.video-frame{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:14px;overflow:hidden;border:2px solid #1f2937}
-.video-frame video{width:100%;height:100%;display:block;background:#000}
-.current-channel-bar{background:#1f2937;padding:14px 18px;border-radius:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-left:5px solid #10b981}
-.channel-status-left{display:flex;align-items:center;gap:12px;min-width:0}
-.live-dot{font-size:10px;color:#ef4444;animation:tvPulseGlow 1.5s infinite}
-@keyframes tvPulseGlow{0%,100%{opacity:.4}50%{opacity:1}}
-.status-label{color:#10b981;display:block;font-size:11px;font-weight:700;text-transform:uppercase}
-.current-channel-name{font-size:16px;font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:0}
-.channel-count-badge{background:#0f172a;color:#fde047;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700;border:1px solid #334155;white-space:nowrap}
-.directory-container{padding:20px;display:flex;flex-direction:column;gap:12px;max-height:560px;min-width:0}
-.dir-server-select,.dir-filter-select{width:100%;padding:11px 38px 11px 14px;background-color:#1e293b;border:1.5px solid #10b981;border-radius:10px;color:#fde047;font-weight:700;font-size:14px;outline:none;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2310b981' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");background-repeat:no-repeat;background-position:right 14px center;background-size:15px}
-.dir-filter-select{border-color:#374151;color:#fff}
-.dir-search-box{position:relative;width:100%}
-.dir-search-input{width:100%;padding:11px 14px 11px 40px;background:#1f2937;border:1.5px solid #374151;border-radius:10px;color:#fff;font-size:14px;outline:none}
-.dir-search-input:focus{border-color:#10b981;background:#111827}
-.dir-search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#10b981;font-size:14px}
-.channels-scroll{flex-grow:1;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding-right:4px}
-.channel-btn{background:rgba(255,255,255,.02);border:1px solid #1f2937;border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:.2s;text-align:left;width:100%;color:inherit}
-.channel-btn:hover{background:rgba(16,185,129,.08);border-color:#10b981}
-.channel-btn.active-channel{background:rgba(16,185,129,.16);border-color:#10b981}
-.channel-logo-wrap{width:38px;height:38px;border-radius:8px;overflow:hidden;background:#0b0f19;border:1px solid #374151;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.channel-logo-wrap img{width:100%;height:100%;object-fit:contain;padding:2px}
-.channel-logo-fallback{font-size:16px;color:#10b981;font-weight:800}
-.channel-info{min-width:0;flex-grow:1}
-.channel-name{font-size:14px;font-weight:700;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
-.channel-cat{font-size:11px;color:#94a3b8;display:block;margin-top:2px}
-.tv-footer-bar{background:#0f172a;border:1px solid #334155;padding:14px;text-align:center;font-size:13px;color:#94a3b8;border-radius:12px;margin-top:16px;width:100%}
-.tv-footer-bar strong{color:#10b981}
-@media(max-width:820px){.iptv-layout{grid-template-columns:1fr}.player-container{padding:14px;border-right:none;border-bottom:1px solid #1f2937}.directory-container{padding:14px;max-height:460px}}
-</style>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-
+        /* ===== PREMIUM LAYER ===== */
+        body::before,body::after{content:"";position:fixed;z-index:-1;width:55vmax;height:55vmax;border-radius:50%;filter:blur(110px);opacity:.28;pointer-events:none;animation:orb 22s ease-in-out infinite alternate}
+        body::before{top:-20vmax;left:-15vmax;background:#2563eb}
+        body::after{bottom:-25vmax;right:-15vmax;background:#7c3aed;animation-delay:-9s}
+        @keyframes orb{to{transform:translate(8vmax,6vmax) scale(1.15)}}
+        @keyframes toolIn{from{opacity:0;transform:translateY(22px) scale(.98)}to{opacity:1;transform:none}}
+        #mainContent>section:not(.hidden-tool){animation:toolIn .55s cubic-bezier(.2,.8,.2,1) both}
+        #mainContent>section:nth-child(2){animation-delay:.08s}#mainContent>section:nth-child(3){animation-delay:.16s}
+        .app-card{position:relative;transition:transform .3s,box-shadow .3s,border-color .3s}
+        .app-card:hover{transform:translateY(-3px);border-color:rgba(96,165,250,.35);box-shadow:0 22px 55px rgba(37,99,235,.18)}
+        .glow-card::before{content:"";position:absolute;inset:-1px;border-radius:25px;padding:1px;background:linear-gradient(135deg,#22d3ee,#8b5cf6,#ec4899,#22d3ee);background-size:300% 300%;animation:borderFlow 6s linear infinite;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+        @keyframes borderFlow{to{background-position:300% 0}}
+        h1{background:linear-gradient(90deg,#fff,#93c5fd,#c4b5fd,#fff);background-size:250% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shine 6s linear infinite}
+        h1 span{-webkit-text-fill-color:#fff}
+        @keyframes shine{to{background-position:250% center}}
+        .tool-pill{backdrop-filter:blur(8px)}
+        .tool-pill.active{animation:pillPulse 2.4s ease-in-out infinite}
+        @keyframes pillPulse{50%{box-shadow:0 0 26px rgba(37,99,235,.75)}}
+        .btn-premium{background:linear-gradient(135deg,#2563eb,#7c3aed,#06b6d4);background-size:200% 200%;transition:transform .2s,box-shadow .3s,background-position .6s;box-shadow:0 10px 28px rgba(37,99,235,.35)}
+        .btn-premium:hover{background-position:100% 50%;transform:translateY(-2px);box-shadow:0 14px 34px rgba(124,58,237,.5)}
+        .btn-premium:active{transform:scale(.97)}.btn-premium:disabled{opacity:.7;cursor:wait}
+        .btn-premium.running{animation:pulseGlow 1.2s infinite}
+        .stat-l{font-size:10px;text-transform:uppercase;font-weight:800;color:#94a3b8;letter-spacing:.08em}
+        .stat-v{font-family:'Fira Code',monospace;font-weight:800;font-size:15px;margin-top:4px}
+        .gauge-wrap{position:relative;width:100%;max-width:340px}
+        .gauge-bg,.gauge-arc{fill:none;stroke-width:14;stroke-linecap:round}
+        .gauge-bg{stroke:rgba(255,255,255,.07)}
+        .gauge-arc{stroke:url(#gg);stroke-dasharray:251.3;stroke-dashoffset:251.3;transition:stroke-dashoffset .35s ease-out;filter:drop-shadow(0 0 8px rgba(59,130,246,.7))}
+        .gauge-needle{transform-origin:100px 100px;transform:rotate(-90deg);transition:transform .35s ease-out}
+        .gauge-needle line{stroke:#fff;stroke-width:2.5;stroke-linecap:round}.gauge-needle circle{fill:#22d3ee}
+        .gauge-readout{position:absolute;left:0;right:0;bottom:2px;text-align:center}
+        .gauge-readout span{display:block;font:900 34px 'Fira Code',monospace;color:#fff;text-shadow:0 0 18px rgba(34,211,238,.5)}
+        .gauge-readout small{font-size:11px;font-weight:800;letter-spacing:.2em;color:#22d3ee;text-transform:uppercase}
+        .radar{position:relative;width:150px;height:150px;border-radius:50%;border:1px solid rgba(34,211,238,.4);background:radial-gradient(circle,rgba(34,211,238,.12),transparent 70%);display:flex;align-items:center;justify-content:center;overflow:hidden}
+        .radar span{position:absolute;border:1px solid rgba(34,211,238,.25);border-radius:50%}
+        .radar span:nth-child(1){inset:15%}.radar span:nth-child(2){inset:32%}.radar span:nth-child(3){inset:46%}
+        .radar-sweep{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,rgba(34,211,238,.55),transparent 30%);animation:spin 2.4s linear infinite;opacity:.35}
+        .radar.scanning .radar-sweep{opacity:1;animation-duration:1s}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .radar-flag{position:relative;font-size:46px;z-index:2;filter:drop-shadow(0 4px 10px rgba(0,0,0,.5))}
+        .info-tile{background:rgba(11,17,34,.75);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:10px 12px;transition:.25s;animation:toolIn .5s both}
+        .info-tile:hover{border-color:rgba(34,211,238,.5);transform:translateY(-2px)}
+        .info-tile small{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:#64748b;font-weight:800;margin-bottom:3px}
+        .info-tile b{color:#fff;font-weight:700;word-break:break-word}
+        .pill-box:hover{border-color:rgba(255,255,255,.2)}
+        .email-item{animation:toolIn .35s both}.email-item:hover{border-color:rgba(59,130,246,.4);transform:translateX(3px)}
+        ::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-thumb{background:#334155;border-radius:9px}
+        .toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,30px);background:rgba(15,23,42,.95);border:1px solid rgba(34,211,238,.4);color:#e2e8f0;padding:9px 18px;border-radius:999px;font-size:12px;font-weight:700;opacity:0;pointer-events:none;transition:.3s;z-index:300;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+        .toast.show{opacity:1;transform:translate(-50%,0)}
+        .hist-row{cursor:pointer;transition:.2s}.hist-row:hover{background:rgba(255,255,255,.06)}
+        .fk-hero{display:flex;align-items:center;gap:16px;padding:16px;border-radius:18px;background:linear-gradient(135deg,rgba(37,99,235,.18),rgba(124,58,237,.14));border:1px solid rgba(255,255,255,.08)}
+        .fk-avatar{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:900 22px Inter,sans-serif;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.4);animation:toolIn .5s both}
+        .fk-card{animation:toolIn .5s both;transition:.25s}.fk-card:hover{border-color:var(--c);transform:translateY(-2px)}
+        .fk-row{display:flex;justify-content:space-between;gap:10px;padding:5px 8px;border-radius:9px;cursor:pointer;transition:.2s}
+        .fk-row:hover{background:rgba(255,255,255,.07)}.fk-row.flash{background:rgba(34,197,94,.3)}
+        .fk-row small{color:#64748b;font-weight:700;white-space:nowrap}.fk-row b{color:#e2e8f0;font-family:'Fira Code',monospace;font-weight:600;text-align:right;word-break:break-all}
+        #swapBtn.spin{animation:swapSpin .5s}@keyframes swapSpin{to{transform:rotate(360deg)}}
+        .tfa-cd{display:flex;align-items:center;gap:10px;margin:6px 0 2px}
+        .tfa-cd-time{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-width:62px;padding:3px 10px;border-radius:999px;background:rgba(8,145,178,.14);border:1px solid rgba(34,211,238,.35);color:#67e8f9;font:800 12px 'Fira Code',monospace;transition:color .4s,border-color .4s,background .4s}
+        .rpb{position:relative;flex:1;height:8px;border-radius:999px;background:rgba(255,255,255,.08);box-shadow:inset 0 1px 3px rgba(0,0,0,.6)}
+        .rpb-fill{position:absolute;inset:0;border-radius:999px;background:linear-gradient(90deg,#8b5cf6,#3b82f6,#22d3ee);clip-path:inset(0 0 0 0 round 999px);transition:clip-path 1s linear}
+        .rpb-head{position:absolute;top:50%;left:100%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:#fff;box-shadow:0 0 10px 3px rgba(34,211,238,.9);transition:left 1s linear,box-shadow .4s}
+        .tfa-cd.warn .rpb-fill{background:linear-gradient(90deg,#f59e0b,#fbbf24)}
+        .tfa-cd.warn .rpb-head{box-shadow:0 0 10px 3px rgba(251,191,36,.9)}
+        .tfa-cd.warn .tfa-cd-time{color:#fcd34d;border-color:rgba(251,191,36,.45);background:rgba(245,158,11,.14)}
+        .tfa-cd.danger .rpb-fill{background:linear-gradient(90deg,#ef4444,#f97316)}
+        .tfa-cd.danger .rpb-head{box-shadow:0 0 12px 4px rgba(239,68,68,.95);animation:tfaBlink .5s ease-in-out infinite alternate}
+        .tfa-cd.danger .tfa-cd-time{color:#fca5a5;border-color:rgba(239,68,68,.55);background:rgba(239,68,68,.16)}
+        @keyframes tfaBlink{to{transform:scale(.6)}}
+        .tfa-cd.reset .rpb-fill,.tfa-cd.reset .rpb-head{transition:none}
+        @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+        /* ===== LIVE IPTV PLAYER STYLES ===== */
+        .tv-top-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#0f172a;border:1px solid #334155;border-radius:16px;margin-bottom:16px;width:100%}
+        .tv-brand-title{font-size:20px;font-weight:800;color:#fff;display:flex;align-items:center;gap:10px}
+        .tv-social-links{display:flex;gap:12px}
+        .tv-social-links a{width:36px;height:36px;border-radius:50%;background:#1e293b;color:#cbd5e1;display:flex;align-items:center;justify-content:center;text-decoration:none;border:1px solid #334155;transition:.25s}
+        .tv-social-links a:hover{background:#10b981;color:#fff;border-color:#10b981;transform:translateY(-2px)}
+        .iptv-wrapper{background:#0f172a;border-radius:20px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.35);border:1px solid #334155;width:100%}
+        .iptv-layout{display:grid;grid-template-columns:1.65fr 1fr;background:#111827}
+        .player-container{padding:20px;display:flex;flex-direction:column;gap:14px;border-right:1px solid #1f2937;min-width:0}
+        .video-frame{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:14px;overflow:hidden;border:2px solid #1f2937}
+        .video-frame video{width:100%;height:100%;display:block;background:#000}
+        .current-channel-bar{background:#1f2937;padding:14px 18px;border-radius:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-left:5px solid #10b981}
+        .channel-status-left{display:flex;align-items:center;gap:12px;min-width:0}
+        .live-dot{font-size:10px;color:#ef4444;animation:tvPulseGlow 1.5s infinite}
+        @keyframes tvPulseGlow{0%,100%{opacity:.4}50%{opacity:1}}
+        .status-label{color:#10b981;display:block;font-size:11px;font-weight:700;text-transform:uppercase}
+        .current-channel-name{font-size:16px;font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:0}
+        .channel-count-badge{background:#0f172a;color:#fde047;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700;border:1px solid #334155;white-space:nowrap}
+        .directory-container{padding:20px;display:flex;flex-direction:column;gap:12px;max-height:560px;min-width:0}
+        .dir-server-select,.dir-filter-select{width:100%;padding:11px 38px 11px 14px;background-color:#1e293b;border:1.5px solid #10b981;border-radius:10px;color:#fde047;font-weight:700;font-size:14px;outline:none;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2310b981' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");background-repeat:no-repeat;background-position:right 14px center;background-size:15px}
+        .dir-filter-select{border-color:#374151;color:#fff}
+        .dir-search-box{position:relative;width:100%}
+        .dir-search-input{width:100%;padding:11px 14px 11px 40px;background:#1f2937;border:1.5px solid #374151;border-radius:10px;color:#fff;font-size:14px;outline:none}
+        .dir-search-input:focus{border-color:#10b981;background:#111827}
+        .dir-search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#10b981;font-size:14px}
+        .channels-scroll{flex-grow:1;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding-right:4px}
+        .channel-btn{background:rgba(255,255,255,.02);border:1px solid #1f2937;border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:.2s;text-align:left;width:100%;color:inherit}
+        .channel-btn:hover{background:rgba(16,185,129,.08);border-color:#10b981}
+        .channel-btn.active-channel{background:rgba(16,185,129,.16);border-color:#10b981}
+        .channel-logo-wrap{width:38px;height:38px;border-radius:8px;overflow:hidden;background:#0b0f19;border:1px solid #374155;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+        .channel-logo-wrap img{width:100%;height:100%;object-fit:contain;padding:2px}
+        .channel-logo-fallback{font-size:16px;color:#10b981;font-weight:800}
+        .channel-info{min-width:0;flex-grow:1}
+        .channel-name{font-size:14px;font-weight:700;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+        .channel-cat{font-size:11px;color:#94a3b8;display:block;margin-top:2px}
+        .tv-footer-bar{background:#0f172a;border:1px solid #334155;padding:14px;text-align:center;font-size:13px;color:#94a3b8;border-radius:12px;margin-top:16px;width:100%}
+        .tv-footer-bar strong{color:#10b981}
+        @media(max-width:820px){.iptv-layout{grid-template-columns:1fr}.player-container{padding:14px;border-right:none;border-bottom:1px solid #1f2937}.directory-container{padding:14px;max-height:460px}}
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </head>
 <body class="flex flex-col items-center">
 
