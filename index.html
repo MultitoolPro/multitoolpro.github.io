@@ -4187,7 +4187,7 @@ window.BijoyLib={toBijoy:t=>ConvertToASCII("bijoy",t),toUnicode:t=>ConvertToUnic
             const initialHash = window.location.hash.replace('#', '') || 'gmail';
             switchTool(initialHash, false);
         };
-        /* ---------------- LIVE IPTV ENGINE ---------------- */
+        /* ---------------- LIVE IPTV ENGINE (FIXED) ---------------- */
 let allChannels = [], hlsInstance = null;
 const videoEl = document.getElementById('iptvVideoPlayer'),
       gridEl = document.getElementById('channelsScrollGrid'),
@@ -4223,10 +4223,11 @@ function parseM3U(d) {
 }
 
 async function switchIptvServer(u) {
+  if (!gridEl) return;
   gridEl.innerHTML = `<div style="color:#64748b;padding:40px;text-align:center"><i class="fa-solid fa-spinner fa-spin" style="color:#10b981;font-size:28px;margin-bottom:10px"></i><p style="font-weight:700">Fetching playlist...</p></div>`;
   try {
     const r = await fetch(u);
-    if (!r.ok) throw new Error();
+    if (!r.ok) throw new Error('HTTP ' + r.status);
     const rawChannels = parseM3U(await r.text());
 
     const bdKeywords = /(bangla|bangladesh|\bbd\b|somoy|jamuna|channel\s*24|ekattor|independent|dbc|news\s*24|ntv|atn|rtv|btv|maasranga|boishakhi|banglavision|desh\s*tv|deepto|ekushey|mytv|mohona|bijoy|ananda|channel\s*i|sa\s*tv|asian\s*tv|gazi|gtv|t\s*sports|nexus|duronto|nagorik|kolkata|zee\s*bangla|star\s*jalsha|colors\s*bangla|sony\s*aath|akaash|abp\s*ananda|24\s*ghanta)/i;
@@ -4241,7 +4242,7 @@ async function switchIptvServer(u) {
     renderChannels(allChannels);
     if (allChannels.length > 0) playChannel(allChannels[0], 0);
   } catch (e) {
-    gridEl.innerHTML = `<div style="color:#f87171;padding:30px;text-align:center"><p style="font-weight:700">Failed to load server.</p></div>`;
+    gridEl.innerHTML = `<div style="color:#f87171;padding:30px;text-align:center"><p style="font-weight:700">Server blocked or offline. Switch Server from dropdown!</p></div>`;
     countBadgeEl.textContent = '0 Channels';
   }
 }
@@ -4283,28 +4284,56 @@ function playChannel(ch, btn) {
   }
   currentNameEl.textContent = ch.name;
   statusTextEl.textContent = 'Connecting...';
+
   if (hlsInstance) {
     hlsInstance.destroy();
     hlsInstance = null;
   }
-  if (Hls.isSupported() && ch.url.includes('.m3u8')) {
-    hlsInstance = new Hls({ enableWorker: true, lowLatencyMode: true });
-    hlsInstance.loadSource(ch.url);
-    hlsInstance.attachMedia(videoEl);
-    hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
-      statusTextEl.textContent = 'Currently Streaming';
-      videoEl.play().catch(() => {});
-    });
-    hlsInstance.on(Hls.Events.ERROR, (e, d) => {
-      if (d.fatal) statusTextEl.textContent = 'Stream Offline';
-    });
-  } else {
-    videoEl.src = ch.url;
+  videoEl.pause();
+  videoEl.removeAttribute('src');
+  videoEl.load();
+
+  // ব্রাউজার অটোপ্লে পলিসি বাইপাস করতে প্রথমবার মিউট করে চালু করা
+  const tryPlay = () => {
     videoEl.play().then(() => {
       statusTextEl.textContent = 'Currently Streaming';
     }).catch(() => {
-      statusTextEl.textContent = 'Stream Unavailable';
+      videoEl.muted = true;
+      videoEl.play().then(() => {
+        statusTextEl.textContent = 'Streaming (Tap speaker to unmute)';
+      }).catch(() => {
+        statusTextEl.textContent = 'Click Play button on video';
+      });
     });
+  };
+
+  if (typeof Hls !== 'undefined' && Hls.isSupported()) {
+    hlsInstance = new Hls({
+      enableWorker: true,
+      lowLatencyMode: true,
+      manifestLoadingTimeOut: 10000
+    });
+    hlsInstance.loadSource(ch.url);
+    hlsInstance.attachMedia(videoEl);
+    hlsInstance.on(Hls.Events.MANIFEST_PARSED, tryPlay);
+    hlsInstance.on(Hls.Events.ERROR, (e, d) => {
+      if (d.fatal) {
+        // HLS ফেইল করলে সরাসরি নেটিভ ভিডিও সোর্স হিসেবে চেষ্টা করবে
+        hlsInstance.destroy();
+        hlsInstance = null;
+        videoEl.src = ch.url;
+        tryPlay();
+        videoEl.onerror = () => {
+          statusTextEl.textContent = 'Stream Offline / Try another channel';
+        };
+      }
+    });
+  } else if (videoEl.canPlayType('application/vnd.apple.mpegurl')) {
+    videoEl.src = ch.url;
+    videoEl.addEventListener('loadedmetadata', tryPlay, { once: true });
+  } else {
+    videoEl.src = ch.url;
+    tryPlay();
   }
 }
     </script>
