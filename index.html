@@ -464,7 +464,48 @@ h1 span{-webkit-text-fill-color:#fff}
 @keyframes tfaBlink{to{transform:scale(.6)}}
 .tfa-cd.reset .rpb-fill,.tfa-cd.reset .rpb-head{transition:none}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+/* ===== LIVE IPTV PLAYER STYLES ===== */
+.tv-top-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#0f172a;border:1px solid #334155;border-radius:16px;margin-bottom:16px;width:100%}
+.tv-brand-title{font-size:20px;font-weight:800;color:#fff;display:flex;align-items:center;gap:10px}
+.tv-social-links{display:flex;gap:12px}
+.tv-social-links a{width:36px;height:36px;border-radius:50%;background:#1e293b;color:#cbd5e1;display:flex;align-items:center;justify-content:center;text-decoration:none;border:1px solid #334155;transition:.25s}
+.tv-social-links a:hover{background:#10b981;color:#fff;border-color:#10b981;transform:translateY(-2px)}
+.iptv-wrapper{background:#0f172a;border-radius:20px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.35);border:1px solid #334155;width:100%}
+.iptv-layout{display:grid;grid-template-columns:1.65fr 1fr;background:#111827}
+.player-container{padding:20px;display:flex;flex-direction:column;gap:14px;border-right:1px solid #1f2937;min-width:0}
+.video-frame{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:14px;overflow:hidden;border:2px solid #1f2937}
+.video-frame video{width:100%;height:100%;display:block;background:#000}
+.current-channel-bar{background:#1f2937;padding:14px 18px;border-radius:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-left:5px solid #10b981}
+.channel-status-left{display:flex;align-items:center;gap:12px;min-width:0}
+.live-dot{font-size:10px;color:#ef4444;animation:tvPulseGlow 1.5s infinite}
+@keyframes tvPulseGlow{0%,100%{opacity:.4}50%{opacity:1}}
+.status-label{color:#10b981;display:block;font-size:11px;font-weight:700;text-transform:uppercase}
+.current-channel-name{font-size:16px;font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:0}
+.channel-count-badge{background:#0f172a;color:#fde047;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700;border:1px solid #334155;white-space:nowrap}
+.directory-container{padding:20px;display:flex;flex-direction:column;gap:12px;max-height:560px;min-width:0}
+.dir-server-select,.dir-filter-select{width:100%;padding:11px 38px 11px 14px;background-color:#1e293b;border:1.5px solid #10b981;border-radius:10px;color:#fde047;font-weight:700;font-size:14px;outline:none;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2310b981' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");background-repeat:no-repeat;background-position:right 14px center;background-size:15px}
+.dir-filter-select{border-color:#374151;color:#fff}
+.dir-search-box{position:relative;width:100%}
+.dir-search-input{width:100%;padding:11px 14px 11px 40px;background:#1f2937;border:1.5px solid #374151;border-radius:10px;color:#fff;font-size:14px;outline:none}
+.dir-search-input:focus{border-color:#10b981;background:#111827}
+.dir-search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#10b981;font-size:14px}
+.channels-scroll{flex-grow:1;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding-right:4px}
+.channel-btn{background:rgba(255,255,255,.02);border:1px solid #1f2937;border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:.2s;text-align:left;width:100%;color:inherit}
+.channel-btn:hover{background:rgba(16,185,129,.08);border-color:#10b981}
+.channel-btn.active-channel{background:rgba(16,185,129,.16);border-color:#10b981}
+.channel-logo-wrap{width:38px;height:38px;border-radius:8px;overflow:hidden;background:#0b0f19;border:1px solid #374151;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.channel-logo-wrap img{width:100%;height:100%;object-fit:contain;padding:2px}
+.channel-logo-fallback{font-size:16px;color:#10b981;font-weight:800}
+.channel-info{min-width:0;flex-grow:1}
+.channel-name{font-size:14px;font-weight:700;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.channel-cat{font-size:11px;color:#94a3b8;display:block;margin-top:2px}
+.tv-footer-bar{background:#0f172a;border:1px solid #334155;padding:14px;text-align:center;font-size:13px;color:#94a3b8;border-radius:12px;margin-top:16px;width:100%}
+.tv-footer-bar strong{color:#10b981}
+@media(max-width:820px){.iptv-layout{grid-template-columns:1fr}.player-container{padding:14px;border-right:none;border-bottom:1px solid #1f2937}.directory-container{padding:14px;max-height:460px}}
 </style>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
 </head>
 <body class="flex flex-col items-center">
 
@@ -487,6 +528,7 @@ h1 span{-webkit-text-fill-color:#fff}
         </div>
         <div id="drawerList" class="flex-1 overflow-y-auto flex flex-col gap-1 pr-1 text-xs font-semibold">
             <button onclick="switchTool('home')" class="drawer-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white text-left">🏠 Home Dashboard</button>
+            <button onclick="switchTool('livetv')" class="drawer-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-800 text-emerald-400 hover:text-white text-left">📺 Live TV Player</button>
             <button onclick="switchTool('gmail')" class="drawer-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white text-left">✉️ Gmail Tools (3-in-1 Side by Side)</button>
             <button onclick="switchTool('email')" class="drawer-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white text-left">📧 Email Generator (Single Tool)</button>
             <button onclick="switchTool('2fa')" class="drawer-item flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white text-left">🔐 2FA Authenticator</button>
@@ -540,6 +582,15 @@ h1 span{-webkit-text-fill-color:#fff}
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
                 HOME
             </button>
+            <!-- LIVE TV Premium Button -->
+<button onclick="switchTool('livetv')" class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-extrabold text-[11px] shadow-md shadow-emerald-500/30 transition transform hover:scale-105 shrink-0" title="Watch Live TV">
+    <span class="relative flex h-2 w-2">
+      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+      <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+    </span>
+    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+    LIVE TV
+</button>
             <div class="marquee-track w-full">
                 <span class="marquee-text font-medium text-slate-300">
                     Welcome to MultiToolPro Digital Toolkit! 2FA Authenticator, Screen Recorder, IP Checker, Real Net Speed Test, Syncfusion Excel Editor, and AES-256 Military Encryption are fully operational.
@@ -1127,7 +1178,59 @@ h1 span{-webkit-text-fill-color:#fff}
                 </div>
             </div>
         </section>
-
+<!-- LIVE TV PLAYER SECTION -->
+        <section id="tool-livetv" class="w-full !max-w-6xl flex flex-col hidden-tool mb-8">
+            <div class="tv-top-bar">
+                <div class="tv-brand-title">
+                    <img src="favicon.png" alt="Logo" style="height:32px;width:32px;border-radius:50%;object-fit:cover;" />
+                    <span>Multitoolpro TV Player</span>
+                </div>
+                <div class="tv-social-links">
+                    <a href="javascript:void(0)" onclick="switchTool('home')" title="Home"><i class="fa-solid fa-house"></i></a>
+                    <a href="https://www.instagram.com/bidhan.nilphamari/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://github.com/MultitoolPro" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                </div>
+            </div>
+            <div class="iptv-wrapper">
+                <div class="iptv-layout">
+                    <div class="player-container">
+                        <div class="video-frame">
+                            <video id="iptvVideoPlayer" controls playsinline poster="tv-poster.jpg"></video>
+                        </div>
+                        <div class="current-channel-bar">
+                            <div class="channel-status-left">
+                                <i class="fa-solid fa-circle live-dot"></i>
+                                <div>
+                                    <span class="status-label" id="streamStatusText">Ready to Stream</span>
+                                    <h4 class="current-channel-name" id="currentChannelName">Select a channel</h4>
+                                </div>
+                            </div>
+                            <span class="channel-count-badge" id="channelCountBadge">0 Channels</span>
+                        </div>
+                    </div>
+                    <div class="directory-container">
+                        <select class="dir-server-select" id="dirServerSelect" onchange="switchIptvServer(this.value)">
+                            <option value="https://iptv-org.github.io/iptv/countries/bd.m3u">&#9889; Server 1: Bangladesh</option>
+                            <option value="https://iptv-org.github.io/iptv/languages/ben.m3u">&#9889; Server 2: All Bangla</option>
+                            <option value="https://raw.githubusercontent.com/bugsfreeweb/LiveTVCollector/refs/heads/main/LiveTV/Bangladesh/LiveTV.m3u">&#9889; Server 3: BD LiveTV</option>
+                            <option value="https://raw.githubusercontent.com/abusaeeidx/Ayna-BDIX-IPTV-Playlist/refs/heads/main/ayna-playlist.m3u">&#9889; Server 4: Ayna BDIX</option>
+                            <option value="https://raw.githubusercontent.com/abusaeeidx/Mrgify-BDIX-IPTV/main/playlist.m3u">&#9889; Server 5: Mrgify BDIX</option>
+                            <option value="https://iptv-org.github.io/iptv/categories/sports.m3u">&#9889; Server 6: Sports</option>
+                            <option value="https://iptv-org.github.io/iptv/countries/in.m3u">&#9889; Server 7: India</option>
+                        </select>
+                        <div class="dir-search-box">
+                            <i class="fa-solid fa-magnifying-glass dir-search-icon"></i>
+                            <input class="dir-search-input" id="dirSearchInput" onkeyup="filterIptvChannels()" placeholder="Search channel..." type="text" />
+                        </div>
+                        <select class="dir-filter-select" id="dirFilterSelect" onchange="filterIptvChannels()">
+                            <option value="All">All Categories</option>
+                        </select>
+                        <div class="channels-scroll" id="channelsScrollGrid"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="tv-footer-bar">&copy; 2026 <strong>Multitoolpro TV Player</strong>. All Rights Reserved.</div>
+        </section>
     </main>
 
     <div id="toast" class="toast"></div>
@@ -3104,7 +3207,7 @@ window.BijoyLib={toBijoy:t=>ConvertToASCII("bijoy",t),toUnicode:t=>ConvertToUnic
                 window.location.hash = t;
             }
 
-            const allTools = ['home', 'converter', '2fa', 'pass', 'email', 'duplicate', 'currency', 'excel', 'fake', 'recorder', 'ip', 'speedtest', 'crypto'];
+            const allTools = ['home', 'livetv', 'converter', '2fa', 'pass', 'email', 'duplicate', 'currency', 'excel', 'fake', 'recorder', 'ip', 'speedtest', 'crypto'];
             const mainContent = document.getElementById('mainContent');
             const isGmail = (t === 'gmail');
 
@@ -3134,6 +3237,8 @@ window.BijoyLib={toBijoy:t=>ConvertToASCII("bijoy",t),toUnicode:t=>ConvertToUnic
             if (t === 'currency') convertCurrency(true);
             if (t === 'ip') fetchClientIpInfo();
             if (t === 'excel') initExcelEditorInstance();
+            if (t !== 'livetv') { document.getElementById('iptvVideoPlayer')?.pause(); }
+            if (t === 'livetv' && !allChannels.length) { switchIptvServer(document.getElementById('dirServerSelect').value); }
         }
 
         window.addEventListener('hashchange', () => {
@@ -4065,6 +4170,126 @@ window.BijoyLib={toBijoy:t=>ConvertToASCII("bijoy",t),toUnicode:t=>ConvertToUnic
             const initialHash = window.location.hash.replace('#', '') || 'gmail';
             switchTool(initialHash, false);
         };
+        /* ---------------- LIVE IPTV ENGINE ---------------- */
+let allChannels = [], hlsInstance = null;
+const videoEl = document.getElementById('iptvVideoPlayer'),
+      gridEl = document.getElementById('channelsScrollGrid'),
+      filterSelectEl = document.getElementById('dirFilterSelect'),
+      searchInputEl = document.getElementById('dirSearchInput'),
+      currentNameEl = document.getElementById('currentChannelName'),
+      statusTextEl = document.getElementById('streamStatusText'),
+      countBadgeEl = document.getElementById('channelCountBadge');
+
+function parseM3U(d) {
+  const l = d.split(/\r?\n/), c = [];
+  let cur = null;
+  for (let i = 0; i < l.length; i++) {
+    const ln = l[i].trim();
+    if (ln.startsWith('#EXTINF:')) {
+      const lm = ln.match(/tvg-logo="([^"]*)"/i),
+            gm = ln.match(/group-title="([^"]*)"/i),
+            ci = ln.lastIndexOf(','),
+            n = ci !== -1 ? ln.substring(ci + 1).trim() : 'Unknown';
+      cur = {
+        name: n || 'Unknown',
+        logo: lm ? lm[1] : '',
+        category: (gm && gm[1]) ? gm[1].trim() : 'General',
+        url: ''
+      };
+    } else if (ln && !ln.startsWith('#') && cur) {
+      cur.url = ln;
+      c.push(cur);
+      cur = null;
+    }
+  }
+  return c;
+}
+
+async function switchIptvServer(u) {
+  gridEl.innerHTML = `<div style="color:#64748b;padding:40px;text-align:center"><i class="fa-solid fa-spinner fa-spin" style="color:#10b981;font-size:28px;margin-bottom:10px"></i><p style="font-weight:700">Fetching playlist...</p></div>`;
+  try {
+    const r = await fetch(u);
+    if (!r.ok) throw new Error();
+    const rawChannels = parseM3U(await r.text());
+
+    const bdKeywords = /(bangla|bangladesh|\bbd\b|somoy|jamuna|channel\s*24|ekattor|independent|dbc|news\s*24|ntv|atn|rtv|btv|maasranga|boishakhi|banglavision|desh\s*tv|deepto|ekushey|mytv|mohona|bijoy|ananda|channel\s*i|sa\s*tv|asian\s*tv|gazi|gtv|t\s*sports|nexus|duronto|nagorik|kolkata|zee\s*bangla|star\s*jalsha|colors\s*bangla|sony\s*aath|akaash|abp\s*ananda|24\s*ghanta)/i;
+
+    allChannels = rawChannels.sort((a, b) => {
+      const aIsBD = bdKeywords.test(a.name + ' ' + a.category) ? 1 : 0;
+      const bIsBD = bdKeywords.test(b.name + ' ' + b.category) ? 1 : 0;
+      return bIsBD - aIsBD;
+    });
+
+    populateCategories(allChannels);
+    renderChannels(allChannels);
+    if (allChannels.length > 0) playChannel(allChannels[0], 0);
+  } catch (e) {
+    gridEl.innerHTML = `<div style="color:#f87171;padding:30px;text-align:center"><p style="font-weight:700">Failed to load server.</p></div>`;
+    countBadgeEl.textContent = '0 Channels';
+  }
+}
+
+function populateCategories(c) {
+  const cats = ['All', ...new Set(c.map(x => x.category))];
+  filterSelectEl.innerHTML = cats.map(cat => `<option value="${cat.replace(/"/g, '&quot;')}">${cat === 'All' ? 'All Categories' : cat}</option>`).join('');
+}
+
+function renderChannels(list) {
+  countBadgeEl.textContent = `${list.length} Channels`;
+  if (!list.length) {
+    gridEl.innerHTML = `<p style="color:#94a3b8;text-align:center;padding:30px">No channels found.</p>`;
+    return;
+  }
+  gridEl.innerHTML = '';
+  list.forEach(ch => {
+    const b = document.createElement('button');
+    b.className = 'channel-btn';
+    b.onclick = () => playChannel(ch, b);
+    const ini = ch.name.charAt(0).toUpperCase();
+    b.innerHTML = `<div class="channel-logo-wrap">${ch.logo ? `<img src="${ch.logo}" alt="${ch.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="channel-logo-fallback" style="display:none">${ini}</span>` : `<span class="channel-logo-fallback">${ini}</span>`}</div><div class="channel-info"><span class="channel-name">${ch.name}</span><span class="channel-cat">${ch.category}</span></div>`;
+    gridEl.appendChild(b);
+  });
+}
+
+function filterIptvChannels() {
+  const q = searchInputEl.value.toLowerCase().trim(),
+        sc = filterSelectEl.value;
+  renderChannels(allChannels.filter(c => c.name.toLowerCase().includes(q) && (sc === 'All' || c.category === sc)));
+}
+
+function playChannel(ch, btn) {
+  document.querySelectorAll('.channel-btn').forEach(b => b.classList.remove('active-channel'));
+  if (btn && btn.classList) btn.classList.add('active-channel');
+  else {
+    const fb = gridEl.querySelector('.channel-btn');
+    if (fb) fb.classList.add('active-channel');
+  }
+  currentNameEl.textContent = ch.name;
+  statusTextEl.textContent = 'Connecting...';
+  if (hlsInstance) {
+    hlsInstance.destroy();
+    hlsInstance = null;
+  }
+  if (Hls.isSupported() && ch.url.includes('.m3u8')) {
+    hlsInstance = new Hls({ enableWorker: true, lowLatencyMode: true });
+    hlsInstance.loadSource(ch.url);
+    hlsInstance.attachMedia(videoEl);
+    hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
+      statusTextEl.textContent = 'Currently Streaming';
+      videoEl.play().catch(() => {});
+    });
+    hlsInstance.on(Hls.Events.ERROR, (e, d) => {
+      if (d.fatal) statusTextEl.textContent = 'Stream Offline';
+    });
+  } else {
+    videoEl.src = ch.url;
+    videoEl.play().then(() => {
+      statusTextEl.textContent = 'Currently Streaming';
+    }).catch(() => {
+      statusTextEl.textContent = 'Stream Unavailable';
+    });
+  }
+}
     </script>
 </body>
 </html>
