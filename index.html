@@ -1877,6 +1877,27 @@ function launchTool(id) {
     return;
   }
 
+  /* PREVENT WRONG TOOL FALLBACK */
+if (id !== 'gdmaker') {
+    const toolCard = document.querySelector(
+        `.mode-card-btn[data-tool-id="${id}"]`
+    );
+
+    const toolName = toolCard
+        ?.querySelector('.mode-card-title')
+        ?.textContent.trim() || id;
+
+    showToast(
+        `${toolName}: এই Tool-এর নিজস্ব Builder এখনো যুক্ত করা হয়নি।`
+    );
+
+    console.warn(
+        `No dedicated builder registered for tool: ${id}`
+    );
+
+    return;
+}
+  
   /* Universal A4 Document / Form / CV / Invoice / Notice / GD / Affidavit / Letter / Receipt / OMR Builder for remaining document tools */
   openUniversalModal(
     '<i class="fa-solid fa-file-shield" style="color:#1e40af;"></i> পুলিশ জিডি আবেদন রাইটিং',
